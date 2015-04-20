@@ -1,0 +1,16 @@
+Django==1.8
+
+# Configuration
+# django-configurations==0.8
+-e git+https://github.com/jezdez/django-configurations.git@master#egg=django-configurations
+
+# For user registration, either via email or social
+# Well-built with regular release cycles!
+# not fully suppot for django 1.8
+django-allauth==0.19.1
+
+# PostgreSQL adapter for the Python
+psycopg2==2.6
+
+# Images
+Pillow==2.8.1

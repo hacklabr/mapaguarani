@@ -1,0 +1,1 @@
+mapaguarani/manage.py
