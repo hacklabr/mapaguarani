@@ -26,6 +26,10 @@ class Production(Common):
     SECRET_KEY = values.SecretValue()
     # END SECRET KEY
 
+    MEDIA_ROOT = "/home/mapaguarani/webfiles/media/"
+    STATIC_ROOT = "/home/mapaguarani/webfiles/static/"
+
+
     # django-secure
     # INSTALLED_APPS += ("djangosecure", )
 
