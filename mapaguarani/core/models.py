@@ -2,7 +2,7 @@ from django.contrib.gis.db import models
 from django.utils.translation import ugettext_lazy as _
 
 
-class VillagesLayer(models.Model):
+class MapLayer(models.Model):
     name = models.CharField(_('name'), max_length=255)
     description = models.TextField(_('Description'))
 
@@ -48,7 +48,7 @@ class IndigenousVillage(IndigenousPlace):
     #     related_name='%(class)s_prominent_subgroup_layers'
     # )
     position = models.PointField()
-    # layer = models.ForeignKey(VillagesLayer, verbose_name=_('Layer'), )
+    layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='villages', blank=True, null=True)
 
     # temporary fields for concept proof
     population = models.CharField(max_length=512, blank=True, null=True)
@@ -115,7 +115,7 @@ class Population(models.Model):
 
 
 class IndigenousLand(IndigenousPlace):
-    official_area = models.FloatField(_(''))
+    official_area = models.FloatField(_('Official area'))
     guarani_exclusive_possession_area_portion = models.FloatField(
         _('Guarani full and exclusive portion area possession'),
         blank=True,
@@ -131,10 +131,14 @@ class IndigenousLand(IndigenousPlace):
     # private field
     demand = models.TextField(_('Demand'), blank=True, null=True)
     # private field???
-    source = models.CharField(_('name'), max_length=512)
+    source = models.CharField(_('Source'), max_length=512)
+
+    public_comments = models.TextField(_('Comments'), blank=True, null=True)
+    private_comments = models.TextField(_('Private comments'), blank=True, null=True)
+
     polygon = models.PolygonField()
 
-    layer = models.ForeignKey(VillagesLayer, verbose_name=_('Layer'))
+    layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='indigenous_lads')
 
     @property
     def villages(self):
@@ -181,7 +185,7 @@ class ArchaeologicalPlace(models.Model):
         max_length=128)
     position_comments = models.TextField(_('Position Comments'))
 
-    layer = models.ForeignKey(VillagesLayer, verbose_name=_('Layer'))
+    layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='archaeological_places')
 
     @property
     def city(self):
