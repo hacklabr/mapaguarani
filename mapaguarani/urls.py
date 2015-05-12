@@ -1,10 +1,18 @@
 from django.conf.urls import include, url
 from django.contrib import admin
-# admin.autodiscover()
+from django.views.generic.base import TemplateView
+from djgeojson.views import GeoJSONLayerView
+from core.models import IndigenousVillage
+admin.autodiscover()
 
 urlpatterns = [
-
-    # url(r'^$', 'mapaguarani.views.home', name='home'),
+    url(r'^data.geojson$',
+        GeoJSONLayerView.as_view(
+            model=IndigenousVillage,
+            geometry_field='position',
+            properties=['name', 'other_names', 'ethnic_groups2', 'population', 'guarani_presence',]),
+        name='villages'),
+    url(r'^$', TemplateView.as_view(template_name='map.html'), name='home'),
 
     url(r'^admin/', include(admin.site.urls)),
 

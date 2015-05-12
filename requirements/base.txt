@@ -15,3 +15,7 @@ psycopg2==2.6
 
 # Images
 Pillow==2.8.1
+
+django-geojson==2.8
+
+django-leaflet==0.16

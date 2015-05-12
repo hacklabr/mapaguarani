@@ -46,6 +46,8 @@ class Common(Configuration):
         'allauth',  # registration
         'allauth.account',  # registration
         'allauth.socialaccount',  # registration
+        'djgeojson',
+        'leaflet',
     )
 
     # Apps specific for this project go here.
@@ -260,6 +262,16 @@ class Common(Configuration):
     # SLUGLIFIER
     # AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
     # END SLUGLIFIER
+
+    LEAFLET_CONFIG = {
+        'DEFAULT_CENTER': (-15.852532, -47.532571),
+        'DEFAULT_ZOOM': 4,
+        'PLUGINS': {
+            'markercluster': {
+                'auto-include': True
+        }
+    }
+    }
 
     # LOGGING CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
