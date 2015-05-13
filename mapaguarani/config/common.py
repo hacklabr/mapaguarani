@@ -48,6 +48,7 @@ class Common(Configuration):
         'allauth.socialaccount',  # registration
         'djgeojson',
         'leaflet',
+        'rosetta',
     )
 
     # Apps specific for this project go here.
@@ -152,6 +153,11 @@ class Common(Configuration):
 
     LANGUAGES = (
         ('pt-br', _('Brazilian Portuguese')),
+        ('en', _('English')),
+    )
+
+    LOCALE_PATHS = (
+        os.path.join(BASE_DIR, 'locale'),
     )
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id

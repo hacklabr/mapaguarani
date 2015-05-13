@@ -1,0 +1,433 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-05-12 23:06-0300\n"
+"PO-Revision-Date: 2015-05-12 23:31-0300\n"
+"Last-Translator: b'  <asd@ad.com>'\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Translated-Using: django-rosetta 0.7.0\n"
+
+#: mapaguarani/config/common.py:154
+msgid "Brazilian Portuguese"
+msgstr "Português Brasileiro"
+
+#: mapaguarani/config/common.py:155
+msgid "English"
+msgstr "Inglês"
+
+#: mapaguarani/core/models.py:6 mapaguarani/core/models.py:11
+#: mapaguarani/core/models.py:23 mapaguarani/core/models.py:27
+#: mapaguarani/core/models.py:92 mapaguarani/core/models.py:106
+#: mapaguarani/core/models.py:160 mapaguarani/core/models.py:180
+#: mapaguarani/core/models.py:181
+msgid "name"
+msgstr "nome"
+
+#: mapaguarani/core/models.py:7 mapaguarani/core/models.py:161
+msgid "Description"
+msgstr "Descrição"
+
+#: mapaguarani/core/models.py:15
+msgid "type"
+msgstr "tipo"
+
+#: mapaguarani/core/models.py:16
+msgid "attached file"
+msgstr "arquivo anexo"
+
+#: mapaguarani/core/models.py:18 mapaguarani/core/models.py:91
+#: mapaguarani/core/models.py:105
+msgid "Date"
+msgstr "Data"
+
+#: mapaguarani/core/models.py:19
+msgid "description"
+msgstr "descrição"
+
+#: mapaguarani/core/models.py:28
+msgid "Others names"
+msgstr "Outros nomes"
+
+#: mapaguarani/core/models.py:31 mapaguarani/core/models.py:57
+msgid "Ethnic group"
+msgstr "Grupo etnico"
+
+#: mapaguarani/core/models.py:35
+msgid "documentation"
+msgstr "documentação"
+
+#: mapaguarani/core/models.py:44 mapaguarani/core/models.py:136
+msgid "Comments"
+msgstr "Comentários"
+
+#: mapaguarani/core/models.py:51 mapaguarani/core/models.py:141
+#: mapaguarani/core/models.py:188
+msgid "Layer"
+msgstr "Camada"
+
+#: mapaguarani/core/models.py:90
+msgid "Guarani presence"
+msgstr "Presença guarani"
+
+#: mapaguarani/core/models.py:95 mapaguarani/core/models.py:109
+msgid "Village"
+msgstr "Aldeia"
+
+#: mapaguarani/core/models.py:104
+msgid "Population"
+msgstr "População"
+
+#: mapaguarani/core/models.py:118
+msgid "Official area"
+msgstr "Area oficial"
+
+#: mapaguarani/core/models.py:120
+msgid "Guarani full and exclusive portion area possession"
+msgstr "Área em posse única e exclusiva dos guaranis"
+
+#: mapaguarani/core/models.py:125
+msgid "Others people full and exclusive portion area possession"
+msgstr ""
+
+#: mapaguarani/core/models.py:130
+msgid "Clain"
+msgstr "Reivindicação"
+
+#: mapaguarani/core/models.py:132
+msgid "Demand"
+msgstr "Demanda"
+
+#: mapaguarani/core/models.py:134
+msgid "Source"
+msgstr "Fonte"
+
+#: mapaguarani/core/models.py:137
+msgid "Private comments"
+msgstr "Observações restritas"
+
+#: mapaguarani/core/models.py:164
+msgid "Guarani indigenous lands layer"
+msgstr "Camada de terras indígenas Guarani"
+
+#: mapaguarani/core/models.py:168
+msgid "Guarani indigenous villages layer"
+msgstr "Camada de aldeias indígenas Guarani"
+
+#: mapaguarani/core/models.py:174
+msgid "Exact"
+msgstr "Exato"
+
+#: mapaguarani/core/models.py:175
+msgid "Estimated"
+msgstr "Estimado"
+
+#: mapaguarani/core/models.py:176
+msgid "By City"
+msgstr "Por Cidade"
+
+#: mapaguarani/core/models.py:177
+msgid "No position"
+msgstr "Sem posição"
+
+#: mapaguarani/core/models.py:183
+msgid "Position Precision"
+msgstr "Precisão da posição"
+
+#: mapaguarani/core/models.py:186
+msgid "Position Comments"
+msgstr ""
+
+#: mapaguarani/templates/account/email.html:7
+msgid "Account"
+msgstr ""
+
+#: mapaguarani/templates/account/email.html:13
+msgid "E-mail Addresses"
+msgstr ""
+
+#: mapaguarani/templates/account/email.html:15
+msgid "The following e-mail addresses are associated with your account:"
+msgstr ""
+
+#: mapaguarani/templates/account/email.html:29
+msgid "Verified"
+msgstr ""
+
+#: mapaguarani/templates/account/email.html:31
+msgid "Unverified"
+msgstr ""
+
+#: mapaguarani/templates/account/email.html:33
+msgid "Primary"
+msgstr ""
+
+#: mapaguarani/templates/account/email.html:39
+msgid "Make Primary"
+msgstr ""
+
+#: mapaguarani/templates/account/email.html:40
+msgid "Re-send Verification"
+msgstr ""
+
+#: mapaguarani/templates/account/email.html:41
+msgid "Remove"
+msgstr ""
+
+#: mapaguarani/templates/account/email.html:48
+msgid "Warning:"
+msgstr ""
+
+#: mapaguarani/templates/account/email.html:48
+msgid ""
+"You currently do not have any e-mail address set up. You should really add "
+"an e-mail address so you can receive notifications, reset your password, "
+"etc."
+msgstr ""
+
+#: mapaguarani/templates/account/email.html:53
+msgid "Add E-mail Address"
+msgstr ""
+
+#: mapaguarani/templates/account/email.html:58
+msgid "Add E-mail"
+msgstr ""
+
+#: mapaguarani/templates/account/email.html:69
+msgid "Do you really want to remove the selected e-mail address?"
+msgstr ""
+
+#: mapaguarani/templates/account/email_confirm.html:7
+#: mapaguarani/templates/account/email_confirm.html:14
+#: mapaguarani/templates/account/email_confirmed.html:6
+#: mapaguarani/templates/account/email_confirmed.html:13
+msgid "Confirm E-mail Address"
+msgstr ""
+
+#: mapaguarani/templates/account/email_confirm.html:20
+#, python-format
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
+"address for user %(user_display)s."
+msgstr ""
+
+#: mapaguarani/templates/account/email_confirm.html:24
+msgid "Confirm"
+msgstr ""
+
+#: mapaguarani/templates/account/email_confirm.html:31
+#, python-format
+msgid ""
+"This e-mail confirmation link expired or is invalid. Please <a "
+"href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+msgstr ""
+
+#: mapaguarani/templates/account/email_confirmed.html:17
+#, python-format
+msgid ""
+"You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an "
+"e-mail address for user %(user_display)s."
+msgstr ""
+
+#: mapaguarani/templates/account/login.html:8
+#: mapaguarani/templates/account/login.html:16
+#: mapaguarani/templates/account/login.html:44
+msgid "Sign In"
+msgstr ""
+
+#: mapaguarani/templates/account/login.html:19
+#, python-format
+msgid ""
+"Please sign in with one\n"
+"      of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a> \n"
+"      for a %(site_name)s account and sign in below:"
+msgstr ""
+
+#: mapaguarani/templates/account/login.html:29
+msgid "or"
+msgstr ""
+
+#: mapaguarani/templates/account/login.html:43
+msgid "Forgot Password?"
+msgstr ""
+
+#: mapaguarani/templates/account/logout.html:6
+#: mapaguarani/templates/account/logout.html:13
+#: mapaguarani/templates/account/logout.html:22
+msgid "Sign Out"
+msgstr ""
+
+#: mapaguarani/templates/account/logout.html:15
+msgid "Are you sure you want to sign out?"
+msgstr ""
+
+#: mapaguarani/templates/account/password_change.html:5
+#: mapaguarani/templates/account/password_change.html:11
+#: mapaguarani/templates/account/password_change.html:16
+#: mapaguarani/templates/account/password_reset_from_key.html:7
+#: mapaguarani/templates/account/password_reset_from_key.html:13
+#: mapaguarani/templates/account/password_reset_from_key_done.html:5
+#: mapaguarani/templates/account/password_reset_from_key_done.html:11
+msgid "Change Password"
+msgstr ""
+
+#: mapaguarani/templates/account/password_delete.html:5
+#: mapaguarani/templates/account/password_delete.html:8
+msgid "Delete Password"
+msgstr ""
+
+#: mapaguarani/templates/account/password_delete.html:9
+msgid ""
+"You may delete your password since you are currently logged in using OpenID."
+msgstr ""
+
+#: mapaguarani/templates/account/password_delete.html:12
+msgid "delete my password"
+msgstr ""
+
+#: mapaguarani/templates/account/password_delete_done.html:5
+#: mapaguarani/templates/account/password_delete_done.html:8
+msgid "Password Deleted"
+msgstr ""
+
+#: mapaguarani/templates/account/password_delete_done.html:9
+msgid "Your password has been deleted."
+msgstr ""
+
+#: mapaguarani/templates/account/password_reset.html:7
+#: mapaguarani/templates/account/password_reset.html:14
+#: mapaguarani/templates/account/password_reset_done.html:6
+#: mapaguarani/templates/account/password_reset_done.html:12
+msgid "Password Reset"
+msgstr ""
+
+#: mapaguarani/templates/account/password_reset.html:19
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll send you"
+" an e-mail allowing you to reset it."
+msgstr ""
+
+#: mapaguarani/templates/account/password_reset.html:24
+msgid "Reset My Password"
+msgstr ""
+
+#: mapaguarani/templates/account/password_reset.html:27
+msgid "Please contact us if you have any trouble resetting your password."
+msgstr ""
+
+#: mapaguarani/templates/account/password_reset_done.html:18
+msgid ""
+"We have sent you an e-mail. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: mapaguarani/templates/account/password_reset_from_key.html:13
+msgid "Bad Token"
+msgstr ""
+
+#: mapaguarani/templates/account/password_reset_from_key.html:17
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
+"reset</a>."
+msgstr ""
+
+#: mapaguarani/templates/account/password_reset_from_key.html:23
+msgid "change password"
+msgstr ""
+
+#: mapaguarani/templates/account/password_reset_from_key.html:26
+#: mapaguarani/templates/account/password_reset_from_key_done.html:12
+msgid "Your password is now changed."
+msgstr ""
+
+#: mapaguarani/templates/account/password_set.html:6
+#: mapaguarani/templates/account/password_set.html:12
+#: mapaguarani/templates/account/password_set.html:17
+msgid "Set Password"
+msgstr ""
+
+#: mapaguarani/templates/account/signup.html:7
+msgid "Signup"
+msgstr ""
+
+#: mapaguarani/templates/account/signup.html:10
+#: mapaguarani/templates/account/signup.html:20
+#: mapaguarani/templates/base.html:47
+msgid "Sign Up"
+msgstr ""
+
+#: mapaguarani/templates/account/signup.html:12
+#, python-format
+msgid ""
+"Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
+msgstr ""
+
+#: mapaguarani/templates/account/signup_closed.html:6
+#: mapaguarani/templates/account/signup_closed.html:12
+msgid "Sign Up Closed"
+msgstr ""
+
+#: mapaguarani/templates/account/signup_closed.html:14
+msgid "We are sorry, but the sign up is currently closed."
+msgstr ""
+
+#: mapaguarani/templates/account/verification_sent.html:5
+#: mapaguarani/templates/account/verification_sent.html:11
+#: mapaguarani/templates/account/verified_email_required.html:6
+#: mapaguarani/templates/account/verified_email_required.html:12
+msgid "Verify Your E-mail Address"
+msgstr ""
+
+#: mapaguarani/templates/account/verification_sent.html:13
+#, python-format
+msgid ""
+"We have sent an e-mail to <a href=\"mailto:%(email)s\">%(email)s</a> for "
+"verification. Follow the link provided to finalize the signup process. "
+"Please contact us if you do not receive it within a few minutes."
+msgstr ""
+
+#: mapaguarani/templates/account/verified_email_required.html:16
+msgid ""
+"This part of the site requires us to verify that\n"
+"        you are who you claim to be. For this purpose, we require that you\n"
+"        verify ownership of your e-mail address. "
+msgstr ""
+
+#: mapaguarani/templates/account/verified_email_required.html:20
+msgid ""
+"We have sent an e-mail to you for\n"
+"        verification. Please click on the link inside this e-mail. Please\n"
+"        contact us if you do not receive it within a few minutes."
+msgstr ""
+
+#: mapaguarani/templates/account/verified_email_required.html:24
+#, python-format
+msgid ""
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
+"e-mail address</a>."
+msgstr ""
+
+#: mapaguarani/templates/base.html:44
+msgid "My Profile"
+msgstr ""
+
+#: mapaguarani/templates/base.html:45
+msgid "Logout"
+msgstr ""
+
+#: mapaguarani/templates/base.html:48
+msgid "Log In"
+msgstr ""
