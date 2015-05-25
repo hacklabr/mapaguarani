@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.views.generic.base import TemplateView
 from djgeojson.views import GeoJSONLayerView
 from core.models import IndigenousVillage
+from django.conf import settings
 admin.autodiscover()
 
 urlpatterns = [
@@ -17,4 +18,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^accounts/', include('allauth.urls')),
+
+    url(r'^rosetta/', include('rosetta.urls')),
+
 ]
