@@ -26,35 +26,53 @@ class EthnicGroup(models.Model):
 class IndigenousPlace(models.Model):
     name = models.CharField(_('name'), max_length=255)
     other_names = models.CharField(_('Others names'), max_length=512)
-    ethnic_groups = models.ManyToManyField(
+    prominent_subgroup = models.ManyToManyField(
         EthnicGroup,
-        verbose_name=_('Ethnic group'),
-        related_name='%(class)s_ethnic_groups_layers'
+        verbose_name=_('prominent ethnic sub-group'),
+        related_name='%(class)s_prominent_subgroup_layers',
+        blank=True
     )
-
-    documentation = models.ManyToManyField(Documentation, verbose_name=_('documentation'))
+    documentation = models.ManyToManyField(
+        Documentation,
+        verbose_name=_('documentation'),
+        related_name='%(class)s_documentation',
+        blank=True)
+    public_comments = models.TextField(_('Comments'), blank=True, null=True)
+    private_comments = models.TextField(_('Private comments'), blank=True, null=True)
 
     objects = models.GeoManager()
 
     class Meta:
         abstract = True
 
+    def __str__(self):
+        return self.name
+
 
 class IndigenousVillage(IndigenousPlace):
+
+    POSITION_PRECISION = (
+        ('exact', _('Exact')),
+        ('approximate', _('Approximate')),
+        ('no_info', _('No information')),
+    )
+
     comments = models.TextField(_('Comments'), blank=True, null=True)
-    # prominent_subgroup = models.ManyToManyField(
-    #     EthnicGroup,
-    #     verbose_name=_('prominent ethnic sub-group'),
-    #     related_name='%(class)s_prominent_subgroup_layers'
-    # )
+    ethnic_groups = models.ManyToManyField(
+        EthnicGroup,
+        verbose_name=_('Ethnic group'),
+        related_name='%(class)s_ethnic_groups_layers',
+        blank=True
+    )
+    position_precision = models.CharField(
+        _('Land Tenure'),
+        choices=POSITION_PRECISION,
+        max_length=256,
+        default=POSITION_PRECISION[2][0]
+    )
+    position_source = models.CharField(_('Source'), max_length=512)
     position = models.PointField()
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='villages', blank=True, null=True)
-
-    # temporary fields for concept proof
-    population = models.CharField(max_length=512, blank=True, null=True)
-    guarani_presence = models.CharField(max_length=512, blank=True, null=True)
-    prominent_subgroup = models.CharField(max_length=512, blank=True, null=True)
-    ethnic_groups2 = models.CharField(_('Ethnic group'), max_length=512, blank=True, null=True)
 
     # @property
     # def population(self):
@@ -91,10 +109,7 @@ class GuaraniPresence(models.Model):
     date = models.DateField(_('Date'))
     source = models.CharField(_('name'), max_length=512)
     village = models.ForeignKey(
-        IndigenousVillage,
-        verbose_name=_('Village'),
-        # related_name='%(class)s_annual_series_guarani_presence'
-    )
+        IndigenousVillage, verbose_name=_('Village'), related_name='%(class)s_annual_series_guarani_presence')
 
     class Meta:
         get_latest_by = 'date'
@@ -103,41 +118,51 @@ class GuaraniPresence(models.Model):
 class Population(models.Model):
     population = models.IntegerField(_('Population'))
     date = models.DateField(_('Date'))
-    source = models.CharField(_('name'), max_length=512)
+    source = models.CharField(_('Source'), max_length=512)
     village = models.ForeignKey(
-        IndigenousVillage,
-        verbose_name=_('Village'),
-        related_name='%(class)s_annual_series_population'
-    )
+        IndigenousVillage, verbose_name=_('Village'), related_name='%(class)s_annual_series_population')
 
     class Meta:
         get_latest_by = 'date'
 
 
 class IndigenousLand(IndigenousPlace):
+
+    LAND_TENURE_CHOICES = (
+        ('no_arrangements', _('Sem Providências')),
+        ('regularized', _('Regularizada')),
+        ('expropriated', _('Desapropriada')),
+        ('expropriated_in_progress', _('Em processo de desapropriação')),
+        ('delimited', _('Delimitada')),
+        ('study', _('Em estudo')),
+
+    )
+    LAND_TENURE_STATUS_CHOICES = (
+        ('no_revision', _('No Revision')),
+        ('not_delimited', _('Not Delimited')),
+        ('revised_land', _('Revised Land')),
+        ('original_land', _('Original Land')),
+    )
+
     official_area = models.FloatField(_('Official area'))
     guarani_exclusive_possession_area_portion = models.FloatField(
-        _('Guarani full and exclusive portion area possession'),
-        blank=True,
-        null=True
-    )
+        _('Guarani full and exclusive portion area possession'), blank=True, null=True)
     others_exclusive_possession_area_portion = models.FloatField(
-        _('Others people full and exclusive portion area possession'),
-        blank=True,
-        null=True
-    )
+        _('Others people full and exclusive portion area possession'), blank=True, null=True)
     # private field
     claim = models.TextField(_('Clain'), blank=True, null=True)
     # private field
     demand = models.TextField(_('Demand'), blank=True, null=True)
     # private field???
     source = models.CharField(_('Source'), max_length=512)
-
-    public_comments = models.TextField(_('Comments'), blank=True, null=True)
-    private_comments = models.TextField(_('Private comments'), blank=True, null=True)
-
-    polygon = models.PolygonField()
-
+    # Situação Fundiária
+    land_tenure = models.CharField(
+        _('Land Tenure'), choices=LAND_TENURE_CHOICES, max_length=256)
+    # Status de revisão fundiária
+    land_tenure_status = models.CharField(
+        _('Land Tenure Status'), choices=LAND_TENURE_STATUS_CHOICES, max_length=256)
+    associated_land = models.CharField(_('Source'), max_length=512, blank=True, null=True)
+    polygon = models.MultiPolygonField()
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='indigenous_lads')
 
     @property
