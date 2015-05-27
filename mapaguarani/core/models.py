@@ -135,7 +135,9 @@ class IndigenousLand(IndigenousPlace):
         ('expropriated_in_progress', _('Em processo de desapropriação')),
         ('delimited', _('Delimitada')),
         ('study', _('Em estudo')),
-
+        ('declared', _('Declarada')),
+        ('acquired', _('Adquirida')),
+        ('regularized_limits_rev', _('Regularizada (Em revisão de limites)')),
     )
     LAND_TENURE_STATUS_CHOICES = (
         ('no_revision', _('No Revision')),

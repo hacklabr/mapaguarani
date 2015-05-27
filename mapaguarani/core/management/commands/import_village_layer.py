@@ -34,7 +34,6 @@ class Command(BaseCommand):
                 'position_source': feat.get('FONTE_LOCA'),
                 'private_comments': feat.get('OBSERVACOE'),
                 'public_comments': feat.get('OBSERVACO2'),
-                # 'geom' : 'POINT',
             }
 
             indigenous_village = IndigenousVillage(**kwargs)
@@ -71,7 +70,7 @@ class Command(BaseCommand):
             elif guarani_presence == 'Não':
                 pass
             else:
-                import ipdb;ipdb.set_trace()
+                self.stdout.write('Falha ao ler Presença Guarani. Valor: ' + guarani_presence)
 
             population = feat.get('POPULACAO_')
             if population:
@@ -86,7 +85,6 @@ class Command(BaseCommand):
                     population.save()
                 except:
                     self.stdout.write('Falha ao ler população. População: ' + population)
-
 
             indigenous_village.save()
 

@@ -61,10 +61,45 @@ class Command(BaseCommand):
                 multi_poly = MultiPolygon(poly)
                 indigenous_land.polygon = multi_poly.wkt
                 indigenous_land.save()
-                print('Terra indígena: ' + indigenous_land.name + 'Posição convertida de Polígono para Multipolígono.')
+                # self.stdout.write('Terra indígena: ' + indigenous_land.name + 'Posição convertida de Polígono para Multipolígono.')
 
             for group in feat.get('SUBGRUPO_P').split(','):
                 indigenous_land.prominent_subgroup.add(_get_ethnic_group(group))
+
+            land_tenure = feat.get('SITUACAO_F')
+            if land_tenure == 'Sem Providências':
+                indigenous_land.land_tenure = 'no_arrangements'
+            elif land_tenure == 'Regularizada':
+                indigenous_land.land_tenure = 'regularized'
+            elif land_tenure == 'Desapropriada':
+                indigenous_land.land_tenure = 'expropriated'
+            elif land_tenure == 'Em processo de desapropriação':
+                indigenous_land.land_tenure = 'expropriated_in_progress'
+            elif land_tenure == 'Delimitada':
+                indigenous_land.land_tenure = 'delimited'
+            elif land_tenure == 'Em estudo':
+                indigenous_land.land_tenure = 'study'
+            elif land_tenure == 'Declarada':
+                indigenous_land.land_tenure = 'declared'
+            elif land_tenure == 'Adquirida':
+                indigenous_land.land_tenure = 'acquired'
+            elif land_tenure == 'Regularizada (Em revisão de limites)':
+                indigenous_land.land_tenure = 'regularized_limits_rev'
+            else:
+                self.stdout.write('Situação fundiária não encontrata: ' + land_tenure)
+
+            land_tenure_status = feat.get('STATUS_REV')
+            if land_tenure_status == 'Sem Revisão':
+                indigenous_land.land_tenure_status = 'no_revision'
+            elif land_tenure_status == 'Não Delimitada':
+                indigenous_land.land_tenure_status = 'not_delimited'
+            elif land_tenure_status == 'Terra Revisada':
+                indigenous_land.land_tenure_status = 'revised_land'
+            elif land_tenure_status == 'Terra Original':
+                indigenous_land.land_tenure_status = 'original_land'
+            else:
+                self.stdout.write('Status de revisão fundiária não encontrata: ' + land_tenure_status)
+
             indigenous_land.save()
 
         self.stdout.write('Camada de terras indígenas importada com sucesso! Caminho do arquivo fornecido: "%s"' % shapefile_path)
