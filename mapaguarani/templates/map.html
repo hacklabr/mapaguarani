@@ -4,22 +4,26 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>{% block title %}django-template{% endblock title %}</title>
+    <title>{% block title %}Mapa Guarani online{% endblock title %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    {% leaflet_js plugins="ALL" %}
-    {% leaflet_css plugins="ALL" %}
 
-    <style>
+    {% compress js %}
 
-        .leaflet-container {  /* all maps */
+    {% endcompress %}
+
+{#    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>#}
+{#    {% leaflet_js plugins="ALL" %}#}
+{#    {% leaflet_css plugins="ALL" %}#}
+
+{#    <style>#}
+{#        .leaflet-container {  /* all maps */#}
 {#            width:  600px;#}
-            height: 600px;
-        }
+{#            height: 600px;#}
+{#        }#}
 
-    </style>
+{#    </style>#}
   </head>
 
   <body>

@@ -16,6 +16,8 @@ from django.utils.translation import ugettext_lazy as _
 import environ
 
 BASE_DIR = dirname(dirname(__file__))
+ROOT_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
+APPS_DIR = ROOT_DIR.path('mapaguarani')
 
 
 env = environ.Env()
@@ -46,8 +48,8 @@ THIRD_PARTY_APPS = (
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
     'djgeojson',
-    'leaflet',
     'rosetta',
+    'compressor',
 )
 
 # Apps specific for this project go here.
@@ -199,43 +201,29 @@ TEMPLATES = [
                 # Your stuff: custom template context processors go here
             ],
         }
-        # 'OPTIONS': {
-        #     'context_processors': [
-        #         'django.contrib.auth.context_processors.auth',
-        #         'allauth.account.context_processors.account',
-        #         'allauth.socialaccount.context_processors.socialaccount',
-        #         'django.template.context_processors.debug',
-        #         'django.template.context_processors.i18n',
-        #         'django.template.context_processors.media',
-        #         'django.template.context_processors.static',
-        #         'django.template.context_processors.tz',
-        #         'django.contrib.messages.context_processors.messages',
-        #         'django.template.context_processors.request',
-        #     ],
-        # },
     },
 ]
 
-# See: http://django-crispy-forms.readthedocs.org/en/latest/install.html#template-packs
-# CRISPY_TEMPLATE_PACK = 'bootstrap3'
-# END TEMPLATE CONFIGURATION
-
 # STATIC FILE CONFIGURATION
+# ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = join(os.path.dirname(BASE_DIR), 'staticfiles')
+STATIC_ROOT = str(ROOT_DIR('staticfiles'))
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (
-    join(BASE_DIR, 'static'),
+    str(APPS_DIR.path('static')),
+    str(ROOT_DIR('bower_components'))
+    # join(BASE_DIR, 'bower_components'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
 )
 # END STATIC FILE CONFIGURATION
 
@@ -246,6 +234,22 @@ MEDIA_ROOT = join(BASE_DIR, 'media')
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
 # END MEDIA CONFIGURATION
+
+# django-compressor configuration
+
+COMPRESS_ENABLED = True
+COMPRESS_URL = STATIC_URL
+COMPRESS_ROOT = str(APPS_DIR.path('static'))
+
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
+
+# COMPRESS_CSS_FILTERS = (
+#     'sample_app.compressor_filters.CustomCssAbsoluteFilter',
+# )
+
+# end django-compressor configuration
 
 # URL Configuration
 ROOT_URLCONF = 'urls'
@@ -276,16 +280,6 @@ LOGIN_URL = 'account_login'
 # SLUGLIFIER
 # AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 # END SLUGLIFIER
-
-LEAFLET_CONFIG = {
-    'DEFAULT_CENTER': (-15.852532, -47.532571),
-    'DEFAULT_ZOOM': 4,
-    'PLUGINS': {
-        'markercluster': {
-            'auto-include': True
-        }
-    }
-}
 
 # LOGGING CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#logging

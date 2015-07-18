@@ -15,6 +15,10 @@ Pillow==2.8.1
 
 django-geojson==2.8
 
-django-leaflet==0.16
+# django-leaflet==0.16
 
 django-rosetta==0.7
+
+django-compressor
+libsass==0.8.2
+django-libsass==0.3
