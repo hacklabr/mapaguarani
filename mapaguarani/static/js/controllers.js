@@ -11,58 +11,38 @@
             var map = L.map('map', {
                 center: [-23.5408, -46.6400],
                 zoom: 5
-                //layers: [grayscale, cities]
             });
 
-            var gm_roadmap = new L.Google('ROADMAP');
-            var gm_terrain = new L.Google('TERRAIN');
-            var gm_hybrid = new L.Google('HYBRID');
+            // Google maps - leaflet 0.7
+            //var gm_roadmap = new L.Google('ROADMAP');
+            //var gm_terrain = new L.Google('TERRAIN');
+            //var gm_hybrid = new L.Google('HYBRID');
+            //var baselayers = {
+            //    'Mapa': gm_roadmap,
+            //    'Hibrido': gm_hybrid,
+            //    'Terreno': gm_terrain
+            //};
+            //map.addLayer(gm_hybrid);
+
+            // Mapbox - leaflet 1.0 compatible
+            var access_token = 'pk.eyJ1IjoiYnJ1bm9zbWFydGluIiwiYSI6IjM1MTAyYTJjMWQ3NmVmYTg0YzQ0ZWFjZTg0MDZiYzQ3In0.ThelegmeGkO5Vwd6KTu6xA'
+            var mapbox_url = 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={access_token}'
+            var mapbox_satalite = L.tileLayer(mapbox_url, {mapid: 'mapbox.satellite', access_token: access_token}),
+                mapbox_streets   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets', access_token: access_token});
+
             var baselayers = {
-                'Mapa': gm_roadmap,
-                'Hibrido': gm_hybrid,
-                'Terreno': gm_terrain
+                'Mapa': mapbox_streets,
+                'Satelite': mapbox_satalite
             };
-            map.addLayer(gm_roadmap);
+            map.addLayer(mapbox_satalite);
+            // end Mapbox
 
-            map.addControl(new L.Control.Layers( baselayers, {}));
-
-            //angular.extend($scope, {
-            //    center: {
-            //        lat: -23.5408,
-            //        lng: -46.6400,
-            //        zoom: 5
-            //    },
-            //    layers: {
-            //        baselayers: {
-            //            googleTerrain: {
-            //                name: 'Terreno',
-            //                layerType: 'TERRAIN',
-            //                type: 'google'
-            //            },
-            //            googleHybrid: {
-            //                name: 'Hybrido',
-            //                layerType: 'HYBRID',
-            //                type: 'google'
-            //            },
-            //            googleRoadmap: {
-            //                name: 'Mapa',
-            //                layerType: 'ROADMAP',
-            //                type: 'google'
-            //            }
-            //        }
-            //    },
-            //    defaults: {
-            //        scrollWheelZoom: true
-            //    }
-            //});
+            var layers_control = new L.Control.Layers( baselayers, {})
+            map.addControl(layers_control);
 
             IndigenousVillage.get({}, function(villages){
 
-                var markers = L.markerClusterGroup({
-                    maxClusterRadius: 30,
-                    disableClusteringAtZoom :8
-                });
-                var geoJsonLayer = L.geoJson(villages, {
+                var villages_layer = L.geoJson(villages, {
                     onEachFeature: function (feature, layer) {
                         var popupOptions = {maxWidth: 200};
                         layer.bindPopup("<b>Aldeia: </b> " + feature.properties.name +
@@ -73,19 +53,30 @@
                             ,popupOptions);
                     }
                 });
-                markers.addLayer(geoJsonLayer);
+                //map.addLayer(villages_layer);
+                //layers_control.addOverlay(villages_layer, 'Aldeias Indígenas');
+
+                var markers = L.markerClusterGroup({
+                    maxClusterRadius: 28,
+                    disableClusteringAtZoom :7
+                });
+                markers.addLayer(villages_layer);
                 map.addLayer(markers);
+                layers_control.addOverlay(markers, 'Aldeias Indígenas');
             });
 
             IndigenousLands.get({}, function(lands){
-                L.geoJson(lands, {
+                var indigenous_lands_layer = L.geoJson(lands, {
                     //style: function (feature) {
                     //    return {color: feature.properties.color};
                     //},
                     //onEachFeature: function (feature, layer) {
                     //    layer.bindPopup(feature.properties.description);
                     //}
-                }).addTo(map);
+                });
+
+                map.addLayer(indigenous_lands_layer);
+                layers_control.addOverlay(indigenous_lands_layer, 'Terras indígenas');
             });
         }
     ]);
