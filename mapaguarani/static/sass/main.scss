@@ -1,25 +1,78 @@
 $icon-font-path: "../../../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
 @import "../../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
 
-html, body {
-//  height: 100%;
+html, body, #container {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
   .map-container {
-//    height: 100%;
-//    padding: 0px;
+    height: 100%;
+  }
+}
+body {
+  padding-top: 50px;
+}
+input[type="radio"], input[type="checkbox"] {
+  margin: 0;
+}
+#sidebar {
+  width: 250px;
+  height: 100%;
+  max-width: 100%;
+  float: left;
+  -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+}
+#map {
+  width: auto;
+  height: 100%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+#loading {
+  position: absolute;
+  width: 220px;
+  height: 19px;
+  top: 50%;
+  left: 50%;
+  margin: -10px 0 0 -110px;
+  z-index: 20001;
+}
+
+.legend {
+  line-height: 18px;
+  color: #555;
+  background-color: white;
+  opacity: 0.8;
+  padding: 10px;
+  i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+  //  opacity: 0.7;
   }
 }
 
-#map {
-  left: 0px;
-  position: absolute;
-  top: 90px;
-  bottom: 0px;
-  right: 0px;
-//  margin: auto;
-//  width: 100%;
-//  height: 100%;
-//  background: #000;
+.navbar .navbar-brand {
+  font-weight: bold;
+  font-size: 25px;
+  color: #FFFFFF;
 }
+.navbar-collapse.in {
+  overflow-y: hidden;
+}
+.navbar-header .navbar-icon-container {
+  margin-right: 15px;
+}
+.navbar-header .navbar-icon {
+  line-height: 50px;
+  height: 50px;
+}
+.navbar-header a.navbar-icon {
+  margin-left: 25px;
+}
+
 
 // bootstrap alert CSS, translated to the django-standard levels of
 // debug, info, success, warning, error
