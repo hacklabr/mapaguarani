@@ -13,28 +13,28 @@
                 zoom: 5
             });
 
-            // Google maps - leaflet 0.7
-            //var gm_roadmap = new L.Google('ROADMAP');
-            //var gm_terrain = new L.Google('TERRAIN');
-            //var gm_hybrid = new L.Google('HYBRID');
-            //var baselayers = {
-            //    'Mapa': gm_roadmap,
-            //    'Hibrido': gm_hybrid,
-            //    'Terreno': gm_terrain
-            //};
-            //map.addLayer(gm_hybrid);
+            //Google maps - leaflet 0.7 only
+            var gm_roadmap = new L.Google('ROADMAP');
+            var gm_terrain = new L.Google('TERRAIN');
+            var gm_hybrid = new L.Google('HYBRID');
+            map.addLayer(gm_hybrid);
 
             // Mapbox - leaflet 1.0 compatible
             var access_token = 'pk.eyJ1IjoiYnJ1bm9zbWFydGluIiwiYSI6IjM1MTAyYTJjMWQ3NmVmYTg0YzQ0ZWFjZTg0MDZiYzQ3In0.ThelegmeGkO5Vwd6KTu6xA'
             var mapbox_url = 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={access_token}'
             var mapbox_satalite = L.tileLayer(mapbox_url, {mapid: 'mapbox.satellite', access_token: access_token}),
-                mapbox_streets   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets', access_token: access_token});
+                mapbox_streets   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets', access_token: access_token}),
+                mapbox_hybrid   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets-satellite', access_token: access_token});
 
             var baselayers = {
-                'Mapa': mapbox_streets,
-                'Satelite': mapbox_satalite
+                'Mapa Mapbox': mapbox_streets,
+                'Satélite Mapbox': mapbox_satalite,
+                'Híbrido Mapbox': mapbox_hybrid,
+                'Mapa Google': gm_roadmap,
+                'Híbrido Google': gm_hybrid,
+                'Terreno Google': gm_terrain
             };
-            map.addLayer(mapbox_satalite);
+            //map.addLayer(mapbox_satalite);
             // end Mapbox
 
             var layers_control = new L.Control.Layers( baselayers, {})
@@ -58,7 +58,8 @@
 
                 var markers = L.markerClusterGroup({
                     maxClusterRadius: 28,
-                    disableClusteringAtZoom :7
+                    //disableClusteringAtZoom : 7
+                    disableClusteringAtZoom : 8 // 8 para Googlemaps
                 });
                 markers.addLayer(villages_layer);
                 map.addLayer(markers);
