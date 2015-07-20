@@ -12,7 +12,7 @@ from .common import *  # noqa
 # SECRET CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-# Raises ImproperlyConfigured exception if DJANO_SECRET_KEY not in os.environ
+# Raises ImproperlyConfigured exception if DJANGO_SECRET_KEY not in os.environ
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 # SITE CONFIGURATION
@@ -24,9 +24,9 @@ ALLOWED_HOSTS = ["*"]
 
 # INSTALLED_APPS += ("gunicorn", )
 
-MEDIA_ROOT = env('MEDIA_ROOT', '/home/mapaguarani/webfiles/media/')
-STATIC_ROOT = env('STATIC_ROOT', '/home/mapaguarani/webfiles/static/')
-# STATICFILES_DIRS = env('STATICFILES_DIRS', '/home/mapaguarani/webfiles/static/')
+MEDIA_ROOT = env('MEDIA_ROOT')
+STATIC_ROOT = env('STATIC_ROOT')
+# STATICFILES_DIRS = env('STATICFILES_DIRS')
 
 # EMAIL
 # ------------------------------------------------------------------------------
