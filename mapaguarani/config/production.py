@@ -20,19 +20,23 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 # Hosts/domain names that are valid for this site
 # See https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ["*"]
+SITE_ID = 1
 # END SITE CONFIGURATION
 
-# INSTALLED_APPS += ("gunicorn", )
+INSTALLED_APPS += ("gunicorn", )
 
 MEDIA_ROOT = env('MEDIA_ROOT')
 STATIC_ROOT = env('STATIC_ROOT')
 # STATICFILES_DIRS = env('STATICFILES_DIRS')
 
+COMPRESS_OFFLINE = True
+COMPRESS_OUTPUT_DIR = ''
+
 # EMAIL
 # ------------------------------------------------------------------------------
 # DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL',
-#                          default='{{cookiecutter.project_name}} <noreply@mapaguarani>')
-# EMAIL_HOST = env("DJANGO_EMAIL_HOST", default='smtp.sendgrid.com')
+#                          default='')
+EMAIL_HOST = env("DJANGO_EMAIL_HOST", default='smtp.sendgrid.com')
 # EMAIL_HOST_PASSWORD = env("SENDGRID_PASSWORD")
 # EMAIL_HOST_USER = env('SENDGRID_USERNAME')
 # EMAIL_PORT = env.int("EMAIL_PORT", default=587)
