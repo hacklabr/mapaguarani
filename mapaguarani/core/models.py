@@ -70,7 +70,7 @@ class IndigenousVillage(IndigenousPlace):
         max_length=256,
         default=POSITION_PRECISION[2][0]
     )
-    position_source = models.CharField(_('Source'), max_length=512)
+    position_source = models.CharField(_('Source'), max_length=512, blank=True)
     position = models.PointField()
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='villages', blank=True, null=True)
 
@@ -159,10 +159,10 @@ class IndigenousLand(IndigenousPlace):
     source = models.CharField(_('Source'), max_length=512)
     # Situação Fundiária
     land_tenure = models.CharField(
-        _('Land Tenure'), choices=LAND_TENURE_CHOICES, max_length=256)
+        _('Land Tenure'), choices=LAND_TENURE_CHOICES, max_length=256, null=True)
     # Status de revisão fundiária
     land_tenure_status = models.CharField(
-        _('Land Tenure Status'), choices=LAND_TENURE_STATUS_CHOICES, max_length=256)
+        _('Land Tenure Status'), choices=LAND_TENURE_STATUS_CHOICES, max_length=256, blank=True)
     associated_land = models.CharField(_('Source'), max_length=512, blank=True, null=True)
     polygon = models.MultiPolygonField()
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='indigenous_lads')
