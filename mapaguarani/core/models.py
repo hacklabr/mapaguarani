@@ -6,21 +6,50 @@ class MapLayer(models.Model):
     name = models.CharField(_('name'), max_length=255)
     description = models.TextField(_('Description'))
 
+    class Meta:
+        verbose_name = _('Map Layer')
+        verbose_name_plural = _('Map Layers')
 
-class DocumentationType(models.Model):
+    def __str__(self):
+        return self.name
+
+
+class DocumentType(models.Model):
     name = models.CharField(_('name'), max_length=255)
 
+    class Meta:
+        verbose_name = _('Indigenous Place Document Type')
+        verbose_name_plural = _('Indigenous Place Document Types')
 
-class Documentation(models.Model):
-    type = models.ForeignKey(DocumentationType, verbose_name=_('type'))
+    def __str__(self):
+        return self.name
+
+
+class Document(models.Model):
+    name = models.CharField(_('name'), max_length=255)
+    type = models.ForeignKey(DocumentType, verbose_name=_('type'))
     file = models.FileField(_('attached file'))
     # TODO verificar se a data é opcional
     date = models.DateField(_('Date'))
     description = models.TextField(_('description'), blank=True, null=True)
 
+    class Meta:
+        verbose_name = _('Indigenous Place Document')
+        verbose_name_plural = _('Indigenous Place Documents')
+
+    def __str__(self):
+        return self.name
+
 
 class EthnicGroup(models.Model):
     name = models.CharField(_('name'), max_length=255)
+
+    class Meta:
+        verbose_name = _('Ethnic Group')
+        verbose_name_plural = _('Ethnic Groups')
+
+    def __str__(self):
+        return self.name
 
 
 class IndigenousPlace(models.Model):
@@ -32,8 +61,8 @@ class IndigenousPlace(models.Model):
         related_name='%(class)s_prominent_subgroup_layers',
         blank=True
     )
-    documentation = models.ManyToManyField(
-        Documentation,
+    document = models.ManyToManyField(
+        Document,
         verbose_name=_('documentation'),
         related_name='%(class)s_documentation',
         blank=True)
@@ -74,6 +103,10 @@ class IndigenousVillage(IndigenousPlace):
     position = models.PointField()
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='villages', blank=True, null=True)
 
+    class Meta:
+        verbose_name = _('Indigenous Village')
+        verbose_name_plural = _('Indigenous Villages')
+
     # @property
     # def population(self):
         # try:
@@ -113,6 +146,10 @@ class GuaraniPresence(models.Model):
 
     class Meta:
         get_latest_by = 'date'
+        verbose_name = _('Guarani Presence')
+
+    def __str__(self):
+        return '{}: {}'.format(self.village.name, self.presence)
 
 
 class Population(models.Model):
@@ -124,6 +161,11 @@ class Population(models.Model):
 
     class Meta:
         get_latest_by = 'date'
+        verbose_name = _('Population')
+        verbose_name_plural = _('Populations')
+
+    def __str__(self):
+        return '{}: {}'.format(self.village.name, self.population)
 
 
 class IndigenousLand(IndigenousPlace):
@@ -167,6 +209,10 @@ class IndigenousLand(IndigenousPlace):
     polygon = models.MultiPolygonField()
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='indigenous_lads')
 
+    class Meta:
+        verbose_name = _('Indigenous Land')
+        verbose_name_plural = _('Indigenous Lands')
+
     @property
     def villages(self):
         # TODO georeferential query VillageLayer
@@ -195,6 +241,13 @@ class LegalProceedings(models.Model):
         verbose_name=_('Guarani indigenous villages layer')
     )
 
+    class Meta:
+        verbose_name = _('Legal Proceeding')
+        verbose_name_plural = _('Legal Proceedings')
+
+    def __str__(self):
+        return self.name
+
 
 class ArchaeologicalPlace(models.Model):
     POSITION_PRECISION_CHOICES = (
@@ -214,6 +267,10 @@ class ArchaeologicalPlace(models.Model):
 
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='archaeological_places')
 
+    class Meta:
+        verbose_name = _('Archaeological Place')
+        verbose_name_plural = _('Archaeological Places')
+
     @property
     def city(self):
         # TODO georeferential query
@@ -228,3 +285,6 @@ class ArchaeologicalPlace(models.Model):
     def country(self):
         # TODO georeferential query
         pass
+
+    def __str__(self):
+        return self.name

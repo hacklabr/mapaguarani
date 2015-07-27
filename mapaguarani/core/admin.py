@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.contrib.gis import admin as geoadmin
 from .models import (
-    IndigenousVillage, IndigenousLand, LegalProceedings, DocumentationType,
-    Documentation, EthnicGroup, GuaraniPresence, Population,
+    IndigenousVillage, IndigenousLand, LegalProceedings, DocumentType,
+    Document, EthnicGroup, GuaraniPresence, Population,
     ArchaeologicalPlace,
 )
 
@@ -32,8 +32,8 @@ class ArchaeologicalPlaceAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(DocumentationType)
-admin.site.register(Documentation)
+admin.site.register(DocumentType)
+admin.site.register(Document)
 admin.site.register(EthnicGroup)
 admin.site.register(GuaraniPresence)
 admin.site.register(Population)
