@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.gis import admin as geoadmin
 from .models import (
     IndigenousVillage, IndigenousLand, LegalProceedings, DocumentationType,
     Documentation, EthnicGroup, GuaraniPresence, Population,
@@ -12,8 +13,13 @@ class IndigenousVillageAdmin(admin.ModelAdmin):
 
 
 @admin.register(IndigenousLand)
-class IndigenousLandAdmin(admin.ModelAdmin):
-    pass
+class IndigenousLandAdmin(geoadmin.GeoModelAdmin):
+    display_wkt = True
+    map_template = 'openlayers.html'
+    list_display = ('name', 'other_names', 'official_area', 'claim', 'demand', 'source', 'land_tenure',
+                    'land_tenure_status', 'public_comments', 'private_comments')
+    list_editable = ('other_names', 'official_area', 'claim', 'demand', 'source', 'land_tenure',
+                     'land_tenure_status', 'public_comments', 'private_comments')
 
 
 @admin.register(LegalProceedings)
