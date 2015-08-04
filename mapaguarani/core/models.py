@@ -54,7 +54,7 @@ class EthnicGroup(models.Model):
 
 class IndigenousPlace(models.Model):
     name = models.CharField(_('name'), max_length=255)
-    other_names = models.CharField(_('Others names'), max_length=512)
+    other_names = models.CharField(_('Others names'), max_length=512, blank=True, null=True)
     prominent_subgroup = models.ManyToManyField(
         EthnicGroup,
         verbose_name=_('prominent ethnic sub-group'),
@@ -188,7 +188,7 @@ class IndigenousLand(IndigenousPlace):
         ('original_land', _('Original Land')),
     )
 
-    official_area = models.FloatField(_('Official area'))
+    official_area = models.FloatField(_('Official area'), blank=True, null=True)
     guarani_exclusive_possession_area_portion = models.FloatField(
         _('Guarani full and exclusive portion area possession'), blank=True, null=True)
     others_exclusive_possession_area_portion = models.FloatField(
@@ -206,7 +206,7 @@ class IndigenousLand(IndigenousPlace):
     land_tenure_status = models.CharField(
         _('Land Tenure Status'), choices=LAND_TENURE_STATUS_CHOICES, max_length=256)
     associated_land = models.CharField(_('Source'), max_length=512, blank=True, null=True)
-    polygon = models.MultiPolygonField()
+    polygon = models.MultiPolygonField(_('Indigenous Land Spatial Data'))
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='indigenous_lads')
 
     class Meta:
