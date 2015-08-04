@@ -50,6 +50,7 @@ THIRD_PARTY_APPS = (
     'djgeojson',
     'rosetta',
     'compressor',
+    'moderation',
 )
 
 # Apps specific for this project go here.

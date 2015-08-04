@@ -5,6 +5,7 @@ from .models import (
     Document, EthnicGroup, GuaraniPresence, Population,
     ArchaeologicalPlace,
 )
+from moderation.admin import ModerationAdmin
 
 
 @admin.register(IndigenousVillage)
@@ -13,8 +14,8 @@ class IndigenousVillageAdmin(admin.ModelAdmin):
 
 
 @admin.register(IndigenousLand)
-class IndigenousLandAdmin(geoadmin.GeoModelAdmin):
-    display_wkt = True
+class IndigenousLandAdmin(geoadmin.GeoModelAdmin, ModerationAdmin):
+    # display_wkt = True
     map_template = 'openlayers.html'
     list_display = ('name', 'other_names', 'official_area', 'claim', 'demand', 'source', 'land_tenure',
                     'land_tenure_status', 'public_comments', 'private_comments')

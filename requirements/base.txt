@@ -22,3 +22,6 @@ django-rosetta==0.7
 django-compressor
 libsass==0.8.2
 django-libsass==0.3
+
+# django-moderation
+-e git+https://github.com/dominno/django-moderation#egg=django-moderation
