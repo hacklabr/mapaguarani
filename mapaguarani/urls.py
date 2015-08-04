@@ -4,7 +4,10 @@ from django.views.generic.base import TemplateView
 from djgeojson.views import GeoJSONLayerView
 from core.models import IndigenousVillage, IndigenousLand
 from core.views import IndigenousLandsLayerView
+from moderation.helpers import auto_discover
 
+
+auto_discover()
 admin.autodiscover()
 
 urlpatterns = [
