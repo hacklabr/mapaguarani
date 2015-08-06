@@ -14,15 +14,11 @@ createlang plpgsql template_postgis
 psql -d template_postgis -f /usr/share/postgresql/9.3/contrib/postgis-2.1/postgis.sql
 psql -d template_postgis -f /usr/share/postgresql/9.3/contrib/postgis-2.1/spatial_ref_sys.sql
 
-psql
-# aqui vai as querys executadas
-
 createdb -T template_postgis mapaguarani
 
 psql
-# query para dar permissão para o banco mapaguarani ao usuário mapaguarani
-# GRANT ALL PRIVILEGES ON DATABASE mapaguarani to mapaguarani;
-
+Query para dar permissão para o banco mapaguarani ao usuário mapaguarani
+GRANT ALL PRIVILEGES ON DATABASE mapaguarani to mapaguarani;
 
 ## Dependências
 sudo apt-get install build-essential git
@@ -36,14 +32,11 @@ source mapaguarani-env/bin/activate
 cd mapaguarani
 pip install -r requirements/production.txt
 
-
-## Geo pedendencies
+## Dependências GIS
 sudo apt-get install binutils libproj-dev gdal-bin
-
 
 Deloy
 
 apt-get install nginx
-
 
 apt-get install gunicorn
