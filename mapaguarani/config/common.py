@@ -50,6 +50,8 @@ THIRD_PARTY_APPS = (
     'djgeojson',
     'rosetta',
     'compressor',
+    'rest_framework',
+    'rest_framework_gis',
     'moderation',
 )
 

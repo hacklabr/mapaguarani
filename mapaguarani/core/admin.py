@@ -10,7 +10,7 @@ from moderation.admin import ModerationAdmin
 
 @admin.register(IndigenousVillage)
 class IndigenousVillageAdmin(admin.ModelAdmin):
-    pass
+    list_per_page = 500
 
 
 @admin.register(IndigenousLand)
@@ -19,8 +19,11 @@ class IndigenousLandAdmin(geoadmin.GeoModelAdmin, ModerationAdmin):
     map_template = 'openlayers.html'
     list_display = ('name', 'other_names', 'official_area', 'claim', 'demand', 'source', 'land_tenure',
                     'land_tenure_status', 'public_comments', 'private_comments')
-    list_editable = ('other_names', 'official_area', 'claim', 'demand', 'source', 'land_tenure',
-                     'land_tenure_status', 'public_comments', 'private_comments')
+    # list_editable = ('other_names', 'official_area', 'claim', 'demand', 'source', 'land_tenure',
+    #                  'land_tenure_status', 'public_comments', 'private_comments')
+    search_fields = ['name', 'other_names', 'claim', 'demand', 'source', 'land_tenure',
+                    'land_tenure_status', 'public_comments', 'private_comments']
+    list_per_page = 500
 
 
 @admin.register(LegalProceedings)
@@ -30,7 +33,7 @@ class LegalProceedingsAdmin(admin.ModelAdmin):
 
 @admin.register(ArchaeologicalPlace)
 class ArchaeologicalPlaceAdmin(admin.ModelAdmin):
-    pass
+    list_per_page = 500
 
 
 admin.site.register(DocumentType)
