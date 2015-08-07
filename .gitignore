@@ -28,5 +28,14 @@ nosetests.xml
 # npm
 node_modules/
 
+# bower_components
+bower_components
+
 # Compass
 .sass-cache
+
+# generated css and js
+mapaguarani/static/CACHE/
+
+#Vagrant stuff
+.vagrant
