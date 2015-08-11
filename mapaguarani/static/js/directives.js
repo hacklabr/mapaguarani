@@ -153,7 +153,7 @@
               // layersControl.addOverlay(markerLayer, 'Aldeias Indígenas');
               map.fitBounds(villagesLayer.getBounds());
             }
-          }, 500), true);
+          }, 700), true);
           map.addLayer(markerLayer);
 
           /*
