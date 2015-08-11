@@ -1,21 +1,22 @@
 (function(angular){
   'use strict';
 
-  var mapaguarani_controllers = angular.module('mapaguarani.controllers', []);
+  var controllers = angular.module('mapaguarani.controllers', []);
 
-  mapaguarani_controllers.controller('GuaraniMapCtrl', ['$scope',
-  'IndigenousVillage',
-  'IndigenousLands',
-  function ($scope, IndigenousVillage, IndigenousLands) {
+  controllers.controller('GuaraniMapCtrl', [
+    '$scope',
+    'GuaraniService',
+    function ($scope, Guarani) {
 
-    IndigenousVillage.get({}, function(villages){
-      $scope.villages = villages;
-    });
+      Guarani.villages.get({}, function(villages){
+        $scope.villages = villages;
+      });
 
-    IndigenousLands.get({}, function(lands) {
-      $scope.lands = lands;
-    });
+      Guarani.lands.get({}, function(lands) {
+        $scope.lands = lands;
+      });
 
-  }
-]);
+    }]
+  );
+
 })(angular);
