@@ -31,6 +31,15 @@
         link: function(scope, element, attrs) {
 
           /*
+           * Content type
+           */
+          scope.content = scope.defaultContent || 'villages';
+          scope.setContent = function(content) {
+            scope.content = content;
+            scope.curPage = 0;
+          };
+
+          /*
            * Filters
            */
 
@@ -52,27 +61,16 @@
           }, true);
 
           /*
-           * Content type
-           */
-          scope.content = scope.defaultContent || 'villages';
-          scope.setContent = function(content) {
-            scope.content = content;
-            scope.curPage = 0;
-          };
-
-          /*
            * Paging
            */
           scope.perPage = attrs.perPage || 10;
           scope.curPage = attrs.currentPage || 0;
-
           scope.pageCount = function() {
-            if(scope.filtered[scope.content].features)
+            if(scope.filtered[scope.content] && scope.filtered[scope.content].features && scope.filtered[scope.content].features.length)
               return Math.ceil(scope.filtered[scope.content].features.length/scope.perPage)-1;
             else
               return 0;
           };
-
           scope.nextPage = function() {
             if(scope.curPage < scope.pageCount())
               scope.curPage++;
@@ -81,7 +79,6 @@
             if(scope.curPage > 0)
               scope.curPage--;
           }
-
           scope.$watch('curPage', function() {
             $(element).scrollTop(0);
           });
