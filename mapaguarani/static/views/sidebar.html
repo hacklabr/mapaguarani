@@ -1,0 +1,27 @@
+<nav id="sidebar-main-nav">
+  <ul>
+    <li ng-click="content = 'village'" ng-class="{active: content == 'village'}">Aldeias indígenas</li>
+    <li ng-click="content = 'land'" ng-class="{active: content == 'land'}">Terras indígenas</li>
+  </ul>
+</nav>
+<nav id="sidebar-filters">
+  <input type="text" placeholder="Pesquisar..." ng-model="textSearch" />
+</nav>
+<div id="villages" ng-show="content == 'village'">
+  <ul class="village list">
+    <li class="village item" ng-repeat="village in villages.features | filter:textSearch">
+      <h3>{{village.properties.name}}</h3>
+      <p>Outros nomes: {{village.properties.other_names}}</p>
+      <p>Grupo étnico: {{village.properties.ethnic_groups2}}</p>
+      <p>População: {{village.properties.population}}</p>
+      <p>Presença guarani: {{village.properties.guarani_presence}}</p>
+    </li>
+  </ul>
+</div>
+<div id="lands" ng-show="content == 'land'">
+  <ul class="land list">
+    <li class="land item" ng-repeat="land in lands.features | filter:textSearch">
+      <h3>{{land.properties.name}}</h3>
+    </li>
+  </ul>
+</div>

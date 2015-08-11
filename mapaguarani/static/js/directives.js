@@ -17,6 +17,25 @@
 
   var landTenures = window.landTenures;
 
+  directives.directive('guaraniSidebar', [
+    function() {
+      return {
+        restrict: 'E',
+        scope: {
+          villages: '=',
+          lands: '=',
+          defaultContent: '='
+        },
+        templateUrl: '/static/views/sidebar.html',
+        link: function(scope, element, attrs) {
+
+          scope.content = scope.defaultContent || 'village';
+
+        }
+      }
+    }
+  ]);
+
   directives.directive('guaraniMap', [
     function() {
       return {
