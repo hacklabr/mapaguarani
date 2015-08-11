@@ -9,7 +9,7 @@
 </nav>
 <div id="villages" ng-show="content == 'village'">
   <ul class="village list">
-    <li class="village item" ng-repeat="village in villages.features | filter:textSearch">
+    <li class="village item" ng-repeat="village in filtered.villages.features = (villages.features | filter:textSearch)">
       <h3>{{village.properties.name}}</h3>
       <p>Outros nomes: {{village.properties.other_names}}</p>
       <p>Grupo étnico: {{village.properties.ethnic_groups2}}</p>
@@ -20,7 +20,7 @@
 </div>
 <div id="lands" ng-show="content == 'land'">
   <ul class="land list">
-    <li class="land item" ng-repeat="land in lands.features | filter:textSearch">
+    <li class="land item" ng-repeat="land in filtered.lands.features = (lands.features | filter:textSearch)">
       <h3>{{land.properties.name}}</h3>
     </li>
   </ul>

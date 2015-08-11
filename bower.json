@@ -28,6 +28,7 @@
     "Leaflet.MakiMarkers": "*",
     "bootstrap": "~3.3.4",
     "leaflet.markercluster": "~0.4.0",
-    "bootstrap-sass": "~3.3.5"
+    "bootstrap-sass": "~3.3.5",
+    "underscore": "~1.8.3"
   }
 }

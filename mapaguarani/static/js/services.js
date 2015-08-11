@@ -1,7 +1,9 @@
 (function(angular){
   'use strict';
 
-  var services = angular.module('mapaguarani.services', ['ngResource']);
+  var services = angular.module('mapaguarani.services', [
+    'ngResource'
+  ]);
 
   services.factory('GuaraniService', [
     '$resource',
