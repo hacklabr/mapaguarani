@@ -30,6 +30,10 @@
         templateUrl: '/static/views/sidebar.html',
         link: function(scope, element, attrs) {
 
+          /*
+           * Filters
+           */
+
           scope.filtered = scope.filtered || {};
 
           scope.$watch('villages', function(villages) {
@@ -42,8 +46,45 @@
               scope.filtered.lands = angular.copy(scope.lands);
           });
 
-          scope.content = scope.defaultContent || 'village';
+          scope.filter = {};
+          scope.$watch('filter', function() {
+            scope.curPage = 0;
+          }, true);
 
+          /*
+           * Content type
+           */
+          scope.content = scope.defaultContent || 'villages';
+          scope.setContent = function(content) {
+            scope.content = content;
+            scope.curPage = 0;
+          };
+
+          /*
+           * Paging
+           */
+          scope.perPage = attrs.perPage || 10;
+          scope.curPage = attrs.currentPage || 0;
+
+          scope.pageCount = function() {
+            if(scope.filtered[scope.content].features)
+              return Math.ceil(scope.filtered[scope.content].features.length/scope.perPage)-1;
+            else
+              return 0;
+          };
+
+          scope.nextPage = function() {
+            if(scope.curPage < scope.pageCount())
+              scope.curPage++;
+          }
+          scope.prevPage = function() {
+            if(scope.curPage > 0)
+              scope.curPage--;
+          }
+
+          scope.$watch('curPage', function() {
+            $(element).scrollTop(0);
+          });
         }
       }
     }

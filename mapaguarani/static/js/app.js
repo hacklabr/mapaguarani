@@ -5,6 +5,7 @@
   var mapaguaraniApp = angular.module('mapaguarani', [
     //'ngRoute',
     //'leaflet-directive',
+    'mapaguarani.filters',
     'mapaguarani.directives',
     'mapaguarani.controllers',
     'mapaguarani.services'

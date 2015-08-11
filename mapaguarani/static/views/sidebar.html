@@ -1,15 +1,15 @@
 <nav id="sidebar-main-nav">
   <ul>
-    <li ng-click="content = 'village'" ng-class="{active: content == 'village'}">Aldeias indígenas</li>
-    <li ng-click="content = 'land'" ng-class="{active: content == 'land'}">Terras indígenas</li>
+    <li ng-click="setContent('villages')" ng-class="{active: content == 'villages'}">Aldeias indígenas</li>
+    <li ng-click="setConent('lands')" ng-class="{active: content == 'lands'}">Terras indígenas</li>
   </ul>
 </nav>
 <nav id="sidebar-filters">
-  <input type="text" placeholder="Pesquisar..." ng-model="textSearch" />
+  <input type="text" placeholder="Pesquisar..." ng-model="filter.textSearch" />
 </nav>
-<div id="villages" ng-show="content == 'village'">
+<div id="villages" ng-show="content == 'villages'">
   <ul class="village list">
-    <li class="village item" ng-repeat="village in filtered.villages.features = (villages.features | filter:textSearch)">
+    <li class="village item" ng-repeat="village in filtered.villages.features = (villages.features | filter:filter.textSearch) | offset:curPage*perPage | limitTo:perPage">
       <h3>{{village.properties.name}}</h3>
       <p>Outros nomes: {{village.properties.other_names}}</p>
       <p>Grupo étnico: {{village.properties.ethnic_groups2}}</p>
@@ -17,10 +17,16 @@
       <p>Presença guarani: {{village.properties.guarani_presence}}</p>
     </li>
   </ul>
+  <nav class="pagination">
+    <div class="btn-group btn-group-justified">
+      <a href="#" ng-click="prevPage();" class="btn btn-default" ng-class="{'disabled': curPage == 0}">Página anterior</a>
+      <a href="#" ng-click="nextPage();" class="btn btn-default" ng-class="{'disabled': curPage >= pageCount()}">Próxima página</a>
+    </div>
+  </nav>
 </div>
-<div id="lands" ng-show="content == 'land'">
+<div id="lands" ng-show="content == 'lands'">
   <ul class="land list">
-    <li class="land item" ng-repeat="land in filtered.lands.features = (lands.features | filter:textSearch)">
+    <li class="land item" ng-repeat="land in filtered.lands.features = (lands.features | filter:filter.textSearch) | offset:curPage*perPage | limitTo:perPage">
       <h3>{{land.properties.name}}</h3>
     </li>
   </ul>
