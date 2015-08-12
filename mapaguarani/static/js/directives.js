@@ -81,6 +81,7 @@
           }
           scope.$watch('curPage', function() {
             $(element).scrollTop(0);
+            $(element).parent().scrollTop(0);
           });
         }
       }

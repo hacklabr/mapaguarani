@@ -20,7 +20,7 @@
   	function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 
   		$locationProvider.html5Mode({
-  			enabled: true,
+  			enabled: false,
   			requireBase: false
   		});
   		$locationProvider.hashPrefix('!');
