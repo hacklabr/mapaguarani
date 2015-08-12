@@ -59,6 +59,7 @@
             '$stateParams',
             '$q',
             function(Guarani, $stateParams, $q) {
+              // Temporary api fix
               var deferred = $q.defer();
               Guarani.villages.get({}, function(villages) {
                 villages.features = _.filter(villages.features, function(f) {
