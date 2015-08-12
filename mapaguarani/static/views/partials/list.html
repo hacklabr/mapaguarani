@@ -39,8 +39,8 @@
 </div>
 <div id="lands" ng-show="content == 'lands'">
   <ul class="land list">
-    <li class="land item" ng-repeat="land in filtered.lands.features = (lands.features | filter:filter.textSearch) | offset:curPage*perPage | limitTo:perPage">
-      <h3>{{land.properties.name}}</h3>
+    <li class="land item" ng-repeat="land in filtered.lands.features = (lands.features | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
+      <h3><a ui-sref="home.land({id: land.id})" title="{{land.properties.name}}" ui-sref-opts="{inherit: false}">{{land.properties.name}}</a></h3>
     </li>
   </ul>
   <nav class="sidebar-pagination">

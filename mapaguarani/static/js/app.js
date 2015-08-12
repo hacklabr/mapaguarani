@@ -50,6 +50,9 @@
         url: 'villages/:id/',
         controller: 'SingleCtrl',
         templateUrl: '/static/views/single.html',
+        data: {
+          contentType: 'village'
+        },
         resolve: {
           Data: [
             'GuaraniService',
@@ -72,6 +75,9 @@
         url: 'lands/:id/',
         controller: 'SingleCtrl',
         templateUrl: '/static/views/single.html',
+        data: {
+          contentType: 'land'
+        },
         resolve: {
           Data: [
             'GuaraniService',
