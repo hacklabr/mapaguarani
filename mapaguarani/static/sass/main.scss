@@ -26,33 +26,7 @@ input[type="radio"], input[type="checkbox"] {
     -moz-transition: all 0.25s ease-out;
     transition: all 0.25s ease-out;
   #sidebar-main-nav {
-    ul {
-      list-style: none;
-      display: table;
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      border-bottom: 1px solid #ccc;
-      li {
-        margin: 0;
-        padding: 10px;
-        display: table-cell;
-        text-align: center;
-        border-right: 1px solid #ccc;
-        cursor: pointer;
-        width: 1%;
-        &:last-child {
-          border-right: 0;
-        }
-        &:hover {
-          color: #000;
-          background: #f0f0f0;
-        }
-        &.active {
-          font-weight: 600;
-        }
-      }
-    }
+    margin: 10px 10px 0 10px;
   }
   #sidebar-filters {
     margin: 10px;

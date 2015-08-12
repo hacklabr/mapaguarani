@@ -1,11 +1,20 @@
-<nav id="sidebar-main-nav">
-  <ul>
-    <li ng-click="setContent('villages')" ng-class="{active: content == 'villages'}">Aldeias indígenas</li>
-    <li ng-click="setContent('lands')" ng-class="{active: content == 'lands'}">Terras indígenas</li>
+<nav id="sidebar-main-nav" role="navigation">
+  <ul class="nav nav-tabs nav-justified">
+    <li ng-class="{active: content == 'villages'}">
+      <a href="javascript:void(0);" ng-click="setContent('villages')">Aldeias indígenas</a>
+    </li>
+    <li ng-click="setContent('lands')" ng-class="{active: content == 'lands'}">
+      <a href="javascript:void(0);" ng-click="setContent('lands')">Terras indígenas</a>
+    </li>
   </ul>
 </nav>
 <nav id="sidebar-filters">
-  <input type="text" placeholder="Pesquisar..." ng-model="filter.textSearch" />
+  <form role="search">
+    <div class="form-group has-feedback">
+      <input id="searchbox" type="text" placeholder="Pesquisar..." class="form-control" ng-model="filter.textSearch">
+      <span id="searchicon" class="fa fa-search form-control-feedback"></span>
+    </div>
+  </form>
 </nav>
 <div id="villages" ng-show="content == 'villages'">
   <ul class="village list">
