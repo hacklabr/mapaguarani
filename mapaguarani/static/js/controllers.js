@@ -1,22 +1,18 @@
-(function(angular){
+(function(angular) {
   'use strict';
 
   var controllers = angular.module('mapaguarani.controllers', []);
 
-  controllers.controller('GuaraniMapCtrl', [
+  controllers.controller('HomeCtrl', [
     '$scope',
-    'GuaraniService',
-    function ($scope, Guarani) {
+    'VillagesData',
+    'LandsData',
+    function ($scope, villages, lands) {
 
       $scope.filtered = {};
 
-      Guarani.villages.get({}, function(villages){
-        $scope.villages = villages;
-      });
-
-      Guarani.lands.get({}, function(lands) {
-        $scope.lands = lands;
-      });
+      $scope.villages = villages;
+      $scope.lands = lands;
 
       $scope.mapData = {};
 

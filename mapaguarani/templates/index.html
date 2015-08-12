@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="map-container" ng-app="mapaguarani" ng-controller="GuaraniMapCtrl">
+<div class="map-container" ng-app="mapaguarani">
   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -26,10 +26,7 @@
     </div>
   </div>
 
-  <div id="container">
-    <guarani-sidebar id="sidebar" villages="villages" lands="lands" filtered="filtered"></guarani-sidebar>
-    <guarani-map id="map" villages="mapData.villages" lands="mapData.lands"></guarani-map>
-  </div>
+  <div id="container" ui-view></div>
 </div>
 {% endblock content %}
 

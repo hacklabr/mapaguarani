@@ -17,7 +17,7 @@
 
   var landTenures = window.landTenures;
 
-  directives.directive('guaraniSidebar', [
+  directives.directive('guaraniList', [
     function() {
       return {
         restrict: 'E',
@@ -27,7 +27,7 @@
           defaultContent: '=',
           filtered: '='
         },
-        templateUrl: '/static/views/sidebar.html',
+        templateUrl: '/static/views/partials/list.html',
         link: function(scope, element, attrs) {
 
           /*
