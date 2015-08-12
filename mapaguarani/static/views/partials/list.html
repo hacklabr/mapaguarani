@@ -26,11 +26,15 @@
       <p>Presença guarani: {{village.properties.guarani_presence}}</p>
     </li>
   </ul>
-  <nav class="pagination">
-    <div class="btn-group btn-group-justified">
-      <a href="javascript:void(0);" ng-click="prevPage();" class="btn btn-default" ng-class="{'disabled': curPage == 0}">Página anterior</a>
-      <a href="javascript:void(0);" ng-click="nextPage();" class="btn btn-default" ng-class="{'disabled': curPage >= pageCount()}">Próxima página</a>
-    </div>
+  <nav class="sidebar-pagination">
+    <ul class="pager">
+      <li class="previous">
+        <a href="javascript:void(0);" ng-click="prevPage();" ng-hide="curPage == 0"><span aria-hidden="true">&larr;</span> Página anterior</a>
+      </li>
+      <li class="next">
+        <a href="javascript:void(0);" ng-click="nextPage();" ng-hide="curPage >= pageCount()">Próxima página <span aria-hidden="true">&rarr;</span></a>
+      </li>
+    </ul>
   </nav>
 </div>
 <div id="lands" ng-show="content == 'lands'">
