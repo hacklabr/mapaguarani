@@ -4,6 +4,7 @@
 
 ## Instalando Banco de Dados Posstgis
 
+```
 sudo apt-get install postgresql postgresql-contrib postgis postgresql-9.3-postgis-2.1 postgresql-9.3-postgis-2.1-scripts libpq-dev
 
 sudo su - postgres
@@ -15,12 +16,19 @@ psql -d template_postgis -f /usr/share/postgresql/9.3/contrib/postgis-2.1/postgi
 psql -d template_postgis -f /usr/share/postgresql/9.3/contrib/postgis-2.1/spatial_ref_sys.sql
 
 createdb -T template_postgis mapaguarani
-
+```
+```
 psql
+```
 Query para dar permissão para o banco mapaguarani ao usuário mapaguarani
+
+```
 GRANT ALL PRIVILEGES ON DATABASE mapaguarani to mapaguarani;
+```
 
 ## Dependências
+
+```
 sudo apt-get install build-essential git
 
 git clone https://github.com/hacklabr/mapaguarani.git
@@ -31,12 +39,17 @@ virtualenv -p /usr/bin/python3 mapaguarani-env
 source mapaguarani-env/bin/activate
 cd mapaguarani
 pip install -r requirements/production.txt
+```
 
 ## Dependências GIS
+
+```
 sudo apt-get install binutils libproj-dev gdal-bin
+```
 
-Deloy
+## Deploy
 
+```
 apt-get install nginx
-
 apt-get install gunicorn
+```

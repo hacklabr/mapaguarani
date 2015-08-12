@@ -28,8 +28,10 @@
 
     {% block angular %}
 {#      {% compress js %}#}
+      <script src="{% static 'underscore/underscore.js' %}"></script>
       <script src="http://maps.google.com/maps/api/js?v=3&sensor=false"></script>
       <script src="{% static 'angular/angular.js' %}"></script>
+      <script src="{% static 'angular-ui-router/release/angular-ui-router.js' %}"></script>
       <script src="{% static 'angular-resource/angular-resource.js' %}"></script>
 
       <script>
@@ -47,7 +49,10 @@
 	    <script src="{% static 'leaflet.markercluster/dist/leaflet.markercluster-src.js' %}"></script>
 {#      <script src="{% static 'leaflet-tilelayer-geojson/TileLayer.GeoJSON.js' %}"></script>#}
 
+      <script src="{% static 'js/land-tenures.js' %}"></script>
       <script src="{% static 'js/app.js' %}"></script>
+      <script src="{% static 'js/filters.js' %}"></script>
+      <script src="{% static 'js/directives.js' %}"></script>
       <script src="{% static 'js/controllers.js' %}"></script>
       <script src="{% static 'js/services.js' %}"></script>
 
@@ -114,4 +119,3 @@
     {% endblock javascript %}
   </body>
 </html>
- 
