@@ -18,13 +18,14 @@
   var landTenures = window.landTenures;
 
   directives.directive('guaraniList', [
-    function() {
+    '$rootScope',
+    '$stateParams',
+    function($rootScope, $stateParams) {
       return {
         restrict: 'E',
         scope: {
           villages: '=',
           lands: '=',
-          defaultContent: '=',
           filtered: '='
         },
         templateUrl: '/static/views/partials/list.html',
@@ -33,16 +34,19 @@
           /*
            * Content type
            */
-          scope.content = scope.defaultContent || 'villages';
+          scope.content = $stateParams.content || 'villages';
           scope.setContent = function(content) {
             scope.content = content;
             scope.curPage = 0;
           };
+          scope.$watch('content', function(content, prevContent) {
+            if(content !== prevContent)
+              $rootScope.$broadcast('mapaguarani.contentChanged', content);
+          });
 
           /*
            * Filters
            */
-
           scope.filtered = scope.filtered || {};
 
           scope.$watch('villages', function(villages) {
@@ -55,16 +59,24 @@
               scope.filtered.lands = angular.copy(scope.lands);
           });
 
-          scope.filter = {};
-          scope.$watch('filter', function() {
-            scope.curPage = 0;
+          if($stateParams.filter) {
+            scope.filter = JSON.parse($stateParams.filter);
+          } else {
+            scope.filter = {};
+          }
+          scope.$watch('filter', function(filter, prevFilter) {
+            if(filter !== prevFilter) {
+              $rootScope.$broadcast('mapaguarani.filterChanged', filter);
+              scope.curPage = 0;
+            }
           }, true);
 
           /*
            * Paging
            */
           scope.perPage = attrs.perPage || 10;
-          scope.curPage = attrs.currentPage || 0;
+          scope.curPage = (parseInt($stateParams.page)-1) || 0;
+
           scope.pageCount = function() {
             if(scope.filtered[scope.content] && scope.filtered[scope.content].features && scope.filtered[scope.content].features.length)
               return Math.ceil(scope.filtered[scope.content].features.length/scope.perPage)-1;
@@ -79,7 +91,11 @@
             if(scope.curPage > 0)
               scope.curPage--;
           }
-          scope.$watch('curPage', function() {
+          scope.$watch('curPage', function(page, prevPage) {
+
+            if(page !== prevPage)
+              $rootScope.$broadcast('mapaguarani.pageChanged', page);
+
             $(element).scrollTop(0);
             $(element).parent().scrollTop(0);
           });

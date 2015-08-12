@@ -5,9 +5,10 @@
 
   controllers.controller('HomeCtrl', [
     '$scope',
+    '$state',
     'VillagesData',
     'LandsData',
-    function ($scope, villages, lands) {
+    function ($scope, $state, villages, lands) {
 
       $scope.filtered = {};
 
@@ -21,14 +22,33 @@
         $scope.mapData.lands = filtered.lands;
       }, true);
 
+      $scope.$on('mapaguarani.contentChanged', function(ev, content) {
+        $state.go('home', {'content': content});
+      });
+
+      $scope.$on('mapaguarani.filterChanged', _.debounce(function(ev, filter) {
+        $state.go('home', {'filter': JSON.stringify(filter)});
+      }, 700));
+
+      $scope.$on('mapaguarani.pageChanged', function(ev, page) {
+        var param;
+        if(page == 0) {
+          param = null;
+        } else {
+          param = page+1;
+        }
+        $state.go('home', {'page': param});
+      });
+
     }
   ]);
 
-  controllers.controller('ContentCtrl', [
+  controllers.controller('SingleCtrl', [
     '$scope',
     'Data',
     function($scope, data) {
       $scope.data = data;
+      $scope.feature = data.features[0];
     }
   ]);
 

@@ -27,7 +27,8 @@
 
       $stateProvider
       .state('home', {
-        url: '/',
+        url: '/?content&filter&page',
+        reloadOnSearch: false,
         controller: 'HomeCtrl',
         templateUrl: '/static/views/home.html',
         resolve: {
@@ -48,13 +49,21 @@
       .state('home.village', {
         url: 'villages/:id/',
         controller: 'SingleCtrl',
-        templateUrl: '/static/views/partials/single.html',
+        templateUrl: '/static/views/single.html',
         resolve: {
           Data: [
             'GuaraniService',
             '$stateParams',
-            function(Guarani) {
-              return Guarani.villages.get({id: $stateParams.id}).$promise;
+            '$q',
+            function(Guarani, $stateParams, $q) {
+              var deferred = $q.defer();
+              Guarani.villages.get({}, function(villages) {
+                villages.features = _.filter(villages.features, function(f) {
+                  return f.id == $stateParams.id;
+                });
+                deferred.resolve(villages);
+              });
+              return deferred.promise;
             }
           ]
         }
