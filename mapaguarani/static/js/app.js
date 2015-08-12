@@ -50,7 +50,7 @@
         controller: 'SingleCtrl',
         templateUrl: '/static/views/partials/single.html',
         resolve: {
-          VillageData: [
+          Data: [
             'GuaraniService',
             '$stateParams',
             function(Guarani) {
@@ -64,7 +64,7 @@
         controller: 'SingleCtrl',
         templateUrl: '/static/views/single.html',
         resolve: {
-          LandData: [
+          Data: [
             'GuaraniService',
             '$stateParams',
             function(Guarani) {

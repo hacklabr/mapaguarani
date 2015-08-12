@@ -21,7 +21,15 @@
         $scope.mapData.lands = filtered.lands;
       }, true);
 
-    }]
-  );
+    }
+  ]);
+
+  controllers.controller('ContentCtrl', [
+    '$scope',
+    'Data',
+    function($scope, data) {
+      $scope.data = data;
+    }
+  ]);
 
 })(angular);
