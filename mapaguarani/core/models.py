@@ -72,11 +72,6 @@ class IndigenousPlace(models.Model):
         related_name='%(class)s_prominent_subgroup_layers',
         blank=True
     )
-    document = models.ManyToManyField(
-        Document,
-        verbose_name=_('documentation'),
-        related_name='%(class)s_documentation',
-        blank=True)
     public_comments = models.TextField(_('Comments'), blank=True, null=True)
     private_comments = models.TextField(_('Private comments'), blank=True, null=True)
 
@@ -109,7 +104,7 @@ class IndigenousVillage(IndigenousPlace):
         max_length=256,
         default=POSITION_PRECISION[2][0]
     )
-    position_source = models.CharField(_('Source'), max_length=512)
+    position_source = models.CharField(_('Position Source'), max_length=512)
     position = models.PointField()
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='villages', blank=True, null=True)
 
@@ -198,6 +193,11 @@ class IndigenousLand(IndigenousPlace):
         ('original_land', _('Original Land')),
     )
 
+    documents = models.ManyToManyField(
+        Document,
+        verbose_name=_('documentation'),
+        related_name='%(class)s_documentation',
+        blank=True)
     official_area = models.FloatField(_('Official area'), blank=True, null=True)
     guarani_exclusive_possession_area_portion = models.FloatField(
         _('Guarani full and exclusive portion area possession'), blank=True, null=True)
