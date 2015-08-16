@@ -94,7 +94,7 @@ class IndigenousVillage(IndigenousPlace):
         blank=True
     )
     position_precision = models.CharField(
-        _('Land Tenure'),
+        _('Position Precision'),
         choices=POSITION_PRECISION,
         max_length=256,
         default=POSITION_PRECISION[2][0]
@@ -220,12 +220,12 @@ class IndigenousLand(IndigenousPlace):
 
     @property
     def population(self):
-        # TODO georeferential query VillageLayer: summ of villages populations
+        # TODO georeferential query VillageLayer: sum of villages populations
         pass
 
     @property
     def calculated_area(self):
-        # TODO shape field calc: only make sense depending on Land situacion
+        # TODO shape field calc: only make sense depending on Land situation
         pass
 
 
