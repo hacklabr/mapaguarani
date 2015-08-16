@@ -173,25 +173,31 @@ class Population(models.Model):
         return '{}: {}'.format(self.village.name, self.population)
 
 
-class IndigenousLand(IndigenousPlace):
+class LandTenure(models.Model):
+    name = models.CharField(_('Name'), max_length=255)
+    map_color = models.CharField(_('Color in Map'), max_length=64)
 
-    LAND_TENURE_CHOICES = (
-        ('no_arrangements', _('Sem Providências')),
-        ('regularized', _('Regularizada')),
-        ('expropriated', _('Desapropriada')),
-        ('expropriated_in_progress', _('Em processo de desapropriação')),
-        ('delimited', _('Delimitada')),
-        ('study', _('Em estudo')),
-        ('declared', _('Declarada')),
-        ('acquired', _('Adquirida')),
-        ('regularized_limits_rev', _('Regularizada (Em revisão de limites)')),
-    )
-    LAND_TENURE_STATUS_CHOICES = (
-        ('no_revision', _('No Revision')),
-        ('not_delimited', _('Not Delimited')),
-        ('revised_land', _('Revised Land')),
-        ('original_land', _('Original Land')),
-    )
+    class Meta:
+        verbose_name = _('Land Tenure')
+        verbose_name_plural = _('Land Tenures')
+
+    def __str__(self):
+        return self.name
+
+
+class LandTenureStatus(models.Model):
+    name = models.CharField(_('Name'), max_length=255)
+    map_color = models.CharField(_('Color in Map'), max_length=64)
+
+    class Meta:
+        verbose_name = _('Land Tenure')
+        verbose_name_plural = _('Land Tenures')
+
+    def __str__(self):
+        return self.name
+
+
+class IndigenousLand(IndigenousPlace):
 
     documents = models.ManyToManyField(
         Document,
@@ -210,12 +216,21 @@ class IndigenousLand(IndigenousPlace):
     # private field???
     source = models.CharField(_('Source'), max_length=512)
     # Situação Fundiária
-    land_tenure = models.CharField(
-        _('Land Tenure'), choices=LAND_TENURE_CHOICES, max_length=256)
+    land_tenure = models.ForeignKey(
+        LandTenure,
+        verbose_name=_('Land Tenure'),
+        related_name='indigenous_lands',
+        blank=True, null=True)
     # Status de revisão fundiária
-    land_tenure_status = models.CharField(
-        _('Land Tenure Status'), choices=LAND_TENURE_STATUS_CHOICES, max_length=256)
-    associated_land = models.CharField(_('Source'), max_length=512, blank=True, null=True)
+    land_tenure_status = models.ForeignKey(
+        LandTenureStatus,
+        verbose_name=_('Land Tenure Status'),
+        related_name='indigenous_lands',
+        blank=True, null=True)
+    associated_land = models.ForeignKey(
+        'self',
+        verbose_name=_('Associated Land'),
+        blank=True, null=True)
     polygon = models.MultiPolygonField(_('Indigenous Land Spatial Data'))
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='indigenous_lads')
 
