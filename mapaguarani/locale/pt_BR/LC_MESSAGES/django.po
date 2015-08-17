@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-27 01:28-0300\n"
-"PO-Revision-Date: 2015-07-27 01:31-0306\n"
+"POT-Creation-Date: 2015-08-13 00:48-0300\n"
+"PO-Revision-Date: 2015-08-13 00:50-0306\n"
 "Last-Translator: b'  <asasddd@asd.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Translated-Using: django-rosetta 0.7.0\n"
 
-#: mapaguarani/config/common.py:157
+#: mapaguarani/config/common.py:160
 msgid "Brazilian Portuguese"
 msgstr "Português Brasileiro"
 
-#: mapaguarani/config/common.py:158
+#: mapaguarani/config/common.py:161
 msgid "English"
 msgstr "Inglês"
 
@@ -40,12 +40,10 @@ msgid "Description"
 msgstr "Descrição"
 
 #: mapaguarani/core/models.py:10
-#| msgid "Layer"
 msgid "Map Layer"
 msgstr "Camada do Mapa"
 
 #: mapaguarani/core/models.py:11
-#| msgid "Layer"
 msgid "Map Layers"
 msgstr "Camadas do Mapa"
 
@@ -75,22 +73,18 @@ msgid "description"
 msgstr "descrição"
 
 #: mapaguarani/core/models.py:37
-#| msgid "Indigenous Land"
 msgid "Indigenous Place Document"
 msgstr "Documento de Terra Indígena"
 
 #: mapaguarani/core/models.py:38
-#| msgid "Indigenous Lands"
 msgid "Indigenous Place Documents"
 msgstr "Documentos de Terras indígenas"
 
 #: mapaguarani/core/models.py:48
-#| msgid "Ethnic group"
 msgid "Ethnic Group"
 msgstr "Grupo étnico"
 
 #: mapaguarani/core/models.py:49
-#| msgid "Ethnic group"
 msgid "Ethnic Groups"
 msgstr "Grupo étnico"
 
@@ -145,12 +139,10 @@ msgid "Layer"
 msgstr "Camada"
 
 #: mapaguarani/core/models.py:107
-#| msgid "Indigenous Land"
 msgid "Indigenous Village"
 msgstr "Aldeia Indígena"
 
 #: mapaguarani/core/models.py:108
-#| msgid "Indigenous Lands"
 msgid "Indigenous Villages"
 msgstr "Aldeias indígenas"
 
@@ -163,7 +155,6 @@ msgid "Village"
 msgstr "Aldeia"
 
 #: mapaguarani/core/models.py:149
-#| msgid "Guarani presence"
 msgid "Guarani Presence"
 msgstr "Presença guarani"
 
@@ -172,7 +163,6 @@ msgid "Population"
 msgstr "População"
 
 #: mapaguarani/core/models.py:165
-#| msgid "Population"
 msgid "Populations"
 msgstr "Populações"
 
@@ -251,6 +241,11 @@ msgstr "Demanda"
 #: mapaguarani/core/models.py:207
 msgid "Land Tenure Status"
 msgstr "Status da Situação Funciária"
+
+#: mapaguarani/core/models.py:209
+#| msgid "Indigenous Land"
+msgid "Indigenous Land Spatial Data"
+msgstr "Dados Espaciais da Terra Indígena"
 
 #: mapaguarani/core/models.py:213
 msgid "Indigenous Land"
@@ -483,6 +478,8 @@ msgid ""
 "Forgotten your password? Enter your e-mail address below, and we'll send you"
 " an e-mail allowing you to reset it."
 msgstr ""
+"Esqueceu sua senha? Insira seu e-mail abaixo e nós iremos te enviar um email"
+" para redefinir sua senha."
 
 #: mapaguarani/templates/account/password_reset.html:24
 msgid "Reset My Password"
