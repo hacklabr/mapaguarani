@@ -175,7 +175,7 @@ class Population(models.Model):
 
 class LandTenure(models.Model):
     name = models.CharField(_('Name'), max_length=255)
-    map_color = models.CharField(_('Color in Map'), max_length=64)
+    map_color = models.CharField(_('Color in Map'), max_length=64, blank=True, null=True)
 
     class Meta:
         verbose_name = _('Land Tenure')
@@ -187,7 +187,7 @@ class LandTenure(models.Model):
 
 class LandTenureStatus(models.Model):
     name = models.CharField(_('Name'), max_length=255)
-    map_color = models.CharField(_('Color in Map'), max_length=64)
+    map_color = models.CharField(_('Color in Map'), max_length=64, blank=True, null=True)
 
     class Meta:
         verbose_name = _('Land Tenure')
