@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.gis.gdal import DataSource
 from django.contrib.gis.geos import fromstr, MultiPolygon
-from core.models import IndigenousLand, MapLayer, EthnicGroup
+from core.models import IndigenousLand, MapLayer, EthnicGroup, ProminentEthnicSubGroup, LandTenure, LandTenureStatus
 
 
 class Command(BaseCommand):
@@ -22,6 +22,18 @@ class Command(BaseCommand):
         def _get_ethnic_group(group):
             ethnic_group, _ = EthnicGroup.objects.get_or_create(name=group)
             return ethnic_group
+
+        def _get_ethnic_subgroup(group):
+            ethnic_group, _ = ProminentEthnicSubGroup.objects.get_or_create(name=group)
+            return ethnic_group
+
+        def _get_land_tenure(name):
+            land_tenure, _ = LandTenure.objects.get_or_create(name=name)
+            return land_tenure
+
+        def _get_land_tenure_status(name):
+            land_tenure_status, _ = LandTenureStatus.objects.get_or_create(name=name)
+            return land_tenure_status
 
         for feat in source_layer:
 
@@ -44,9 +56,9 @@ class Command(BaseCommand):
                 'guarani_exclusive_possession_area_portion': float(feat.get('PORCAO_ARE')),
                 'others_exclusive_possession_area_portion': float(feat.get('PORCAO_AR2')),
 
-                'land_tenure': feat.get('SITUACAO_F'),
-                'land_tenure_status': feat.get('STATUS_REV'),
-                'associated_land': feat.get('TERRAS_ASS'),
+                # 'land_tenure': feat.get('SITUACAO_F'),
+                # 'land_tenure_status': feat.get('STATUS_REV'),
+                # 'associated_land': feat.get('TERRAS_ASS'),
             }
 
             indigenous_land = IndigenousLand(**kwargs)
@@ -64,39 +76,41 @@ class Command(BaseCommand):
                 # self.stdout.write('Terra indígena: ' + indigenous_land.name + 'Posição convertida de Polígono para Multipolígono.')
 
             for group in feat.get('SUBGRUPO_P').split(','):
-                indigenous_land.prominent_subgroup.add(_get_ethnic_group(group))
+                indigenous_land.prominent_subgroup.add(_get_ethnic_subgroup(group))
 
             land_tenure = feat.get('SITUACAO_F')
             if land_tenure == 'Sem Providências':
-                indigenous_land.land_tenure = 'no_arrangements'
-            elif land_tenure == 'Regularizada':
-                indigenous_land.land_tenure = 'regularized'
-            elif land_tenure == 'Desapropriada':
-                indigenous_land.land_tenure = 'expropriated'
-            elif land_tenure == 'Em processo de desapropriação':
-                indigenous_land.land_tenure = 'expropriated_in_progress'
+                indigenous_land.land_tenure = _get_land_tenure('Sem Providências')
+            elif land_tenure in ['Regularizada', 'Regularizada (Em revisão de limites)']:
+                indigenous_land.land_tenure = _get_land_tenure('Regularizada')
+            elif land_tenure in ['Desapropriada', 'Desapropriada (Reivindicação de Identificação)']:
+                indigenous_land.land_tenure = _get_land_tenure('Desapropriada')
+            elif land_tenure in ['Em processo de desapropriação', 'Em processo de despropriação pelo Estado.',
+                                 'Área em processo de despropriação pelo Estado.', 'Em processo de Desapropriação.',
+                                 'Em processo de Desapropriação']:
+                indigenous_land.land_tenure = _get_land_tenure('Em processo de desapropriação')
             elif land_tenure == 'Delimitada':
-                indigenous_land.land_tenure = 'delimited'
+                indigenous_land.land_tenure = _get_land_tenure('Delimitada')
             elif land_tenure == 'Em estudo':
-                indigenous_land.land_tenure = 'study'
+                indigenous_land.land_tenure = _get_land_tenure('Em estudo')
             elif land_tenure == 'Declarada':
-                indigenous_land.land_tenure = 'declared'
-            elif land_tenure == 'Adquirida':
-                indigenous_land.land_tenure = 'acquired'
-            elif land_tenure == 'Regularizada (Em revisão de limites)':
-                indigenous_land.land_tenure = 'regularized_limits_rev'
+                indigenous_land.land_tenure = _get_land_tenure('Declarada')
+            elif land_tenure in ['Adquirida', 'Dominial Indígena']:
+                indigenous_land.land_tenure = _get_land_tenure('Adquirida')
+            elif land_tenure == 'Homologada':
+                indigenous_land.land_tenure = _get_land_tenure('Homologada')
             else:
-                self.stdout.write('Situação fundiária não encontrata: ' + land_tenure)
+                self.stdout.write('Situação fundiária não encontrata! NOME: ' + feat.get('TERRA_INDI') + 'STATUS: ' + land_tenure)
 
             land_tenure_status = feat.get('STATUS_REV')
             if land_tenure_status == 'Sem Revisão':
-                indigenous_land.land_tenure_status = 'no_revision'
+                indigenous_land.land_tenure_status = _get_land_tenure_status('Sem Revisão')
             elif land_tenure_status == 'Não Delimitada':
-                indigenous_land.land_tenure_status = 'not_delimited'
+                indigenous_land.land_tenure_status = _get_land_tenure_status('Não Delimitada')
             elif land_tenure_status == 'Terra Revisada':
-                indigenous_land.land_tenure_status = 'revised_land'
+                indigenous_land.land_tenure_status = _get_land_tenure_status('Terra Revisada')
             elif land_tenure_status == 'Terra Original':
-                indigenous_land.land_tenure_status = 'original_land'
+                indigenous_land.land_tenure_status = _get_land_tenure_status('Terra Original')
             else:
                 self.stdout.write('Status de revisão fundiária não encontrata: ' + land_tenure_status)
 
