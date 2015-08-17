@@ -112,34 +112,34 @@ class IndigenousVillage(IndigenousPlace):
         verbose_name = _('Indigenous Village')
         verbose_name_plural = _('Indigenous Villages')
 
-    # @property
-    # def population(self):
-        # try:
-        #     return self.anual_series_population.latest().population
-        # except Population.DoesNotExist:
-        #     return 0
+    @property
+    def population(self):
+        try:
+            return self.population_annual_series.latest().population
+        except Population.DoesNotExist:
+            return 0
 
-    # @property
-    # def guarani_presence(self):
-        # try:
-        #     return self.annual_series_guarani_presence.latest().presence
-        # except GuaraniPresence.DoesNotExist:
-        #     return 0
+    @property
+    def guarani_presence(self):
+        try:
+            return self.guarani_presence_annual_series.latest().presence
+        except GuaraniPresence.DoesNotExist:
+            return 0
 
     @property
     def city(self):
         # TODO georeferential query
-        pass
+        return ''
 
     @property
     def state(self):
         # TODO georeferential query
-        pass
+        return ''
 
     @property
     def country(self):
         # TODO georeferential query
-        pass
+        return ''
 
 
 class GuaraniPresence(models.Model):
@@ -147,7 +147,7 @@ class GuaraniPresence(models.Model):
     date = models.DateField(_('Date'))
     source = models.CharField(_('name'), max_length=512)
     village = models.ForeignKey(
-        IndigenousVillage, verbose_name=_('Village'), related_name='%(class)s_annual_series_guarani_presence')
+        IndigenousVillage, verbose_name=_('Village'), related_name='guarani_presence_annual_series')
 
     class Meta:
         get_latest_by = 'date'
@@ -162,12 +162,12 @@ class Population(models.Model):
     date = models.DateField(_('Date'))
     source = models.CharField(_('Source'), max_length=512)
     village = models.ForeignKey(
-        IndigenousVillage, verbose_name=_('Village'), related_name='%(class)s_annual_series_population')
+        IndigenousVillage, verbose_name=_('Village'), related_name='population_annual_series')
 
     class Meta:
         get_latest_by = 'date'
         verbose_name = _('Population')
-        verbose_name_plural = _('Populations')
+        verbose_name_plural = _('Populations History')
 
     def __str__(self):
         return '{}: {}'.format(self.village.name, self.population)
