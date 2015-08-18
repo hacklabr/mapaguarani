@@ -1,103 +1,44 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="map-container" ng-app="mapaguarani" ng-controller="GuaraniMapCtrl">
-{#    <leaflet center="center" layers="layers" geojson="geojson"d markers="markers" height="780px" width="100%"></leaflet>#}
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <div class="navbar-icon-container">
-            <a href="#" class="navbar-icon pull-right visible-xs" id="nav-btn"><i class="fa fa-bars fa-lg white"></i></a>
-            <a href="#" class="navbar-icon pull-right visible-xs" id="sidebar-toggle-btn"><i class="fa fa-search fa-lg white"></i></a>
-          </div>
-          <a class="navbar-brand" href="#">Mapa Guarani Yvyrupa</a>
+<div class="map-container" ng-app="mapaguarani">
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <div class="navbar-icon-container">
+          <a href="#" class="navbar-icon pull-right visible-xs" id="nav-btn"><i class="fa fa-bars fa-lg white"></i></a>
+          <a href="#" class="navbar-icon pull-right visible-xs" id="sidebar-toggle-btn"><i class="fa fa-search fa-lg white"></i></a>
         </div>
-        <div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="search">
-            <div class="form-group has-feedback">
-                <input id="searchbox" type="text" placeholder="Search" class="form-control">
-                <span id="searchicon" class="fa fa-search form-control-feedback"></span>
-            </div>
-          </form>
-          <ul class="nav navbar-nav">
-              <li><a href="{% url 'admin:login' %}" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Entrar</a></li>
-{#            <li class="dropdown">#}
-{#              <a id="toolsDrop" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe white"></i>&nbsp;&nbsp;Tools <b class="caret"></b></a>#}
-{#              <ul class="dropdown-menu">#}
-{#                <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="full-extent-btn"><i class="fa fa-arrows-alt"></i>&nbsp;&nbsp;Zoom To Full Extent</a></li>#}
-{#                <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="legend-btn"><i class="fa fa-picture-o"></i>&nbsp;&nbsp;Show Legend</a></li>#}
-{#                <li class="divider hidden-xs"></li>#}
-{#                <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Entrar</a></li>#}
-{#              </ul>#}
-{#            </li>#}
-            <li><a href="#" data-toggle="modal" data-target="#aboutModal" id="about-btn"><i class="fa fa-question-circle white"></i>&nbsp;&nbsp;Sobre</a></li>
-{#            <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"><i class="fa fa-list white"></i>&nbsp;&nbsp;Barra Lateral</a></li>#}
-          </ul>
-        </div><!--/.navbar-collapse -->
+        <a class="navbar-brand" ui-sref="home" ui-sref-opts="{reload: true, inherit: false}">Mapa Guarani Yvyrupa</a>
       </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="{% url 'admin:login' %}" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Entrar</a></li>
+          <li><a href="javascript:void(0);" data-toggle="modal" data-target="#aboutModal" id="about-btn"><i class="fa fa-question-circle white"></i>&nbsp;&nbsp;Sobre</a></li>
+        </ul>
+      </div><!--/.navbar-collapse -->
     </div>
-
-    <div id="container">
-{#      <div id="sidebar">#}
-{#        <div class="sidebar-wrapper">#}
-{#          <div class="panel panel-default" id="features">#}
-{#            <div class="panel-heading">#}
-{#              <h3 class="panel-title">Points of Interest#}
-{#              <button type="button" class="btn btn-xs btn-default pull-right" id="sidebar-hide-btn"><i class="fa fa-chevron-left"></i></button></h3>#}
-{#            </div>#}
-{#            <div class="panel-body">#}
-{#              <div class="row">#}
-{#                <div class="col-xs-8 col-md-8">#}
-{#                  <input type="text" class="form-control search" placeholder="Filter" />#}
-{#                </div>#}
-{#              </div>#}
-{#            </div>#}
-{#            <div class="sidebar-table">#}
-{#              <table class="table table-hover" id="feature-list">#}
-{#                <thead class="hidden">#}
-{#                  <tr>#}
-{#                    <th>Icon</th>#}
-{#                  <tr>#}
-{#                  <tr>#}
-{#                    <th>Name</th>#}
-{#                  <tr>#}
-{#                  <tr>#}
-{#                    <th>Chevron</th>#}
-{#                  <tr>#}
-{#                </thead>#}
-{#                <tbody class="list"></tbody>#}
-{#              </table>#}
-{#            </div>#}
-{#          </div>#}
-{#        </div>#}
-{#      </div>#}
-      <div id="map"></div>
-    </div>
-{#    <div id="loading">#}
-{#      <div class="loading-indicator">#}
-{#        <div class="progress progress-striped active">#}
-{#          <div class="progress-bar progress-bar-info progress-bar-full"></div>#}
-{#        </div>#}
-{#      </div>#}
-{#    </div>#}
   </div>
+
+  <div id="container" ui-view></div>
+</div>
 {% endblock content %}
 
 {% block modal %}
-  <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Sobre Mapa Guarani Yvyrupa</h4>
-        </div>
-        <div class="modal-body">
-          <p>Aqui vai o texto sobre o Mapa Guarani Yvyrupa</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Sobre Mapa Guarani Yvyrupa</h4>
+      </div>
+      <div class="modal-body">
+        <p>Aqui vai o texto sobre o Mapa Guarani Yvyrupa</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 {% endblock modal %}
