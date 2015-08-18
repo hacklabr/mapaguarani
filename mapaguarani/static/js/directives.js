@@ -51,12 +51,13 @@
 
           scope.$watch('villages', function(villages) {
             if(typeof villages == 'object')
-              scope.filtered.villages = angular.copy(scope.villages);
+              scope.filtered.villages = angular.copy(villages);
           });
 
           scope.$watch('lands', function(lands) {
-            if(typeof lands == 'object')
-              scope.filtered.lands = angular.copy(scope.lands);
+            if(typeof lands == 'object') {
+              scope.filtered.lands = angular.copy(lands);
+            }
           });
 
           if($stateParams.filter) {
@@ -78,8 +79,8 @@
           scope.curPage = (parseInt($stateParams.page)-1) || 0;
 
           scope.pageCount = function() {
-            if(scope.filtered[scope.content] && scope.filtered[scope.content].features && scope.filtered[scope.content].features.length)
-              return Math.ceil(scope.filtered[scope.content].features.length/scope.perPage)-1;
+            if(scope.filtered[scope.content] && scope.filtered[scope.content].length)
+              return Math.ceil(scope.filtered[scope.content].length/scope.perPage)-1;
             else
               return 0;
           };
@@ -105,7 +106,8 @@
   ]);
 
   directives.directive('guaraniMap', [
-    function() {
+    'GuaraniService',
+    function(Guarani) {
       return {
         restrict: 'E',
         scope: {
@@ -154,8 +156,11 @@
               markerLayer.removeLayer(villagesLayer);
               villagesLayer = null;
             }
-            if(villages && villages.features && villages.features.length) {
-              villagesLayer = L.geoJson(villages, {
+            if(villages && villages.length) {
+              villagesLayer = L.geoJson(Guarani.toGeoJSON(villages), {
+                pointToLayer: function(feature, latlng) {
+                  
+                },
                 onEachFeature: function(feature, layer) {
                   var popupOptions = {maxWidth: 200};
                   layer.bindPopup("<b>Aldeia: </b> " + feature.properties.name +
@@ -167,46 +172,46 @@
                 }
               });
               markerLayer.addLayer(villagesLayer);
-              // layersControl.addOverlay(markerLayer, 'Aldeias Indígenas');
               map.fitBounds(villagesLayer.getBounds());
             }
           }, 700), true);
           map.addLayer(markerLayer);
+          layersControl.addOverlay(markerLayer, 'Aldeias Indígenas');
 
           /*
            * Polygon layer setup
            */
           var landsLayer;
-          scope.$watch('lands', function(lands) {
+          scope.$watch('lands', _.debounce(function(lands) {
             if(landsLayer) {
+              layersControl.removeLayer(landsLayer);
               map.removeLayer(landsLayer);
               landsLayer = null;
             }
-            if(lands && lands.features && lands.features.length) {
-              landsLayer = L.geoJson(lands, {
+            if(lands && lands.length) {
+              landsLayer = L.geoJson(Guarani.toGeoJSON(lands), {
                 style: function(feature) {
                   var style = {};
-                  var landTenure = landTenures[feature.properties.land_tenure];
-                  if (landTenure) {
-                    style = landTenure.style;
-                  }
+
+                  if(feature.properties.land_tenure_status)
+                    style.color = feature.properties.land_tenure_status.map_color;
+                  if(feature.properties.land_tenure)
+                    style.fillColor = feature.properties.land_tenure.map_color;
+
                   style.opacity = 0.8;
                   style.fillOpacity = 0.5;
                   style.weight = 2;
                   return style;
                 },
                 onEachFeature: function(feature, layer) {
-                  var landTenure = landTenures[feature.properties.landTenure];
-                  if (landTenure)
-                    layer.bindPopup(landTenure.name);
-                  else
-                    layer.bindPopup(feature.properties.landTenure);
+                  layer.bindPopup(feature.properties.name);
                 }
               });
-              // map.addLayer(landsLayer);
-              // layersControl.addOverlay(landsLayer, 'Terras indígenas');
+              map.addLayer(landsLayer);
+              map.fitBounds(landsLayer.getBounds());
+              layersControl.addOverlay(landsLayer, 'Terras indígenas');
             }
-          });
+          }, 700), true);
 
           var legendsControl = L.control({position: 'bottomright'});
           legendsControl.onAdd = function(map) {

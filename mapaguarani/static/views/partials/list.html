@@ -18,12 +18,12 @@
 </nav>
 <div id="villages" ng-show="content == 'villages'">
   <ul class="village list">
-    <li class="village item" ng-repeat="village in filtered.villages.features = (villages.features | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
-      <h3><a ui-sref="home.village({id: village.id})" title="{{village.properties.name}}" ui-sref-opts="{inherit: false}">{{village.properties.name}}</a></h3>
-      <p>Outros nomes: {{village.properties.other_names}}</p>
-      <p>Grupo étnico: {{village.properties.ethnic_groups2}}</p>
-      <p>População: {{village.properties.population}}</p>
-      <p>Presença guarani: {{village.properties.guarani_presence}}</p>
+    <li class="village item" ng-repeat="village in filtered.villages = (villages | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
+      <h3><a ui-sref="home.village({id: village.id})" title="{{village.name}}" ui-sref-opts="{inherit: false}">{{village.name}}</a></h3>
+      <p>Outros nomes: {{village.other_names}}</p>
+      <p>Grupo étnico: {{village.ethnic_groups2}}</p>
+      <p>População: {{village.population}}</p>
+      <p>Presença guarani: {{village.guarani_presence}}</p>
     </li>
   </ul>
   <nav class="sidebar-pagination">
@@ -39,8 +39,8 @@
 </div>
 <div id="lands" ng-show="content == 'lands'">
   <ul class="land list">
-    <li class="land item" ng-repeat="land in filtered.lands.features = (lands.features | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
-      <h3><a ui-sref="home.land({id: land.id})" title="{{land.properties.name}}" ui-sref-opts="{inherit: false}">{{land.properties.name}}</a></h3>
+    <li class="land item" ng-repeat="land in filtered.lands = (lands | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
+      <h3><a ui-sref="home.land({id: land.id})" title="{{land.name}}" ui-sref-opts="{inherit: false}">{{land.name}}</a></h3>
     </li>
   </ul>
   <nav class="sidebar-pagination">

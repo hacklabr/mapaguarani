@@ -50,7 +50,6 @@
     function($state, $scope, data) {
       $scope.type = $state.current.data.contentType;
       $scope.data = data;
-      $scope.feature = data.features[0];
     }
   ]);
 
