@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.gis.utils import LayerMapping
 from django.contrib.gis.gdal import DataSource
-from core.models import IndigenousVillage, MapLayer, EthnicGroup, GuaraniPresence, Population
+from core.models import IndigenousVillage, MapLayer, EthnicGroup, GuaraniPresence, Population, ProminentEthnicSubGroup
 
 import datetime
 
@@ -24,6 +24,10 @@ class Command(BaseCommand):
 
         def _get_ethnic_group(group):
             ethnic_group, _ = EthnicGroup.objects.get_or_create(name=group)
+            return ethnic_group
+
+        def _get_ethnic_subgroup(group):
+            ethnic_group, _ = ProminentEthnicSubGroup.objects.get_or_create(name=group)
             return ethnic_group
 
         for feat in source_layer:
@@ -59,7 +63,7 @@ class Command(BaseCommand):
             for group in feat.get('GRUPO_ETNI').split(','):
                 indigenous_village.ethnic_groups.add(_get_ethnic_group(group))
             for group in feat.get('SUB_GRUPO_').split(','):
-                indigenous_village.prominent_subgroup.add(_get_ethnic_group(group))
+                indigenous_village.prominent_subgroup.add(_get_ethnic_subgroup(group))
 
             guarani_presence = feat.get('PRESENCA_G')
             if guarani_presence == 'Sim':

@@ -43,13 +43,17 @@ class IndigenousVillageAdmin(geoadmin.GeoModelAdmin):
 class IndigenousLandAdmin(geoadmin.GeoModelAdmin, ModerationAdmin):
     # display_wkt = True
     map_template = 'openlayers.html'
-    list_display = ('name', 'other_names', 'official_area', 'claim', 'demand', 'source', 'land_tenure',
-                    'land_tenure_status', 'public_comments', 'private_comments', 'associated_land')
+    list_display = ('name', 'other_names', 'get_prominent_subgroup', 'official_area', 'claim', 'demand', 'source',
+                    'land_tenure', 'land_tenure_status', 'public_comments', 'private_comments', 'associated_land')
     # list_editable = ('other_names', 'official_area', 'claim', 'demand', 'source', 'land_tenure',
     #                  'land_tenure_status', 'public_comments', 'private_comments')
     search_fields = ['name', 'other_names', 'claim', 'demand', 'source', 'land_tenure',
                      'land_tenure_status', 'public_comments', 'private_comments']
     list_per_page = 500
+
+    def get_prominent_subgroup(self, obj):
+        return "\n".join([prominent_sub.name for prominent_sub in obj.prominent_subgroup.all()])
+    get_prominent_subgroup.short_description = _('Prominent Ethnic SubGroup')
 
 
 @admin.register(LegalProceedings)

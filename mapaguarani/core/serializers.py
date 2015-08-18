@@ -37,6 +37,7 @@ class CompactGeometryField(fields.GeometryField):
 
 class IndigenousLandSerializer(serializers.ModelSerializer):
 
+    associated_land = serializers.PrimaryKeyRelatedField(read_only=True)
     polygon = CompactGeometryField()
     # polygon = fields.GeometrySerializerMethodField()
 
@@ -63,14 +64,16 @@ class IndigenousLandSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = IndigenousLand
-
+        depth = 1
 
 
 class IndigenousVillageSerializer(serializers.ModelSerializer):
     class Meta:
         model = IndigenousVillage
+        depth = 1
 
 
 class ArchaeologicalPlaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = ArchaeologicalPlace
+        depth = 1
