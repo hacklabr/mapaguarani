@@ -151,6 +151,7 @@
            * Marker layer setup
            */
           var villagesLayer;
+          var villageIcon = L.divIcon({className: 'village-marker'});
           scope.$watch('villages', _.debounce(function(villages) {
             if(villagesLayer) {
               markerLayer.removeLayer(villagesLayer);
@@ -159,7 +160,7 @@
             if(villages && villages.length) {
               villagesLayer = L.geoJson(Guarani.toGeoJSON(villages), {
                 pointToLayer: function(feature, latlng) {
-                  
+                  return L.marker(latlng, {icon: villageIcon});
                 },
                 onEachFeature: function(feature, layer) {
                   var popupOptions = {maxWidth: 200};
