@@ -1,0 +1,56 @@
+<nav id="sidebar-main-nav" role="navigation">
+  <ul class="nav nav-tabs nav-justified">
+    <li ng-class="{active: content == 'villages'}">
+      <a href="javascript:void(0);" ng-click="setContent('villages')">Aldeias indígenas</a>
+    </li>
+    <li class="disabled" ng-class="{active: content == 'lands'}">
+      <a href="javascript:void(0);" ng-click="setContent('lands')">Terras indígenas</a>
+    </li>
+  </ul>
+</nav>
+<nav id="sidebar-filters">
+  <form role="search">
+    <div class="form-group has-feedback">
+      <input id="searchbox" type="text" placeholder="Pesquisar..." class="form-control" ng-model="filter.text">
+      <span id="searchicon" class="fa fa-search form-control-feedback"></span>
+    </div>
+  </form>
+</nav>
+<div id="villages" ng-show="content == 'villages'">
+  <ul class="village list">
+    <li class="village item" ng-repeat="village in filtered.villages.features = (villages.features | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
+      <h3><a ui-sref="home.village({id: village.id})" title="{{village.properties.name}}" ui-sref-opts="{inherit: false}">{{village.properties.name}}</a></h3>
+      <p>Outros nomes: {{village.properties.other_names}}</p>
+      <p>Grupo étnico: {{village.properties.ethnic_groups2}}</p>
+      <p>População: {{village.properties.population}}</p>
+      <p>Presença guarani: {{village.properties.guarani_presence}}</p>
+    </li>
+  </ul>
+  <nav class="sidebar-pagination">
+    <ul class="pager">
+      <li class="previous">
+        <a href="javascript:void(0);" ng-click="prevPage();" ng-hide="curPage == 0"><span aria-hidden="true">&larr;</span> Página anterior</a>
+      </li>
+      <li class="next">
+        <a href="javascript:void(0);" ng-click="nextPage();" ng-hide="curPage >= pageCount()">Próxima página <span aria-hidden="true">&rarr;</span></a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<div id="lands" ng-show="content == 'lands'">
+  <ul class="land list">
+    <li class="land item" ng-repeat="land in filtered.lands.features = (lands.features | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
+      <h3><a ui-sref="home.land({id: land.id})" title="{{land.properties.name}}" ui-sref-opts="{inherit: false}">{{land.properties.name}}</a></h3>
+    </li>
+  </ul>
+  <nav class="sidebar-pagination">
+    <ul class="pager">
+      <li class="previous">
+        <a href="javascript:void(0);" ng-click="prevPage();" ng-hide="curPage == 0"><span aria-hidden="true">&larr;</span> Página anterior</a>
+      </li>
+      <li class="next">
+        <a href="javascript:void(0);" ng-click="nextPage();" ng-hide="curPage >= pageCount()">Próxima página <span aria-hidden="true">&rarr;</span></a>
+      </li>
+    </ul>
+  </nav>
+</div>
