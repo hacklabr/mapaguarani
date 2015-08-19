@@ -72,12 +72,52 @@ input[type="radio"], input[type="checkbox"] {
   width: auto;
   height: 100%;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  .village-marker {
+  .village-guarani-marker {
     background: #e7ec13;
     border-radius: 100%;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
     -o-border-radius: 100%;
+  }
+  .village-other-marker {
+    background: #f57a14;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -o-border-radius: 100%;
+  }
+  .marker-cluster,
+  .marker-cluster-medium,
+  .marker-cluster-small {
+    background: transparent;
+    &:before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 20px;
+      background: #f57a14;
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      border-radius: 100%;
+      -webkit-border-radius: 100%;
+      -moz-border-radius: 100%;
+      -o-border-radius: 100%;
+    }
+    div {
+      width: 20px;
+      height: 20px;
+      margin-top: 10px;
+      margin-left: 10px;
+      background: transparent;
+      background: #e7ec13;
+      box-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+      position: relative;
+      z-index: 3;
+      span {
+        line-height: 20px;
+      }
+    }
   }
 }
 #loading {

@@ -52,12 +52,12 @@
           ]
         }
       })
-      .state('home.village', {
-        url: 'villages/:id/',
+      .state('village', {
+        url: '/villages/:id/',
         controller: 'SingleCtrl',
         templateUrl: '/static/views/single.html',
         data: {
-          contentType: 'village'
+          contentType: 'villages'
         },
         resolve: {
           Data: [
@@ -69,12 +69,12 @@
           ]
         }
       })
-      .state('home.land', {
-        url: 'lands/:id/',
+      .state('land', {
+        url: '/lands/:id/',
         controller: 'SingleCtrl',
         templateUrl: '/static/views/single.html',
         data: {
-          contentType: 'land'
+          contentType: 'lands'
         },
         resolve: {
           Data: [
@@ -86,12 +86,12 @@
           ]
         }
       })
-      .state('home.site', {
-        url: 'sites/:id/',
+      .state('site', {
+        url: '/sites/:id/',
         controller: 'SingleCtrl',
         templateUrl: '/static/views/single.html',
         data: {
-          contentType: 'site'
+          contentType: 'sites'
         },
         resolve: {
           Data: [

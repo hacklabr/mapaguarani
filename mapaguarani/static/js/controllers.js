@@ -9,21 +9,31 @@
     'VillagesData',
     'LandsData',
     'SitesData',
-    function ($scope, $state, villages, lands, sites) {
+    'guaraniMapService',
+    function ($scope, $state, villages, lands, sites, Map) {
 
       $scope.filtered = {};
 
       $scope.villages = villages;
       $scope.lands = lands;
       $scope.sites = sites;
-      
+
       $scope.mapData = {};
 
-      $scope.$watch('filtered', function(filtered) {
-        $scope.mapData.villages = filtered.villages;
-        $scope.mapData.lands = filtered.lands;
-        $scope.mapData.sites = filtered.sites;
-      }, true);
+      var filter = false;
+
+      if($state.current.name == 'home') {
+        $scope.$watch('filtered', function(filtered) {
+          filter = filtered;
+          Map.setData(filtered);
+        }, true);
+      }
+
+      $scope.$on('$stateChangeSuccess', function(ev, to, toParams, from) {
+        if(filter && to.name == 'home') {
+          Map.setData(filter);
+        }
+      });
 
       $scope.$on('mapaguarani.contentChanged', function(ev, content) {
         $state.go('home', {'content': content});
@@ -50,10 +60,13 @@
     '$state',
     '$scope',
     'Data',
-    function($state, $scope, data) {
+    'guaraniMapService',
+    function($state, $scope, data, Map) {
       $scope.type = $state.current.data.contentType;
       $scope.data = data;
-      console.log($scope.data);
+      $scope.map = {};
+      $scope.map[$scope.type] = [$scope.data];
+      Map.setData($scope.map);
     }
   ]);
 
