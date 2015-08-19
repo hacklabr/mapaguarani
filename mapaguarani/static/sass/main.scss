@@ -12,13 +12,20 @@ html, body, #container {
 body {
   padding-top: 50px;
 }
+a {
+  color: #eac367;
+}
+a:hover,
+a:focus {
+  color: #c19a3c;
+}
 input[type="radio"], input[type="checkbox"] {
   margin: 0;
 }
 #sidebar {
-  width: 30%;
+  width: 35%;
   height: 100%;
-  max-width: 550px;
+  max-width: 650px;
   float: left;
   overflow: auto;
   position: relative;
@@ -37,6 +44,23 @@ input[type="radio"], input[type="checkbox"] {
   .sidebar-pagination {
     margin: 0 10px 10px;
   }
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    .item {
+      margin: 10px;
+      padding: 20px 10px 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -o-border-radius: 4px;
+      h3 {
+        margin: 0 0 10px;
+      }
+    }
+  }
 }
 #map {
   width: auto;
@@ -45,6 +69,9 @@ input[type="radio"], input[type="checkbox"] {
   .village-marker {
     background: #e7ec13;
     border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -o-border-radius: 100%;
   }
 }
 #loading {
@@ -75,6 +102,7 @@ input[type="radio"], input[type="checkbox"] {
 .navbar .navbar-brand {
   font-weight: bold;
   font-size: 25px;
+  color: #8c83c7;
 }
 .navbar-collapse.in {
   overflow-y: hidden;
