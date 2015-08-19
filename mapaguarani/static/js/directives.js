@@ -105,9 +105,32 @@
     }
   ]);
 
+  directives.factory('guaraniMapService', [
+    function() {
+      var map, data;
+      return {
+        setMap: function(m) {
+          map = m;
+          return map;
+        },
+        getMap: function() {
+          return map;
+        },
+        setData: function(d) {
+          data = d;
+          return data;
+        },
+        getData: function() {
+          return data;
+        }
+      }
+    }
+  ]);
+
   directives.directive('guaraniMap', [
     'GuaraniService',
-    function(Guarani) {
+    'guaraniMapService',
+    function(Guarani, Map) {
       return {
         restrict: 'E',
         scope: {
@@ -126,6 +149,15 @@
           var map = L.map(attrs.id, {
             center: scope.center,
             zoom: scope.zoom
+          });
+
+          Map.setMap(map);
+
+          var data;
+          scope.$watch(function() {
+            return Map.getData();
+          }, function(d) {
+            data = d;
           });
 
           map.addLayer(gm_hybrid);

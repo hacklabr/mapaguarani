@@ -23,7 +23,7 @@ input[type="radio"], input[type="checkbox"] {
   margin: 0;
 }
 #sidebar {
-  width: 35%;
+  width: 38%;
   height: 100%;
   max-width: 650px;
   float: left;
@@ -32,6 +32,9 @@ input[type="radio"], input[type="checkbox"] {
   -webkit-transition: all 0.25s ease-out;
     -moz-transition: all 0.25s ease-out;
     transition: all 0.25s ease-out;
+  .nav > li > a {
+    padding: 10px 5px;
+  }
   #sidebar-main-nav {
     margin: 15px 15px 0 15px;
   }
