@@ -283,14 +283,20 @@ class ArchaeologicalPlace(models.Model):
     )
 
     name = models.CharField(_('name'), max_length=255)
-    acronym = models.CharField(_('name'), max_length=512)
+    code = models.CharField(_('Code'), max_length=255, blank=True, null=True)
+    acronym = models.CharField(_('Acronym'), max_length=512, blank=True, null=True)
+    cnsa = models.CharField(_('CNSA'), max_length=512, blank=True, null=True)
+    position = models.PointField()
     position_precision = models.CharField(
         _('Position Precision'),
         choices=POSITION_PRECISION_CHOICES,
         max_length=128)
     position_comments = models.TextField(_('Position Comments'))
+    biblio_references = models.CharField(_('Source'), max_length=512, blank=True, null=True)
 
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='archaeological_places')
+
+    objects = models.GeoManager()
 
     class Meta:
         verbose_name = _('Archaeological Place')
@@ -313,3 +319,14 @@ class ArchaeologicalPlace(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ArchaeologicalImage(models.Model):
+    name = models.CharField(_('name'), max_length=255, blank=True, null=True)
+    desc = models.TextField(_('Description'), blank=True, null=True)
+    credits = models.CharField(_('Credits'), max_length=512, blank=True, null=True)
+    image = models.ImageField(_('Image'))
+    archaeological_place = models.ForeignKey(
+        ArchaeologicalPlace,
+        verbose_name=_('Archaeological Place'),
+        related_name='images')

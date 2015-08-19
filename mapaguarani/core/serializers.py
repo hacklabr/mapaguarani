@@ -79,6 +79,10 @@ class IndigenousVillageSerializer(serializers.ModelSerializer):
 
 
 class ArchaeologicalPlaceSerializer(serializers.ModelSerializer):
+
+    geometry = fields.GeometryField(source='position')
+
     class Meta:
         model = ArchaeologicalPlace
+        exclude = ['position']
         depth = 1

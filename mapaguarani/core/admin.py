@@ -4,9 +4,11 @@ from django.utils.translation import ugettext_lazy as _
 from .models import (
     IndigenousVillage, IndigenousLand, LegalProceedings, DocumentType,
     Document, EthnicGroup, GuaraniPresence, Population,
-    ArchaeologicalPlace,
+    ArchaeologicalPlace, ArchaeologicalImage
 )
 from moderation.admin import ModerationAdmin
+# from django.contrib.gis.maps.google import GoogleMap
+# GMAP = GoogleMap(key='AIzaSyDX4lCrBqaA-sXJTsm6NQhERpua6p-9SIQ') # Can also set GOOGLE_MAPS_API_KEY in settings
 
 
 class PopulationInLine(admin.TabularInline):
@@ -15,6 +17,8 @@ class PopulationInLine(admin.TabularInline):
 
 @admin.register(IndigenousVillage)
 class IndigenousVillageAdmin(geoadmin.GeoModelAdmin):
+    # extra_js = [GMAP.api_url + GMAP.key]
+    # map_template = 'gis/admin/google.html'
 
     list_display = ('name', 'other_names', 'get_ethnic_groups', 'get_prominent_subgroup',
                     'population', 'get_guarani_presence',
@@ -56,14 +60,29 @@ class IndigenousLandAdmin(geoadmin.GeoModelAdmin, ModerationAdmin):
     get_prominent_subgroup.short_description = _('Prominent Ethnic SubGroup')
 
 
-@admin.register(LegalProceedings)
-class LegalProceedingsAdmin(admin.ModelAdmin):
-    pass
+class ArchaeologicalImageInLine(admin.TabularInline):
+    model = ArchaeologicalImage
 
 
 @admin.register(ArchaeologicalPlace)
 class ArchaeologicalPlaceAdmin(admin.ModelAdmin):
+    list_display = ('get_name', 'code', 'acronym', 'cnsa','biblio_references',
+                    'position_precision', 'position_comments', 'position',)
     list_per_page = 500
+    inlines = [
+        ArchaeologicalImageInLine,
+    ]
+
+    def get_name(self, obj):
+        if obj.name:
+            return obj.name
+        else:
+            return _('(No name)')
+    get_name.short_description = _('Name')
+
+@admin.register(LegalProceedings)
+class LegalProceedingsAdmin(admin.ModelAdmin):
+    pass
 
 
 admin.site.register(DocumentType)
