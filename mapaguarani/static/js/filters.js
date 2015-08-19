@@ -15,4 +15,15 @@
     }
   ]);
 
+  filters.filter('listEthnic', [
+    function() {
+      return function(input, start) {
+        if(input) {
+          return _.map(input, function(g) { return g.name; }).join(', ');
+        }
+        return input;
+      }
+    }
+  ])
+
 })(angular);

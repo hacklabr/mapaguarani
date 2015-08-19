@@ -72,8 +72,15 @@ input[type="radio"], input[type="checkbox"] {
   width: auto;
   height: 100%;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  .village-marker {
+  .village-guarani-marker {
     background: #e7ec13;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -o-border-radius: 100%;
+  }
+  .village-other-marker {
+    background: #f57a14;
     border-radius: 100%;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;

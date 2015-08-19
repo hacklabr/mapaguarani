@@ -190,7 +190,8 @@
           layersControl.addOverlay(markerLayer, 'Aldeias Indígenas');
 
           var villagesLayer;
-          var villageIcon = L.divIcon({className: 'village-marker'});
+          var villageGuaraniIcon = L.divIcon({className: 'village-guarani-marker'});
+          var villageOtherIcon = L.divIcon({className: 'village-other-marker'});
 
           var landsLayer;
 
@@ -211,7 +212,10 @@
               if(villages && villages.length) {
                 villagesLayer = L.geoJson(Guarani.toGeoJSON(villages), {
                   pointToLayer: function(feature, latlng) {
-                    return L.marker(latlng, {icon: villageIcon});
+                    var icon = villageGuaraniIcon;
+                    if(feature.properties.ethnic_groups.length > 1)
+                      icon = villageOtherIcon;
+                    return L.marker(latlng, {icon: icon});
                   },
                   onEachFeature: function(feature, layer) {
                     var popupOptions = {maxWidth: 200};
@@ -279,7 +283,7 @@
           map.on('overlayadd', function(eventLayer) {
             // Switch to the Population legend...
             if (eventLayer.name === 'Terras indígenas') {
-              legendControl.addTo(this);
+              legendsControl.addTo(this);
             }
           });
           map.on('overlayremove', function(eventLayer) {
