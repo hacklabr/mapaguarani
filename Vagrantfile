@@ -18,9 +18,9 @@ $dependencies = <<SCRIPT
     echo "GRANT ALL PRIVILEGES ON DATABASE mapaguarani to vagrant;" | su postgres -c "psql"
 
     # Python env
-    virtualenv -p /usr/bin/python3 mapaguarani-env
-    source mapaguarani-env/bin/activate
-    pip install -r /vagrant/requirements/local.txt
+    su vagrant -c "virtualenv -p /usr/bin/python3 mapaguarani-env"
+    su vagrant -c "source mapaguarani-env/bin/activate"
+    su vagrant -c "pip install -r /vagrant/requirements/local.txt"
 
 SCRIPT
 
