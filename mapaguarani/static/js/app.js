@@ -57,7 +57,7 @@
         controller: 'SingleCtrl',
         templateUrl: '/static/views/single.html',
         data: {
-          contentType: 'village'
+          contentType: 'villages'
         },
         resolve: {
           Data: [
@@ -74,7 +74,7 @@
         controller: 'SingleCtrl',
         templateUrl: '/static/views/single.html',
         data: {
-          contentType: 'land'
+          contentType: 'lands'
         },
         resolve: {
           Data: [
@@ -91,7 +91,7 @@
         controller: 'SingleCtrl',
         templateUrl: '/static/views/single.html',
         data: {
-          contentType: 'site'
+          contentType: 'sites'
         },
         resolve: {
           Data: [

@@ -142,9 +142,7 @@
         restrict: 'E',
         scope: {
           center: '=',
-          zoom: '=',
-          villages: '=',
-          lands: '='
+          zoom: '='
         },
         link: function(scope, element, attrs) {
 
@@ -160,12 +158,12 @@
 
           Map.setMap(map);
 
-          var data;
           scope.$watch(function() {
             return Map.getData();
-          }, function(d) {
-            data = d;
-          });
+          }, _.debounce(function(data) {
+            console.log(data);
+            setLayers(data);
+          }, 700), true);
 
           map.addLayer(gm_hybrid);
 
@@ -189,69 +187,83 @@
           /*
            * Marker layer setup
            */
+          map.addLayer(markerLayer);
+          layersControl.addOverlay(markerLayer, 'Aldeias Indígenas');
+
           var villagesLayer;
           var villageIcon = L.divIcon({className: 'village-marker'});
-          scope.$watch('villages', _.debounce(function(villages) {
+
+          var landsLayer;
+
+          function setLayers(data) {
+
+            if(!data)
+              return false;
+
+            /*
+             * Villages
+             */
             if(villagesLayer) {
               markerLayer.removeLayer(villagesLayer);
               villagesLayer = null;
             }
-            if(villages && villages.length) {
-              villagesLayer = L.geoJson(Guarani.toGeoJSON(villages), {
-                pointToLayer: function(feature, latlng) {
-                  return L.marker(latlng, {icon: villageIcon});
-                },
-                onEachFeature: function(feature, layer) {
-                  var popupOptions = {maxWidth: 200};
-                  layer.bindPopup("<b>Aldeia: </b> " + feature.properties.name +
-                  "<br><b>Outros nomes: </b>" + feature.properties.other_names +
-                  "<br><b>Grupo étnico: </b>" + feature.properties.ethnic_groups2 +
-                  "<br><b>População: </b>" + feature.properties.population +
-                  "<br><b>Presença guarani: </b>" + feature.properties.guarani_presence
-                  ,popupOptions);
-                }
-              });
-              markerLayer.addLayer(villagesLayer);
-              map.fitBounds(villagesLayer.getBounds());
+            if(data.villages) {
+              var villages = data.villages;
+              if(villages && villages.length) {
+                villagesLayer = L.geoJson(Guarani.toGeoJSON(villages), {
+                  pointToLayer: function(feature, latlng) {
+                    return L.marker(latlng, {icon: villageIcon});
+                  },
+                  onEachFeature: function(feature, layer) {
+                    var popupOptions = {maxWidth: 200};
+                    layer.bindPopup("<b>Aldeia: </b> " + feature.properties.name +
+                    "<br><b>Outros nomes: </b>" + feature.properties.other_names +
+                    "<br><b>Grupo étnico: </b>" + feature.properties.ethnic_groups2 +
+                    "<br><b>População: </b>" + feature.properties.population +
+                    "<br><b>Presença guarani: </b>" + feature.properties.guarani_presence
+                    ,popupOptions);
+                  }
+                });
+                markerLayer.addLayer(villagesLayer);
+                map.fitBounds(villagesLayer.getBounds());
+              }
             }
-          }, 700), true);
-          map.addLayer(markerLayer);
-          layersControl.addOverlay(markerLayer, 'Aldeias Indígenas');
 
-          /*
-           * Polygon layer setup
-           */
-          var landsLayer;
-          scope.$watch('lands', _.debounce(function(lands) {
+            /*
+             * Lands
+             */
             if(landsLayer) {
               layersControl.removeLayer(landsLayer);
               map.removeLayer(landsLayer);
               landsLayer = null;
             }
-            if(lands && lands.length) {
-              landsLayer = L.geoJson(Guarani.toGeoJSON(lands), {
-                style: function(feature) {
-                  var style = {};
+            if(data.lands) {
+              var lands = data.lands;
+              if(lands && lands.length) {
+                landsLayer = L.geoJson(Guarani.toGeoJSON(lands), {
+                  style: function(feature) {
+                    var style = {};
 
-                  if(feature.properties.land_tenure_status)
-                    style.color = feature.properties.land_tenure_status.map_color;
-                  if(feature.properties.land_tenure)
-                    style.fillColor = feature.properties.land_tenure.map_color;
+                    if(feature.properties.land_tenure_status)
+                      style.color = feature.properties.land_tenure_status.map_color;
+                    if(feature.properties.land_tenure)
+                      style.fillColor = feature.properties.land_tenure.map_color;
 
-                  style.opacity = 0.8;
-                  style.fillOpacity = 0.5;
-                  style.weight = 2;
-                  return style;
-                },
-                onEachFeature: function(feature, layer) {
-                  layer.bindPopup(feature.properties.name);
-                }
-              });
-              map.addLayer(landsLayer);
-              map.fitBounds(landsLayer.getBounds());
-              layersControl.addOverlay(landsLayer, 'Terras indígenas');
+                    style.opacity = 0.8;
+                    style.fillOpacity = 0.5;
+                    style.weight = 2;
+                    return style;
+                  },
+                  onEachFeature: function(feature, layer) {
+                    layer.bindPopup(feature.properties.name);
+                  }
+                });
+                map.addLayer(landsLayer);
+                map.fitBounds(landsLayer.getBounds());
+                layersControl.addOverlay(landsLayer, 'Terras indígenas');
+              }
             }
-          }, 700), true);
+          }
 
           var legendsControl = L.control({position: 'bottomright'});
           legendsControl.onAdd = function(map) {
