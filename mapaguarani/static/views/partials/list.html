@@ -3,8 +3,11 @@
     <li ng-class="{active: content == 'villages'}">
       <a href="javascript:void(0);" ng-click="setContent('villages')">Aldeias indígenas</a>
     </li>
-    <li class="disabled" ng-class="{active: content == 'lands'}">
+    <li ng-class="{active: content == 'lands'}">
       <a href="javascript:void(0);" ng-click="setContent('lands')">Terras indígenas</a>
+    </li>
+    <li ng-class="{active: content == 'sites'}">
+      <a href="javascript:void(0);" ng-click="setContent('sites')">Sítios arqueológicos</a>
     </li>
   </ul>
 </nav>
@@ -18,12 +21,12 @@
 </nav>
 <div id="villages" ng-show="content == 'villages'">
   <ul class="village list">
-    <li class="village item" ng-repeat="village in filtered.villages.features = (villages.features | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
-      <h3><a ui-sref="home.village({id: village.id})" title="{{village.properties.name}}" ui-sref-opts="{inherit: false}">{{village.properties.name}}</a></h3>
-      <p>Outros nomes: {{village.properties.other_names}}</p>
-      <p>Grupo étnico: {{village.properties.ethnic_groups2}}</p>
-      <p>População: {{village.properties.population}}</p>
-      <p>Presença guarani: {{village.properties.guarani_presence}}</p>
+    <li class="village item" ng-repeat="village in filtered.villages = (villages | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
+      <h3><a ui-sref="home.village({id: village.id})" title="{{village.name}}" ui-sref-opts="{inherit: false}">{{village.name}}</a></h3>
+      <p>Outros nomes: {{village.other_names}}</p>
+      <p>Grupo étnico: {{village.ethnic_groups2}}</p>
+      <p>População: {{village.population}}</p>
+      <p>Presença guarani: {{village.guarani_presence}}</p>
     </li>
   </ul>
   <nav class="sidebar-pagination">
@@ -39,8 +42,25 @@
 </div>
 <div id="lands" ng-show="content == 'lands'">
   <ul class="land list">
-    <li class="land item" ng-repeat="land in filtered.lands.features = (lands.features | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
-      <h3><a ui-sref="home.land({id: land.id})" title="{{land.properties.name}}" ui-sref-opts="{inherit: false}">{{land.properties.name}}</a></h3>
+    <li class="land item" ng-repeat="land in filtered.lands = (lands | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
+      <h3><a ui-sref="home.land({id: land.id})" title="{{land.name}}" ui-sref-opts="{inherit: false}">{{land.name}}</a></h3>
+    </li>
+  </ul>
+  <nav class="sidebar-pagination">
+    <ul class="pager">
+      <li class="previous">
+        <a href="javascript:void(0);" ng-click="prevPage();" ng-hide="curPage == 0"><span aria-hidden="true">&larr;</span> Página anterior</a>
+      </li>
+      <li class="next">
+        <a href="javascript:void(0);" ng-click="nextPage();" ng-hide="curPage >= pageCount()">Próxima página <span aria-hidden="true">&rarr;</span></a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<div id="sites" ng-show="content == 'sites'">
+  <ul class="site list">
+    <li class="site item" ng-repeat="site in filtered.sites = (sites | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
+      <h3><a ui-sref="home.site({id: site.id})" title="{{site.name}}" ui-sref-opts="{inherit: false}">{{site.name}}</a></h3>
     </li>
   </ul>
   <nav class="sidebar-pagination">

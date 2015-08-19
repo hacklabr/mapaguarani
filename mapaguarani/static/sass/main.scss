@@ -12,36 +12,73 @@ html, body, #container {
 body {
   padding-top: 50px;
 }
+a {
+  color: #eac367;
+}
+a:hover,
+a:focus {
+  color: #c19a3c;
+}
 input[type="radio"], input[type="checkbox"] {
   margin: 0;
 }
 #sidebar {
-  width: 30%;
+  width: 38%;
   height: 100%;
-  max-width: 550px;
+  max-width: 650px;
   float: left;
   overflow: auto;
   position: relative;
   -webkit-transition: all 0.25s ease-out;
     -moz-transition: all 0.25s ease-out;
     transition: all 0.25s ease-out;
+  .nav > li > a {
+    padding: 10px 5px;
+  }
   #sidebar-main-nav {
-    margin: 10px 10px 0 10px;
+    margin: 15px 15px 0 15px;
   }
   #sidebar-filters {
-    margin: 10px;
+    margin: 15px;
     input {
       width: 100%;
     }
   }
   .sidebar-pagination {
-    margin: 0 10px 10px;
+    margin: 0 15px 15px;
+  }
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    .item {
+      margin: 15px;
+      padding: 20px 15px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -o-border-radius: 4px;
+      h3 {
+        margin: 0 0 15px;
+      }
+    }
+  }
+  article.single {
+    margin: 0 15px;
   }
 }
 #map {
   width: auto;
   height: 100%;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  .village-marker {
+    background: #e7ec13;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -o-border-radius: 100%;
+  }
 }
 #loading {
   position: absolute;
@@ -71,7 +108,7 @@ input[type="radio"], input[type="checkbox"] {
 .navbar .navbar-brand {
   font-weight: bold;
   font-size: 25px;
-  color: #FFFFFF;
+  color: #8c83c7;
 }
 .navbar-collapse.in {
   overflow-y: hidden;

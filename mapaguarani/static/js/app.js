@@ -35,13 +35,19 @@
           VillagesData: [
             'GuaraniService',
             function(Guarani) {
-              return Guarani.villages.get().$promise;
+              return Guarani.villages.query().$promise;
             }
           ],
           LandsData: [
             'GuaraniService',
             function(Guarani) {
-              return Guarani.lands.get().$promise;
+              return Guarani.lands.query().$promise;
+            }
+          ],
+          SitesData: [
+            'GuaraniService',
+            function(Guarani) {
+              return Guarani.sites.query().$promise;
             }
           ]
         }
@@ -57,17 +63,8 @@
           Data: [
             'GuaraniService',
             '$stateParams',
-            '$q',
-            function(Guarani, $stateParams, $q) {
-              // Temporary api fix
-              var deferred = $q.defer();
-              Guarani.villages.get({}, function(villages) {
-                villages.features = _.filter(villages.features, function(f) {
-                  return f.id == $stateParams.id;
-                });
-                deferred.resolve(villages);
-              });
-              return deferred.promise;
+            function(Guarani, $stateParams) {
+              return Guarani.villages.get({id: $stateParams.id}).$promise;
             }
           ]
         }
@@ -83,8 +80,25 @@
           Data: [
             'GuaraniService',
             '$stateParams',
-            function(Guarani) {
+            function(Guarani, $stateParams) {
               return Guarani.lands.get({id: $stateParams.id}).$promise;
+            }
+          ]
+        }
+      })
+      .state('home.site', {
+        url: 'sites/:id/',
+        controller: 'SingleCtrl',
+        templateUrl: '/static/views/single.html',
+        data: {
+          contentType: 'site'
+        },
+        resolve: {
+          Data: [
+            'GuaraniService',
+            '$stateParams',
+            function(Guarani, $stateParams) {
+              return Guarani.sites.get({id: $stateParams.id}).$promise;
             }
           ]
         }
