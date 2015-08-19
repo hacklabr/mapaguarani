@@ -1,7 +1,7 @@
 <article class="single">
   <h2>{{data.name}}</h2>
-  <p>Outros nomes: {{data.other_names}}</p>
-  <p>Grupo étnico: {{data.ethnic_groups2}}</p>
-  <p>População: {{data.population}}</p>
-  <p>Presença guarani: {{data.guarani_presence}}</p>
+  <p ng-show="data.other_names">Outros nomes: {{data.other_names}}</p>
+  <p ng-show="data.ethnic_groups.length">Grupo étnico: {{data.ethnic_groups | listEthnic}}</p>
+  <p ng-show="data.population">População: {{data.population}}</p>
+  <p ng-show="data.guarani_presence">Presença guarani: {{data.guarani_presence}}</p>
 </article>

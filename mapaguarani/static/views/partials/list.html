@@ -23,10 +23,10 @@
   <ul class="village list">
     <li class="village item" ng-repeat="village in filtered.villages = (villages | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
       <h3><a ui-sref="village({id: village.id})" title="{{village.name}}" ui-sref-opts="{inherit: false}">{{village.name}}</a></h3>
-      <p>Outros nomes: {{village.other_names}}</p>
-      <p>Grupo étnico: {{village.ethnic_groups | listEthnic}}</p>
-      <p>População: {{village.population}}</p>
-      <p>Presença guarani: {{village.guarani_presence}}</p>
+      <p ng-show="village.other_names">Outros nomes: {{village.other_names}}</p>
+      <p ng-show="village.ethnic_groups.length">Grupo étnico: {{village.ethnic_groups | listEthnic}}</p>
+      <p ng-show="village.population">População: {{village.population}}</p>
+      <p ng-show="village.guarani_presence">Presença guarani: {{village.guarani_presence}}</p>
     </li>
   </ul>
   <nav class="sidebar-pagination">
