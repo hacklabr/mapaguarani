@@ -1,4 +1,4 @@
-(function(angular) {
+(function(angular, L, _) {
   'use strict';
 
   var directives = angular.module('mapaguarani.directives', []);
@@ -161,7 +161,6 @@
           scope.$watch(function() {
             return Map.getData();
           }, _.debounce(function(data) {
-            console.log(data);
             setLayers(data);
           }, 700), true);
 
@@ -293,4 +292,4 @@
     }
   ])
 
-})(angular);
+})(angular, L, _);
