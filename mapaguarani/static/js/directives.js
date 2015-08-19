@@ -26,6 +26,7 @@
         scope: {
           villages: '=',
           lands: '=',
+          sites: '=',
           filtered: '='
         },
         templateUrl: '/static/views/partials/list.html',
@@ -57,6 +58,12 @@
           scope.$watch('lands', function(lands) {
             if(typeof lands == 'object') {
               scope.filtered.lands = angular.copy(lands);
+            }
+          });
+
+          scope.$watch('sites', function(sites) {
+            if(typeof sites == 'object') {
+              scope.filtered.sites = angular.copy(sites);
             }
           });
 

@@ -11,6 +11,7 @@
       return {
         villages: $resource('api/villages/:id'),
         lands: $resource('api/lands/:id'),
+        sites: $resource('api/archaeological/:id'),
         toGeoJSON: function(data) {
           var geojson = {
             type: 'FeatureCollection',

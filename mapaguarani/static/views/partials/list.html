@@ -6,8 +6,8 @@
     <li ng-class="{active: content == 'lands'}">
       <a href="javascript:void(0);" ng-click="setContent('lands')">Terras indígenas</a>
     </li>
-    <li ng-class="{active: content == 'sitio'}">
-      <a href="javascript:void(0);" ng-click="setContent('sitio')">Sítios arqueológicos</a>
+    <li ng-class="{active: content == 'sites'}">
+      <a href="javascript:void(0);" ng-click="setContent('sites')">Sítios arqueológicos</a>
     </li>
   </ul>
 </nav>
@@ -44,6 +44,23 @@
   <ul class="land list">
     <li class="land item" ng-repeat="land in filtered.lands = (lands | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
       <h3><a ui-sref="home.land({id: land.id})" title="{{land.name}}" ui-sref-opts="{inherit: false}">{{land.name}}</a></h3>
+    </li>
+  </ul>
+  <nav class="sidebar-pagination">
+    <ul class="pager">
+      <li class="previous">
+        <a href="javascript:void(0);" ng-click="prevPage();" ng-hide="curPage == 0"><span aria-hidden="true">&larr;</span> Página anterior</a>
+      </li>
+      <li class="next">
+        <a href="javascript:void(0);" ng-click="nextPage();" ng-hide="curPage >= pageCount()">Próxima página <span aria-hidden="true">&rarr;</span></a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<div id="sites" ng-show="content == 'sites'">
+  <ul class="site list">
+    <li class="site item" ng-repeat="site in filtered.sites = (sites | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
+      <h3><a ui-sref="home.site({id: site.id})" title="{{site.name}}" ui-sref-opts="{inherit: false}">{{site.name}}</a></h3>
     </li>
   </ul>
   <nav class="sidebar-pagination">

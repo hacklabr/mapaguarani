@@ -43,6 +43,12 @@
             function(Guarani) {
               return Guarani.lands.query().$promise;
             }
+          ],
+          SitesData: [
+            'GuaraniService',
+            function(Guarani) {
+              return Guarani.sites.query().$promise;
+            }
           ]
         }
       })
@@ -76,6 +82,23 @@
             '$stateParams',
             function(Guarani, $stateParams) {
               return Guarani.lands.get({id: $stateParams.id}).$promise;
+            }
+          ]
+        }
+      })
+      .state('home.site', {
+        url: 'sites/:id/',
+        controller: 'SingleCtrl',
+        templateUrl: '/static/views/single.html',
+        data: {
+          contentType: 'site'
+        },
+        resolve: {
+          Data: [
+            'GuaraniService',
+            '$stateParams',
+            function(Guarani, $stateParams) {
+              return Guarani.sites.get({id: $stateParams.id}).$promise;
             }
           ]
         }

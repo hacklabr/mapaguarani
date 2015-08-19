@@ -8,18 +8,21 @@
     '$state',
     'VillagesData',
     'LandsData',
-    function ($scope, $state, villages, lands) {
+    'SitesData',
+    function ($scope, $state, villages, lands, sites) {
 
       $scope.filtered = {};
 
       $scope.villages = villages;
       $scope.lands = lands;
-
+      $scope.sites = sites;
+      
       $scope.mapData = {};
 
       $scope.$watch('filtered', function(filtered) {
         $scope.mapData.villages = filtered.villages;
         $scope.mapData.lands = filtered.lands;
+        $scope.mapData.sites = filtered.sites;
       }, true);
 
       $scope.$on('mapaguarani.contentChanged', function(ev, content) {
