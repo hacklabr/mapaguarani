@@ -1,4 +1,4 @@
-(function(angular) {
+(function(angular, _) {
   'use strict';
 
   var filters = angular.module('mapaguarani.filters', []);
@@ -17,13 +17,24 @@
 
   filters.filter('listEthnic', [
     function() {
-      return function(input, start) {
+      return function(input) {
         if(input) {
           return _.map(input, function(g) { return g.name; }).join(', ');
         }
         return input;
       }
     }
-  ])
+  ]);
 
-})(angular);
+  filters.filter('contentType', [
+    function() {
+      return function(input, contentType, filterContent, conditional) {
+        if(contentType && conditional && contentType != filterContent) {
+          return [];
+        }
+        return input;
+      }
+    }
+  ]);
+
+})(angular, _);
