@@ -1,8 +1,10 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic.base import TemplateView
+from djgeojson.views import TiledGeoJSONLayerView
 from core.views import (IndigenousLandsLayerView, IndigenousLandViewSet, IndigenousVillageViewSet,
                         ArchaeologicalPlaceViewSet,)
+from core.models import IndigenousVillage, IndigenousLand, ArchaeologicalPlace
 from moderation.helpers import auto_discover
 from rest_framework import routers
 
@@ -21,6 +23,15 @@ urlpatterns = [
 
     # Services
     url(r'^api/', include(router.urls)),
+
+    url(r'^tiles/villages/(?P<z>\d+)/(?P<x>\d+)/(?P<y>\d+).geojson$',
+        TiledGeoJSONLayerView.as_view(model=IndigenousVillage), name='data'),
+
+    url(r'^tiles/lands/(?P<z>\d+)/(?P<x>\d+)/(?P<y>\d+).geojson$',
+        TiledGeoJSONLayerView.as_view(model=IndigenousLand), name='data'),
+
+    url(r'^tiles/archaeological/(?P<z>\d+)/(?P<x>\d+)/(?P<y>\d+).geojson$',
+        TiledGeoJSONLayerView.as_view(model=ArchaeologicalPlace), name='data'),
 
     url(r'^admin/', include(admin.site.urls)),
 
