@@ -25,13 +25,23 @@ urlpatterns = [
     url(r'^api/', include(router.urls)),
 
     url(r'^tiles/villages/(?P<z>\d+)/(?P<x>\d+)/(?P<y>\d+).geojson$',
-        TiledGeoJSONLayerView.as_view(model=IndigenousVillage), name='data'),
+        TiledGeoJSONLayerView.as_view(
+            model=IndigenousVillage,
+            geometry_field='position',
+        ), name='data'),
 
     url(r'^tiles/lands/(?P<z>\d+)/(?P<x>\d+)/(?P<y>\d+).geojson$',
-        TiledGeoJSONLayerView.as_view(model=IndigenousLand), name='data'),
+        TiledGeoJSONLayerView.as_view(
+            model=IndigenousLand,
+            geometry_field='polygon',
+            trim_to_boundary=False
+        ), name='data'),
 
     url(r'^tiles/archaeological/(?P<z>\d+)/(?P<x>\d+)/(?P<y>\d+).geojson$',
-        TiledGeoJSONLayerView.as_view(model=ArchaeologicalPlace), name='data'),
+        TiledGeoJSONLayerView.as_view(
+            model=ArchaeologicalPlace,
+            geometry_field='position',
+        ), name='data'),
 
     url(r'^admin/', include(admin.site.urls)),
 
