@@ -190,8 +190,8 @@ class LandTenureStatus(models.Model):
     map_color = models.CharField(_('Color in Map'), max_length=64, blank=True, null=True)
 
     class Meta:
-        verbose_name = _('Land Tenure')
-        verbose_name_plural = _('Land Tenures')
+        verbose_name = _('Land Tenure Status')
+        verbose_name_plural = _('Land Tenures Status')
 
     def __str__(self):
         return self.name
