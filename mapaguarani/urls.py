@@ -34,7 +34,20 @@ urlpatterns = [
         TiledGeoJSONLayerView.as_view(
             model=IndigenousLand,
             geometry_field='polygon',
-            trim_to_boundary=False
+            trim_to_boundary=False,
+            simplifications={
+                0: 0.001,
+                1: 0.001,
+                2: 0.001,
+                3: 0.001,
+                4: 0.001,
+                5: 0.001,
+                6: 0.001,
+                7: 0.001,
+                8: 0.001,
+                9: 0.001,
+                10: 0.0001,
+            }
         ), name='data'),
 
     url(r'^tiles/archaeological/(?P<z>\d+)/(?P<x>\d+)/(?P<y>\d+).geojson$',
