@@ -19,14 +19,6 @@
       $scope.lands = lands;
       $scope.sites = sites;
 
-      Map.setData({
-        villages: villages,
-        lands: lands,
-        sites: sites
-      });
-
-      $scope.mapData = {};
-
       var filter = false;
 
       var map;
@@ -53,7 +45,7 @@
 
       $scope.$on('$stateChangeSuccess', function(ev, to, toParams) {
         if(to.name == 'home') {
-          Map.updateBounds();
+          // Map.updateBounds();
         }
       });
 

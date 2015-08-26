@@ -145,7 +145,9 @@
   directives.directive('guaraniMap', [
     'GuaraniService',
     'guaraniMapService',
-    function(Guarani, Map) {
+    '$rootScope',
+    '$state',
+    function(Guarani, Map, $rootScope, $state) {
       return {
         restrict: 'E',
         scope: {
@@ -187,32 +189,25 @@
           /*
            * Marker layer setup
            */
-          var markerLayer = new L.MarkerClusterGroup({
-            maxClusterRadius: 25,
-            iconCreateFunction: function(cluster) {
-              return new L.DivIcon({ html: '<div><span>' + cluster.getChildCount() + '</span></div>', className: 'villages-cluster marker-cluster', iconSize: new L.Point(40, 40) });
-            }
-          });
-          contentLayer.addLayer(markerLayer);
-          layersControl.addOverlay(markerLayer, 'Aldeias Indígenas');
-
-          scope.$watch(function() {
-            return Map.getData();
-          }, function(data) {
-            setLayers(data);
-          }, true);
-
-          /*
-           * Init Villages layer
-           */
-          var villagesLayer = new L.FeatureGroup();
-          var villageGuaraniIcon = L.divIcon({className: 'village-guarani-marker'});
-          var villageOtherIcon = L.divIcon({className: 'village-other-marker'});
 
           /*
            * Init Lands layer
            */
           var landsLayer = new L.FeatureGroup();
+          contentLayer.addLayer(landsLayer);
+
+          /*
+           * Init Villages layer
+           */
+          var villagesLayer = new L.MarkerClusterGroup({
+            maxClusterRadius: 25,
+            iconCreateFunction: function(cluster) {
+              return new L.DivIcon({ html: '<div><span>' + cluster.getChildCount() + '</span></div>', className: 'villages-cluster marker-cluster', iconSize: new L.Point(40, 40) });
+            }
+          });
+          contentLayer.addLayer(villagesLayer);
+          var villageGuaraniIcon = L.divIcon({className: 'village-guarani-marker'});
+          var villageOtherIcon = L.divIcon({className: 'village-other-marker'});
 
           /*
            * Init sites layer
@@ -223,128 +218,110 @@
               return new L.DivIcon({ html: '<div><span>' + cluster.getChildCount() + '</span></div>', className: 'sites-cluster marker-cluster', iconSize: new L.Point(40, 40) });
             }
           });
+          contentLayer.addLayer(sitesLayer);
           var sitesIcon = L.divIcon({className: 'site-marker'});
 
-          function setLayers(data) {
-
-            if(!data)
-              return false;
-
-            /*
-             * Villages
-             */
-            markerLayer.removeLayer(villagesLayer);
-            villagesLayer = new L.FeatureGroup();
-            if(data.villages) {
-              var villages = data.villages;
-              if(villages && villages.length) {
-                L.geoJson(Guarani.toGeoJSON(villages), {
-                  pointToLayer: function(feature, latlng) {
-                    var icon = villageGuaraniIcon;
-                    if(feature.properties.ethnic_groups.length > 1)
-                      icon = villageOtherIcon;
-                    var marker = L.marker(latlng, {icon: icon});
-
-                    var popupOptions = {maxWidth: 200};
-                    marker.bindPopup("<b>Aldeia: </b> " + feature.properties.name +
-                    "<br><b>Outros nomes: </b>" + feature.properties.other_names +
-                    "<br><b>Grupo étnico: </b>" + feature.properties.ethnic_groups2 +
-                    "<br><b>População: </b>" + feature.properties.population +
-                    "<br><b>Presença guarani: </b>" + feature.properties.guarani_presence
-                    ,popupOptions);
-
-                    villagesLayer.addLayer(marker);
-                    return marker;
-                  }
-                });
-                markerLayer.addLayer(villagesLayer);
-              }
+          var landsTileLayer = new L.TileLayer.GeoJSON('/tiles/lands/{z}/{x}/{y}.geojson', {
+            clipTiles: true,
+            unique: function(feature) {
+              return feature.id;
             }
-
-            /*
-             * Lands
-             */
-            layersControl.removeLayer(landsLayer);
-            contentLayer.removeLayer(landsLayer);
-            landsLayer = new L.FeatureGroup();
-            if(data.lands) {
-              var lands = data.lands;
-              if(lands && lands.length) {
-                L.geoJson(Guarani.toGeoJSON(lands), {
-                  onEachFeature: function(feature, polygon) {
-                    var style = {};
-                    if(feature.properties.land_tenure_status)
-                      style.color = feature.properties.land_tenure_status.map_color;
-                    if(feature.properties.land_tenure)
-                      style.fillColor = feature.properties.land_tenure.map_color;
-                    style.opacity = 0.8;
-                    style.fillOpacity = 0.5;
-                    style.weight = 2;
-                    polygon.setStyle(style);
-
-                    polygon.bindPopup(feature.properties.name);
-
-                    landsLayer.addLayer(polygon);
-                  }
-                });
-                contentLayer.addLayer(landsLayer);
-                layersControl.addOverlay(landsLayer, 'Terras indígenas');
-              }
+          }, {
+            style: function(feature) {
+              var style = {};
+              if(feature.properties.land_tenure_status)
+                style.color = feature.properties.land_tenure_status.map_color;
+              if(feature.properties.land_tenure)
+                style.fillColor = feature.properties.land_tenure.map_color;
+              style.opacity = 0.8;
+              style.fillOpacity = 0.5;
+              style.weight = 1;
+              return style;
             }
+          });
+          contentLayer.addLayer(landsTileLayer);
 
-            /*
-             * Archaeological sites
-             */
-            contentLayer.removeLayer(sitesLayer);
-            sitesLayer = new L.MarkerClusterGroup({
-              maxClusterRadius: 25,
-              iconCreateFunction: function(cluster) {
-                return new L.DivIcon({ html: '<div><span>' + cluster.getChildCount() + '</span></div>', className: 'sites-cluster marker-cluster', iconSize: new L.Point(40, 40) });
-              }
+          var villagesMarker = [];
+          var villagesTileLayer = new L.TileLayer.GeoJSON('/tiles/villages/{z}/{x}/{y}.geojson', {
+            clipTiles: true,
+            layer: villagesLayer,
+            unique: function(feature) {
+              return feature.id;
+            }
+          }, {
+            pointToLayer: function(feature, latlng) {
+              var icon = villageGuaraniIcon;
+              if(feature.properties.ethnic_groups && feature.properties.ethnic_groups.length > 1)
+                icon = villageOtherIcon;
+              var marker = new L.Marker(latlng, {icon: icon});
+              villagesLayer.addLayer(marker);
+              villagesMarker.push(marker);
+              marker.on('click', function() {
+                $rootScope.$apply(function() {
+                  // $state.go('home.village', { id: feature.id });
+                });
+              });
+              return null;
+            }
+          });
+          villagesLayer.addLayer(villagesTileLayer);
+          map.on('zoomstart', function() {
+            villagesMarker.forEach(function(marker) {
+              villagesLayer.removeLayer(marker);
             });
-            if(data.sites) {
-              var sites = data.sites;
-              if(sites && sites.length) {
-                L.geoJson(Guarani.toGeoJSON(sites), {
-                  pointToLayer: function(feature, latlng) {
-                    var icon = sitesIcon;
-                    var marker = L.marker(latlng, {icon: icon});
+          });
 
-                    var popupOptions = {maxWidth: 200};
-                    marker.bindPopup("<b>Sítio arqueológico: </b> " + feature.properties.name, popupOptions);
-
-                    sitesLayer.addLayer(marker);
-                    return marker;
-                  }
+          var sitesMarker = [];
+          var sitesTileLayer = new L.TileLayer.GeoJSON('/tiles/archaeological/{z}/{x}/{y}.geojson', {
+            clipTiles: true,
+            unique: function(feature) {
+              return feature.id;
+            }
+          }, {
+            pointToLayer: function(feature, latlng) {
+              var icon = sitesIcon;
+              var marker = new L.Marker(latlng, {icon: icon});
+              console.log(feature);
+              sitesLayer.addLayer(marker);
+              sitesMarker.push(marker);
+              marker.on('click', function() {
+                $rootScope.$apply(function() {
+                  // $state.go('home.site', { id: feature.id });
                 });
-                contentLayer.addLayer(sitesLayer);
-              }
-            }
-          }
-
-          var legendsControl = L.control({position: 'bottomright'});
-          legendsControl.onAdd = function(map) {
-            var div = L.DomUtil.create('div', 'info legend');
-            var tenure;
-            div.innerHTML += '<p><strong>Terras indígenas</strong></p>';
-            for (tenure in landTenures) {
-              div.innerHTML += '<i style="background:' + landTenures[tenure].style.fillColor + '"></i>' + landTenures[tenure].name + '<br>';
-            }
-            return div;
-          };
-          legendsControl.addTo(map);
-
-          map.on('overlayadd', function(eventLayer) {
-            // Switch to the Population legend...
-            if (eventLayer.name === 'Terras indígenas') {
-              legendsControl.addTo(this);
+              });
+              return null;
             }
           });
-          map.on('overlayremove', function(eventLayer) {
-            if (eventLayer.name === 'Terras indígenas') {
-              this.removeControl(legendsControl);
-            }
+          sitesLayer.addLayer(sitesTileLayer);
+          map.on('zoomstart', function() {
+            sitesMarker.forEach(function(marker) {
+              sitesLayer.removeLayer(marker);
+            });
           });
+
+          // var legendsControl = L.control({position: 'bottomright'});
+          // legendsControl.onAdd = function(map) {
+          //   var div = L.DomUtil.create('div', 'info legend');
+          //   var tenure;
+          //   div.innerHTML += '<p><strong>Terras indígenas</strong></p>';
+          //   for (tenure in landTenures) {
+          //     div.innerHTML += '<i style="background:' + landTenures[tenure].style.fillColor + '"></i>' + landTenures[tenure].name + '<br>';
+          //   }
+          //   return div;
+          // };
+          // legendsControl.addTo(map);
+          //
+          // map.on('overlayadd', function(eventLayer) {
+          //   // Switch to the Population legend...
+          //   if (eventLayer.name === 'Terras indígenas') {
+          //     legendsControl.addTo(this);
+          //   }
+          // });
+          // map.on('overlayremove', function(eventLayer) {
+          //   if (eventLayer.name === 'Terras indígenas') {
+          //     this.removeControl(legendsControl);
+          //   }
+          // });
         }
       }
     }
