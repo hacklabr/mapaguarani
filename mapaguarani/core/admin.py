@@ -3,8 +3,8 @@ from django.contrib.gis import admin as geoadmin
 from django.utils.translation import ugettext_lazy as _
 from .models import (
     IndigenousVillage, IndigenousLand, LegalProceedings, DocumentType,
-    Document, EthnicGroup, GuaraniPresence, Population,
-    ArchaeologicalPlace, ArchaeologicalImage
+    Document, EthnicGroup, ProminentEthnicSubGroup, GuaraniPresence, Population,
+    ArchaeologicalPlace, ArchaeologicalImage, LandTenure, LandTenureStatus
 )
 from moderation.admin import ModerationAdmin
 # from django.contrib.gis.maps.google import GoogleMap
@@ -80,6 +80,7 @@ class ArchaeologicalPlaceAdmin(admin.ModelAdmin):
             return _('(No name)')
     get_name.short_description = _('Name')
 
+
 @admin.register(LegalProceedings)
 class LegalProceedingsAdmin(admin.ModelAdmin):
     pass
@@ -88,5 +89,8 @@ class LegalProceedingsAdmin(admin.ModelAdmin):
 admin.site.register(DocumentType)
 admin.site.register(Document)
 admin.site.register(EthnicGroup)
+admin.site.register(ProminentEthnicSubGroup)
+admin.site.register(LandTenure)
+admin.site.register(LandTenureStatus)
 admin.site.register(GuaraniPresence)
 admin.site.register(Population)
