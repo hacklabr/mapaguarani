@@ -21,8 +21,8 @@
 </nav>
 <div id="villages" ng-show="content == 'villages'">
   <ul class="village list">
-    <li class="village item" ng-repeat="village in filtered.villages = (villages | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
-      <h3><a ui-sref="village({id: village.id})" title="{{village.name}}" ui-sref-opts="{inherit: false}">{{village.name}}</a></h3>
+    <li class="village item" ng-repeat="village in filtered.villages = (villages | contentType:'villages':content:filter.text | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
+      <h3><a ui-sref="home.village({id: village.id})" title="{{village.name}}" ui-sref-opts="{inherit: false}">{{village.name}}</a></h3>
       <p ng-show="village.other_names">Outros nomes: {{village.other_names}}</p>
       <p ng-show="village.ethnic_groups.length">Grupo étnico: {{village.ethnic_groups | listEthnic}}</p>
       <p ng-show="village.population">População: {{village.population}}</p>
@@ -42,8 +42,8 @@
 </div>
 <div id="lands" ng-show="content == 'lands'">
   <ul class="land list">
-    <li class="land item" ng-repeat="land in filtered.lands = (lands | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
-      <h3><a ui-sref="land({id: land.id})" title="{{land.name}}" ui-sref-opts="{inherit: false}">{{land.name}}</a></h3>
+    <li class="land item" ng-repeat="land in filtered.lands = (lands | contentType:'lands':content:filter.text | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
+      <h3><a ui-sref="home.land({id: land.id})" title="{{land.name}}" ui-sref-opts="{inherit: false}">{{land.name}}</a></h3>
     </li>
   </ul>
   <nav class="sidebar-pagination">
@@ -59,8 +59,8 @@
 </div>
 <div id="sites" ng-show="content == 'sites'">
   <ul class="site list">
-    <li class="site item" ng-repeat="site in filtered.sites = (sites | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
-      <h3><a ui-sref="site({id: site.id})" title="{{site.name}}" ui-sref-opts="{inherit: false}">{{site.name}}</a></h3>
+    <li class="site item" ng-repeat="site in filtered.sites = (sites | contentType:'sites':content:filter.text | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
+      <h3><a ui-sref="home.site({id: site.id})" title="{{site.name}}" ui-sref-opts="{inherit: false}">{{site.name}}</a></h3>
     </li>
   </ul>
   <nav class="sidebar-pagination">

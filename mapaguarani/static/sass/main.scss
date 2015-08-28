@@ -86,16 +86,23 @@ input[type="radio"], input[type="checkbox"] {
     -moz-border-radius: 100%;
     -o-border-radius: 100%;
   }
-  .marker-cluster,
-  .marker-cluster-medium,
-  .marker-cluster-small {
+  .site-marker {
+    background: gray;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -o-border-radius: 100%;
+  }
+  .leaflet-div-icon {
+
+  }
+  .marker-cluster {
     background: transparent;
     &:before {
       content: '';
       display: block;
       width: 20px;
       height: 20px;
-      background: #f57a14;
       position: absolute;
       top: 12px;
       left: 12px;
@@ -109,8 +116,6 @@ input[type="radio"], input[type="checkbox"] {
       height: 20px;
       margin-top: 10px;
       margin-left: 10px;
-      background: transparent;
-      background: #e7ec13;
       box-shadow: 1px 1px 1px rgba(0,0,0,0.3);
       position: relative;
       z-index: 3;
@@ -118,6 +123,23 @@ input[type="radio"], input[type="checkbox"] {
         line-height: 20px;
       }
     }
+  }
+}
+.marker-cluster.villages-cluster {
+  &:before {
+    background: #f57a14;
+  }
+  div {
+    background: #e7ec13;
+  }
+
+}
+.marker-cluster.sites-cluster {
+  &:before {
+    background: lightgray;
+  }
+  div {
+    background: darken(lightgray, 10%);
   }
 }
 #loading {

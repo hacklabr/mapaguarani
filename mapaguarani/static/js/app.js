@@ -52,8 +52,8 @@
           ]
         }
       })
-      .state('village', {
-        url: '/villages/:id/',
+      .state('home.village', {
+        url: 'villages/:id/',
         controller: 'SingleCtrl',
         templateUrl: '/static/views/single.html',
         data: {
@@ -69,8 +69,8 @@
           ]
         }
       })
-      .state('land', {
-        url: '/lands/:id/',
+      .state('home.land', {
+        url: 'lands/:id/',
         controller: 'SingleCtrl',
         templateUrl: '/static/views/single.html',
         data: {
@@ -86,8 +86,8 @@
           ]
         }
       })
-      .state('site', {
-        url: '/sites/:id/',
+      .state('home.site', {
+        url: 'sites/:id/',
         controller: 'SingleCtrl',
         templateUrl: '/static/views/single.html',
         data: {
