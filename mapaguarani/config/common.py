@@ -114,7 +114,7 @@ EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.s
 # MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
-    ("""Your Name""", 'Your email'),
+    ("""Hacklab""", 'bruno@hacklab.com.br'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
@@ -194,8 +194,6 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'allauth.account.context_processors.account',
-                'allauth.socialaccount.context_processors.socialaccount',
                 'django.template.context_processors.i18n',
                 'django.template.context_processors.media',
                 'django.template.context_processors.static',
