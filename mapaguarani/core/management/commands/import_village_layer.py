@@ -22,13 +22,66 @@ class Command(BaseCommand):
         villages_layer.description = 'Camada de Aldeias Indígenas dos povos Guarani'
         villages_layer.save()
 
-        def _get_ethnic_group(group):
-            ethnic_group, _ = EthnicGroup.objects.get_or_create(name=group)
-            return ethnic_group
+        def _get_ethnic_group(groups):
 
-        def _get_ethnic_subgroup(group):
-            ethnic_group, _ = ProminentEthnicSubGroup.objects.get_or_create(name=group)
-            return ethnic_group
+            groups_names = []
+            group_list = groups.split()
+            if len(group_list) == 1:
+                groups_names.append(group_list[0])
+            elif 'e' in group_list and len(group_list) == 3:
+                groups_names.append(group_list[0])
+                groups_names.append(group_list[2])
+            elif len(group_list) == 4:
+                groups_names.append(group_list[0][:-1])
+                groups_names.append(group_list[1])
+                groups_names.append(group_list[3])
+            else:
+                print('EthnicGroup:')
+                print(group_list)
+
+            for group_name in groups_names:
+                try:
+                    yield EthnicGroup.objects.get(name=group_name)
+                except EthnicGroup.DoesNotExist:
+                    print('Não achou EthnicGroup: ' + group_name)
+
+        def _get_ethnic_subgroup(groups):
+            groups_names = []
+            group_list = groups.split()
+            if len(group_list) == 1:
+                if '/' not in group_list[0]:
+                    groups_names.append(group_list[0])
+                else:
+                    group_list = groups.split('/')
+                    if len(group_list) == 2:
+                        groups_names.append(group_list[0])
+                        groups_names.append(group_list[1])
+            elif '/' in groups:
+                if group_list and len(group_list) == 3:
+                    groups_names.append(group_list[0])
+                    if '/' in group_list[2]:
+                        group_list2 = group_list[2].split('/')
+                        groups_names.append(group_list2[0])
+                        groups_names.append(group_list2[1])
+                    else:
+                        groups_names.append(group_list[2])
+                else:
+                    for group in group_list:
+                        if not '/' in group:
+                            groups_names.append(group)
+                        else:
+                            if len(group) > 1:
+                                groups_names.append(group.split('/')[1])
+            else:
+                print(group_list)
+
+            for group_name in groups_names:
+                try:
+                    yield ProminentEthnicSubGroup.objects.get(name=group_name)
+                except ProminentEthnicSubGroup.DoesNotExist:
+                    print('Não achou: ' + group_name)
+                    print(groups)
+                    print('\n')
 
         for feat in source_layer:
             kwargs = {
@@ -60,10 +113,13 @@ class Command(BaseCommand):
             except:
                 self.stdout.write('Falha ao salvar aldeia indígena\n')
 
-            for group in feat.get('GRUPO_ETNI').split(','):
-                indigenous_village.ethnic_groups.add(_get_ethnic_group(group))
-            for group in feat.get('SUB_GRUPO_').split(','):
-                indigenous_village.prominent_subgroup.add(_get_ethnic_subgroup(group))
+            ethnic_groups = _get_ethnic_group(feat.get('GRUPO_ETNI'))
+            for group in ethnic_groups:
+                indigenous_village.ethnic_groups.add(group)
+
+            ethnic_subgroups = _get_ethnic_subgroup(feat.get('SUB_GRUPO_'))
+            for ethnic_subgroup in ethnic_subgroups:
+                indigenous_village.prominent_subgroup.add(ethnic_subgroup)
 
             guarani_presence = feat.get('PRESENCA_G')
             if guarani_presence == 'Sim':
