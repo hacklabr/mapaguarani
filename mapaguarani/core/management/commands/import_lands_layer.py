@@ -19,13 +19,81 @@ class Command(BaseCommand):
         lands_layer.description = 'Camada de Terras Indígenas dos povos Guarani'
         lands_layer.save()
 
-        def _get_ethnic_group(group):
-            ethnic_group, _ = EthnicGroup.objects.get_or_create(name=group)
-            return ethnic_group
+        def _get_ethnic_group(groups):
 
-        def _get_ethnic_subgroup(group):
-            ethnic_group, _ = ProminentEthnicSubGroup.objects.get_or_create(name=group)
-            return ethnic_group
+            groups_names = []
+            if ',' in groups:
+                group_list = groups.split(',')
+            else:
+                group_list = groups.split()
+            if len(group_list) == 1:
+                groups_names.append(group_list[0])
+            elif 'e' in group_list and len(group_list) == 3:
+                groups_names.append(group_list[0])
+                groups_names.append(group_list[2])
+            elif len(group_list) == 4:
+                groups_names.append(group_list[0][:-1])
+                groups_names.append(group_list[1])
+                groups_names.append(group_list[3])
+            elif len(group_list) == 2 or len(group_list) == 3:
+                groups_names = group_list
+            else:
+                print('EthnicGroup:')
+                print(group_list)
+
+            for group_name in groups_names:
+                try:
+                    yield EthnicGroup.objects.get(name=group_name)
+                except EthnicGroup.DoesNotExist:
+                    print('Não achou EthnicGroup: ' + group_name)
+
+        def _get_ethnic_subgroup(groups):
+            groups_names = []
+            if ',' in groups:
+                group_list = groups.split(',')
+            else:
+                group_list = groups.split()
+            if len(group_list) == 1:
+                if '/' not in group_list[0]:
+                    groups_names.append(group_list[0])
+                else:
+                    group_list = groups.split('/')
+                    if len(group_list) == 2:
+                        groups_names = group_list
+            elif '/' in groups:
+                if group_list and len(group_list) == 3:
+                    groups_names.append(group_list[0])
+                    if '/' in group_list[2]:
+                        group_list2 = group_list[2].split('/')
+                        groups_names.append(group_list2[0])
+                        groups_names.append(group_list2[1])
+                    else:
+                        groups_names.append(group_list[2])
+                elif len(group_list) == 2:
+                    groups_names.append(group_list[0])
+                    if '/'in group_list[1]:
+                        groups_names.append(group_list[1][1:])
+                    else:
+                        groups_names.append(group_list[1])
+                elif len(group_list) == 4:
+                    groups_names.append(group_list[0])
+                    groups_names.append(group_list[2])
+                    if '/'in group_list[3]:
+                        groups_names.append(group_list[3][1:])
+                    else:
+                        groups_names.append(group_list[3])
+            elif len(group_list) == 2 or len(group_list) == 3:
+                groups_names = group_list
+            else:
+                print(group_list)
+
+            for group_name in groups_names:
+                try:
+                    yield ProminentEthnicSubGroup.objects.get(name=group_name)
+                except ProminentEthnicSubGroup.DoesNotExist:
+                    print('Não achou: ' + group_name)
+                    print(groups)
+                    print('\n')
 
         def _get_land_tenure(name):
             land_tenure, _ = LandTenure.objects.get_or_create(name=name)
@@ -56,8 +124,6 @@ class Command(BaseCommand):
                 'guarani_exclusive_possession_area_portion': float(feat.get('PORCAO_ARE')),
                 'others_exclusive_possession_area_portion': float(feat.get('PORCAO_AR2')),
 
-                # 'land_tenure': feat.get('SITUACAO_F'),
-                # 'land_tenure_status': feat.get('STATUS_REV'),
                 # 'associated_land': feat.get('TERRAS_ASS'),
             }
 
@@ -75,8 +141,13 @@ class Command(BaseCommand):
                 indigenous_land.save()
                 # self.stdout.write('Terra indígena: ' + indigenous_land.name + 'Posição convertida de Polígono para Multipolígono.')
 
-            for group in feat.get('SUBGRUPO_P').split(','):
-                indigenous_land.prominent_subgroup.add(_get_ethnic_subgroup(group))
+            ethnic_groups = _get_ethnic_group(feat.get('GRUPO_ETNI'))
+            for group in ethnic_groups:
+                indigenous_land.ethnic_groups.add(group)
+
+            ethnic_subgroups = _get_ethnic_subgroup(feat.get('SUBGRUPO_P'))
+            for ethnic_subgroup in ethnic_subgroups:
+                indigenous_land.prominent_subgroup.add(ethnic_subgroup)
 
             land_tenure = feat.get('SITUACAO_F')
             if land_tenure == 'Sem Providências':

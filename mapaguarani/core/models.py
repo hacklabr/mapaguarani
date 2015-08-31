@@ -66,6 +66,12 @@ class ProminentEthnicSubGroup(models.Model):
 class IndigenousPlace(models.Model):
     name = models.CharField(_('name'), max_length=255)
     other_names = models.CharField(_('Others names'), max_length=512, blank=True, null=True)
+    ethnic_groups = models.ManyToManyField(
+        EthnicGroup,
+        verbose_name=_('Ethnic group'),
+        related_name='%(class)s_ethnic_groups_layers',
+        blank=True
+    )
     prominent_subgroup = models.ManyToManyField(
         ProminentEthnicSubGroup,
         verbose_name=_('prominent ethnic sub-group'),
@@ -92,12 +98,6 @@ class IndigenousVillage(IndigenousPlace):
         ('no_info', _('No information')),
     )
 
-    ethnic_groups = models.ManyToManyField(
-        EthnicGroup,
-        verbose_name=_('Ethnic group'),
-        related_name='%(class)s_ethnic_groups_layers',
-        blank=True
-    )
     position_precision = models.CharField(
         _('Position Precision'),
         choices=POSITION_PRECISION,
