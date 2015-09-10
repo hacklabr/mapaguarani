@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import IndigenousLand, IndigenousVillage, ArchaeologicalPlace
+from .models import IndigenousLand, IndigenousVillage, ArchaeologicalPlace, LandTenure, LandTenureStatus
 
 
 class IndigenousLandSerializer(serializers.ModelSerializer):
@@ -26,3 +26,17 @@ class ArchaeologicalPlaceSerializer(serializers.ModelSerializer):
         model = ArchaeologicalPlace
         exclude = ['position']
         depth = 1
+
+
+class LandTenureSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = LandTenure
+        fields = ['name', 'map_color', 'indigenous_lands']
+
+
+class LandTenureStatusSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = LandTenureStatus
+        fields = ['name', 'map_color', 'indigenous_lands']

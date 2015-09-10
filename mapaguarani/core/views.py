@@ -1,7 +1,11 @@
 from djgeojson.views import GeoJSONLayerView
 from rest_framework import viewsets
-from .models import IndigenousLand, IndigenousVillage, ArchaeologicalPlace
-from .serializers import IndigenousLandSerializer, IndigenousVillageSerializer, ArchaeologicalPlaceSerializer
+from .models import (IndigenousLand, IndigenousVillage,
+                     ArchaeologicalPlace, LandTenure, LandTenureStatus,)
+from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
+                          ArchaeologicalPlaceSerializer, LandTenureSerializer,
+                          LandTenureStatusSerializer)
+
 
 
 class IndigenousLandsLayerView(GeoJSONLayerView):
@@ -23,3 +27,13 @@ class IndigenousVillageViewSet(viewsets.ReadOnlyModelViewSet):
 class ArchaeologicalPlaceViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = ArchaeologicalPlace.objects.all()
     serializer_class = ArchaeologicalPlaceSerializer
+
+
+class LandTenureViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = LandTenure.objects.all()
+    serializer_class = LandTenureSerializer
+
+
+class LandTenureStatusViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = LandTenureStatus.objects.all()
+    serializer_class = LandTenureStatusSerializer

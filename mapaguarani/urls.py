@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.views.generic.base import TemplateView
 from djgeojson.views import TiledGeoJSONLayerView
 from core.views import (IndigenousLandsLayerView, IndigenousLandViewSet, IndigenousVillageViewSet,
-                        ArchaeologicalPlaceViewSet,)
+                        ArchaeologicalPlaceViewSet, LandTenureViewSet, LandTenureStatusViewSet)
 from core.models import IndigenousVillage, IndigenousLand, ArchaeologicalPlace
 from moderation.helpers import auto_discover
 from rest_framework import routers
@@ -14,6 +14,8 @@ admin.autodiscover()
 
 router = routers.SimpleRouter()
 router.register(r'lands', IndigenousLandViewSet)
+router.register(r'land_tenures', LandTenureViewSet)
+router.register(r'land_tenures_status', LandTenureStatusViewSet)
 router.register(r'villages', IndigenousVillageViewSet)
 router.register(r'archaeological', ArchaeologicalPlaceViewSet)
 
@@ -64,5 +66,7 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
 
     url(r'^rosetta/', include('rosetta.urls')),
+
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 
 ]
