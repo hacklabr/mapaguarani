@@ -3,7 +3,9 @@ from django.contrib import admin
 from django.views.generic.base import TemplateView
 from djgeojson.views import TiledGeoJSONLayerView
 from core.views import (IndigenousLandsLayerView, IndigenousLandViewSet, IndigenousVillageViewSet,
-                        ArchaeologicalPlaceViewSet, LandTenureViewSet, LandTenureStatusViewSet)
+                        ArchaeologicalPlaceViewSet, LandTenureViewSet, LandTenureStatusViewSet,
+                        IndigenousLandsShapefileView, IndigenousVillagesShapefileView,
+                        ArchaeologicalPlacesShapefileView, )
 from core.models import IndigenousVillage, IndigenousLand, ArchaeologicalPlace
 from moderation.helpers import auto_discover
 from rest_framework import routers
@@ -60,6 +62,12 @@ urlpatterns = [
             geometry_field='position',
             properties=['id', 'name',],
         ), name='data'),
+
+     url(r'^shapefiles/villages/$', IndigenousVillagesShapefileView.as_view(), name='villages_shapefiles'),
+
+    url(r'^shapefiles/lands/$', IndigenousLandsShapefileView.as_view(), name='lands_shapefiles'),
+
+    url(r'^shapefiles/archaeological/$', ArchaeologicalPlacesShapefileView.as_view(), name='archaeological_shapefiles'),
 
     url(r'^admin/', include(admin.site.urls)),
 
