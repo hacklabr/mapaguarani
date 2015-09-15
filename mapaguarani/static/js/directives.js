@@ -221,25 +221,12 @@
           contentLayer.addLayer(sitesLayer);
           var sitesIcon = L.divIcon({className: 'site-marker'});
 
-          var landsTileLayer = new L.TileLayer.GeoJSON('/tiles/lands/{z}/{x}/{y}.geojson', {
-            clipTiles: true,
-            unique: function(feature) {
-              return feature.id;
-            }
-          }, {
-            style: function(feature) {
-              var style = {};
-              if(feature.properties.land_tenure_status)
-                style.color = feature.properties.land_tenure_status.map_color;
-              if(feature.properties.land_tenure)
-                style.fillColor = feature.properties.land_tenure.map_color;
-              style.opacity = 0.8;
-              style.fillOpacity = 0.5;
-              style.weight = 1;
-              return style;
-            }
+          var landsLayer = L.tileLayer('http://localhost:4000/indigenousland/{z}/{x}/{y}.png');
+          var landsGridLayer = new L.UtfGrid('http://localhost:4000/indigenousland/{z}/{x}/{y}.grid.json?interactivity=id,name', {
+            useJsonP: false
           });
-          contentLayer.addLayer(landsTileLayer);
+          map.addLayer(landsLayer);
+          map.addLayer(landsGridLayer);
 
           var villagesMarker = [];
           var villagesTileLayer = new L.TileLayer.GeoJSON('/tiles/villages/{z}/{x}/{y}.geojson', {
@@ -281,7 +268,6 @@
             pointToLayer: function(feature, latlng) {
               var icon = sitesIcon;
               var marker = new L.Marker(latlng, {icon: icon});
-              console.log(feature);
               sitesLayer.addLayer(marker);
               sitesMarker.push(marker);
               marker.on('click', function() {
