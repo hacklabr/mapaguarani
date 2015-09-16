@@ -221,9 +221,15 @@
           contentLayer.addLayer(sitesLayer);
           var sitesIcon = L.divIcon({className: 'site-marker'});
 
-          var landsLayer = L.tileLayer('http://localhost:4000/indigenousland/{z}/{x}/{y}.png');
+          var landsLayer = L.tileLayer('http://localhost:4000/indigenousland/{z}/{x}/{y}.png', {
+            zIndex: 2
+          });
           var landsGridLayer = new L.UtfGrid('http://localhost:4000/indigenousland/{z}/{x}/{y}.grid.json?interactivity=id,name', {
             useJsonP: false
+          });
+          landsGridLayer.on('click', function(ev) {
+            if(ev.data)
+              $state.go('land', {id: ev.data.id});
           });
           map.addLayer(landsLayer);
           map.addLayer(landsGridLayer);
@@ -241,11 +247,12 @@
               if(feature.properties.ethnic_groups && feature.properties.ethnic_groups.length > 1)
                 icon = villageOtherIcon;
               var marker = new L.Marker(latlng, {icon: icon});
+              marker._id = feature.properties.id;
               villagesLayer.addLayer(marker);
               villagesMarker.push(marker);
-              marker.on('click', function() {
+              marker.on('click', function(ev) {
                 $rootScope.$apply(function() {
-                  // $state.go('home.village', { id: feature.id });
+                  $state.go('village', { id: ev.target._id });
                 });
               });
               return null;
@@ -267,12 +274,12 @@
           }, {
             pointToLayer: function(feature, latlng) {
               var icon = sitesIcon;
-              var marker = new L.Marker(latlng, {icon: icon});
+              var marker = new L.Marker(latlng, {icon: icon});               marker._id = feature.properties.id;
               sitesLayer.addLayer(marker);
               sitesMarker.push(marker);
-              marker.on('click', function() {
+              marker.on('click', function(ev) {
                 $rootScope.$apply(function() {
-                  // $state.go('home.site', { id: feature.id });
+                  $state.go('site', { id: ev.target._id });
                 });
               });
               return null;
