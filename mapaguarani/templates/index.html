@@ -14,14 +14,6 @@
       <div class="navbar-collapse navbar-right collapse">
         <ul class="nav navbar-nav">
           <li><a href="{% url 'admin:login' %}" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Entrar</a></li>
-
-          <li class="dropdown">
-            <a aria-expanded="true" class="dropdown-toggle" id="downloadDrop" href="#" role="button" data-toggle="dropdown"><i class="fa fa-cloud-download white"></i>&nbsp;&nbsp;Download <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="{% url 'lands_shapefiles' %}" download="terras_indigenas.zip" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Shapefile Terras Inígenas</a></li>
-              <li><a href="{% url 'villages_shapefiles' %}" download="aldeias_indigenas.zip" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Shapefile Aldeias Inígenas</a></li>
-              <li><a href="{% url 'archaeological_shapefiles' %}" download="sitios_arqueologicos.zip" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Shapefiles Sítios Arqueológicos</a></li>
-            </ul>
           <li><a href="javascript:void(0);" data-toggle="modal" data-target="#aboutModal" id="about-btn"><i class="fa fa-question-circle white"></i>&nbsp;&nbsp;Sobre</a></li>
         </ul>
       </div><!--/.navbar-collapse -->

@@ -1,76 +1,109 @@
-<nav id="sidebar-main-nav" role="navigation">
-  <ul class="nav nav-tabs nav-justified">
-    <li ng-class="{active: content == 'villages'}">
-      <a href="javascript:void(0);" ng-click="setContent('villages')">Aldeias indígenas</a>
+<section id="sidebar-main-content">
+  <ul class="content-list">
+    <li id="villages" class="content-item" ng-class="{active: content == 'villages'}">
+      <p class="actions">
+        <a href="javascript:void(0);" ng-click="toggleContent('villages')" class="fa fa-bars"></a>
+        <a href="/shapefiles/villages/" class="fa fa-cloud-download"></a>
+        <a href="javascript:void(0);" ng-click="toggleLayer('villages')" class="fa fa-eye"></a>
+      </p>
+      <h2><a href="javascript:void(0);" ng-click="toggleContent('villages')">Aldeias indígenas</a></h2>
+      <div class="content-item-body" ng-show="content == 'villages'" sidebar-height="content == 'villages'">
+        <nav id="village-filters">
+          <form role="search">
+            <div class="form-group has-feedback">
+              <input id="searchbox" type="text" placeholder="Pesquisar..." class="form-control" ng-model="filter.text">
+              <span id="searchicon" class="fa fa-search form-control-feedback"></span>
+            </div>
+          </form>
+        </nav>
+        <ul class="village list">
+          <li class="village item" ng-repeat="village in filtered.villages = (villages | contentType:'villages':content:filter.text | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
+            <h3><a ui-sref="village({id: village.id})" title="{{village.name}}" ui-sref-opts="{inherit: false}">{{village.name}}</a></h3>
+            <p ng-show="village.other_names">Outros nomes: {{village.other_names}}</p>
+            <p ng-show="village.ethnic_groups.length">Grupo étnico: {{village.ethnic_groups | listEthnic}}</p>
+            <p ng-show="village.population">População: {{village.population}}</p>
+            <p ng-show="village.guarani_presence">Presença guarani: {{village.guarani_presence}}</p>
+          </li>
+        </ul>
+        <nav class="sidebar-pagination">
+          <ul class="pager">
+            <li class="previous">
+              <a href="javascript:void(0);" ng-click="prevPage();" ng-hide="curPage == 0"><span aria-hidden="true">&larr;</span> Página anterior</a>
+            </li>
+            <li class="next">
+              <a href="javascript:void(0);" ng-click="nextPage();" ng-hide="curPage >= pageCount()">Próxima página <span aria-hidden="true">&rarr;</span></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </li>
-    <li ng-class="{active: content == 'lands'}">
-      <a href="javascript:void(0);" ng-click="setContent('lands')">Terras indígenas</a>
+    <li id="lands" class="content-item" ng-class="{active: content == 'lands'}">
+      <p class="actions">
+        <a href="javascript:void(0);" ng-click="toggleContent('lands')" class="fa fa-bars"></a>
+        <a href="/shapefiles/lands/" class="fa fa-cloud-download"></a>
+        <a href="#" class="fa fa-eye"></a>
+      </p>
+      <h2><a href="javascript:void(0);" ng-click="toggleContent('lands')">Terras indígenas</a></h2>
+      <div class="content-item-body" ng-show="content == 'lands'" sidebar-height="content == 'lands'">
+        <nav id="lands-filters">
+          <form role="search">
+            <div class="form-group has-feedback">
+              <input id="searchbox" type="text" placeholder="Pesquisar..." class="form-control" ng-model="filter.text">
+              <span id="searchicon" class="fa fa-search form-control-feedback"></span>
+            </div>
+          </form>
+        </nav>
+        <ul class="land list">
+          <li class="land item" ng-repeat="land in filtered.lands = (lands | contentType:'lands':content:filter.text | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
+            <h3><a ui-sref="land({id: land.id})" title="{{land.name}}" ui-sref-opts="{inherit: false}">{{land.name}}</a></h3>
+          </li>
+        </ul>
+        <nav class="sidebar-pagination">
+          <ul class="pager">
+            <li class="previous">
+              <a href="javascript:void(0);" ng-click="prevPage();" ng-hide="curPage == 0"><span aria-hidden="true">&larr;</span> Página anterior</a>
+            </li>
+            <li class="next">
+              <a href="javascript:void(0);" ng-click="nextPage();" ng-hide="curPage >= pageCount()">Próxima página <span aria-hidden="true">&rarr;</span></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </li>
-    <li ng-class="{active: content == 'sites'}">
-      <a href="javascript:void(0);" ng-click="setContent('sites')">Sítios arqueológicos</a>
+    <li id="sites" class="content-item" ng-class="{active: content == 'sites'}">
+      <p class="actions">
+        <a href="javascript:void(0);" ng-click="toggleContent('sites')" class="fa fa-bars"></a>
+        <a href="/shapefiles/archaeological/" class="fa fa-cloud-download"></a>
+        <a href="#" class="fa fa-eye"></a>
+      </p>
+      <h2><a href="javascript:void(0);" ng-click="toggleContent('sites')">Sítios arqueológicos</a></h2>
+      <div class="content-item-body" ng-show="content == 'sites'" sidebar-height="content == 'sites'">
+        <nav id="sites-filters">
+          <form role="search">
+            <div class="form-group has-feedback">
+              <input id="searchbox" type="text" placeholder="Pesquisar..." class="form-control" ng-model="filter.text">
+              <span id="searchicon" class="fa fa-search form-control-feedback"></span>
+            </div>
+          </form>
+        </nav>
+        <ul class="site list">
+          <li class="site item" ng-repeat="site in filtered.sites = (sites | contentType:'sites':content:filter.text | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
+            <h3><a ui-sref="site({id: site.id})" title="{{site.name}}" ui-sref-opts="{inherit: false}">{{site.name}}</a></h3>
+          </li>
+        </ul>
+        <nav class="sidebar-pagination">
+          <ul class="pager">
+            <li class="previous">
+              <a href="javascript:void(0);" ng-click="prevPage();" ng-hide="curPage == 0"><span aria-hidden="true">&larr;</span> Página anterior</a>
+            </li>
+            <li class="next">
+              <a href="javascript:void(0);" ng-click="nextPage();" ng-hide="curPage >= pageCount()">Próxima página <span aria-hidden="true">&rarr;</span></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </li>
   </ul>
-</nav>
-<nav id="sidebar-filters">
-  <form role="search">
-    <div class="form-group has-feedback">
-      <input id="searchbox" type="text" placeholder="Pesquisar..." class="form-control" ng-model="filter.text">
-      <span id="searchicon" class="fa fa-search form-control-feedback"></span>
-    </div>
-  </form>
-</nav>
-<div id="villages" ng-show="content == 'villages'">
-  <ul class="village list">
-    <li class="village item" ng-repeat="village in filtered.villages = (villages | contentType:'villages':content:filter.text | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
-      <h3><a ui-sref="village({id: village.id})" title="{{village.name}}" ui-sref-opts="{inherit: false}">{{village.name}}</a></h3>
-      <p ng-show="village.other_names">Outros nomes: {{village.other_names}}</p>
-      <p ng-show="village.ethnic_groups.length">Grupo étnico: {{village.ethnic_groups | listEthnic}}</p>
-      <p ng-show="village.population">População: {{village.population}}</p>
-      <p ng-show="village.guarani_presence">Presença guarani: {{village.guarani_presence}}</p>
-    </li>
-  </ul>
-  <nav class="sidebar-pagination">
-    <ul class="pager">
-      <li class="previous">
-        <a href="javascript:void(0);" ng-click="prevPage();" ng-hide="curPage == 0"><span aria-hidden="true">&larr;</span> Página anterior</a>
-      </li>
-      <li class="next">
-        <a href="javascript:void(0);" ng-click="nextPage();" ng-hide="curPage >= pageCount()">Próxima página <span aria-hidden="true">&rarr;</span></a>
-      </li>
-    </ul>
-  </nav>
-</div>
-<div id="lands" ng-show="content == 'lands'">
-  <ul class="land list">
-    <li class="land item" ng-repeat="land in filtered.lands = (lands | contentType:'lands':content:filter.text | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
-      <h3><a ui-sref="land({id: land.id})" title="{{land.name}}" ui-sref-opts="{inherit: false}">{{land.name}}</a></h3>
-    </li>
-  </ul>
-  <nav class="sidebar-pagination">
-    <ul class="pager">
-      <li class="previous">
-        <a href="javascript:void(0);" ng-click="prevPage();" ng-hide="curPage == 0"><span aria-hidden="true">&larr;</span> Página anterior</a>
-      </li>
-      <li class="next">
-        <a href="javascript:void(0);" ng-click="nextPage();" ng-hide="curPage >= pageCount()">Próxima página <span aria-hidden="true">&rarr;</span></a>
-      </li>
-    </ul>
-  </nav>
-</div>
-<div id="sites" ng-show="content == 'sites'">
-  <ul class="site list">
-    <li class="site item" ng-repeat="site in filtered.sites = (sites | contentType:'sites':content:filter.text | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
-      <h3><a ui-sref="site({id: site.id})" title="{{site.name}}" ui-sref-opts="{inherit: false}">{{site.name}}</a></h3>
-    </li>
-  </ul>
-  <nav class="sidebar-pagination">
-    <ul class="pager">
-      <li class="previous">
-        <a href="javascript:void(0);" ng-click="prevPage();" ng-hide="curPage == 0"><span aria-hidden="true">&larr;</span> Página anterior</a>
-      </li>
-      <li class="next">
-        <a href="javascript:void(0);" ng-click="nextPage();" ng-hide="curPage >= pageCount()">Próxima página <span aria-hidden="true">&rarr;</span></a>
-      </li>
-    </ul>
-  </nav>
+</section>
+<div ng-show="1 == 0">
 </div>
