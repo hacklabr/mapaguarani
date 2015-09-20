@@ -38,7 +38,7 @@
               L.geoJson(Guarani.toGeoJSON(filtered[key])).addTo(focusLayer);
             }
           }
-          map.fitBounds(focusLayer.getBounds());
+          // map.fitBounds(focusLayer.getBounds());
           focusLayer = null;
         }
       }, 600), true);
@@ -90,7 +90,7 @@
             L.geoJson(Guarani.toGeoJSON($scope.map[key])).addTo(focusLayer);
           }
         }
-        map.fitBounds(focusLayer.getBounds());
+        // map.fitBounds(focusLayer.getBounds());
         focusLayer = null;
       });
 

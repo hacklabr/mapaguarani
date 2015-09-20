@@ -3,6 +3,30 @@
 
   var directives = angular.module('mapaguarani.directives', []);
 
+  directives.directive('sidebarHeight', [
+    function() {
+      return {
+        restrict: 'A',
+        scope: {
+          sidebarHeight: '='
+        },
+        link: function(scope, element, attrs) {
+          scope.$watch('sidebarHeight', function(apply) {
+            doHeight(apply);
+          });
+          function doHeight(apply) {
+            if(apply) {
+              var height = $('#sidebar').height() - (57*4);
+              $(element).height(height).addClass('active');
+            } else {
+              $(element).height(0).removeClass('active');;
+            }
+          }
+        }
+      }
+    }
+  ]);
+
   //Google maps - leaflet 0.7 only
   var gm_roadmap = new L.Google('ROADMAP');
   var gm_terrain = new L.Google('TERRAIN');
@@ -14,8 +38,6 @@
   var mapbox_satellite = L.tileLayer(mapbox_url, {mapid: 'mapbox.satellite', access_token: access_token});
   var mapbox_streets   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets', access_token: access_token});
   var mapbox_hybrid   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets-satellite', access_token: access_token});
-
-  var landTenures = window.landTenures;
 
   directives.directive('guaraniList', [
     '$rootScope',
@@ -35,15 +57,26 @@
           /*
            * Content type
            */
-          scope.content = $stateParams.content || 'villages';
+          scope.content = $stateParams.content || '';
           scope.setContent = function(content) {
             scope.content = content;
             scope.curPage = 0;
           };
+          scope.toggleContent = function(content) {
+            if(scope.content == content) {
+              scope.content = '';
+            } else {
+              scope.setContent(content);
+            }
+          }
           scope.$watch('content', function(content, prevContent) {
             if(content !== prevContent)
               $rootScope.$broadcast('mapaguarani.contentChanged', content);
           });
+
+          scope.toggleLayer = function(layer) {
+
+          };
 
           /*
            * Filters
@@ -106,6 +139,7 @@
 
             $(element).scrollTop(0);
             $(element).parent().scrollTop(0);
+            $(element).parent().parent().scrollTop(0);
           });
         }
       }
@@ -114,7 +148,7 @@
 
   directives.factory('guaraniMapService', [
     function() {
-      var map, data;
+      var map, layers = [];
       return {
         setMap: function(m) {
           map = m;
@@ -123,12 +157,11 @@
         getMap: function() {
           return map;
         },
-        setData: function(d) {
-          data = d;
-          return data;
+        addLayer: function(layer) {
+          layers.push(layer);
         },
-        getData: function() {
-          return data;
+        toggleLayer: function(layer) {
+          
         },
         updateBounds: function() {
           if(map && map.contentLayer) {
@@ -150,6 +183,7 @@
     function(Guarani, Map, $rootScope, $state) {
       return {
         restrict: 'E',
+        replace: true,
         scope: {
           center: '=',
           zoom: '='
@@ -187,14 +221,20 @@
           map.contentLayer = contentLayer;
 
           /*
-           * Marker layer setup
-           */
-
-          /*
            * Init Lands layer
            */
-          var landsLayer = new L.FeatureGroup();
-          contentLayer.addLayer(landsLayer);
+           var landsLayer = L.tileLayer('http://localhost:4000/indigenousland/{z}/{x}/{y}.png', {
+             zIndex: 2
+           });
+           var landsGridLayer = new L.UtfGrid('http://localhost:4000/indigenousland/{z}/{x}/{y}.grid.json?interactivity=id,name', {
+             useJsonP: false
+           });
+           landsGridLayer.on('click', function(ev) {
+             if(ev.data)
+               $state.go('land', {id: ev.data.id});
+           });
+           map.addLayer(landsLayer);
+           map.addLayer(landsGridLayer);
 
           /*
            * Init Villages layer
@@ -221,26 +261,6 @@
           contentLayer.addLayer(sitesLayer);
           var sitesIcon = L.divIcon({className: 'site-marker'});
 
-          var landsTileLayer = new L.TileLayer.GeoJSON('/tiles/lands/{z}/{x}/{y}.geojson', {
-            clipTiles: true,
-            unique: function(feature) {
-              return feature.id;
-            }
-          }, {
-            style: function(feature) {
-              var style = {};
-              if(feature.properties.land_tenure_status)
-                style.color = feature.properties.land_tenure_status.map_color;
-              if(feature.properties.land_tenure)
-                style.fillColor = feature.properties.land_tenure.map_color;
-              style.opacity = 0.8;
-              style.fillOpacity = 0.5;
-              style.weight = 1;
-              return style;
-            }
-          });
-          contentLayer.addLayer(landsTileLayer);
-
           var villagesMarker = [];
           var villagesTileLayer = new L.TileLayer.GeoJSON('/tiles/villages/{z}/{x}/{y}.geojson', {
             clipTiles: true,
@@ -254,11 +274,12 @@
               if(feature.properties.ethnic_groups && feature.properties.ethnic_groups.length > 1)
                 icon = villageOtherIcon;
               var marker = new L.Marker(latlng, {icon: icon});
+              marker._id = feature.properties.id;
               villagesLayer.addLayer(marker);
               villagesMarker.push(marker);
-              marker.on('click', function() {
+              marker.on('click', function(ev) {
                 $rootScope.$apply(function() {
-                  // $state.go('home.village', { id: feature.id });
+                  $state.go('village', { id: ev.target._id });
                 });
               });
               return null;
@@ -280,13 +301,12 @@
           }, {
             pointToLayer: function(feature, latlng) {
               var icon = sitesIcon;
-              var marker = new L.Marker(latlng, {icon: icon});
-              console.log(feature);
+              var marker = new L.Marker(latlng, {icon: icon});               marker._id = feature.properties.id;
               sitesLayer.addLayer(marker);
               sitesMarker.push(marker);
-              marker.on('click', function() {
+              marker.on('click', function(ev) {
                 $rootScope.$apply(function() {
-                  // $state.go('home.site', { id: feature.id });
+                  $state.go('site', { id: ev.target._id });
                 });
               });
               return null;

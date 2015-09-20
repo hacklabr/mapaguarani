@@ -23,20 +23,76 @@ input[type="radio"], input[type="checkbox"] {
   margin: 0;
 }
 #sidebar {
-  width: 38%;
-  height: 100%;
+  position: absolute;
+  width: 28%;
+  height: 86%;
+  margin: 2%;
   max-width: 650px;
-  float: left;
   overflow: auto;
-  position: relative;
+  z-index: 10;
   -webkit-transition: all 0.25s ease-out;
     -moz-transition: all 0.25s ease-out;
     transition: all 0.25s ease-out;
+  pointer-events: none;
   .nav > li > a {
     padding: 10px 5px;
   }
-  #sidebar-main-nav {
-    margin: 15px 15px 0 15px;
+  #sidebar-main-content {
+    pointer-events: auto;
+    background: #fff;
+    ul.content-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li.content-item {
+        margin: 0;
+        padding: 20px;
+        border-bottom: 1px solid #ccc;
+        h2 {
+          margin: 0;
+          padding: 0;
+          line-height: 1;
+          font-size: 16px;
+          font-weight: 600;
+          color: #666;
+          a {
+            color: inherit;
+            text-decoration: none;
+          }
+        }
+        &.active {
+          h2 {
+            color: #111;
+          }
+        }
+        .actions {
+          float: right;
+          margin: 0;
+          a {
+            color: #666;
+            margin-left: 10px;
+            font-size: 18px;
+            &:hover {
+              color: #333;
+              text-decoration: none;
+            }
+          }
+        }
+        .content-item-body {
+          height: 0;
+          padding-right: 20px;
+          position: relative;
+          overflow: auto;
+          transition: all .4s ease-in-out;
+          -webkit-transition: all .4s ease-in-out;
+          -moz-transition: all .4s ease-in-out;
+          -o-transition: all .4s ease-in-out;
+          &.active {
+            margin-top: 20px;
+          }
+        }
+      }
+    }
   }
   #sidebar-filters {
     margin: 15px;
@@ -52,9 +108,9 @@ input[type="radio"], input[type="checkbox"] {
     margin: 0;
     padding: 0;
     .item {
-      margin: 15px;
-      padding: 20px 15px 15px;
-      border: 1px solid #ddd;
+      margin: 0;
+      padding: 20px 0;
+      border-bottom: 1px solid #ddd;
       border-radius: 4px;
       -webkit-border-radius: 4px;
       -moz-border-radius: 4px;
@@ -69,9 +125,22 @@ input[type="radio"], input[type="checkbox"] {
   }
 }
 #map {
-  width: auto;
+  width: 100%;
   height: 100%;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  .leaflet-left {
+    left: 30%;
+    .leaflet-control {
+      margin-left: 20px;
+    }
+  }
+  .leaflet-top {
+    top: 2%;
+  }
+  .leaflet-google-layer.leaflet-left.leaflet-top {
+    top: 0;
+    left: 0;
+  }
   .village-guarani-marker {
     background: #e7ec13;
     border-radius: 100%;

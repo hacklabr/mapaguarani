@@ -41,6 +41,7 @@ Vagrant.configure('2') do |config|
     config.ssh.forward_agent = true
     # Forward the dev server port
     config.vm.network :forwarded_port, host: 8000, guest: 8000
+    config.vm.network :forwarded_port, host: 4000, guest: 4000
 
     config.vm.provision "shell", inline: $setup
     config.vm.provision "shell", inline: $dependencies
