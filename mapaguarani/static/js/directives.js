@@ -180,7 +180,8 @@
     'guaraniMapService',
     '$rootScope',
     '$state',
-    function(Guarani, Map, $rootScope, $state) {
+    '$window',
+    function(Guarani, Map, $rootScope, $state, $window) {
       return {
         restrict: 'E',
         replace: true,
@@ -223,18 +224,19 @@
           /*
            * Init Lands layer
            */
-           var landsLayer = L.tileLayer('http://localhost:4000/indigenousland/{z}/{x}/{y}.png', {
-             zIndex: 2
-           });
-           var landsGridLayer = new L.UtfGrid('http://localhost:4000/indigenousland/{z}/{x}/{y}.grid.json?interactivity=id,name', {
-             useJsonP: false
-           });
-           landsGridLayer.on('click', function(ev) {
-             if(ev.data)
-               $state.go('land', {id: ev.data.id});
-           });
-           map.addLayer(landsLayer);
-           map.addLayer(landsGridLayer);
+          var default_host = $window.location.hostname;
+          var landsLayer = L.tileLayer('http://' + default_host + ':4000/indigenousland/{z}/{x}/{y}.png', {
+           zIndex: 2
+          });
+          var landsGridLayer = new L.UtfGrid('http://' + default_host + ':4000/indigenousland/{z}/{x}/{y}.grid.json?interactivity=id,name', {
+           useJsonP: false
+          });
+          landsGridLayer.on('click', function(ev) {
+           if(ev.data)
+             $state.go('land', {id: ev.data.id});
+          });
+          map.addLayer(landsLayer);
+          map.addLayer(landsGridLayer);
 
           /*
            * Init Villages layer
