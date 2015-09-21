@@ -10,7 +10,7 @@ html, body, #container {
   }
 }
 body {
-  padding-top: 50px;
+  // padding-top: 50px;
 }
 a {
   color: #eac367;
@@ -22,11 +22,14 @@ a:focus {
 input[type="radio"], input[type="checkbox"] {
   margin: 0;
 }
+.navbar-fixed-top {
+  background: transparent;
+}
 #sidebar {
   position: absolute;
   width: 28%;
   height: 86%;
-  margin: 2%;
+  margin: 65px 15px;
   max-width: 650px;
   overflow: auto;
   z-index: 10;
@@ -80,13 +83,15 @@ input[type="radio"], input[type="checkbox"] {
         }
         .content-item-body {
           height: 0;
-          padding-right: 20px;
           position: relative;
           overflow: auto;
           transition: all .4s ease-in-out;
           -webkit-transition: all .4s ease-in-out;
           -moz-transition: all .4s ease-in-out;
           -o-transition: all .4s ease-in-out;
+          background: #f6f6f6;
+          margin: 0 -20px -20px -20px;
+          padding: 20px;
           &.active {
             margin-top: 20px;
           }
@@ -134,12 +139,28 @@ input[type="radio"], input[type="checkbox"] {
       margin-left: 20px;
     }
   }
+  .leaflet-right .leaflet-control {
+    margin-right: 15px;
+  }
   .leaflet-top {
-    top: 2%;
+    top: 65px;
+    .leaflet-control {
+      margin-top: 0;
+    }
   }
   .leaflet-google-layer.leaflet-left.leaflet-top {
     top: 0;
     left: 0;
+  }
+  .leaflet-control-layers {
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    -o-border-radius: 0;
+    box-shadow: 0 0 0;
+    -moz-box-shadow: 0 0 0;
+    -webkit-box-shadow: 0 0 0;
+    -o-box-shadow: 0 0 0;
   }
   .village-guarani-marker {
     background: #e7ec13;
@@ -239,7 +260,10 @@ input[type="radio"], input[type="checkbox"] {
 .navbar .navbar-brand {
   font-weight: bold;
   font-size: 25px;
-  color: #8c83c7;
+  color: #fff;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.6);
+  text-transform: uppercase;
+  letter-spacing: -1px;
 }
 .navbar-collapse.in {
   overflow-y: hidden;
@@ -253,6 +277,9 @@ input[type="radio"], input[type="checkbox"] {
 }
 .navbar-header a.navbar-icon {
   margin-left: 25px;
+}
+.navbar-nav a {
+  background: #fff;
 }
 
 
