@@ -16,7 +16,7 @@
           });
           function doHeight(apply) {
             if(apply) {
-              var height = $('#sidebar').height() - (57*4);
+              var height = $('#sidebar').height() - (57*4) - 64;
               $(element).height(height).addClass('active');
             } else {
               $(element).height(0).removeClass('active');;
@@ -83,6 +83,14 @@
            */
           scope.filtered = scope.filtered || {};
 
+          scope.getAll = function() {
+            var all = [];
+            all = all.concat(angular.copy(scope.villages));
+            all = all.concat(angular.copy(scope.lands));
+            all = all.concat(angular.copy(scope.sites));
+            return all;
+          };
+
           scope.$watch('villages', function(villages) {
             if(typeof villages == 'object')
               scope.filtered.villages = angular.copy(villages);
@@ -98,6 +106,10 @@
             if(typeof sites == 'object') {
               scope.filtered.sites = angular.copy(sites);
             }
+          });
+
+          scope.$watchGroup(['villages', 'lands', 'sites'], function() {
+            scope._all = scope.getAll();
           });
 
           if($stateParams.filter) {
@@ -121,8 +133,11 @@
           scope.pageCount = function() {
             if(scope.filtered[scope.content] && scope.filtered[scope.content].length)
               return Math.ceil(scope.filtered[scope.content].length/scope.perPage)-1;
-            else
+            else if(scope.filter.text) {
+              return Math.ceil(scope.filtered.all.length/scope.perPage)-1;
+            } else {
               return 0;
+            }
           };
           scope.nextPage = function() {
             if(scope.curPage < scope.pageCount())
@@ -140,6 +155,7 @@
             $(element).scrollTop(0);
             $(element).parent().scrollTop(0);
             $(element).parent().parent().scrollTop(0);
+            $(element).parent().parent().parent().scrollTop(0);
           });
         }
       }
@@ -161,7 +177,7 @@
           layers.push(layer);
         },
         toggleLayer: function(layer) {
-          
+
         },
         updateBounds: function() {
           if(map && map.contentLayer) {

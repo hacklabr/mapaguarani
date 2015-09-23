@@ -1,4 +1,29 @@
 <section id="sidebar-main-content">
+  <form id="main-search" role="search">
+    <input id="searchbox" type="text" placeholder="Pesquisar..." class="form-control" ng-model="filter.text">
+    <span id="searchicon" class="fa fa-search form-control-feedback"></span>
+  </form>
+  <div class="content-item-body" ng-show="filter.text && !content" sidebar-height="filter.text && !content">
+    <ul class="all list">
+      <li class="all item" ng-repeat="item in filtered.all = (_all | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
+        <h3><a ui-sref="village({id: item.id})" title="{{item.name}}" ui-sref-opts="{inherit: false}">{{item.name}}</a></h3>
+        <p ng-show="item.other_names">Outros nomes: {{item.other_names}}</p>
+        <p ng-show="item.ethnic_groups.length">Grupo étnico: {{item.ethnic_groups | listEthnic}}</p>
+        <p ng-show="item.population">População: {{item.population}}</p>
+        <p ng-show="item.guarani_presence">Presença guarani: {{item.guarani_presence}}</p>
+      </li>
+    </ul>
+    <nav class="sidebar-pagination">
+      <ul class="pager">
+        <li class="previous">
+          <a href="javascript:void(0);" ng-click="prevPage();" ng-hide="curPage == 0"><span aria-hidden="true">&larr;</span> Página anterior</a>
+        </li>
+        <li class="next">
+          <a href="javascript:void(0);" ng-click="nextPage();" ng-hide="curPage >= pageCount()">Próxima página <span aria-hidden="true">&rarr;</span></a>
+        </li>
+      </ul>
+    </nav>
+  </div>
   <ul class="content-list">
     <li id="villages" class="content-item" ng-class="{active: content == 'villages'}">
       <p class="actions">
@@ -12,7 +37,7 @@
           <form role="search">
             <div class="form-group has-feedback">
               <input id="searchbox" type="text" placeholder="Pesquisar..." class="form-control" ng-model="filter.text">
-              <span id="searchicon" class="fa fa-search form-control-feedback"></span>
+              <span class="fa fa-search form-control-feedback"></span>
             </div>
           </form>
         </nav>
@@ -49,7 +74,7 @@
           <form role="search">
             <div class="form-group has-feedback">
               <input id="searchbox" type="text" placeholder="Pesquisar..." class="form-control" ng-model="filter.text">
-              <span id="searchicon" class="fa fa-search form-control-feedback"></span>
+              <span class="fa fa-search form-control-feedback"></span>
             </div>
           </form>
         </nav>
@@ -82,7 +107,7 @@
           <form role="search">
             <div class="form-group has-feedback">
               <input id="searchbox" type="text" placeholder="Pesquisar..." class="form-control" ng-model="filter.text">
-              <span id="searchicon" class="fa fa-search form-control-feedback"></span>
+              <span class="fa fa-search form-control-feedback"></span>
             </div>
           </form>
         </nav>
