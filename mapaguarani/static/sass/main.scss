@@ -160,7 +160,13 @@ input[type="radio"], input[type="checkbox"] {
     }
   }
   article.single {
-    margin: 0 15px;
+    background: #fff;
+    pointer-events: auto;
+    padding: 20px;
+    h1,
+    h2 {
+      margin-top: 0;
+    }
   }
 }
 #map {
