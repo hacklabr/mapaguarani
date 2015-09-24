@@ -31,14 +31,14 @@ urlpatterns = [
     url(r'^tiles/villages/(?P<z>\d+)/(?P<x>\d+)/(?P<y>\d+).geojson$',
         TiledGeoJSONLayerView.as_view(
             model=IndigenousVillage,
-            geometry_field='position',
+            geometry_field='geometry',
             properties=['id', 'name',],
         ), name='data'),
 
     url(r'^tiles/lands/(?P<z>\d+)/(?P<x>\d+)/(?P<y>\d+).geojson$',
         TiledGeoJSONLayerView.as_view(
             model=IndigenousLand,
-            geometry_field='polygon',
+            geometry_field='geometry',
             properties=['id', 'name', 'land_tenure', 'land_tenure_status', ],
             trim_to_boundary=True,
             simplifications={
@@ -59,7 +59,7 @@ urlpatterns = [
     url(r'^tiles/archaeological/(?P<z>\d+)/(?P<x>\d+)/(?P<y>\d+).geojson$',
         TiledGeoJSONLayerView.as_view(
             model=ArchaeologicalPlace,
-            geometry_field='position',
+            geometry_field='geometry',
             properties=['id', 'name',],
         ), name='data'),
 

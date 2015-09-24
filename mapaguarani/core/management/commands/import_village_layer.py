@@ -105,7 +105,7 @@ class Command(BaseCommand):
             else:
                 self.stdout.write('Precisão da posição não encontrata: ' + position_precision)
 
-            indigenous_village.position = feat.geom.wkt
+            indigenous_village.geometry = feat.geom.wkt
 
             try:
                 # try to save as MultPolygon

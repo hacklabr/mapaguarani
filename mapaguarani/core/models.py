@@ -105,7 +105,7 @@ class IndigenousVillage(IndigenousPlace):
         default=POSITION_PRECISION[2][0]
     )
     position_source = models.CharField(_('Position Source'), max_length=512)
-    position = models.PointField()
+    geometry = models.PointField()
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='villages', blank=True, null=True)
 
     class Meta:
@@ -231,7 +231,7 @@ class IndigenousLand(IndigenousPlace):
         'self',
         verbose_name=_('Associated Land'),
         blank=True, null=True)
-    polygon = models.MultiPolygonField(_('Indigenous Land Spatial Data'))
+    geometry = models.MultiPolygonField(_('Indigenous Land Spatial Data'))
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='indigenous_lads')
 
     class Meta:
@@ -286,7 +286,7 @@ class ArchaeologicalPlace(models.Model):
     code = models.CharField(_('Code'), max_length=255, blank=True, null=True)
     acronym = models.CharField(_('Acronym'), max_length=512, blank=True, null=True)
     cnsa = models.CharField(_('CNSA'), max_length=512, blank=True, null=True)
-    position = models.PointField()
+    geometry = models.PointField()
     position_precision = models.CharField(
         _('Position Precision'),
         choices=POSITION_PRECISION_CHOICES,

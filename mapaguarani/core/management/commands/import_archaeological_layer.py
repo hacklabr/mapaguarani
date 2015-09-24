@@ -45,7 +45,7 @@ class Command(BaseCommand):
 
                 latitude, longitude = utm.to_latlon(int(coords[1]), int(coords[2]), int(coords[0][0:2]), coords[0][-1])
 
-                archaeological_place.position = Point(longitude, latitude)
+                archaeological_place.geometry = Point(longitude, latitude)
                 archaeological_place.save()
 
         self.stdout.write('\n')

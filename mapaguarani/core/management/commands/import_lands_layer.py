@@ -137,7 +137,7 @@ class Command(BaseCommand):
                 # Convert polygon to MultPolgon before save
                 poly = fromstr(feat.geom.wkt)
                 multi_poly = MultiPolygon(poly)
-                indigenous_land.polygon = multi_poly.wkt
+                indigenous_land.geometry = multi_poly.wkt
                 indigenous_land.save()
                 # self.stdout.write('Terra indígena: ' + indigenous_land.name + 'Posição convertida de Polígono para Multipolígono.')
 

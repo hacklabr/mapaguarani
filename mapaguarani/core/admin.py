@@ -22,7 +22,7 @@ class IndigenousVillageAdmin(geoadmin.GeoModelAdmin):
 
     list_display = ('name', 'other_names', 'get_ethnic_groups', 'get_prominent_subgroup',
                     'population', 'get_guarani_presence',
-                    'position_precision', 'position_source', 'position',
+                    'position_precision', 'position_source', 'geometry',
                     'public_comments', 'private_comments',)
     list_per_page = 500
     inlines = [
@@ -67,7 +67,7 @@ class ArchaeologicalImageInLine(admin.TabularInline):
 @admin.register(ArchaeologicalPlace)
 class ArchaeologicalPlaceAdmin(admin.ModelAdmin):
     list_display = ('get_name', 'code', 'acronym', 'cnsa','biblio_references',
-                    'position_precision', 'position_comments', 'position',)
+                    'position_precision', 'position_comments', 'geometry',)
     list_per_page = 500
     inlines = [
         ArchaeologicalImageInLine,

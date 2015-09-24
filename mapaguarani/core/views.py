@@ -108,7 +108,7 @@ class ShapefileView(View):
         layer = self.serializer_class(self.queryset, many=True)
 
         # first = self.queryset.first()
-        # geometry_type = first.polygon.geom_type
+        # geometry_type = first.geometry.geom_type
 
         geo_field = None
         for field in self.queryset.model._meta.fields:
@@ -119,7 +119,7 @@ class ShapefileView(View):
         if self.geometry_type:
             geometry_type = self.geometry_type
             # first = self.queryset.first()
-            # geometry_type = first.polygon.geom_type
+            # geometry_type = first.geometry.geom_type
         else:
             geometry_type = geo_field.geom_type
         properties = layer.child.get_fields().copy()
@@ -175,7 +175,7 @@ class IndigenousLandsShapefileView(ShapefileView):
     serializer_class = IndigenousLandGeojsonSerializer
     queryset = IndigenousLand.objects.all()
     # self.readme = readme
-    geo_field = 'polygon'
+    geo_field = 'geometry'
     geometry_type = 'MultiPolygon'
     file_name = 'terras_indigenas'
 
@@ -184,7 +184,7 @@ class IndigenousVillagesShapefileView(ShapefileView):
     serializer_class = IndigenousVillageGeojsonSerializer
     queryset = IndigenousVillage.objects.all()
     # self.readme = readme
-    geo_field = 'position'
+    geo_field = 'geometry'
     geometry_type = 'Point'
     file_name = 'aldeias_indigenas'
 
@@ -193,6 +193,6 @@ class ArchaeologicalPlacesShapefileView(ShapefileView):
     serializer_class = ArchaeologicalPlaceGeojsonSerializer
     queryset = ArchaeologicalPlace.objects.all()
     # self.readme = readme
-    geo_field = 'position'
+    geo_field = 'geometry'
     geometry_type = 'Point'
     file_name = 'sitios_arqueologicos'

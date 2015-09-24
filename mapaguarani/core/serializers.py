@@ -9,7 +9,7 @@ class IndigenousLandSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = IndigenousLand
-        exclude = ['polygon']
+        exclude = ['geometry']
         depth = 1
 
 
@@ -17,7 +17,23 @@ class IndigenousVillageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = IndigenousVillage
-        exclude = ['position']
+        exclude = ['geometry']
+        depth = 1
+
+
+class ArchaeologicalPlaceListSerializer(serializers.ListSerializer):
+
+    @classmethod
+    def many_init(cls, *args, **kwargs):
+        # Instantiate the child serializer.
+        kwargs['child'] = cls()
+        # Instantiate the parent list serializer.
+        import ipdb;ipdb.set_trace()
+        return ArchaeologicalPlaceListSerializer(*args, **kwargs)
+
+    class Meta:
+        model = ArchaeologicalPlace
+        exclude = ['geometry']
         depth = 1
 
 
@@ -25,7 +41,8 @@ class ArchaeologicalPlaceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ArchaeologicalPlace
-        exclude = ['position']
+        list_serializer_class = ArchaeologicalPlaceListSerializer
+        # exclude = ['geometry']
         depth = 1
 
 
@@ -70,7 +87,7 @@ class IndigenousLandGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
 
     class Meta:
         model = IndigenousLand
-        geo_field = 'polygon'
+        geo_field = 'geometry'
         exclude = ['id', 'documents', 'layer', ]
 
 
@@ -78,9 +95,9 @@ class IndigenousVillageGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
 
     class Meta:
         model = IndigenousVillage
-        geo_field = 'position'
+        geo_field = 'geometry'
         fields = ['ethnic_groups', 'prominent_subgroup', 'population', 'guarani_presence', 'name', 'other_names',
-        'public_comments', 'private_comments', 'position_precision', 'position_source', 'position']
+        'public_comments', 'private_comments', 'position_precision', 'position_source', 'geometry']
         # exclude = ['id', 'layer', ]
 
 
@@ -88,5 +105,5 @@ class ArchaeologicalPlaceGeojsonSerializer(GeoFeatureModelSerializer):
 
     class Meta:
         model = ArchaeologicalPlace
-        geo_field = 'position'
+        geo_field = 'geometry'
         exclude = ['id', 'layer', ]
