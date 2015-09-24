@@ -17,7 +17,6 @@ class IndigenousVillageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = IndigenousVillage
-        exclude = ['geometry']
         depth = 1
 
 
@@ -28,12 +27,11 @@ class ArchaeologicalPlaceListSerializer(serializers.ListSerializer):
         # Instantiate the child serializer.
         kwargs['child'] = cls()
         # Instantiate the parent list serializer.
-        import ipdb;ipdb.set_trace()
+        # import ipdb;ipdb.set_trace()
         return ArchaeologicalPlaceListSerializer(*args, **kwargs)
 
     class Meta:
         model = ArchaeologicalPlace
-        exclude = ['geometry']
         depth = 1
 
 
@@ -41,7 +39,7 @@ class ArchaeologicalPlaceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ArchaeologicalPlace
-        list_serializer_class = ArchaeologicalPlaceListSerializer
+        # list_serializer_class = ArchaeologicalPlaceListSerializer
         # exclude = ['geometry']
         depth = 1
 
