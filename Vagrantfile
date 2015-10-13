@@ -5,20 +5,33 @@ SCRIPT
 $dependencies = <<SCRIPT
     export DEBIAN_FRONTEND=noninteractive
     apt-get install -y postgresql postgresql-contrib postgis postgresql-9.3-postgis-2.1 postgresql-9.3-postgis-2.1-scripts libpq-dev
+    apt-get install -y postgresql-server-dev-all plpython-9.3
     apt-get install -y build-essential git python-dev python3-dev libjpeg-dev zlib1g-dev python-virtualenv binutils libproj-dev gdal-bin
 
     # Needed to install Fiona via pip
     apt-get install -y libgdal-dev
 
-    # Configure postgis
-    su postgres -c "createuser vagrant"
-    su postgres -c "createdb -O vagrant template_postgis -E UTF-8"
-    su postgres -c "createlang plpgsql template_postgis"
-    su postgres -c "psql -d template_postgis -f /usr/share/postgresql/9.3/contrib/postgis-2.1/postgis.sql"
-    su postgres -c "psql -d template_postgis -f /usr/share/postgresql/9.3/contrib/postgis-2.1/spatial_ref_sys.sql"
+    # install pg_schema_triggers
+    git clone https://github.com/CartoDB/pg_schema_triggers.git
+    cd pg_schema_triggers/
+    make
+    make install
+    cd ..
 
-    su postgres -c "createdb -T template_postgis mapaguarani"
-    echo "GRANT ALL PRIVILEGES ON DATABASE mapaguarani to vagrant;" | su postgres -c "psql"
+    git clone https://github.com/CartoDB/cartodb-postgresql.git
+    cd cartodb-postgresql
+    sudo make all install
+    cd ..
+
+
+    # Configure postgis
+    sudo -u postgres createuser -d vagrant
+    sudo -u vagrant createdb mapaguarani
+
+    sudo -u postgres psql -d mapaguarani -c "CREATE EXTENSION postgis;"
+    sudo -u postgres psql -d mapaguarani -c "CREATE EXTENSION schema_triggers;"
+    sudo -u postgres psql -d mapaguarani -c "CREATE EXTENSION plpythonu;"
+    sudo -u postgres psql -d mapaguarani -c "CREATE EXTENSION cartodb;"
 
 SCRIPT
 
@@ -29,6 +42,22 @@ $virtualenv = <<SCRIPT
     virtualenv -p /usr/bin/python3 mapaguarani-env
     source /home/vagrant/mapaguarani-env/bin/activate
     /home/vagrant/mapaguarani-env/bin/pip install -r /vagrant/requirements/local.txt
+
+SCRIPT
+
+$import_layers = <<SCRIPT
+    # must run with vagrant user
+
+    cd /vagrant
+    # migrations
+    /home/vagrant/mapaguarani-env/bin/python3 manage.py migrate
+    # load initial data
+    /home/vagrant/mapaguarani-env/bin/python3 manage.py loaddata fixtures/initial_data.json
+
+    git clone https://github.com/hacklabr/camadas-cti /home/vagrant/camadas-cti
+    /home/vagrant/mapaguarani-env/bin/python3 manage.py import_lands_layer /home/vagrant/camadas-cti/terras_indigenas_final_importacao.shp
+    /home/vagrant/mapaguarani-env/bin/python3 manage.py import_village_layer /home/vagrant/camadas-cti/camada-aldeias-importacao.shp
+    /home/vagrant/mapaguarani-env/bin/python3 manage.py import_archaeological_layer /home/vagrant/camadas-cti/sitios.csv
 
 SCRIPT
 
@@ -81,6 +110,10 @@ Vagrant.configure('2') do |config|
     config.vm.provision "shell", inline: $dependencies
     config.vm.provision "shell", inline: $virtualenv, privileged: false
     config.vm.provision "shell", inline: $windshaft
+    config.vm.provision "shell",
+            inline: $import_layers,
+            privileged: false,
+            run: "always"
     config.vm.provision "shell",
             inline: $maptiler,
             privileged: false,
