@@ -1,0 +1,1900 @@
+[
+{
+    "fields": {
+        "model": "permission",
+        "app_label": "auth"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "group",
+        "app_label": "auth"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "contenttype",
+        "app_label": "contenttypes"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "session",
+        "app_label": "sessions"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "site",
+        "app_label": "sites"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "logentry",
+        "app_label": "admin"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "emailaddress",
+        "app_label": "account"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "emailconfirmation",
+        "app_label": "account"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "socialapp",
+        "app_label": "socialaccount"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "socialaccount",
+        "app_label": "socialaccount"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "socialtoken",
+        "app_label": "socialaccount"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "user",
+        "app_label": "users"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "maplayer",
+        "app_label": "core"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "ethnicgroup",
+        "app_label": "core"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "indigenousvillage",
+        "app_label": "core"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "guaranipresence",
+        "app_label": "core"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "population",
+        "app_label": "core"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "indigenousland",
+        "app_label": "core"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "legalproceedings",
+        "app_label": "core"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "archaeologicalplace",
+        "app_label": "core"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "moderatedobject",
+        "app_label": "moderation"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "documenttype",
+        "app_label": "core"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "document",
+        "app_label": "core"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "prominentethnicsubgroup",
+        "app_label": "core"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "landtenure",
+        "app_label": "core"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "landtenurestatus",
+        "app_label": "core"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "fields": {
+        "model": "archaeologicalimage",
+        "app_label": "core"
+    },
+    "model": "contenttypes.contenttype"
+},
+{
+    "pk": 1,
+    "fields": {
+        "name": "guarani.map.as",
+        "domain": "guarani.map.as"
+    },
+    "model": "sites.site"
+},
+{
+    "pk": 1,
+    "fields": {
+        "name": "Terras Ind\u00edgenas",
+        "description": "Camada de Terras Ind\u00edgenas dos povos Guarani"
+    },
+    "model": "core.maplayer"
+},
+{
+    "pk": 2,
+    "fields": {
+        "name": "Aldeias Ind\u00edgenas",
+        "description": "Camada de Aldeias Ind\u00edgenas dos povos Guarani"
+    },
+    "model": "core.maplayer"
+},
+{
+    "pk": 3,
+    "fields": {
+        "name": "S\u00edtios Arqueol\u00f3gicos",
+        "description": "Camada de S\u00edtios Arqueol\u00f3gicos"
+    },
+    "model": "core.maplayer"
+},
+{
+    "pk": 2,
+    "fields": {
+        "name": "Portaria GT"
+    },
+    "model": "core.documenttype"
+},
+{
+    "pk": 3,
+    "fields": {
+        "name": "Delimita\u00e7\u00e3o"
+    },
+    "model": "core.documenttype"
+},
+{
+    "pk": 4,
+    "fields": {
+        "name": "Declara\u00e7\u00e3o"
+    },
+    "model": "core.documenttype"
+},
+{
+    "pk": 5,
+    "fields": {
+        "name": "Homologa\u00e7\u00e3o"
+    },
+    "model": "core.documenttype"
+},
+{
+    "pk": 6,
+    "fields": {
+        "name": "Registro"
+    },
+    "model": "core.documenttype"
+},
+{
+    "pk": 7,
+    "fields": {
+        "name": "Desapropria\u00e7\u00e3o"
+    },
+    "model": "core.documenttype"
+},
+{
+    "pk": 8,
+    "fields": {
+        "name": "Reserva\u00e7\u00e3o"
+    },
+    "model": "core.documenttype"
+},
+{
+    "pk": 28,
+    "fields": {
+        "name": "Guarani"
+    },
+    "model": "core.ethnicgroup"
+},
+{
+    "pk": 38,
+    "fields": {
+        "name": "Gavi\u00e3o"
+    },
+    "model": "core.ethnicgroup"
+},
+{
+    "pk": 39,
+    "fields": {
+        "name": "Guajajara"
+    },
+    "model": "core.ethnicgroup"
+},
+{
+    "pk": 40,
+    "fields": {
+        "name": "Karaj\u00e1"
+    },
+    "model": "core.ethnicgroup"
+},
+{
+    "pk": 41,
+    "fields": {
+        "name": "Xerente"
+    },
+    "model": "core.ethnicgroup"
+},
+{
+    "pk": 42,
+    "fields": {
+        "name": "Terena"
+    },
+    "model": "core.ethnicgroup"
+},
+{
+    "pk": 43,
+    "fields": {
+        "name": "Xokleng"
+    },
+    "model": "core.ethnicgroup"
+},
+{
+    "pk": 44,
+    "fields": {
+        "name": "Tupiniquim"
+    },
+    "model": "core.ethnicgroup"
+},
+{
+    "pk": 45,
+    "fields": {
+        "name": "Kaingang"
+    },
+    "model": "core.ethnicgroup"
+},
+{
+    "pk": 46,
+    "fields": {
+        "name": "Xet\u00e1"
+    },
+    "model": "core.ethnicgroup"
+},
+{
+    "pk": 1,
+    "fields": {
+        "name": "Mbya"
+    },
+    "model": "core.prominentethnicsubgroup"
+},
+{
+    "pk": 3,
+    "fields": {
+        "name": "Nhandeva"
+    },
+    "model": "core.prominentethnicsubgroup"
+},
+{
+    "pk": 6,
+    "fields": {
+        "name": "Tupi-guarani"
+    },
+    "model": "core.prominentethnicsubgroup"
+},
+{
+    "pk": 11,
+    "fields": {
+        "name": "Ava-Guarani"
+    },
+    "model": "core.prominentethnicsubgroup"
+},
+{
+    "pk": 12,
+    "fields": {
+        "name": "Kaiova"
+    },
+    "model": "core.prominentethnicsubgroup"
+},
+{
+    "pk": 1,
+    "fields": {
+        "map_color": null,
+        "name": "Regularizada"
+    },
+    "model": "core.landtenure"
+},
+{
+    "pk": 2,
+    "fields": {
+        "map_color": null,
+        "name": "Adquirida"
+    },
+    "model": "core.landtenure"
+},
+{
+    "pk": 3,
+    "fields": {
+        "map_color": null,
+        "name": "Declarada"
+    },
+    "model": "core.landtenure"
+},
+{
+    "pk": 4,
+    "fields": {
+        "map_color": null,
+        "name": "Delimitada"
+    },
+    "model": "core.landtenure"
+},
+{
+    "pk": 5,
+    "fields": {
+        "map_color": null,
+        "name": "Homologada"
+    },
+    "model": "core.landtenure"
+},
+{
+    "pk": 6,
+    "fields": {
+        "map_color": null,
+        "name": "Desapropriada"
+    },
+    "model": "core.landtenure"
+},
+{
+    "pk": 7,
+    "fields": {
+        "map_color": null,
+        "name": "Em processo de desapropria\u00e7\u00e3o"
+    },
+    "model": "core.landtenure"
+},
+{
+    "pk": 8,
+    "fields": {
+        "map_color": null,
+        "name": "Sem Provid\u00eancias"
+    },
+    "model": "core.landtenure"
+},
+{
+    "pk": 9,
+    "fields": {
+        "map_color": null,
+        "name": "Em estudo"
+    },
+    "model": "core.landtenure"
+},
+{
+    "pk": 1,
+    "fields": {
+        "map_color": null,
+        "name": "Sem Revis\u00e3o"
+    },
+    "model": "core.landtenurestatus"
+},
+{
+    "pk": 2,
+    "fields": {
+        "map_color": null,
+        "name": "Terra Revisada"
+    },
+    "model": "core.landtenurestatus"
+},
+{
+    "pk": 3,
+    "fields": {
+        "map_color": null,
+        "name": "Terra Original"
+    },
+    "model": "core.landtenurestatus"
+},
+{
+    "pk": 4,
+    "fields": {
+        "map_color": null,
+        "name": "N\u00e3o Delimitada"
+    },
+    "model": "core.landtenurestatus"
+},
+{
+    "fields": {
+        "codename": "add_permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "name": "Can add permission"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "name": "Can change permission"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "name": "Can delete permission"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "name": "Can add group"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "name": "Can change group"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "name": "Can delete group"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_contenttype",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "name": "Can add content type"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_contenttype",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "name": "Can change content type"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_contenttype",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "name": "Can delete content type"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "name": "Can add session"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "name": "Can change session"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "name": "Can delete session"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_site",
+        "content_type": [
+            "sites",
+            "site"
+        ],
+        "name": "Can add site"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_site",
+        "content_type": [
+            "sites",
+            "site"
+        ],
+        "name": "Can change site"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_site",
+        "content_type": [
+            "sites",
+            "site"
+        ],
+        "name": "Can delete site"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_logentry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "name": "Can add log entry"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_logentry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "name": "Can change log entry"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_logentry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "name": "Can delete log entry"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_emailaddress",
+        "content_type": [
+            "account",
+            "emailaddress"
+        ],
+        "name": "Can add email address"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_emailaddress",
+        "content_type": [
+            "account",
+            "emailaddress"
+        ],
+        "name": "Can change email address"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_emailaddress",
+        "content_type": [
+            "account",
+            "emailaddress"
+        ],
+        "name": "Can delete email address"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_emailconfirmation",
+        "content_type": [
+            "account",
+            "emailconfirmation"
+        ],
+        "name": "Can add email confirmation"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_emailconfirmation",
+        "content_type": [
+            "account",
+            "emailconfirmation"
+        ],
+        "name": "Can change email confirmation"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_emailconfirmation",
+        "content_type": [
+            "account",
+            "emailconfirmation"
+        ],
+        "name": "Can delete email confirmation"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_socialapp",
+        "content_type": [
+            "socialaccount",
+            "socialapp"
+        ],
+        "name": "Can add social application"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_socialapp",
+        "content_type": [
+            "socialaccount",
+            "socialapp"
+        ],
+        "name": "Can change social application"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_socialapp",
+        "content_type": [
+            "socialaccount",
+            "socialapp"
+        ],
+        "name": "Can delete social application"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_socialaccount",
+        "content_type": [
+            "socialaccount",
+            "socialaccount"
+        ],
+        "name": "Can add social account"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_socialaccount",
+        "content_type": [
+            "socialaccount",
+            "socialaccount"
+        ],
+        "name": "Can change social account"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_socialaccount",
+        "content_type": [
+            "socialaccount",
+            "socialaccount"
+        ],
+        "name": "Can delete social account"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_socialtoken",
+        "content_type": [
+            "socialaccount",
+            "socialtoken"
+        ],
+        "name": "Can add social application token"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_socialtoken",
+        "content_type": [
+            "socialaccount",
+            "socialtoken"
+        ],
+        "name": "Can change social application token"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_socialtoken",
+        "content_type": [
+            "socialaccount",
+            "socialtoken"
+        ],
+        "name": "Can delete social application token"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_user",
+        "content_type": [
+            "users",
+            "user"
+        ],
+        "name": "Can add user"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_user",
+        "content_type": [
+            "users",
+            "user"
+        ],
+        "name": "Can change user"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_user",
+        "content_type": [
+            "users",
+            "user"
+        ],
+        "name": "Can delete user"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_maplayer",
+        "content_type": [
+            "core",
+            "maplayer"
+        ],
+        "name": "Can add map layer"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_maplayer",
+        "content_type": [
+            "core",
+            "maplayer"
+        ],
+        "name": "Can change map layer"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_maplayer",
+        "content_type": [
+            "core",
+            "maplayer"
+        ],
+        "name": "Can delete map layer"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_ethnicgroup",
+        "content_type": [
+            "core",
+            "ethnicgroup"
+        ],
+        "name": "Can add ethnic group"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_ethnicgroup",
+        "content_type": [
+            "core",
+            "ethnicgroup"
+        ],
+        "name": "Can change ethnic group"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_ethnicgroup",
+        "content_type": [
+            "core",
+            "ethnicgroup"
+        ],
+        "name": "Can delete ethnic group"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_indigenousvillage",
+        "content_type": [
+            "core",
+            "indigenousvillage"
+        ],
+        "name": "Can add indigenous village"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_indigenousvillage",
+        "content_type": [
+            "core",
+            "indigenousvillage"
+        ],
+        "name": "Can change indigenous village"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_indigenousvillage",
+        "content_type": [
+            "core",
+            "indigenousvillage"
+        ],
+        "name": "Can delete indigenous village"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_guaranipresence",
+        "content_type": [
+            "core",
+            "guaranipresence"
+        ],
+        "name": "Can add guarani presence"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_guaranipresence",
+        "content_type": [
+            "core",
+            "guaranipresence"
+        ],
+        "name": "Can change guarani presence"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_guaranipresence",
+        "content_type": [
+            "core",
+            "guaranipresence"
+        ],
+        "name": "Can delete guarani presence"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_population",
+        "content_type": [
+            "core",
+            "population"
+        ],
+        "name": "Can add population"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_population",
+        "content_type": [
+            "core",
+            "population"
+        ],
+        "name": "Can change population"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_population",
+        "content_type": [
+            "core",
+            "population"
+        ],
+        "name": "Can delete population"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_indigenousland",
+        "content_type": [
+            "core",
+            "indigenousland"
+        ],
+        "name": "Can add indigenous land"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_indigenousland",
+        "content_type": [
+            "core",
+            "indigenousland"
+        ],
+        "name": "Can change indigenous land"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_indigenousland",
+        "content_type": [
+            "core",
+            "indigenousland"
+        ],
+        "name": "Can delete indigenous land"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_legalproceedings",
+        "content_type": [
+            "core",
+            "legalproceedings"
+        ],
+        "name": "Can add legal proceedings"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_legalproceedings",
+        "content_type": [
+            "core",
+            "legalproceedings"
+        ],
+        "name": "Can change legal proceedings"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_legalproceedings",
+        "content_type": [
+            "core",
+            "legalproceedings"
+        ],
+        "name": "Can delete legal proceedings"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_archaeologicalplace",
+        "content_type": [
+            "core",
+            "archaeologicalplace"
+        ],
+        "name": "Can add archaeological place"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_archaeologicalplace",
+        "content_type": [
+            "core",
+            "archaeologicalplace"
+        ],
+        "name": "Can change archaeological place"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_archaeologicalplace",
+        "content_type": [
+            "core",
+            "archaeologicalplace"
+        ],
+        "name": "Can delete archaeological place"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_moderatedobject",
+        "content_type": [
+            "moderation",
+            "moderatedobject"
+        ],
+        "name": "Can add moderated object"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_moderatedobject",
+        "content_type": [
+            "moderation",
+            "moderatedobject"
+        ],
+        "name": "Can change moderated object"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_moderatedobject",
+        "content_type": [
+            "moderation",
+            "moderatedobject"
+        ],
+        "name": "Can delete moderated object"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_documenttype",
+        "content_type": [
+            "core",
+            "documenttype"
+        ],
+        "name": "Can add Indigenous Place Document Type"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_documenttype",
+        "content_type": [
+            "core",
+            "documenttype"
+        ],
+        "name": "Can change Indigenous Place Document Type"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_documenttype",
+        "content_type": [
+            "core",
+            "documenttype"
+        ],
+        "name": "Can delete Indigenous Place Document Type"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_document",
+        "content_type": [
+            "core",
+            "document"
+        ],
+        "name": "Can add Indigenous Place Document"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_document",
+        "content_type": [
+            "core",
+            "document"
+        ],
+        "name": "Can change Indigenous Place Document"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_document",
+        "content_type": [
+            "core",
+            "document"
+        ],
+        "name": "Can delete Indigenous Place Document"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_prominentethnicsubgroup",
+        "content_type": [
+            "core",
+            "prominentethnicsubgroup"
+        ],
+        "name": "Can add Prominent Ethnic SubGroup"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_prominentethnicsubgroup",
+        "content_type": [
+            "core",
+            "prominentethnicsubgroup"
+        ],
+        "name": "Can change Prominent Ethnic SubGroup"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_prominentethnicsubgroup",
+        "content_type": [
+            "core",
+            "prominentethnicsubgroup"
+        ],
+        "name": "Can delete Prominent Ethnic SubGroup"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_landtenure",
+        "content_type": [
+            "core",
+            "landtenure"
+        ],
+        "name": "Can add Land Tenure"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_landtenure",
+        "content_type": [
+            "core",
+            "landtenure"
+        ],
+        "name": "Can change Land Tenure"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_landtenure",
+        "content_type": [
+            "core",
+            "landtenure"
+        ],
+        "name": "Can delete Land Tenure"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_landtenurestatus",
+        "content_type": [
+            "core",
+            "landtenurestatus"
+        ],
+        "name": "Can add Land Tenure"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_landtenurestatus",
+        "content_type": [
+            "core",
+            "landtenurestatus"
+        ],
+        "name": "Can change Land Tenure"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_landtenurestatus",
+        "content_type": [
+            "core",
+            "landtenurestatus"
+        ],
+        "name": "Can delete Land Tenure"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "add_archaeologicalimage",
+        "content_type": [
+            "core",
+            "archaeologicalimage"
+        ],
+        "name": "Can add archaeological image"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "change_archaeologicalimage",
+        "content_type": [
+            "core",
+            "archaeologicalimage"
+        ],
+        "name": "Can change archaeological image"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "codename": "delete_archaeologicalimage",
+        "content_type": [
+            "core",
+            "archaeologicalimage"
+        ],
+        "name": "Can delete archaeological image"
+    },
+    "model": "auth.permission"
+},
+{
+    "fields": {
+        "permissions": [
+            [
+                "add_document",
+                "core",
+                "document"
+            ],
+            [
+                "add_guaranipresence",
+                "core",
+                "guaranipresence"
+            ],
+            [
+                "add_indigenousland",
+                "core",
+                "indigenousland"
+            ],
+            [
+                "add_indigenousvillage",
+                "core",
+                "indigenousvillage"
+            ],
+            [
+                "add_population",
+                "core",
+                "population"
+            ]
+        ],
+        "name": "Colaboradores de Alddeias e Territ\u00f3rios"
+    },
+    "model": "auth.group"
+},
+{
+    "fields": {
+        "permissions": [
+            [
+                "add_archaeologicalplace",
+                "core",
+                "archaeologicalplace"
+            ]
+        ],
+        "name": "Colaboradores de S\u00edtios Arqueol\u00f3gicos"
+    },
+    "model": "auth.group"
+},
+{
+    "fields": {
+        "permissions": [
+            [
+                "add_legalproceedings",
+                "core",
+                "legalproceedings"
+            ]
+        ],
+        "name": "Colaboradores do Banco Jur\u00eddico"
+    },
+    "model": "auth.group"
+},
+{
+    "fields": {
+        "permissions": [
+            [
+                "add_document",
+                "core",
+                "document"
+            ],
+            [
+                "change_document",
+                "core",
+                "document"
+            ],
+            [
+                "delete_document",
+                "core",
+                "document"
+            ],
+            [
+                "add_documenttype",
+                "core",
+                "documenttype"
+            ],
+            [
+                "change_documenttype",
+                "core",
+                "documenttype"
+            ],
+            [
+                "delete_documenttype",
+                "core",
+                "documenttype"
+            ],
+            [
+                "add_ethnicgroup",
+                "core",
+                "ethnicgroup"
+            ],
+            [
+                "change_ethnicgroup",
+                "core",
+                "ethnicgroup"
+            ],
+            [
+                "delete_ethnicgroup",
+                "core",
+                "ethnicgroup"
+            ],
+            [
+                "add_guaranipresence",
+                "core",
+                "guaranipresence"
+            ],
+            [
+                "change_guaranipresence",
+                "core",
+                "guaranipresence"
+            ],
+            [
+                "delete_guaranipresence",
+                "core",
+                "guaranipresence"
+            ],
+            [
+                "add_indigenousland",
+                "core",
+                "indigenousland"
+            ],
+            [
+                "change_indigenousland",
+                "core",
+                "indigenousland"
+            ],
+            [
+                "delete_indigenousland",
+                "core",
+                "indigenousland"
+            ],
+            [
+                "add_indigenousvillage",
+                "core",
+                "indigenousvillage"
+            ],
+            [
+                "change_indigenousvillage",
+                "core",
+                "indigenousvillage"
+            ],
+            [
+                "delete_indigenousvillage",
+                "core",
+                "indigenousvillage"
+            ],
+            [
+                "add_landtenure",
+                "core",
+                "landtenure"
+            ],
+            [
+                "change_landtenure",
+                "core",
+                "landtenure"
+            ],
+            [
+                "delete_landtenure",
+                "core",
+                "landtenure"
+            ],
+            [
+                "add_landtenurestatus",
+                "core",
+                "landtenurestatus"
+            ],
+            [
+                "change_landtenurestatus",
+                "core",
+                "landtenurestatus"
+            ],
+            [
+                "delete_landtenurestatus",
+                "core",
+                "landtenurestatus"
+            ],
+            [
+                "add_population",
+                "core",
+                "population"
+            ],
+            [
+                "change_population",
+                "core",
+                "population"
+            ],
+            [
+                "delete_population",
+                "core",
+                "population"
+            ],
+            [
+                "add_prominentethnicsubgroup",
+                "core",
+                "prominentethnicsubgroup"
+            ],
+            [
+                "change_prominentethnicsubgroup",
+                "core",
+                "prominentethnicsubgroup"
+            ],
+            [
+                "delete_prominentethnicsubgroup",
+                "core",
+                "prominentethnicsubgroup"
+            ],
+            [
+                "add_moderatedobject",
+                "moderation",
+                "moderatedobject"
+            ],
+            [
+                "change_moderatedobject",
+                "moderation",
+                "moderatedobject"
+            ],
+            [
+                "delete_moderatedobject",
+                "moderation",
+                "moderatedobject"
+            ]
+        ],
+        "name": "Editores de Aldeias e Territ\u00f3rios"
+    },
+    "model": "auth.group"
+},
+{
+    "fields": {
+        "permissions": [
+            [
+                "add_archaeologicalimage",
+                "core",
+                "archaeologicalimage"
+            ],
+            [
+                "change_archaeologicalimage",
+                "core",
+                "archaeologicalimage"
+            ],
+            [
+                "delete_archaeologicalimage",
+                "core",
+                "archaeologicalimage"
+            ],
+            [
+                "add_archaeologicalplace",
+                "core",
+                "archaeologicalplace"
+            ],
+            [
+                "change_archaeologicalplace",
+                "core",
+                "archaeologicalplace"
+            ],
+            [
+                "delete_archaeologicalplace",
+                "core",
+                "archaeologicalplace"
+            ],
+            [
+                "add_moderatedobject",
+                "moderation",
+                "moderatedobject"
+            ],
+            [
+                "change_moderatedobject",
+                "moderation",
+                "moderatedobject"
+            ],
+            [
+                "delete_moderatedobject",
+                "moderation",
+                "moderatedobject"
+            ]
+        ],
+        "name": "Editores de S\u00edtios Arqueol\u00f3gicos"
+    },
+    "model": "auth.group"
+},
+{
+    "fields": {
+        "permissions": [
+            [
+                "add_legalproceedings",
+                "core",
+                "legalproceedings"
+            ],
+            [
+                "change_legalproceedings",
+                "core",
+                "legalproceedings"
+            ],
+            [
+                "delete_legalproceedings",
+                "core",
+                "legalproceedings"
+            ],
+            [
+                "add_moderatedobject",
+                "moderation",
+                "moderatedobject"
+            ],
+            [
+                "change_moderatedobject",
+                "moderation",
+                "moderatedobject"
+            ],
+            [
+                "delete_moderatedobject",
+                "moderation",
+                "moderatedobject"
+            ]
+        ],
+        "name": "Editores do Banco Jur\u00eddico"
+    },
+    "model": "auth.group"
+},
+{
+    "fields": {
+        "permissions": [
+            [
+                "add_archaeologicalplace",
+                "core",
+                "archaeologicalplace"
+            ],
+            [
+                "change_archaeologicalplace",
+                "core",
+                "archaeologicalplace"
+            ],
+            [
+                "delete_archaeologicalplace",
+                "core",
+                "archaeologicalplace"
+            ],
+            [
+                "add_document",
+                "core",
+                "document"
+            ],
+            [
+                "change_document",
+                "core",
+                "document"
+            ],
+            [
+                "delete_document",
+                "core",
+                "document"
+            ],
+            [
+                "add_documenttype",
+                "core",
+                "documenttype"
+            ],
+            [
+                "change_documenttype",
+                "core",
+                "documenttype"
+            ],
+            [
+                "delete_documenttype",
+                "core",
+                "documenttype"
+            ],
+            [
+                "add_ethnicgroup",
+                "core",
+                "ethnicgroup"
+            ],
+            [
+                "change_ethnicgroup",
+                "core",
+                "ethnicgroup"
+            ],
+            [
+                "delete_ethnicgroup",
+                "core",
+                "ethnicgroup"
+            ],
+            [
+                "add_guaranipresence",
+                "core",
+                "guaranipresence"
+            ],
+            [
+                "change_guaranipresence",
+                "core",
+                "guaranipresence"
+            ],
+            [
+                "delete_guaranipresence",
+                "core",
+                "guaranipresence"
+            ],
+            [
+                "add_indigenousland",
+                "core",
+                "indigenousland"
+            ],
+            [
+                "change_indigenousland",
+                "core",
+                "indigenousland"
+            ],
+            [
+                "delete_indigenousland",
+                "core",
+                "indigenousland"
+            ],
+            [
+                "add_indigenousvillage",
+                "core",
+                "indigenousvillage"
+            ],
+            [
+                "change_indigenousvillage",
+                "core",
+                "indigenousvillage"
+            ],
+            [
+                "delete_indigenousvillage",
+                "core",
+                "indigenousvillage"
+            ],
+            [
+                "add_legalproceedings",
+                "core",
+                "legalproceedings"
+            ],
+            [
+                "change_legalproceedings",
+                "core",
+                "legalproceedings"
+            ],
+            [
+                "delete_legalproceedings",
+                "core",
+                "legalproceedings"
+            ],
+            [
+                "add_maplayer",
+                "core",
+                "maplayer"
+            ],
+            [
+                "change_maplayer",
+                "core",
+                "maplayer"
+            ],
+            [
+                "delete_maplayer",
+                "core",
+                "maplayer"
+            ],
+            [
+                "add_population",
+                "core",
+                "population"
+            ],
+            [
+                "change_population",
+                "core",
+                "population"
+            ],
+            [
+                "delete_population",
+                "core",
+                "population"
+            ],
+            [
+                "add_moderatedobject",
+                "moderation",
+                "moderatedobject"
+            ],
+            [
+                "change_moderatedobject",
+                "moderation",
+                "moderatedobject"
+            ],
+            [
+                "delete_moderatedobject",
+                "moderation",
+                "moderatedobject"
+            ],
+            [
+                "add_user",
+                "users",
+                "user"
+            ],
+            [
+                "change_user",
+                "users",
+                "user"
+            ],
+            [
+                "delete_user",
+                "users",
+                "user"
+            ]
+        ],
+        "name": "Administrador"
+    },
+    "model": "auth.group"
+},
+{
+    "fields": {
+        "email": "bruno@hacklab.com.br",
+        "username": "admin",
+        "last_login": "2015-10-12T18:49:42.461",
+        "date_joined": "2015-07-21T09:42:05.793",
+        "user_permissions": [],
+        "is_active": true,
+        "last_name": "",
+        "is_superuser": true,
+        "password": "pbkdf2_sha256$20000$sylZRefDrqzO$m8/hSnqKDEGKR8rUUY9HGVonMSAbOiVwdxsn3xL0VIo=",
+        "groups": [],
+        "first_name": "",
+        "is_staff": true
+    },
+    "model": "users.user"
+}
+]
