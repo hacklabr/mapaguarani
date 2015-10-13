@@ -128,7 +128,7 @@ class Command(BaseCommand):
             }
 
             indigenous_land = IndigenousLand(**kwargs)
-            indigenous_land.polygon = feat.geom.wkt
+            indigenous_land.geometry = feat.geom.wkt
 
             try:
                 # try to save as MultPolygon
