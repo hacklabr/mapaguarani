@@ -1,0 +1,64 @@
+<script type="sql/html" id="sql_template">
+WITH meta AS (
+  SELECT ext, ST_XMin(ext) xmin, ST_YMin(ext) ymin FROM (SELECT ST_SetSRID(!bbox!::box3d, 3857) as ext) a
+),
+filtered_table AS (
+  SELECT t.*, geometry g FROM core_archaeologicalplace t, meta m WHERE t.geometry && m.ext
+),
+b as (
+ select st_collect(g) as g, count(*) as points_count, 1 as id, array_agg(id) AS id_list
+ FROM filtered_table
+ GROUP BY st_snaptogrid(g, greatest(!pixel_width!,!pixel_height!) * 48, greatest(!pixel_width!,!pixel_height!) * 48)
+ HAVING count(*) > 48 ),
+m as (
+ select st_collect(g) as g, count(*) as points_count, 1 as id, array_agg(id) AS id_list
+ FROM filtered_table
+ WHERE id NOT IN (SELECT unnest(id_list) FROM b)
+ GROUP BY st_snaptogrid(g, greatest(!pixel_width!,!pixel_height!) * 0.75 * 48, greatest(!pixel_width!,!pixel_height!) * 0.75 * 48)
+ HAVING count(*) > 48 * 0.5 ),
+s as (
+ select st_collect(g) as g, count(*) as points_count, 1 as id, array_agg(id) AS id_list
+ FROM filtered_table
+ WHERE id NOT IN (SELECT unnest(id_list) FROM b) AND id NOT IN (SELECT unnest(id_list) FROM m)
+ GROUP BY st_snaptogrid(g, greatest(!pixel_width!,!pixel_height!) * 0.5 * 48, greatest(!pixel_width!,!pixel_height!) * 0.5 * 48)
+ HAVING count(*) > GREATEST(48 * 0.1, 2) )
+SELECT g geometry, 1 points_count, id, ARRAY[id] as id_list, 'origin' as src, id::text cdb_list FROM filtered_table WHERE id NOT IN (SELECT unnest(id_list) FROM b) AND id NOT IN (SELECT unnest(id_list) FROM m) AND id NOT IN (SELECT unnest(id_list) FROM s)
+UNION ALL
+SELECT ST_Centroid(g) geometry, points_count, id, id_list, 'bigs' as src, array_to_string(id_list, ',') cdb_list FROM b
+UNION ALL
+SELECT ST_Centroid(g) geometry, points_count, id, id_list, 'mids' as src, array_to_string(id_list, ',') cdb_list FROM m
+UNION ALL
+SELECT ST_Centroid(g) geometry, points_count, id, id_list, 'smalls' as src, array_to_string(id_list, ',') cdb_list FROM s
+</script>
+<script type="sql/html" id="cartocss_template">
+  Map {buffer-size: 256;}
+  #layer {
+    marker-width: 48 * 0.15;
+    marker-fill: #d15c5c;
+    marker-opacity: 0.6;
+    marker-line-width: 0;
+    marker-allow-overlap: true;
+    marker-comp-op: dst-atop;
+    [src = 'smalls'] {marker-width: 48 * 0.3; }
+    [src = 'mids'] {marker-width: 48 * 0.75;}
+    [src = 'bigs'] { marker-width: 48; }
+    [zoom>11]{marker-width: 48;}
+  }
+  #layer::lables {
+    text-size: 0;
+    text-fill: black;
+    text-opacity: 0.8;
+    text-name: [points_count];
+    text-face-name: 'DejaVu Sans Book';
+    text-halo-fill: #fff;
+    text-halo-radius: 0;
+    // if points_count >= 100 we should also make text smaller //
+    [src = 'smalls'] {text-size: 48 * 0.2; text-halo-radius: 1; }
+    // if points_count >= 1000 we should also make text smaller //
+    [src = 'mids'] {text-size: 48 * 0.3; text-halo-radius: 1; }
+    // if points_count >= 10000 we should also make text smaller //
+    [src = 'bigs'] { text-size: 48 * 0.5; text-halo-radius: 1; }
+    text-allow-overlap: true;
+    [zoom>11]{text-size: 48 * 0.66;}
+  }
+</script>
