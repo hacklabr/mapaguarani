@@ -285,11 +285,11 @@
             var sitesGridLayer = new L.UtfGrid('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.grid.json', {
               useJsonP: false
             });
-            sitesGridLayer.on('click', function(ev) {
-              if(ev.data) {
-                $state.go('site', {id: ev.data.id});
-              }
-            });
+            // sitesGridLayer.on('click', function(ev) {
+            //   if(ev.data) {
+            //     $state.go('site', {id: ev.data.id});
+            //   }
+            // });
             map.addLayer(sitesLayer);
             map.addLayer(sitesGridLayer);
           });
