@@ -47,7 +47,7 @@
             var sql = $(html).filter('#sql_template').html();
             var cartocss = $(html).filter('#cartocss_template').html();
 
-            var options = _.extend({
+            var settings = _.extend({
               sql: sql,
               cartocss: cartocss,
               cartocss_version: '2.1.1',
@@ -59,7 +59,7 @@
               layers: [
                 {
                   type: 'mapnik',
-                  options: options
+                  options: settings
                 }
               ]
             };

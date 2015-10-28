@@ -233,6 +233,18 @@
           var layersControl = new L.Control.Layers(baselayers, {});
           map.addControl(layersControl);
 
+          var clusterClick = function(ev, type) {
+            // console.log(ev);
+            if(ev.data) {
+              console.log(ev);
+              if(ev.data.id == 0) {
+                map.setView(ev.latlng, map.getZoom() + 1);
+              } else {
+                $state.go(type, {id: ev.data.id});
+              }
+            }
+          };
+
           /*
            * Init Lands layer
            */
@@ -244,8 +256,8 @@
            useJsonP: false
           });
           landsGridLayer.on('click', function(ev) {
-           if(ev.data)
-             $state.go('land', {id: ev.data.id});
+            if(ev.data)
+              $state.go('land', {id: ev.data.id});
           });
           map.addLayer(landsLayer);
           map.addLayer(landsGridLayer);
@@ -255,7 +267,7 @@
            */
 
           Guarani.sqlTiles('cluster_indigenousvillage', {
-            interactivity: ['id,cdb_list']
+            interactivity: ['id','cdb_list']
           }).then(function(token) {
             var villagesLayer = L.tileLayer('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.png', {
               zIndex: 10
@@ -263,11 +275,9 @@
             var villagesGridLayer = new L.UtfGrid('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.grid.json', {
               useJsonP: false
             });
-            // villagesGridLayer.on('click', function(ev) {
-            //   if(ev.data) {
-            //     $state.go('land', {id: ev.data.id});
-            //   }
-            // });
+            villagesGridLayer.on('click', function(ev) {
+              clusterClick(ev, 'village');
+            });
             map.addLayer(villagesLayer);
             map.addLayer(villagesGridLayer);
           });
@@ -277,7 +287,7 @@
            */
 
           Guarani.sqlTiles('cluster_archaeologicalplace', {
-            interactivity: ['id,cdb_list']
+            interactivity: ['id','cdb_list']
           }).then(function(token) {
             var sitesLayer = L.tileLayer('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.png', {
               zIndex: 10
@@ -285,11 +295,9 @@
             var sitesGridLayer = new L.UtfGrid('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.grid.json', {
               useJsonP: false
             });
-            // sitesGridLayer.on('click', function(ev) {
-            //   if(ev.data) {
-            //     $state.go('site', {id: ev.data.id});
-            //   }
-            // });
+            sitesGridLayer.on('click', function(ev) {
+              clusterClick(ev, 'site');
+            });
             map.addLayer(sitesLayer);
             map.addLayer(sitesGridLayer);
           });
