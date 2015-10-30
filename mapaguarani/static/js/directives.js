@@ -157,14 +157,20 @@
             $(element).parent().parent().scrollTop(0);
             $(element).parent().parent().parent().scrollTop(0);
           });
+
         }
       }
     }
   ]);
 
   directives.factory('guaraniMapService', [
-    function() {
-      var map, layers = [];
+    '$rootScope',
+    function($rootScope) {
+      var map;
+      var layers = [];
+
+      var cluster;
+
       return {
         setMap: function(m) {
           map = m;
@@ -186,6 +192,17 @@
               map.fitBounds(bounds);
             }
           }
+        },
+        clusterSelection: function(ids, type) {
+          cluster = {
+            type: type,
+            ids: ids.slice(0)
+          };
+          console.log('from service', cluster);
+          // $rootScope.$broadcast('clusterSelectionUpdated', cluster);
+        },
+        getCluster: function() {
+          return cluster;
         }
       }
     }
@@ -197,10 +214,10 @@
     '$rootScope',
     '$state',
     '$window',
-    function(Guarani, Map, $rootScope, $state, $window) {
+    '$timeout',
+    function(Guarani, Map, $rootScope, $state, $window, $timeout) {
       return {
         restrict: 'E',
-        replace: true,
         scope: {
           center: '=',
           zoom: '='
@@ -234,11 +251,24 @@
           map.addControl(layersControl);
 
           var clusterClick = function(ev, type) {
-            // console.log(ev);
             if(ev.data) {
-              console.log(ev);
               if(ev.data.id == 0) {
-                map.setView(ev.latlng, map.getZoom() + 1);
+                if(map.getZoom() < 16) {
+                  map.setView(ev.latlng, map.getZoom() + 1);
+                }
+                if(ev.data.src == 'smalls' || ev.data.src == 'mids' || map.getZoom() > 14) {
+                  var cluster = {
+                    type: type,
+                    ids: ev.data.cdb_list.split(',')
+                  };
+                  // $rootScope.$apply(function() {
+                  //   $rootScope.$broadcast('mapaguarani.clusterSelection', cluster);
+                  // });
+                  $state.go('home', {clustered: cluster});
+                  // scope.$apply(function() {
+                  //   Map.clusterSelection(ev.data.cdb_list.split(','), type);
+                  // });
+                }
               } else {
                 $state.go(type, {id: ev.data.id});
               }
@@ -267,7 +297,7 @@
            */
 
           Guarani.sqlTiles('cluster_indigenousvillage', {
-            interactivity: ['id','cdb_list']
+            interactivity: ['id','cdb_list','src']
           }).then(function(token) {
             var villagesLayer = L.tileLayer('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.png', {
               zIndex: 10
@@ -287,7 +317,7 @@
            */
 
           Guarani.sqlTiles('cluster_archaeologicalplace', {
-            interactivity: ['id','cdb_list']
+            interactivity: ['id','cdb_list','src']
           }).then(function(token) {
             var sitesLayer = L.tileLayer('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.png', {
               zIndex: 10

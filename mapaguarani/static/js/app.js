@@ -27,7 +27,7 @@
 
       $stateProvider
       .state('home', {
-        url: '/?content&filter&page',
+        url: '/?content&filter&page&clustered',
         reloadOnSearch: false,
         controller: 'HomeCtrl',
         templateUrl: '/static/views/home.html',

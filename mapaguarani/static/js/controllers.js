@@ -3,6 +3,18 @@
 
   var controllers = angular.module('mapaguarani.controllers', []);
 
+  controllers.controller('MainCtrl', [
+    '$scope',
+    function($scope) {
+
+      $scope.$on('mapaguarani.clusterSelection', function(ev, cluster) {
+        $scope.cluster = cluster;
+        console.log(cluster);
+      });
+
+    }
+  ]);
+
   controllers.controller('HomeCtrl', [
     '$scope',
     '$state',
@@ -57,6 +69,12 @@
         $state.go('home', {'filter': JSON.stringify(filter)});
       }, 700));
 
+      // $scope.$watch(function() {
+      //   return Map.getCluster();
+      // }, function(cluster) {
+      //   console.log('from controller', cluster);
+      // }, true);
+
       $scope.$on('mapaguarani.pageChanged', function(ev, page) {
         var param;
         if(page == 0) {
@@ -93,7 +111,6 @@
         // map.fitBounds(focusLayer.getBounds());
         focusLayer = null;
       });
-
     }
   ]);
 
