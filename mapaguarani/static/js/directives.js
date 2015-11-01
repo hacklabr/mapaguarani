@@ -329,7 +329,7 @@
 
           Map.setMap(map);
 
-          map.addLayer(mapbox_streets);
+          map.addLayer(gm_hybrid);
 
           var baselayers = {
             'Mapa Mapbox': mapbox_streets,
@@ -367,7 +367,7 @@
            */
           var default_host = $window.location.hostname;
           var landsLayer = L.tileLayer('http://' + default_host + ':4000/indigenousland/{z}/{x}/{y}.png', {
-           zIndex: 2
+           zIndex: 3
           });
           var landsGridLayer = new L.UtfGrid('http://' + default_host + ':4000/indigenousland/{z}/{x}/{y}.grid.json?interactivity=id,name', {
            useJsonP: false
@@ -380,26 +380,6 @@
           map.addLayer(landsGridLayer);
 
           /*
-           * Init villages layer
-           */
-
-          Guarani.sqlTiles('cluster_indigenousvillage', {
-            interactivity: ['id','cdb_list','src']
-          }).then(function(token) {
-            var villagesLayer = L.tileLayer('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.png', {
-              zIndex: 10
-            });
-            var villagesGridLayer = new L.UtfGrid('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.grid.json', {
-              useJsonP: false
-            });
-            villagesGridLayer.on('click', function(ev) {
-              clusterClick(ev, 'village');
-            });
-            map.addLayer(villagesLayer);
-            map.addLayer(villagesGridLayer);
-          });
-
-          /*
            * Init archaeological sites layer
            */
 
@@ -407,7 +387,7 @@
             interactivity: ['id','cdb_list','src']
           }).then(function(token) {
             var sitesLayer = L.tileLayer('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.png', {
-              zIndex: 10
+              zIndex: 4
             });
             var sitesGridLayer = new L.UtfGrid('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.grid.json', {
               useJsonP: false
@@ -419,29 +399,49 @@
             map.addLayer(sitesGridLayer);
           });
 
-          // var legendsControl = L.control({position: 'bottomright'});
-          // legendsControl.onAdd = function(map) {
-          //   var div = L.DomUtil.create('div', 'info legend');
-          //   var tenure;
-          //   div.innerHTML += '<p><strong>Terras indígenas</strong></p>';
-          //   for (tenure in landTenures) {
-          //     div.innerHTML += '<i style="background:' + landTenures[tenure].style.fillColor + '"></i>' + landTenures[tenure].name + '<br>';
-          //   }
-          //   return div;
-          // };
-          // legendsControl.addTo(map);
-          //
-          // map.on('overlayadd', function(eventLayer) {
-          //   // Switch to the Population legend...
-          //   if (eventLayer.name === 'Terras indígenas') {
-          //     legendsControl.addTo(this);
-          //   }
-          // });
-          // map.on('overlayremove', function(eventLayer) {
-          //   if (eventLayer.name === 'Terras indígenas') {
-          //     this.removeControl(legendsControl);
-          //   }
-          // });
+          /*
+           * Init villages layer
+           */
+
+          Guarani.sqlTiles('cluster_indigenousvillage', {
+            interactivity: ['id','cdb_list','src']
+          }).then(function(token) {
+            var villagesLayer = L.tileLayer('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.png', {
+              zIndex: 5
+            });
+            var villagesGridLayer = new L.UtfGrid('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.grid.json', {
+              useJsonP: false
+            });
+            villagesGridLayer.on('click', function(ev) {
+              clusterClick(ev, 'village');
+            });
+            map.addLayer(villagesLayer);
+            map.addLayer(villagesGridLayer);
+          });
+
+          var legendsControl = L.control({position: 'bottomright'});
+          legendsControl.onAdd = function(map) {
+            var div = L.DomUtil.create('div', 'info legend');
+            var tenure;
+            div.innerHTML += '<p><strong>Terras indígenas</strong></p>';
+            for (tenure in landTenures) {
+              div.innerHTML += '<i style="background:' + landTenures[tenure].style.fillColor + '"></i>' + landTenures[tenure].name + '<br>';
+            }
+            return div;
+          };
+          legendsControl.addTo(map);
+
+          map.on('overlayadd', function(eventLayer) {
+            // Switch to the Population legend...
+            if (eventLayer.name === 'Terras indígenas') {
+              legendsControl.addTo(this);
+            }
+          });
+          map.on('overlayremove', function(eventLayer) {
+            if (eventLayer.name === 'Terras indígenas') {
+              this.removeControl(legendsControl);
+            }
+          });
         }
       }
     }
