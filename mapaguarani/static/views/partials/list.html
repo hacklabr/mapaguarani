@@ -70,8 +70,8 @@
             <a class="close" href="javascript:void(0);" title="Fechar busca avançada" ng-click="toggleAdv()">x</a>
             <div class="dropdown-filters">
               <p class="dropdown-filter" ng-repeat="(k,f) in adv.lands">
-                <label for="villages_adv_filter_{{k}}">{{f.name}}</label>
-                <select id="villages_adv_filter_{{k}}" ng-model="filter.advanced[k]" ng-options="option[f.ref] as option[f.label] for option in f.options">
+                <label for="lands_adv_filter_{{k}}">{{f.name}}</label>
+                <select id="lands_adv_filter_{{k}}" ng-model="filter.advanced[k]" ng-options="option[f.ref] as option[f.label] for option in f.options">
                   <option value="">---</option>
                 </select>
               </p>
@@ -107,8 +107,8 @@
             <a class="close" href="javascript:void(0);" title="Fechar busca avançada" ng-click="toggleAdv()">x</a>
             <div class="dropdown-filters">
               <p class="dropdown-filter" ng-repeat="(k,f) in adv.sites">
-                <label for="villages_adv_filter_{{k}}">{{f.name}}</label>
-                <select id="villages_adv_filter_{{k}}" ng-model="filter.advanced[k]" ng-options="option[f.ref] as option[f.label] for option in f.options">
+                <label for="sites_adv_filter_{{k}}">{{f.name}}</label>
+                <select id="sites_adv_filter_{{k}}" ng-model="filter.advanced[k]" ng-options="option[f.ref] as option[f.label] for option in f.options">
                   <option value="">---</option>
                 </select>
               </p>
