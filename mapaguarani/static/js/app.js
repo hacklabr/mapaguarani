@@ -57,7 +57,10 @@
         controller: 'SingleCtrl',
         templateUrl: '/static/views/single.html',
         data: {
-          contentType: 'villages'
+          contentType: 'sites',
+        },
+        params: {
+          focus: true
         },
         resolve: {
           Data: [
@@ -74,7 +77,10 @@
         controller: 'SingleCtrl',
         templateUrl: '/static/views/single.html',
         data: {
-          contentType: 'lands'
+          contentType: 'sites',
+        },
+        params: {
+          focus: true
         },
         resolve: {
           Data: [
@@ -91,7 +97,10 @@
         controller: 'SingleCtrl',
         templateUrl: '/static/views/single.html',
         data: {
-          contentType: 'sites'
+          contentType: 'sites',
+        },
+        params: {
+          focus: true
         },
         resolve: {
           Data: [

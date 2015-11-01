@@ -10,9 +10,27 @@
     '$resource',
     function($q, $resource) {
       return {
-        villages: $resource('api/villages/:id'),
-        lands: $resource('api/lands/:id'),
-        sites: $resource('api/archaeological/:id'),
+        villages: $resource('api/villages/:id', {}, {
+          query: {
+            method: 'GET',
+            isArray: true,
+            cache: true
+          }
+        }),
+        lands: $resource('api/lands/:id', {}, {
+          query: {
+            method: 'GET',
+            isArray: true,
+            cache: true
+          }
+        }),
+        sites: $resource('api/archaeological/:id', {}, {
+          query: {
+            method: 'GET',
+            isArray: true,
+            cache: true
+          }
+        }),
         toGeoJSON: function(data) {
           var geojson = {
             type: 'FeatureCollection',

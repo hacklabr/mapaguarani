@@ -7,11 +7,6 @@
     '$scope',
     function($scope) {
 
-      $scope.$on('mapaguarani.clusterSelection', function(ev, cluster) {
-        $scope.cluster = cluster;
-        console.log(cluster);
-      });
-
     }
   ]);
 
@@ -25,6 +20,8 @@
     'GuaraniService',
     'guaraniMapService',
     function ($scope, $state, $stateParams, villages, lands, sites, Guarani, Map) {
+
+      $scope.$emit('mapaguarani.loaded');
 
       $scope.filtered = {};
 
@@ -58,14 +55,7 @@
 
       $scope.$on('$stateChangeSuccess', function(ev, to, toParams) {
         if(to.name == 'home') {
-          // Map.updateBounds();
-        }
-        console.log('changed');
-        if($state.params.clustered) {
-          console.log('has cluster');
-          var clustered = JSON.parse($state.params.clustered);
-          $scope.clustered = _.filter($scope[clustered.type + 's'], function(item) { return clustered.ids.indexOf(item.id) !== -1; });
-          console.log($scope.clustered);
+          Map.updateBounds();
         }
       });
 
@@ -77,12 +67,6 @@
         $state.go('home', {'filter': JSON.stringify(filter)});
       }, 700));
 
-      // $scope.$watch(function() {
-      //   return Map.getCluster();
-      // }, function(cluster) {
-      //   console.log('from controller', cluster);
-      // }, true);
-
       $scope.$on('mapaguarani.pageChanged', function(ev, page) {
         var param;
         if(page == 0) {
@@ -92,6 +76,25 @@
         }
         $state.go('home', {'page': param});
       });
+
+      $scope.$watch(function() {
+        return $state.params;
+      }, function(params) {
+        if(params.clustered) {
+          var clustered = JSON.parse(params.clustered);
+          if(clustered && clustered.ids.length) {
+            $scope.clustered = _.filter($scope[clustered.type + 's'], function(item) { return clustered.ids.indexOf(item.id) !== -1; });
+          } else {
+            $scope.clustered = {};
+          }
+        } else {
+          $scope.clustered = {};
+        }
+      });
+
+      $scope.clearClustered = function() {
+        $state.go('home', {clustered: null});
+      };
 
     }
   ]);
@@ -103,22 +106,26 @@
     'guaraniMapService',
     'GuaraniService',
     function($state, $scope, data, Map, Guarani) {
+      $scope.$emit('mapaguarani.loaded');
+
       $scope.type = $state.current.data.contentType;
       $scope.data = data;
       $scope.map = {};
       $scope.map[$scope.type] = [$scope.data];
-      $scope.$watch(function() {
-        return Map.getMap();
-      }, function(map) {
-        var focusLayer = L.featureGroup();
-        for(var key in $scope.map) {
-          if($scope.map[key] && $scope.map[key].length) {
-            L.geoJson(Guarani.toGeoJSON($scope.map[key])).addTo(focusLayer);
+      if($state.params.focus) {
+        $scope.$watch(function() {
+          return Map.getMap();
+        }, function(map) {
+          var focusLayer = L.featureGroup();
+          for(var key in $scope.map) {
+            if($scope.map[key] && $scope.map[key].length) {
+              L.geoJson(Guarani.toGeoJSON($scope.map[key])).addTo(focusLayer);
+            }
           }
-        }
-        // map.fitBounds(focusLayer.getBounds());
-        focusLayer = null;
-      });
+            map.fitBounds(focusLayer.getBounds());
+          focusLayer = null;
+        });
+      }
     }
   ]);
 

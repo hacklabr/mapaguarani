@@ -41,6 +41,22 @@ input[type="radio"], input[type="checkbox"] {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
   }
 }
+#mapaguarani-loading {
+  position: fixed;
+  z-index: 9999;
+  background: #fff;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: 20%;
+  text-align: center;
+  text-transform: uppercase;
+  h2 {
+    font-size: 20px;
+    color: #999;
+  }
+}
 #sidebar {
   position: absolute;
   z-index: 2000;
@@ -60,6 +76,7 @@ input[type="radio"], input[type="checkbox"] {
     pointer-events: auto;
     background: #fff;
     #main-search {
+      position: relative;
       input {
         margin: 0;
         padding: 20px;
@@ -130,6 +147,26 @@ input[type="radio"], input[type="checkbox"] {
             margin-top: 20px;
           }
         }
+      }
+    }
+  }
+  #clustered-results {
+    pointer-events: auto;
+    background: #fff;
+    #clustered-header {
+      padding: 10px;
+      .close {
+        float: right;
+        color: #333;
+        line-height: 1;
+        text-decoration: none;
+      }
+      h2 {
+        margin: 0;
+        font-size: 16px;
+        text-transform: uppercase;
+        color: #999;
+        padding: 0 0 20px;
       }
     }
   }

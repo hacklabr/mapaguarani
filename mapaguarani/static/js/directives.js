@@ -39,6 +39,20 @@
   var mapbox_streets   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets', access_token: access_token});
   var mapbox_hybrid   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets-satellite', access_token: access_token});
 
+  directives.directive('loading', [
+    '$rootScope',
+    function($rootScope) {
+      return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+          $rootScope.$on('mapaguarani.loaded', function() {
+            angular.element(element).remove();
+          });
+        }
+      }
+    }
+  ])
+
   directives.directive('guaraniList', [
     '$rootScope',
     '$stateParams',
@@ -218,23 +232,9 @@
 
         },
         updateBounds: function() {
-          if(map && map.contentLayer) {
-            var bounds = map.contentLayer.getBounds();
-            if(!_.isEmpty(bounds)) {
-              map.fitBounds(bounds);
-            }
+          if(map) {
+            map.setView([-16.107747, -51.103348], 5);
           }
-        },
-        clusterSelection: function(ids, type) {
-          cluster = {
-            type: type,
-            ids: ids.slice(0)
-          };
-          console.log('from service', cluster);
-          // $rootScope.$broadcast('clusterSelectionUpdated', cluster);
-        },
-        getCluster: function() {
-          return cluster;
         }
       }
     }
@@ -288,21 +288,15 @@
                 if(map.getZoom() < 16) {
                   map.setView(ev.latlng, map.getZoom() + 1);
                 }
-                if(ev.data.src == 'smalls' || ev.data.src == 'mids' || map.getZoom() > 14) {
+                if(ev.data.src == 'smalls' || map.getZoom() > 14) {
                   var cluster = {
                     type: type,
                     ids: _.map(ev.data.cdb_list.split(','), function(id) { return parseInt(id); })
                   };
-                  // $rootScope.$apply(function() {
-                  //   $rootScope.$broadcast('mapaguarani.clusterSelection', cluster);
-                  // });
                   $state.go('home', {clustered: JSON.stringify(cluster)});
-                  // scope.$apply(function() {
-                  //   Map.clusterSelection(ev.data.cdb_list.split(','), type);
-                  // });
                 }
               } else {
-                $state.go(type, {id: ev.data.id});
+                $state.go(type, {id: ev.data.id, focus: false});
               }
             }
           };
@@ -319,7 +313,7 @@
           });
           landsGridLayer.on('click', function(ev) {
             if(ev.data)
-              $state.go('land', {id: ev.data.id});
+              $state.go('land', {id: ev.data.id, focus: false});
           });
           map.addLayer(landsLayer);
           map.addLayer(landsGridLayer);
