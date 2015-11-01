@@ -29,6 +29,8 @@
       $scope.villages = villages;
       $scope.sites = sites;
 
+      // console.log($scope.sites);
+
       var filter = false;
 
       var map;
@@ -39,22 +41,22 @@
         map = m;
       });
 
-      $scope.$watch('filtered', _.debounce(function(filtered) {
-        filter = filtered;
-        if(map && $state.current.name == 'home') {
-          var focusLayer = L.featureGroup();
-          for(var key in filtered) {
-            if(filtered[key] && filtered[key].length) {
-              L.geoJson(Guarani.toGeoJSON(filtered[key])).addTo(focusLayer);
-            }
-          }
-          // map.fitBounds(focusLayer.getBounds());
-          focusLayer = null;
-        }
-      }, 600), true);
+      // $scope.$watch('filtered', _.debounce(function(filtered) {
+      //   filter = filtered;
+      //   if(map && $state.current.name == 'home') {
+      //     var focusLayer = L.featureGroup();
+      //     for(var key in filtered) {
+      //       if(filtered[key] && filtered[key].length) {
+      //         L.geoJson(Guarani.toGeoJSON(filtered[key])).addTo(focusLayer);
+      //       }
+      //     }
+      //     map.fitBounds(focusLayer.getBounds());
+      //     focusLayer = null;
+      //   }
+      // }, 600), true);
 
-      $scope.$on('$stateChangeSuccess', function(ev, to, toParams) {
-        if(to.name == 'home') {
+      $scope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+        if(to.name == 'home' && fromParams.focus) {
           Map.updateBounds();
         }
       });
@@ -108,6 +110,8 @@
     function($state, $scope, data, Map, Guarani) {
       $scope.$emit('mapaguarani.loaded');
 
+      console.log(data);
+
       $scope.type = $state.current.data.contentType;
       $scope.data = data;
       $scope.map = {};
@@ -122,7 +126,7 @@
               L.geoJson(Guarani.toGeoJSON($scope.map[key])).addTo(focusLayer);
             }
           }
-            map.fitBounds(focusLayer.getBounds());
+          map.fitBounds(focusLayer.getBounds());
           focusLayer = null;
         });
       }

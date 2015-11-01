@@ -27,10 +27,13 @@
 
       $stateProvider
       .state('home', {
-        url: '/?content&filter&page&clustered',
+        url: '/?content&filter&page',
         reloadOnSearch: false,
         controller: 'HomeCtrl',
         templateUrl: '/static/views/home.html',
+        params: {
+          'clustered': undefined
+        },
         resolve: {
           VillagesData: [
             'GuaraniService',

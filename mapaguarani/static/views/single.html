@@ -1,7 +1,31 @@
 <article class="single">
   <h2>{{data.name}}</h2>
-  <p ng-show="data.other_names">Outros nomes: {{data.other_names}}</p>
-  <p ng-show="data.ethnic_groups.length">Grupo étnico: {{data.ethnic_groups | listEthnic}}</p>
-  <p ng-show="data.population">População: {{data.population}}</p>
-  <p ng-show="data.guarani_presence">Presença guarani: {{data.guarani_presence}}</p>
+  <table>
+    <tbody>
+      <tr ng-show="data.other_names">
+        <th>Outros nomes</th>
+        <td>{{data.other_names}}</td>
+      </tr>
+      <tr ng-show="data.ethnic_groups.length">
+        <th>Grupos étnicos</th>
+        <td>{{data.ethnic_groups | listObj:'name'}}</td>
+      </tr>
+      <tr ng-show="data.land_tenure">
+        <th>Posse</th>
+        <td>{{data.land_tenure.name}}</td>
+      </tr>
+      <tr ng-show="data.land_tenure_status">
+        <th>Situação da posse</th>
+        <td>{{data.land_tenure_status.name}}</td>
+      </tr>
+      <tr ng-show="data.population">
+        <th>População</th>
+        <td>{{data.population}}</td>
+      </tr>
+      <tr ng-show="data.guarani_presence">
+        <th>Presença Guarani</th>
+        <td>{{data.guarani_presence}}</td>
+      </tr>
+    </tbody>
+  </table>
 </article>

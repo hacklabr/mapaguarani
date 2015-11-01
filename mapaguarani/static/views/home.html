@@ -2,7 +2,7 @@
   <section id="clustered-results" ng-show="clustered.length">
     <header id="clustered-header">
       <a ng-click="clearClustered()" href="javascript:void(0);" class="close">x</a>
-      <h2>Resultados na região</h2>
+      <h2>{{clustered[0].layer.name}} na região</h2>
     </header>
     <ul class="all list">
       <li guarani-item item="item" class="all item" ng-repeat="item in clustered"></li>
