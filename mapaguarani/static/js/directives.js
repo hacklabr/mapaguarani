@@ -163,6 +163,38 @@
     }
   ]);
 
+  directives.directive('guaraniItem', [
+    '$state',
+    function($state) {
+      return {
+        restrict: 'EA',
+        scope: {
+          'item': '='
+        },
+        templateUrl: '/static/views/partials/list-item.html',
+        link: function(scope, element, attrs) {
+
+          var type;
+
+          switch(scope.item.layer.name) {
+            case 'Aldeias Indígenas':
+              type = 'village';
+              break;
+            case 'Terras Indígenas':
+              type = 'land';
+              break;
+            case 'Sítios Arqueológicos':
+              type = 'site';
+              break;
+          }
+
+          scope.url = $state.href(type, {id: scope.item.id}, {inherit: false});
+
+        }
+      }
+    }
+  ]);
+
   directives.factory('guaraniMapService', [
     '$rootScope',
     function($rootScope) {
@@ -236,7 +268,7 @@
 
           Map.setMap(map);
 
-          map.addLayer(gm_hybrid);
+          map.addLayer(mapbox_streets);
 
           var baselayers = {
             'Mapa Mapbox': mapbox_streets,
@@ -259,12 +291,12 @@
                 if(ev.data.src == 'smalls' || ev.data.src == 'mids' || map.getZoom() > 14) {
                   var cluster = {
                     type: type,
-                    ids: ev.data.cdb_list.split(',')
+                    ids: _.map(ev.data.cdb_list.split(','), function(id) { return parseInt(id); })
                   };
                   // $rootScope.$apply(function() {
                   //   $rootScope.$broadcast('mapaguarani.clusterSelection', cluster);
                   // });
-                  $state.go('home', {clustered: cluster});
+                  $state.go('home', {clustered: JSON.stringify(cluster)});
                   // scope.$apply(function() {
                   //   Map.clusterSelection(ev.data.cdb_list.split(','), type);
                   // });

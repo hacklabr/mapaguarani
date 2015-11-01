@@ -1,3 +1,9 @@
 <div ui-view>
+  <section id="clustered-results" ng-show="clustered.length">
+    <h2>Resultados na região</h2>
+    <ul class="all list">
+      <li guarani-item item="item" class="all item" ng-repeat="item in clustered"></li>
+    </ul>
+  </section>
   <guarani-list villages="villages" lands="lands" sites="sites" filtered="filtered"></guarani-list>
 </div>

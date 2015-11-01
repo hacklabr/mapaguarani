@@ -18,17 +18,18 @@
   controllers.controller('HomeCtrl', [
     '$scope',
     '$state',
+    '$stateParams',
     'VillagesData',
     'LandsData',
     'SitesData',
     'GuaraniService',
     'guaraniMapService',
-    function ($scope, $state, villages, lands, sites, Guarani, Map) {
+    function ($scope, $state, $stateParams, villages, lands, sites, Guarani, Map) {
 
       $scope.filtered = {};
 
-      $scope.villages = villages;
       $scope.lands = lands;
+      $scope.villages = villages;
       $scope.sites = sites;
 
       var filter = false;
@@ -58,6 +59,13 @@
       $scope.$on('$stateChangeSuccess', function(ev, to, toParams) {
         if(to.name == 'home') {
           // Map.updateBounds();
+        }
+        console.log('changed');
+        if($state.params.clustered) {
+          console.log('has cluster');
+          var clustered = JSON.parse($state.params.clustered);
+          $scope.clustered = _.filter($scope[clustered.type + 's'], function(item) { return clustered.ids.indexOf(item.id) !== -1; });
+          console.log($scope.clustered);
         }
       });
 

@@ -1,0 +1,7 @@
+<div class="guarani-list-item">
+  <h3><a href="{{url}}" title="{{item.name}}">{{item.name}}</a></h3>
+  <p ng-show="item.other_names">Outros nomes: {{item.other_names}}</p>
+  <p ng-show="item.ethnic_groups.length">Grupo étnico: {{item.ethnic_groups | listEthnic}}</p>
+  <p ng-show="item.population">População: {{item.population}}</p>
+  <p ng-show="item.guarani_presence">Presença guarani: {{item.guarani_presence}}</p>
+</div>
