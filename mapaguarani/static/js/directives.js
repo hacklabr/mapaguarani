@@ -57,7 +57,8 @@
     '$rootScope',
     '$stateParams',
     'GuaraniService',
-    function($rootScope, $stateParams, Guarani) {
+    'guaraniMapService',
+    function($rootScope, $stateParams, Guarani, Map) {
       return {
         restrict: 'E',
         scope: {
@@ -93,7 +94,7 @@
           });
 
           scope.toggleLayer = function(layer) {
-
+            Map.toggleLayer(layer);
           };
 
           /*
@@ -290,7 +291,7 @@
           layers.push(layer);
         },
         toggleLayer: function(layer) {
-
+          $rootScope.$broadcast('mapaguarani.toggleLayer', layer);
         },
         updateBounds: function() {
           if(map) {
@@ -362,6 +363,8 @@
             }
           };
 
+          scope.interactiveLayers = {};
+
           /*
            * Init Lands layer
            */
@@ -376,6 +379,11 @@
             if(ev.data)
               $state.go('land', {id: ev.data.id, focus: false});
           });
+          scope.interactiveLayers.lands = {
+            tile: landsLayer,
+            grid: landsGridLayer,
+            active: true
+          };
           map.addLayer(landsLayer);
           map.addLayer(landsGridLayer);
 
@@ -395,6 +403,11 @@
             sitesGridLayer.on('click', function(ev) {
               clusterClick(ev, 'site');
             });
+            scope.interactiveLayers.sites = {
+              tile: sitesLayer,
+              grid: sitesGridLayer,
+              active: true
+            };
             map.addLayer(sitesLayer);
             map.addLayer(sitesGridLayer);
           });
@@ -415,8 +428,28 @@
             villagesGridLayer.on('click', function(ev) {
               clusterClick(ev, 'village');
             });
+            scope.interactiveLayers.villages = {
+              tile: villagesLayer,
+              grid: villagesGridLayer,
+              active: true
+            };
             map.addLayer(villagesLayer);
             map.addLayer(villagesGridLayer);
+          });
+
+          $rootScope.$on('mapaguarani.toggleLayer', function(ev, layer) {
+              if(scope.interactiveLayers[layer]) {
+                if(scope.interactiveLayers[layer].active) {
+                  scope.interactiveLayers[layer].active = false;
+                  map.removeLayer(scope.interactiveLayers[layer].tile);
+                  map.removeLayer(scope.interactiveLayers[layer].grid);
+                } else {
+                  scope.interactiveLayers[layer].active = true;
+                  map.addLayer(scope.interactiveLayers[layer].tile);
+                  map.addLayer(scope.interactiveLayers[layer].grid);
+                }
+
+              }
           });
 
           // var legendsControl = L.control({position: 'bottomright'});
