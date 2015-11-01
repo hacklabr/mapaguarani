@@ -419,29 +419,29 @@
             map.addLayer(villagesGridLayer);
           });
 
-          var legendsControl = L.control({position: 'bottomright'});
-          legendsControl.onAdd = function(map) {
-            var div = L.DomUtil.create('div', 'info legend');
-            var tenure;
-            div.innerHTML += '<p><strong>Terras indígenas</strong></p>';
-            for (tenure in landTenures) {
-              div.innerHTML += '<i style="background:' + landTenures[tenure].style.fillColor + '"></i>' + landTenures[tenure].name + '<br>';
-            }
-            return div;
-          };
-          legendsControl.addTo(map);
-
-          map.on('overlayadd', function(eventLayer) {
-            // Switch to the Population legend...
-            if (eventLayer.name === 'Terras indígenas') {
-              legendsControl.addTo(this);
-            }
-          });
-          map.on('overlayremove', function(eventLayer) {
-            if (eventLayer.name === 'Terras indígenas') {
-              this.removeControl(legendsControl);
-            }
-          });
+          // var legendsControl = L.control({position: 'bottomright'});
+          // legendsControl.onAdd = function(map) {
+          //   var div = L.DomUtil.create('div', 'info legend');
+          //   var tenure;
+          //   div.innerHTML += '<p><strong>Terras indígenas</strong></p>';
+          //   for (tenure in landTenures) {
+          //     div.innerHTML += '<i style="background:' + landTenures[tenure].style.fillColor + '"></i>' + landTenures[tenure].name + '<br>';
+          //   }
+          //   return div;
+          // };
+          // legendsControl.addTo(map);
+          //
+          // map.on('overlayadd', function(eventLayer) {
+          //   // Switch to the Population legend...
+          //   if (eventLayer.name === 'Terras indígenas') {
+          //     legendsControl.addTo(this);
+          //   }
+          // });
+          // map.on('overlayremove', function(eventLayer) {
+          //   if (eventLayer.name === 'Terras indígenas') {
+          //     this.removeControl(legendsControl);
+          //   }
+          // });
         }
       }
     }

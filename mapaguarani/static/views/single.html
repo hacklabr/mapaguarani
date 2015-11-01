@@ -10,6 +10,10 @@
         <th>Grupos étnicos</th>
         <td>{{data.ethnic_groups | listObj:'name'}}</td>
       </tr>
+      <tr ng-show="data.prominent_subgroup.length">
+        <th>Subgrupo de destaque</th>
+        <td>{{data.prominent_subgroup | listObj:'name'}}</td>
+      </tr>
       <tr ng-show="data.land_tenure">
         <th>Posse</th>
         <td>{{data.land_tenure.name}}</td>
