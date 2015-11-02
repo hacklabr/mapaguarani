@@ -31,6 +31,20 @@
             cache: true
           }
         }),
+        tenures: $resource('api/land_tenures', {}, {
+          query: {
+            method: 'GET',
+            isArray: true,
+            cache: true
+          }
+        }),
+        tenures_status: $resource('api/land_tenures_status', {}, {
+          query: {
+            method: 'GET',
+            isArray: true,
+            cache: true
+          }
+        }),
         getUniq: function(list, param, uniqParam) {
           var vals = [];
           _.each(list, function(item) {

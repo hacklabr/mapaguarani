@@ -187,6 +187,14 @@ input[type="radio"], input[type="checkbox"] {
             color: #111;
           }
         }
+        .fa-eye {
+          opacity: .2;
+        }
+        &.active-layer {
+          .fa-eye {
+            opacity: 1;
+          }
+        }
         .actions {
           float: right;
           margin: 0;
@@ -338,9 +346,6 @@ input[type="radio"], input[type="checkbox"] {
     -moz-border-radius: 100%;
     -o-border-radius: 100%;
   }
-  .leaflet-div-icon {
-
-  }
   .marker-cluster {
     background: transparent;
     &:before {
@@ -367,6 +372,38 @@ input[type="radio"], input[type="checkbox"] {
       span {
         line-height: 20px;
       }
+    }
+  }
+  .legend {
+    .bg-item,
+    .border-item,
+    .point-item {
+      width: 14px;
+      height: 14px;
+      float: left;
+      margin-top: 2px;
+      margin-right: 5px;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -wekbit-box-sizing: border-box;
+      border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+      -o-border-radius: 3px;
+    }
+    .point-item,
+    .bg-item {
+      background: #000;
+    }
+    .point-item {
+      border-radius: 100%;
+      -moz-border-radius: 100%;
+      -webkit-border-radius: 100%;
+      -o-border-radius: 100%;
+    }
+    .border-item {
+      background: transparent;
+      border: 1px solid #000;
     }
   }
 }
@@ -402,13 +439,10 @@ input[type="radio"], input[type="checkbox"] {
   color: #555;
   background-color: white;
   opacity: 0.8;
-  padding: 10px;
-  i {
-    width: 18px;
-    height: 18px;
-    float: left;
-    margin-right: 8px;
-  //  opacity: 0.7;
+  padding: 10px 10px 0;
+  width: 230px;
+  &:hover {
+    opacity: 1;
   }
 }
 

@@ -19,7 +19,7 @@
     </nav>
   </div>
   <ul class="content-list">
-    <li id="villages" class="content-item" ng-class="{active: content == 'villages'}">
+    <li id="villages" class="content-item" ng-class="{active: content == 'villages', 'active-layer': activeLayers.villages}">
       <p class="actions">
         <a href="javascript:void(0);" ng-click="toggleContent('villages')" class="fa fa-bars"></a>
         <a href="/shapefiles/villages/" class="fa fa-cloud-download"></a>
@@ -56,7 +56,7 @@
         </nav>
       </div>
     </li>
-    <li id="lands" class="content-item" ng-class="{active: content == 'lands'}">
+    <li id="lands" class="content-item" ng-class="{active: content == 'lands', 'active-layer': activeLayers.lands}">
       <p class="actions">
         <a href="javascript:void(0);" ng-click="toggleContent('lands')" class="fa fa-bars"></a>
         <a href="/shapefiles/lands/" class="fa fa-cloud-download"></a>
@@ -93,7 +93,7 @@
         </nav>
       </div>
     </li>
-    <li id="sites" class="content-item" ng-class="{active: content == 'sites'}">
+    <li id="sites" class="content-item" ng-class="{active: content == 'sites', 'active-layer': activeLayers.sites}">
       <p class="actions">
         <a href="javascript:void(0);" ng-click="toggleContent('sites')" class="fa fa-bars"></a>
         <a href="/shapefiles/archaeological/" class="fa fa-cloud-download"></a>
