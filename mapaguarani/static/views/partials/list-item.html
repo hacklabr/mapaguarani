@@ -1,0 +1,35 @@
+<div class="guarani-list-item">
+  <h3><a href="{{url}}" title="{{item.name}}">{{item.name}}</a></h3>
+  <table>
+    <tbody>
+      <tr ng-show="item.other_names">
+        <th>Outros nomes</th>
+        <td>{{item.other_names}}</td>
+      </tr>
+      <tr ng-show="item.ethnic_groups.length">
+        <th>Grupos étnicos</th>
+        <td>{{item.ethnic_groups | listObj:'name'}}</td>
+      </tr>
+      <tr ng-show="item.prominent_subgroup.length">
+        <th>Subgrupo de destaque</th>
+        <td>{{item.prominent_subgroup | listObj:'name'}}</td>
+      </tr>
+      <tr ng-show="item.land_tenure">
+        <th>Posse</th>
+        <td>{{item.land_tenure.name}}</td>
+      </tr>
+      <tr ng-show="item.land_tenure_status">
+        <th>Situação da posse</th>
+        <td>{{item.land_tenure_status.name}}</td>
+      </tr>
+      <tr ng-show="item.population">
+        <th>População</th>
+        <td>{{item.population}}</td>
+      </tr>
+      <tr ng-show="item.guarani_presence">
+        <th>Presença Guarani</th>
+        <td>{{item.guarani_presence}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

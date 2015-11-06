@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="map-container" ng-app="mapaguarani">
+<div class="map-container" ng-app="mapaguarani" ng-controller="MainCtrl">
   <div class="navbar navbar-fixed-top" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -21,8 +21,14 @@
   </div>
 
   <div id="container">
-    <div id="sidebar" ui-view></div>
+    <div id="sidebar">
+      <div ui-view></div>
+    </div>
     <guarani-map id="map"></guarani-map>
+  </div>
+  <div id="mapaguarani-loading" loading>
+    <h1>Mapa Guarani Yvyrupa</h1>
+    <h2>Carregando dados....</h2>
   </div>
 </div>
 {% endblock content %}

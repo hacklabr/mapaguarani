@@ -39,10 +39,26 @@
   var mapbox_streets   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets', access_token: access_token});
   var mapbox_hybrid   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets-satellite', access_token: access_token});
 
+  directives.directive('loading', [
+    '$rootScope',
+    function($rootScope) {
+      return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+          $rootScope.$on('mapaguarani.loaded', function() {
+            angular.element(element).remove();
+          });
+        }
+      }
+    }
+  ])
+
   directives.directive('guaraniList', [
     '$rootScope',
     '$stateParams',
-    function($rootScope, $stateParams) {
+    'GuaraniService',
+    'guaraniMapService',
+    function($rootScope, $stateParams, Guarani, Map) {
       return {
         restrict: 'E',
         scope: {
@@ -70,12 +86,24 @@
             }
           }
           scope.$watch('content', function(content, prevContent) {
-            if(content !== prevContent)
+            if(content !== prevContent) {
               $rootScope.$broadcast('mapaguarani.contentChanged', content);
+              scope.filter.advanced = undefined;
+              scope.showAdv = false;
+            }
           });
 
+          scope.activeLayers = {
+            'villages': true,
+            'lands': true,
+            'sites': true
+          };
           scope.toggleLayer = function(layer) {
-
+            if(scope.activeLayers[layer])
+              scope.activeLayers[layer] = false;
+            else
+              scope.activeLayers[layer] = true;
+            Map.toggleLayer(layer);
           };
 
           /*
@@ -125,6 +153,63 @@
           }, true);
 
           /*
+           * Advanced filters
+           */
+
+          scope.showAdv = scope.filter.advanced ? true : false;
+          scope.toggleAdv = function() {
+            if(scope.showAdv) {
+              scope.showAdv = false;
+              scope.filter.advanced = undefined;
+            } else
+              scope.showAdv = true;
+          };
+
+          scope.adv = {};
+
+          scope.adv.villages = {
+            ethnic_groups: {
+              name: 'Grupos étnicos',
+              ref: 'id',
+              label: 'name',
+              options: Guarani.getUniq(scope.villages, 'ethnic_groups', 'id')
+            },
+            prominent_subgroup: {
+              name: 'Subgrupo de destaque',
+              ref: 'id',
+              label: 'name',
+              options: Guarani.getUniq(scope.villages, 'prominent_subgroup', 'id')
+            }
+          };
+
+          scope.adv.lands = {
+            ethnic_groups: {
+              name: 'Grupos étnicos',
+              ref: 'id',
+              label: 'name',
+              options: Guarani.getUniq(scope.lands, 'ethnic_groups', 'id')
+            },
+            prominent_subgroup: {
+              name: 'Subgrupo de destaque',
+              ref: 'id',
+              label: 'name',
+              options: Guarani.getUniq(scope.lands, 'prominent_subgroup', 'id')
+            },
+            land_tenure: {
+              name: 'Posse',
+              ref: 'id',
+              label: 'name',
+              options: Guarani.getUniq(scope.lands, 'land_tenure', 'id')
+            },
+            land_tenure_status: {
+              name: 'Situação da posse',
+              ref: 'id',
+              label: 'name',
+              options: Guarani.getUniq(scope.lands, 'land_tenure_status', 'id')
+            }
+          };
+
+          /*
            * Paging
            */
           scope.perPage = attrs.perPage || 10;
@@ -157,14 +242,52 @@
             $(element).parent().parent().scrollTop(0);
             $(element).parent().parent().parent().scrollTop(0);
           });
+
+        }
+      }
+    }
+  ]);
+
+  directives.directive('guaraniItem', [
+    '$state',
+    function($state) {
+      return {
+        restrict: 'EA',
+        scope: {
+          'item': '='
+        },
+        templateUrl: '/static/views/partials/list-item.html',
+        link: function(scope, element, attrs) {
+
+          var type;
+
+          switch(scope.item.layer.name) {
+            case 'Aldeias Indígenas':
+              type = 'village';
+              break;
+            case 'Terras Indígenas':
+              type = 'land';
+              break;
+            case 'Sítios Arqueológicos':
+              type = 'site';
+              break;
+          }
+
+          scope.url = $state.href(type, {id: scope.item.id}, {inherit: false});
+
         }
       }
     }
   ]);
 
   directives.factory('guaraniMapService', [
-    function() {
-      var map, layers = [];
+    '$rootScope',
+    function($rootScope) {
+      var map;
+      var layers = [];
+
+      var cluster;
+
       return {
         setMap: function(m) {
           map = m;
@@ -177,14 +300,11 @@
           layers.push(layer);
         },
         toggleLayer: function(layer) {
-
+          $rootScope.$broadcast('mapaguarani.toggleLayer', layer);
         },
         updateBounds: function() {
-          if(map && map.contentLayer) {
-            var bounds = map.contentLayer.getBounds();
-            if(!_.isEmpty(bounds)) {
-              map.fitBounds(bounds);
-            }
+          if(map) {
+            map.setView([-16.107747, -51.103348], 5);
           }
         }
       }
@@ -197,10 +317,10 @@
     '$rootScope',
     '$state',
     '$window',
-    function(Guarani, Map, $rootScope, $state, $window) {
+    '$timeout',
+    function(Guarani, Map, $rootScope, $state, $window, $timeout) {
       return {
         restrict: 'E',
-        replace: true,
         scope: {
           center: '=',
           zoom: '='
@@ -233,133 +353,156 @@
           var layersControl = new L.Control.Layers(baselayers, {});
           map.addControl(layersControl);
 
-          var contentLayer = new L.FeatureGroup();
-          map.addLayer(contentLayer);
-          map.contentLayer = contentLayer;
+          map.on('layeradd', function(ev) {
+            if(ev.layer.name && scope.interactiveLayers[ev.layer.name])
+              map.addControl(scope.interactiveLayers[ev.layer.name].legend);
+          });
+          map.on('layerremove', function(ev) {
+            if(ev.layer.name && scope.interactiveLayers[ev.layer.name])
+              map.removeControl(scope.interactiveLayers[ev.layer.name].legend);
+          });
+
+          var clusterClick = function(ev, type) {
+            if(ev.data) {
+              if(ev.data.id == 0) {
+                if(map.getZoom() < 16) {
+                  map.setView(ev.latlng, map.getZoom() + 1);
+                }
+                if(ev.data.src == 'smalls' || map.getZoom() > 14) {
+                  var cluster = {
+                    type: type,
+                    ids: _.map(ev.data.cdb_list.split(','), function(id) { return parseInt(id); })
+                  };
+                  $state.go('home', {clustered: JSON.stringify(cluster)});
+                }
+              } else {
+                $state.go(type, {id: ev.data.id, focus: false});
+              }
+            }
+          };
+
+          scope.interactiveLayers = {};
 
           /*
            * Init Lands layer
            */
           var default_host = $window.location.hostname;
           var landsLayer = L.tileLayer('http://' + default_host + ':4000/indigenousland/{z}/{x}/{y}.png', {
-           zIndex: 2
+           zIndex: 3
           });
           var landsGridLayer = new L.UtfGrid('http://' + default_host + ':4000/indigenousland/{z}/{x}/{y}.grid.json?interactivity=id,name', {
            useJsonP: false
           });
           landsGridLayer.on('click', function(ev) {
-           if(ev.data)
-             $state.go('land', {id: ev.data.id});
+            if(ev.data)
+              $state.go('land', {id: ev.data.id, focus: false});
           });
+          var landsLegend = L.control({'position': 'bottomright'});
+          landsLegend.onAdd = function(map) {
+            var div = L.DomUtil.create('div', 'info legend lands');
+            div.innerHTML += '<p><strong>Terras indígenas</strong></p>';
+            Guarani.tenures.query(function(tenures) {
+              _.each(tenures, function(tenure) {
+                div.innerHTML += '<p><span class="bg-item" style="background-color:' + tenure.map_color + ';"></span> ' + tenure.name + '</p>';
+              });
+            });
+            Guarani.tenures_status.query(function(tenures) {
+              _.each(tenures, function(tenure) {
+                div.innerHTML += '<p><span class="border-item" style="border-color:' + tenure.map_color + ';"></span> ' + tenure.name + '</p>';
+              });
+            });
+            return div;
+          };
+          scope.interactiveLayers.lands = {
+            tile: landsLayer,
+            grid: landsGridLayer,
+            legend: landsLegend,
+            active: true
+          };
+          landsLayer.name = 'lands';
           map.addLayer(landsLayer);
           map.addLayer(landsGridLayer);
 
           /*
-           * Init Villages layer
+           * Init archaeological sites layer
            */
-          var villagesLayer = new L.MarkerClusterGroup({
-            maxClusterRadius: 25,
-            iconCreateFunction: function(cluster) {
-              return new L.DivIcon({ html: '<div><span>' + cluster.getChildCount() + '</span></div>', className: 'villages-cluster marker-cluster', iconSize: new L.Point(40, 40) });
-            }
+
+          Guarani.sqlTiles('cluster_archaeologicalplace', {
+            interactivity: ['id','cdb_list','src']
+          }).then(function(token) {
+            var sitesLayer = L.tileLayer('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.png', {
+              zIndex: 4
+            });
+            var sitesGridLayer = new L.UtfGrid('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.grid.json', {
+              useJsonP: false
+            });
+            sitesGridLayer.on('click', function(ev) {
+              clusterClick(ev, 'site');
+            });
+            var sitesLegend = L.control({'position': 'bottomright'});
+            sitesLegend.onAdd = function(map) {
+              var div = L.DomUtil.create('div', 'info legend sites');
+              div.innerHTML += '<p><span class="point-item" style="background-color: #5CA2D1;"></span> <strong>Sítios arqueológicos</strong></p>';
+              return div;
+            };
+            scope.interactiveLayers.sites = {
+              tile: sitesLayer,
+              grid: sitesGridLayer,
+              legend: sitesLegend,
+              active: true
+            };
+            sitesLayer.name = 'sites';
+            map.addLayer(sitesLayer);
+            map.addLayer(sitesGridLayer);
           });
-          contentLayer.addLayer(villagesLayer);
-          var villageGuaraniIcon = L.divIcon({className: 'village-guarani-marker'});
-          var villageOtherIcon = L.divIcon({className: 'village-other-marker'});
 
           /*
-           * Init sites layer
+           * Init villages layer
            */
-          var sitesLayer = new L.MarkerClusterGroup({
-            maxClusterRadius: 25,
-            iconCreateFunction: function(cluster) {
-              return new L.DivIcon({ html: '<div><span>' + cluster.getChildCount() + '</span></div>', className: 'sites-cluster marker-cluster', iconSize: new L.Point(40, 40) });
-            }
-          });
-          contentLayer.addLayer(sitesLayer);
-          var sitesIcon = L.divIcon({className: 'site-marker'});
 
-          var villagesMarker = [];
-          var villagesTileLayer = new L.TileLayer.GeoJSON('/tiles/villages/{z}/{x}/{y}.geojson', {
-            clipTiles: true,
-            layer: villagesLayer,
-            unique: function(feature) {
-              return feature.id;
-            }
-          }, {
-            pointToLayer: function(feature, latlng) {
-              var icon = villageGuaraniIcon;
-              if(feature.properties.ethnic_groups && feature.properties.ethnic_groups.length > 1)
-                icon = villageOtherIcon;
-              var marker = new L.Marker(latlng, {icon: icon});
-              marker._id = feature.properties.id;
-              villagesLayer.addLayer(marker);
-              villagesMarker.push(marker);
-              marker.on('click', function(ev) {
-                $rootScope.$apply(function() {
-                  $state.go('village', { id: ev.target._id });
-                });
-              });
-              return null;
-            }
-          });
-          villagesLayer.addLayer(villagesTileLayer);
-          map.on('zoomstart', function() {
-            villagesMarker.forEach(function(marker) {
-              villagesLayer.removeLayer(marker);
+          Guarani.sqlTiles('cluster_indigenousvillage', {
+            interactivity: ['id','cdb_list','src']
+          }).then(function(token) {
+            var villagesLayer = L.tileLayer('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.png', {
+              zIndex: 5
             });
-          });
-
-          var sitesMarker = [];
-          var sitesTileLayer = new L.TileLayer.GeoJSON('/tiles/archaeological/{z}/{x}/{y}.geojson', {
-            clipTiles: true,
-            unique: function(feature) {
-              return feature.id;
-            }
-          }, {
-            pointToLayer: function(feature, latlng) {
-              var icon = sitesIcon;
-              var marker = new L.Marker(latlng, {icon: icon});               marker._id = feature.properties.id;
-              sitesLayer.addLayer(marker);
-              sitesMarker.push(marker);
-              marker.on('click', function(ev) {
-                $rootScope.$apply(function() {
-                  $state.go('site', { id: ev.target._id });
-                });
-              });
-              return null;
-            }
-          });
-          sitesLayer.addLayer(sitesTileLayer);
-          map.on('zoomstart', function() {
-            sitesMarker.forEach(function(marker) {
-              sitesLayer.removeLayer(marker);
+            var villagesGridLayer = new L.UtfGrid('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.grid.json', {
+              useJsonP: false
             });
+            villagesGridLayer.on('click', function(ev) {
+              clusterClick(ev, 'village');
+            });
+            var villagesLegend = L.control({'position': 'bottomright'});
+            villagesLegend.onAdd = function(map) {
+              var div = L.DomUtil.create('div', 'info legend villages');
+              div.innerHTML += '<p><span class="point-item" style="background-color: #e7ec13;"></span> <strong>Aldeias Indígenas</strong></p>';
+              return div;
+            };
+            scope.interactiveLayers.villages = {
+              tile: villagesLayer,
+              grid: villagesGridLayer,
+              legend: villagesLegend,
+              active: true
+            };
+            villagesLayer.name = 'villages';
+            map.addLayer(villagesLayer);
+            map.addLayer(villagesGridLayer);
           });
 
-          // var legendsControl = L.control({position: 'bottomright'});
-          // legendsControl.onAdd = function(map) {
-          //   var div = L.DomUtil.create('div', 'info legend');
-          //   var tenure;
-          //   div.innerHTML += '<p><strong>Terras indígenas</strong></p>';
-          //   for (tenure in landTenures) {
-          //     div.innerHTML += '<i style="background:' + landTenures[tenure].style.fillColor + '"></i>' + landTenures[tenure].name + '<br>';
-          //   }
-          //   return div;
-          // };
-          // legendsControl.addTo(map);
-          //
-          // map.on('overlayadd', function(eventLayer) {
-          //   // Switch to the Population legend...
-          //   if (eventLayer.name === 'Terras indígenas') {
-          //     legendsControl.addTo(this);
-          //   }
-          // });
-          // map.on('overlayremove', function(eventLayer) {
-          //   if (eventLayer.name === 'Terras indígenas') {
-          //     this.removeControl(legendsControl);
-          //   }
-          // });
+          $rootScope.$on('mapaguarani.toggleLayer', function(ev, layer) {
+              if(scope.interactiveLayers[layer]) {
+                if(scope.interactiveLayers[layer].active) {
+                  scope.interactiveLayers[layer].active = false;
+                  map.removeLayer(scope.interactiveLayers[layer].tile);
+                  map.removeLayer(scope.interactiveLayers[layer].grid);
+                } else {
+                  scope.interactiveLayers[layer].active = true;
+                  map.addLayer(scope.interactiveLayers[layer].tile);
+                  map.addLayer(scope.interactiveLayers[layer].grid);
+                }
+
+              }
+          });
         }
       }
     }

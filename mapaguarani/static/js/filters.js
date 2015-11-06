@@ -15,13 +15,17 @@
     }
   ]);
 
-  filters.filter('listEthnic', [
+  filters.filter('listObj', [
     function() {
-      return function(input) {
-        if(input) {
-          return _.map(input, function(g) { return g.name; }).join(', ');
+      return function(input, prop) {
+        if(input && input.length) {
+          if(prop) {
+            return _.map(input, function(g) { return g[prop]; }).join(', ');
+          } else {
+            return '';
+          }
         }
-        return input;
+        return '';
       }
     }
   ]);
@@ -36,5 +40,29 @@
       }
     }
   ]);
+
+  filters.filter('advancedSearch', [
+    function() {
+      return function(input, filter, config) {
+        if(filter && config) {
+          for(var key in config) {
+            if(filter[key]) {
+              input = _.filter(input, function(item) {
+                if(angular.isArray(item[key])) {
+                  return _.find(item[key], function(propVal) {
+                    return propVal[config[key].ref] == filter[key];
+                  });
+                } else {
+                  if(item[key])
+                    return item[key][config[key].ref] == filter[key];
+                }
+              });
+            }
+          }
+        }
+        return input;
+      }
+    }
+  ])
 
 })(angular, _);
