@@ -6,11 +6,15 @@ from .models import IndigenousLand, IndigenousVillage, ArchaeologicalPlace, Land
 class IndigenousLandSerializer(serializers.ModelSerializer):
 
     associated_land = serializers.PrimaryKeyRelatedField(read_only=True)
+    bbox = serializers.SerializerMethodField()
 
     class Meta:
         model = IndigenousLand
         exclude = ['geometry']
         depth = 1
+
+    def get_bbox(self, obj):
+        return obj.geometry.extent
 
 
 class IndigenousVillageSerializer(serializers.ModelSerializer):
