@@ -5,13 +5,7 @@
   </form>
   <div class="content-item-body" ng-show="filter.text && !content" sidebar-height="filter.text && !content">
     <ul class="all list">
-      <li class="all item" ng-repeat="item in filtered.all = (_all | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
-        <h3><a ui-sref="village({id: item.id})" title="{{item.name}}" ui-sref-opts="{inherit: false}">{{item.name}}</a></h3>
-        <p ng-show="item.other_names">Outros nomes: {{item.other_names}}</p>
-        <p ng-show="item.ethnic_groups.length">Grupo étnico: {{item.ethnic_groups | listEthnic}}</p>
-        <p ng-show="item.population">População: {{item.population}}</p>
-        <p ng-show="item.guarani_presence">Presença guarani: {{item.guarani_presence}}</p>
-      </li>
+      <li guarani-item item="item" class="all item" ng-repeat="item in filtered.all = (_all | filter:filter.text) | offset:curPage*perPage | limitTo:perPage"></li>
     </ul>
     <nav class="sidebar-pagination">
       <ul class="pager">
@@ -25,30 +19,30 @@
     </nav>
   </div>
   <ul class="content-list">
-    <li id="villages" class="content-item" ng-class="{active: content == 'villages'}">
+    <li id="villages" class="content-item" ng-class="{active: content == 'villages', 'active-layer': activeLayers.villages}">
       <p class="actions">
         <a href="javascript:void(0);" ng-click="toggleContent('villages')" class="fa fa-bars"></a>
         <a href="/shapefiles/villages/" class="fa fa-cloud-download"></a>
-        <a href="javascript:void(0);" ng-click="toggleLayer('villages')" class="fa fa-eye"></a>
+        <a href="javascript:void(0);" ng-click="toggleLayer('villages')" class="fa fa-eye" title="Visualizar/esconder camada do mapa"></a>
       </p>
       <h2><a href="javascript:void(0);" ng-click="toggleContent('villages')">Aldeias indígenas</a></h2>
       <div class="content-item-body" ng-show="content == 'villages'" sidebar-height="content == 'villages'">
-        <nav id="village-filters">
-          <form role="search">
-            <div class="form-group has-feedback">
-              <input id="searchbox" type="text" placeholder="Pesquisar..." class="form-control" ng-model="filter.text">
-              <span class="fa fa-search form-control-feedback"></span>
+        <nav id="village-filters" class="content-filters" ng-show="adv.villages">
+          <a class="toggle-adv" ng-click="toggleAdv()" href="javascript:void(0);" ng-hide="showAdv">Busca avançada</a>
+          <form role="search" ng-show="showAdv">
+            <a class="close" href="javascript:void(0);" title="Fechar busca avançada" ng-click="toggleAdv()">x</a>
+            <div class="dropdown-filters">
+              <p class="dropdown-filter" ng-repeat="(k,f) in adv.villages">
+                <label for="villages_adv_filter_{{k}}">{{f.name}}</label>
+                <select id="villages_adv_filter_{{k}}" ng-model="filter.advanced[k]" ng-options="option[f.ref] as option[f.label] for option in f.options">
+                  <option value="">---</option>
+                </select>
+              </p>
             </div>
           </form>
         </nav>
         <ul class="village list">
-          <li class="village item" ng-repeat="village in filtered.villages = (villages | contentType:'villages':content:filter.text | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
-            <h3><a ui-sref="village({id: village.id})" title="{{village.name}}" ui-sref-opts="{inherit: false}">{{village.name}}</a></h3>
-            <p ng-show="village.other_names">Outros nomes: {{village.other_names}}</p>
-            <p ng-show="village.ethnic_groups.length">Grupo étnico: {{village.ethnic_groups | listEthnic}}</p>
-            <p ng-show="village.population">População: {{village.population}}</p>
-            <p ng-show="village.guarani_presence">Presença guarani: {{village.guarani_presence}}</p>
-          </li>
+          <li guarani-item item="village" class="village item" ng-repeat="village in filtered.villages = (villages | contentType:'villages':content:filter.text | filter:filter.text | advancedSearch:filter.advanced:adv.villages) | offset:curPage*perPage | limitTo:perPage"></li>
         </ul>
         <nav class="sidebar-pagination">
           <ul class="pager">
@@ -62,26 +56,30 @@
         </nav>
       </div>
     </li>
-    <li id="lands" class="content-item" ng-class="{active: content == 'lands'}">
+    <li id="lands" class="content-item" ng-class="{active: content == 'lands', 'active-layer': activeLayers.lands}">
       <p class="actions">
         <a href="javascript:void(0);" ng-click="toggleContent('lands')" class="fa fa-bars"></a>
         <a href="/shapefiles/lands/" class="fa fa-cloud-download"></a>
-        <a href="#" class="fa fa-eye"></a>
+        <a href="javascript:void(0);" ng-click="toggleLayer('lands')" class="fa fa-eye" title="Visualizar/esconder camada do mapa"></a>
       </p>
       <h2><a href="javascript:void(0);" ng-click="toggleContent('lands')">Terras indígenas</a></h2>
       <div class="content-item-body" ng-show="content == 'lands'" sidebar-height="content == 'lands'">
-        <nav id="lands-filters">
-          <form role="search">
-            <div class="form-group has-feedback">
-              <input id="searchbox" type="text" placeholder="Pesquisar..." class="form-control" ng-model="filter.text">
-              <span class="fa fa-search form-control-feedback"></span>
+        <nav id="village-filters" class="content-filters" ng-show="adv.lands">
+          <a class="toggle-adv" ng-click="toggleAdv()" href="javascript:void(0);" ng-hide="showAdv">Busca avançada</a>
+          <form role="search" ng-show="showAdv">
+            <a class="close" href="javascript:void(0);" title="Fechar busca avançada" ng-click="toggleAdv()">x</a>
+            <div class="dropdown-filters">
+              <p class="dropdown-filter" ng-repeat="(k,f) in adv.lands">
+                <label for="lands_adv_filter_{{k}}">{{f.name}}</label>
+                <select id="lands_adv_filter_{{k}}" ng-model="filter.advanced[k]" ng-options="option[f.ref] as option[f.label] for option in f.options">
+                  <option value="">---</option>
+                </select>
+              </p>
             </div>
           </form>
         </nav>
         <ul class="land list">
-          <li class="land item" ng-repeat="land in filtered.lands = (lands | contentType:'lands':content:filter.text | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
-            <h3><a ui-sref="land({id: land.id})" title="{{land.name}}" ui-sref-opts="{inherit: false}">{{land.name}}</a></h3>
-          </li>
+          <li guarani-item item="land" class="land item" ng-repeat="land in filtered.lands = (lands | contentType:'lands':content:filter.text | filter:filter.text | advancedSearch:filter.advanced:adv.lands) | offset:curPage*perPage | limitTo:perPage"></li>
         </ul>
         <nav class="sidebar-pagination">
           <ul class="pager">
@@ -95,26 +93,30 @@
         </nav>
       </div>
     </li>
-    <li id="sites" class="content-item" ng-class="{active: content == 'sites'}">
+    <li id="sites" class="content-item" ng-class="{active: content == 'sites', 'active-layer': activeLayers.sites}">
       <p class="actions">
         <a href="javascript:void(0);" ng-click="toggleContent('sites')" class="fa fa-bars"></a>
         <a href="/shapefiles/archaeological/" class="fa fa-cloud-download"></a>
-        <a href="#" class="fa fa-eye"></a>
+        <a href="javascript:void(0);" ng-click="toggleLayer('sites')" class="fa fa-eye" title="Visualizar/esconder camada do mapa"></a>
       </p>
       <h2><a href="javascript:void(0);" ng-click="toggleContent('sites')">Sítios arqueológicos</a></h2>
       <div class="content-item-body" ng-show="content == 'sites'" sidebar-height="content == 'sites'">
-        <nav id="sites-filters">
-          <form role="search">
-            <div class="form-group has-feedback">
-              <input id="searchbox" type="text" placeholder="Pesquisar..." class="form-control" ng-model="filter.text">
-              <span class="fa fa-search form-control-feedback"></span>
+        <nav id="village-filters" class="content-filters" ng-show="adv.sites">
+          <a class="toggle-adv" ng-click="toggleAdv()" href="javascript:void(0);" ng-hide="showAdv">Busca avançada</a>
+          <form role="search" ng-show="showAdv">
+            <a class="close" href="javascript:void(0);" title="Fechar busca avançada" ng-click="toggleAdv()">x</a>
+            <div class="dropdown-filters">
+              <p class="dropdown-filter" ng-repeat="(k,f) in adv.sites">
+                <label for="sites_adv_filter_{{k}}">{{f.name}}</label>
+                <select id="sites_adv_filter_{{k}}" ng-model="filter.advanced[k]" ng-options="option[f.ref] as option[f.label] for option in f.options">
+                  <option value="">---</option>
+                </select>
+              </p>
             </div>
           </form>
         </nav>
         <ul class="site list">
-          <li class="site item" ng-repeat="site in filtered.sites = (sites | contentType:'sites':content:filter.text | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
-            <h3><a ui-sref="site({id: site.id})" title="{{site.name}}" ui-sref-opts="{inherit: false}">{{site.name}}</a></h3>
-          </li>
+          <li guarani-item item="site" class="site item" ng-repeat="site in filtered.sites = (sites | contentType:'sites':content:filter.text | filter:filter.text) | offset:curPage*perPage | limitTo:perPage"></li>
         </ul>
         <nav class="sidebar-pagination">
           <ul class="pager">

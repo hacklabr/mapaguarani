@@ -21,7 +21,6 @@
   "dependencies": {
     "angular": "1.4.x",
     "angular-resource": "1.4.x",
-    "angular-animate": "1.4.x",
     "leaflet": "0.7.x",
     "leaflet-plugins": "*",
     "leaflet-tilelayer-geojson": "*",

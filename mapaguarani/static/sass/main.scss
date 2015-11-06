@@ -41,6 +41,22 @@ input[type="radio"], input[type="checkbox"] {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
   }
 }
+#mapaguarani-loading {
+  position: fixed;
+  z-index: 9999;
+  background: #fff;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: 20%;
+  text-align: center;
+  text-transform: uppercase;
+  h2 {
+    font-size: 20px;
+    color: #999;
+  }
+}
 #sidebar {
   position: absolute;
   z-index: 2000;
@@ -56,10 +72,31 @@ input[type="radio"], input[type="checkbox"] {
   .nav > li > a {
     padding: 10px 5px;
   }
+  table {
+    width: 100%;
+    // margin: 0 -20px -20px;
+    color: #666;
+    border-bottom: 1px solid #e7e7e7;
+    tr {
+      border-left: 1px solid #e7e7e7;
+      border-right: 1px solid #e7e7e7;
+      width: 100%;
+      border-top: 1px solid #e7e7e7;
+      th {
+        width: 40%;
+        padding: 20px;
+      }
+      td {
+        padding: 20px;
+        border-left: 1px solid #e4e4e4;
+      }
+    }
+  }
   #sidebar-main-content {
     pointer-events: auto;
     background: #fff;
     #main-search {
+      position: relative;
       input {
         margin: 0;
         padding: 20px;
@@ -78,12 +115,52 @@ input[type="radio"], input[type="checkbox"] {
       height: 0;
       position: relative;
       overflow: auto;
-      transition: all .4s ease-in-out;
-      -webkit-transition: all .4s ease-in-out;
-      -moz-transition: all .4s ease-in-out;
-      -o-transition: all .4s ease-in-out;
+      // transition: all .4s linear;
+      // -webkit-transition: all .4s linear;
+      // -moz-transition: all .4s linear;
+      // -o-transition: all .4s linear;
       background: #f6f6f6;
-      padding: 0 20px;
+      padding: 0;
+      .close {
+        margin-top: -5px;
+      }
+      .content-filters {
+        background: #e9e9e9;
+        color: #333;
+        padding: 20px;
+        .toggle-adv {
+          color: #999;
+          text-align: center;
+          margin: -10px 0;
+          display: block;
+          text-decoration: none;
+          text-transform: uppercase;
+          font-weight: 600;
+          font-size: 12px;
+          &:hover {
+            color: #333;
+          }
+        }
+        #searchbox,
+        p {
+          margin: 0 0 10px;
+        }
+        .dropdown-filter {
+          label {
+            display: block;
+            color: #999;
+            text-transform: uppercase;
+          }
+          select {
+            display: block;
+            width: 100%;
+          }
+        }
+        input,
+        select,
+        select option {
+        }
+      }
     }
     ul.content-list {
       list-style: none;
@@ -110,6 +187,14 @@ input[type="radio"], input[type="checkbox"] {
             color: #111;
           }
         }
+        .fa-eye {
+          opacity: .2;
+        }
+        &.active-layer {
+          .fa-eye {
+            opacity: 1;
+          }
+        }
         .actions {
           float: right;
           margin: 0;
@@ -124,12 +209,34 @@ input[type="radio"], input[type="checkbox"] {
           }
         }
         .content-item-body {
-          padding: 20px;
+          padding: 0;
           margin: 0 -20px -20px -20px;
           &.active {
             margin-top: 20px;
+            border-top: 1px solid #ccc;
           }
         }
+      }
+    }
+  }
+  #clustered-results {
+    pointer-events: auto;
+    background: #fff;
+    #clustered-header {
+      padding: 10px;
+      .close {
+        float: right;
+        color: #333;
+        line-height: 1;
+        margin-top: -5px;
+        text-decoration: none;
+      }
+      h2 {
+        margin: 0;
+        font-size: 16px;
+        text-transform: uppercase;
+        color: #999;
+        padding: 0 0 20px;
       }
     }
   }
@@ -148,14 +255,26 @@ input[type="radio"], input[type="checkbox"] {
     padding: 0;
     .item {
       margin: 0;
-      padding: 20px 0;
+      padding: 20px;
+      background: #f6f6f6;
       border-bottom: 1px solid #ddd;
-      border-radius: 4px;
-      -webkit-border-radius: 4px;
-      -moz-border-radius: 4px;
-      -o-border-radius: 4px;
+      position: relative;
+      &:hover {
+        z-index: 2;
+        background: #fff;
+      }
       h3 {
+        font-weight: 800;
         margin: 0 0 15px;
+      }
+      table {
+        tr {
+          td,
+          th {
+            padding: 10px;
+            font-size: 12px;
+          }
+        }
       }
     }
   }
@@ -166,6 +285,7 @@ input[type="radio"], input[type="checkbox"] {
     h1,
     h2 {
       margin-top: 0;
+      margin-bottom: 20px;
     }
   }
 }
@@ -226,9 +346,6 @@ input[type="radio"], input[type="checkbox"] {
     -moz-border-radius: 100%;
     -o-border-radius: 100%;
   }
-  .leaflet-div-icon {
-
-  }
   .marker-cluster {
     background: transparent;
     &:before {
@@ -255,6 +372,38 @@ input[type="radio"], input[type="checkbox"] {
       span {
         line-height: 20px;
       }
+    }
+  }
+  .legend {
+    .bg-item,
+    .border-item,
+    .point-item {
+      width: 14px;
+      height: 14px;
+      float: left;
+      margin-top: 2px;
+      margin-right: 5px;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -wekbit-box-sizing: border-box;
+      border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+      -o-border-radius: 3px;
+    }
+    .point-item,
+    .bg-item {
+      background: #000;
+    }
+    .point-item {
+      border-radius: 100%;
+      -moz-border-radius: 100%;
+      -webkit-border-radius: 100%;
+      -o-border-radius: 100%;
+    }
+    .border-item {
+      background: transparent;
+      border: 1px solid #000;
     }
   }
 }
@@ -290,19 +439,16 @@ input[type="radio"], input[type="checkbox"] {
   color: #555;
   background-color: white;
   opacity: 0.8;
-  padding: 10px;
-  i {
-    width: 18px;
-    height: 18px;
-    float: left;
-    margin-right: 8px;
-  //  opacity: 0.7;
+  padding: 10px 10px 0;
+  width: 230px;
+  &:hover {
+    opacity: 1;
   }
 }
 
 .navbar .navbar-brand {
   font-weight: bold;
-  font-size: 25px;
+  font-size: 20px;
   color: #fff;
   text-shadow: 1px 1px 1px rgba(0,0,0,0.6);
   text-transform: uppercase;
@@ -322,7 +468,11 @@ input[type="radio"], input[type="checkbox"] {
   margin-left: 25px;
 }
 .navbar-nav a {
-  background: #fff;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  &:hover {
+    background: transparent !important;
+    color: #fff;
+  }
 }
 
 
