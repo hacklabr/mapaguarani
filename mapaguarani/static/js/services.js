@@ -121,7 +121,8 @@
             };
             $.ajax({
               type: 'POST',
-              url: 'http://localhost:4000/api',
+              // url: 'http://localhost:4000/api',
+              url: 'http://guarani.map.as:4000/api',
               data: JSON.stringify(data),
               contentType: 'application/json; charset=utf-8',
               dataType: 'json',
