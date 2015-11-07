@@ -84,7 +84,8 @@ $maptiler = <<SCRIPT
     cd mapaguarani-tiler
     npm install request
     npm install underscore
-    npm install windshaft
+    npm install git+https://git@github.com/miguelpeixe/Windshaft.git
+    # npm install windshaft
     # FIXME for some reason, it only get done in second time
     npm install windshaft
     cp config.vagrant.js config.js
@@ -112,8 +113,7 @@ Vagrant.configure('2') do |config|
     config.vm.provision "shell", inline: $windshaft
     config.vm.provision "shell",
             inline: $import_layers,
-            privileged: false,
-            run: "always"
+            privileged: false
     config.vm.provision "shell",
             inline: $maptiler,
             privileged: false,
