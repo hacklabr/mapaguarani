@@ -98,7 +98,7 @@ Vagrant.configure('2') do |config|
     # config.vm.box_url = "http://files.vagrantup.com/" + config.vm.box + ".box"
 
     config.vm.provider "virtualbox" do |v|
-        v.memory = 1024
+        v.memory = 2048
         v.cpus = 2
     end
 
@@ -116,8 +116,7 @@ Vagrant.configure('2') do |config|
             privileged: false
     config.vm.provision "shell",
             inline: $maptiler,
-            privileged: false,
-            run: "always"
+            privileged: false
     config.vm.provision "shell",
             inline: $runserver,
             privileged: false,
