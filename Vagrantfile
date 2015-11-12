@@ -20,7 +20,7 @@ $dependencies = <<SCRIPT
 
     git clone https://github.com/CartoDB/cartodb-postgresql.git
     cd cartodb-postgresql
-    sudo make all install
+    make all install
     cd ..
 
 
@@ -61,14 +61,6 @@ $import_layers = <<SCRIPT
 
 SCRIPT
 
-$runserver = <<SCRIPT
-    # must run with vagrant user
-    cd /vagrant
-    /home/vagrant/mapaguarani-env/bin/python3 manage.py migrate
-    /home/vagrant/mapaguarani-env/bin/python3 manage.py runserver 0.0.0.0:8000 &
-
-SCRIPT
-
 $windshaft = <<SCRIPT
 
     apt-get install -y nodejs npm
@@ -82,14 +74,20 @@ $maptiler = <<SCRIPT
     # must run with vagrant user
     git clone https://github.com/hacklabr/mapaguarani-tiler.git
     cd mapaguarani-tiler
-    npm install request
-    npm install underscore
-    npm install git+https://git@github.com/miguelpeixe/Windshaft.git
-    # npm install windshaft
-    # FIXME for some reason, it only get done in second time
-    npm install windshaft
+    npm install
     cp config.vagrant.js config.js
-    node app.js &
+
+SCRIPT
+
+$runserver = <<SCRIPT
+    # must run with vagrant user
+    cd /vagrant
+    /home/vagrant/mapaguarani-env/bin/python3 manage.py migrate
+    /home/vagrant/mapaguarani-env/bin/python3 manage.py runserver 0.0.0.0:8000 &
+
+    # run the windshaft maptiles
+    node /home/vagrant/mapaguarani-tiler/app.js &
+
 SCRIPT
 
 Vagrant.configure('2') do |config|
@@ -110,13 +108,9 @@ Vagrant.configure('2') do |config|
     config.vm.provision "shell", inline: $setup
     config.vm.provision "shell", inline: $dependencies
     config.vm.provision "shell", inline: $virtualenv, privileged: false
+    config.vm.provision "shell", inline: $import_layers, privileged: false
     config.vm.provision "shell", inline: $windshaft
-    config.vm.provision "shell",
-            inline: $import_layers,
-            privileged: false
-    config.vm.provision "shell",
-            inline: $maptiler,
-            privileged: false
+    config.vm.provision "shell", inline: $maptiler, privileged: false
     config.vm.provision "shell",
             inline: $runserver,
             privileged: false,
