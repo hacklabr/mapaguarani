@@ -440,11 +440,11 @@
               clusterClick(ev, 'site');
             });
             var sitesLegend = L.control({'position': 'bottomright'});
-            sitesLegend.onAdd = function(map) {
+            /*sitesLegend.onAdd = function(map) {
               var div = L.DomUtil.create('div', 'info legend sites');
               div.innerHTML += '<p><span class="point-item" style="background-color: #5CA2D1;"></span> <strong>Sítios arqueológicos</strong></p>';
               return div;
-            };
+            };*/
             scope.interactiveLayers.sites = {
               tile: sitesLayer,
               grid: sitesGridLayer,
@@ -473,11 +473,11 @@
               clusterClick(ev, 'village');
             });
             var villagesLegend = L.control({'position': 'bottomright'});
-            villagesLegend.onAdd = function(map) {
+            /*villagesLegend.onAdd = function(map) {
               var div = L.DomUtil.create('div', 'info legend villages');
               div.innerHTML += '<p><span class="point-item" style="background-color: #e7ec13;"></span> <strong>Aldeias Indígenas</strong></p>';
               return div;
-            };
+            };*/
             scope.interactiveLayers.villages = {
               tile: villagesLayer,
               grid: villagesGridLayer,
