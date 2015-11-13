@@ -14,7 +14,7 @@ DEBUG = env.bool('DJANGO_DEBUG', default=True)
 TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 
 # Deactivate compress so sass deps are watched
-COMPRESS_ENABLED = True
+COMPRESS_ENABLED = False
 
 # SECRET CONFIGURATION
 # ------------------------------------------------------------------------------
