@@ -21,9 +21,18 @@
   <ul class="content-list">
     <li id="villages" class="content-item" ng-class="{active: content == 'villages', 'active-layer': activeLayers.villages}">
       <p class="actions">
-        <a href="javascript:void(0);" ng-click="toggleContent('villages')" class="fa fa-list"></a>
-        <a href="/shapefiles/villages/" class="fa fa-cloud-download"></a>
-        <a href="javascript:void(0);" ng-click="toggleLayer('villages')" class="fa fa-eye" title="Visualizar/esconder camada do mapa"></a>
+        <a href="javascript:void(0);" ng-click="toggleContent('villages')">
+          <span class="text">lista</span>
+          <span class="fa fa-list"></span>
+        </a>
+        <a href="/shapefiles/villages/">
+          <span class="text">download</span>
+          <span class="fa fa-cloud-download"></span>
+        </a>
+        <a href="javascript:void(0);" ng-click="toggleLayer('villages')" title="Visualizar/esconder camada do mapa">
+          <span class="text">ver</span>
+          <span class="fa fa-eye"></span>
+        </a>
       </p>
       <h2><a href="javascript:void(0);" ng-click="toggleContent('villages')"><span class="icon-color"></span>Aldeias indígenas</a></h2>
       <div class="content-item-body" ng-show="content == 'villages'" sidebar-height="content == 'villages'">
@@ -58,9 +67,18 @@
     </li>
     <li id="lands" class="content-item" ng-class="{active: content == 'lands', 'active-layer': activeLayers.lands}">
       <p class="actions">
-        <a href="javascript:void(0);" ng-click="toggleContent('lands')" class="fa fa-list"></a>
-        <a href="/shapefiles/lands/" class="fa fa-cloud-download"></a>
-        <a href="javascript:void(0);" ng-click="toggleLayer('lands')" class="fa fa-eye" title="Visualizar/esconder camada do mapa"></a>
+        <a href="javascript:void(0);" ng-click="toggleContent('lands')">
+          <span class="text">lista</span>
+          <span class="fa fa-list"></span>
+        </a>
+        <a href="/shapefiles/lands/">
+          <span class="text">download</span>
+          <span class="fa fa-cloud-download"></span>
+        </a>
+        <a href="javascript:void(0);" ng-click="toggleLayer('lands')" title="Visualizar/esconder camada do mapa">
+          <span class="text">ver</span>
+          <span class="fa fa-eye"></span>
+        </a>
       </p>
       <h2><a href="javascript:void(0);" ng-click="toggleContent('lands')"><span class="icon-color"></span>Terras indígenas</a></h2>
       <div class="content-item-body" ng-show="content == 'lands'" sidebar-height="content == 'lands'">
@@ -95,9 +113,18 @@
     </li>
     <li id="sites" class="content-item" ng-class="{active: content == 'sites', 'active-layer': activeLayers.sites}">
       <p class="actions">
-        <a href="javascript:void(0);" ng-click="toggleContent('sites')" class="fa fa-list"></a>
-        <a href="/shapefiles/archaeological/" class="fa fa-cloud-download"></a>
-        <a href="javascript:void(0);" ng-click="toggleLayer('sites')" class="fa fa-eye" title="Visualizar/esconder camada do mapa"></a>
+        <a href="javascript:void(0);" ng-click="toggleContent('sites')">
+          <span class="text">lista</span>
+          <span class="fa fa-list"></span>
+        </a>
+        <a href="/shapefiles/archaeological/">
+          <span class="text">download</span>
+          <span class="fa fa-cloud-download"></span>
+        </a>
+        <a href="javascript:void(0);" ng-click="toggleLayer('sites')" title="Visualizar/esconder camada do mapa">
+          <span class="text">ver</span>
+          <span class="fa fa-eye"></span>
+        </a>
       </p>
       <h2><a href="javascript:void(0);" ng-click="toggleContent('sites')"><span class="icon-color"></span>Sítios arqueológicos</a></h2>
       <div class="content-item-body" ng-show="content == 'sites'" sidebar-height="content == 'sites'">
