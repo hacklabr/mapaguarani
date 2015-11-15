@@ -13,8 +13,10 @@ class IndigenousLandSerializer(serializers.ModelSerializer):
         exclude = ['geometry']
         depth = 1
 
-    def get_bbox(self, obj):
-        return obj.geometry.extent
+    @staticmethod
+    def get_bbox(obj):
+        if obj.geometry.extent:
+            return [[obj.geometry.extent[0], obj.geometry.extent[1]], [obj.geometry.extent[2], obj.geometry.extent[3]]]
 
 
 class IndigenousVillageSerializer(serializers.ModelSerializer):
