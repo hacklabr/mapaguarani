@@ -24,6 +24,7 @@ class IndigenousVillageAdmin(geoadmin.GeoModelAdmin):
                     'population', 'get_guarani_presence',
                     'position_precision', 'position_source', 'geometry',
                     'public_comments', 'private_comments',)
+    search_fields = ['name', 'other_names',]
     list_per_page = 500
     inlines = [
         PopulationInLine,
@@ -51,8 +52,8 @@ class IndigenousLandAdmin(geoadmin.GeoModelAdmin, ModerationAdmin):
                     'land_tenure', 'land_tenure_status', 'public_comments', 'private_comments', 'associated_land')
     # list_editable = ('other_names', 'official_area', 'claim', 'demand', 'source', 'land_tenure',
     #                  'land_tenure_status', 'public_comments', 'private_comments')
-    search_fields = ['name', 'other_names', 'claim', 'demand', 'source', 'land_tenure',
-                     'land_tenure_status', 'public_comments', 'private_comments']
+    search_fields = ['name', 'other_names', 'claim', 'demand', 'source', 'land_tenure__name',
+                     'land_tenure_status__name', 'public_comments', 'private_comments']
     list_per_page = 500
 
     def get_prominent_subgroup(self, obj):
@@ -66,8 +67,9 @@ class ArchaeologicalImageInLine(admin.TabularInline):
 
 @admin.register(ArchaeologicalPlace)
 class ArchaeologicalPlaceAdmin(admin.ModelAdmin):
-    list_display = ('get_name', 'code', 'acronym', 'cnsa','biblio_references',
+    list_display = ('get_name', 'code', 'acronym', 'cnsa', 'biblio_references',
                     'position_precision', 'position_comments', 'geometry',)
+    search_fields = ['name', 'code', 'acronym', 'cnsa', 'biblio_references',]
     list_per_page = 500
     inlines = [
         ArchaeologicalImageInLine,
