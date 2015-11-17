@@ -1,0 +1,118 @@
+#map {
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  .leaflet-top, .leaflet-bottom {
+    z-index: 2000;
+  }
+  .leaflet-left {
+    left: 340px;
+    .leaflet-control {
+      margin-left: 20px;
+    }
+  }
+  .leaflet-right .leaflet-control {
+    margin-right: 15px;
+  }
+  .leaflet-top {
+    top: 50px;
+    .leaflet-control {
+      margin-top: 0;
+    }
+  }
+  .leaflet-google-layer.leaflet-left.leaflet-top {
+    top: 0;
+    left: 0;
+  }
+  .leaflet-control-layers {
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    -o-border-radius: 0;
+    box-shadow: 0 0 0;
+    -moz-box-shadow: 0 0 0;
+    -webkit-box-shadow: 0 0 0;
+    -o-box-shadow: 0 0 0;
+  }
+  .village-guarani-marker {
+    background: #e7ec13;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -o-border-radius: 100%;
+  }
+  .village-other-marker {
+    background: #f57a14;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -o-border-radius: 100%;
+  }
+  .site-marker {
+    background: gray;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -o-border-radius: 100%;
+  }
+  .marker-cluster {
+    background: transparent;
+    &:before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      border-radius: 100%;
+      -webkit-border-radius: 100%;
+      -moz-border-radius: 100%;
+      -o-border-radius: 100%;
+    }
+    div {
+      width: 20px;
+      height: 20px;
+      margin-top: 10px;
+      margin-left: 10px;
+      box-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+      position: relative;
+      z-index: 3;
+      span {
+        line-height: 20px;
+      }
+    }
+  }
+  .legend {
+    .bg-item,
+    .border-item,
+    .point-item {
+      width: 14px;
+      height: 14px;
+      float: left;
+      margin-top: 2px;
+      margin-right: 5px;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -wekbit-box-sizing: border-box;
+      border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+      -o-border-radius: 3px;
+    }
+    .point-item,
+    .bg-item {
+      background: #000;
+    }
+    .point-item {
+      border-radius: 100%;
+      -moz-border-radius: 100%;
+      -webkit-border-radius: 100%;
+      -o-border-radius: 100%;
+    }
+    .border-item {
+      background: transparent;
+      border: 1px solid #000;
+    }
+  }
+}
