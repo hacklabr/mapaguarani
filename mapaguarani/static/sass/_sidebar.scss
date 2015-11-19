@@ -1,9 +1,9 @@
 #sidebar {
   position: absolute;
   z-index: 2000;
-  height: 86%;
+  height: 100%;
   margin: 50px 0 0; 
-  width: 340px;
+  width: 390px;
   overflow: auto;
   -webkit-transition: all 0.25s ease-out;
     -moz-transition: all 0.25s ease-out;
@@ -37,35 +37,66 @@
   }
   #sidebar-main-content {
     position: relative;
-    .icon-menu {
+    width: 340px;
+    .button-menu {
+      cursor: pointer; 
       position: absolute;
+      pointer-events: auto;
       text-align: center; 
       width: 40px;
+      z-index: 0;
       .text {
         color: #fff;
+        display: block;
+        font-size: 11px;
+        font-weight: bold;
+        margin-bottom: 3px;
+        text-transform: uppercase;
       }
       .bubble {
-        border-radius: 50%;
         background-color: #fff;
+        border: 1px solid rgba(0,0,0,0.3);
+        border-radius: 50%;
+        box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+        box-sizing: border-box;      
         display: block; 
         height: 40px;
         width: 40px;
+        .fa {
+          font-size: 22px;
+          &-caret-left {
+            margin: 7px 0 0 12px;
+          }
+          &-caret-right {
+            margin: 7px 0 0 5px;
+          }
+        }
       }
     }
     &.open {
-      .text,.fa-caret-right {
-        display: none;
+      .button-menu {
+        top: 113px;
+        right: -20px;
+        .menu-open {
+          display: none;
+        }
       }
     }
     &.closed {
-      .fa-caret-left {
-        display: none;
+      left: -340px;
+      .button-menu {
+        top: 104px;
+        right: -50px;
+        .menu-close {
+          display: none;
+        }
       }
     }
     .content {
       pointer-events: auto;
       background: #fff; 
       position: relative;
+      z-index: 1;
       #main-search {
         position: relative;
         input {

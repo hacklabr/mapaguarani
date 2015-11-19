@@ -1,4 +1,4 @@
-<section id="sidebar-main-content" class="open">
+<section id="sidebar-main-content" ng-class="menuIsClosed ? 'closed' : 'open'">
   <div class="content">
     <form id="main-search" role="search">
       <input id="searchbox" type="text" placeholder="Pesquisar..." class="form-control" ng-model="filter.text">
@@ -159,6 +159,19 @@
         </div>
       </li>
     </ul>
+  </div>
+  <div class="button-menu">
+    <div class="menu-close" ng-click="menuIsClosed = true">
+      <span class="bubble">
+        <i class="fa fa-caret-left"></i>
+      </span>
+    </div>
+    <div class="menu-open" ng-click="menuIsClosed = false">
+      <span class="text">Menu</span>
+      <span class="bubble">
+        <i class="fa fa-caret-right"></i>
+      </span>
+    </div>
   </div>
 </section>
 <div ng-show="1 == 0">
