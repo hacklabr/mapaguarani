@@ -3,6 +3,9 @@
 
   var directives = angular.module('mapaguarani.directives', []);
 
+  /*
+   * Lock sidebar height to proper site grid limits
+   */
   directives.directive('sidebarHeight', [
     function() {
       return {
@@ -27,6 +30,9 @@
     }
   ]);
 
+  /*
+   * Store map layers
+   */
   //Google maps - leaflet 0.7 only
   var gm_roadmap = new L.Google('ROADMAP');
   var gm_terrain = new L.Google('TERRAIN');
@@ -39,6 +45,9 @@
   var mapbox_streets   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets', access_token: access_token});
   var mapbox_hybrid   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets-satellite', access_token: access_token});
 
+  /*
+   * Loading message
+   */
   directives.directive('loading', [
     '$rootScope',
     function($rootScope) {
@@ -53,6 +62,10 @@
     }
   ])
 
+  /*
+   * Sidebar list directive
+   * Display and filter items
+   */
   directives.directive('guaraniList', [
     '$rootScope',
     '$stateParams',
@@ -85,6 +98,7 @@
               scope.setContent(content);
             }
           }
+          // Watch content to broacast change of value and clear filters
           scope.$watch('content', function(content, prevContent) {
             if(content !== prevContent) {
               $rootScope.$broadcast('mapaguarani.contentChanged', content);
@@ -93,11 +107,16 @@
             }
           });
 
+          /*
+           * Layer toggler
+           */
+          // Available layers, all enabled by default
           scope.activeLayers = {
             'villages': true,
             'lands': true,
             'sites': true
           };
+          // Toggler
           scope.toggleLayer = function(layer) {
             if(scope.activeLayers[layer])
               scope.activeLayers[layer] = false;
@@ -111,6 +130,7 @@
            */
           scope.filtered = scope.filtered || {};
 
+          // Get every available content for "search all" results
           scope.getAll = function() {
             var all = [];
             all = all.concat(angular.copy(scope.villages));
@@ -119,32 +139,38 @@
             return all;
           };
 
+          // Watch village content changes for filterable collection
           scope.$watch('villages', function(villages) {
             if(typeof villages == 'object')
               scope.filtered.villages = angular.copy(villages);
           });
 
+          // Watch lands content changes for filterable collection
           scope.$watch('lands', function(lands) {
             if(typeof lands == 'object') {
               scope.filtered.lands = angular.copy(lands);
             }
           });
 
+          // Watch sites content changes for filterable collection
           scope.$watch('sites', function(sites) {
             if(typeof sites == 'object') {
               scope.filtered.sites = angular.copy(sites);
             }
           });
 
+          // Watch all content changes to store `getAll` on scope
           scope.$watchGroup(['villages', 'lands', 'sites'], function() {
             scope._all = scope.getAll();
           });
 
+          // Use state params defined filters
           if($stateParams.filter) {
             scope.filter = JSON.parse($stateParams.filter);
           } else {
             scope.filter = {};
           }
+          // Watch filter changes to broadcast and reset paging
           scope.$watch('filter', function(filter, prevFilter) {
             if(filter !== prevFilter) {
               $rootScope.$broadcast('mapaguarani.filterChanged', filter);
@@ -165,8 +191,10 @@
               scope.showAdv = true;
           };
 
+          /*
+           * Config adv nav fields for each content type
+           */
           scope.adv = {};
-
           scope.adv.villages = {
             ethnic_groups: {
               name: 'Grupos étnicos',
@@ -181,7 +209,6 @@
               options: Guarani.getUniq(scope.villages, 'prominent_subgroup', 'id')
             }
           };
-
           scope.adv.lands = {
             ethnic_groups: {
               name: 'Grupos étnicos',
@@ -248,6 +275,9 @@
     }
   ]);
 
+  /*
+   * Single item directive
+   */
   directives.directive('guaraniItem', [
     '$state',
     function($state) {
@@ -259,8 +289,8 @@
         templateUrl: '/static/views/partials/list-item.html',
         link: function(scope, element, attrs) {
 
+          // Identify content type from item layer name
           var type;
-
           switch(scope.item.layer.name) {
             case 'Aldeias Indígenas':
               type = 'village';
@@ -273,6 +303,7 @@
               break;
           }
 
+          // Get item url
           scope.url = $state.href(type, {id: scope.item.id}, {inherit: false});
 
         }
@@ -280,6 +311,9 @@
     }
   ]);
 
+  /*
+   * Map interaction service
+   */
   directives.factory('guaraniMapService', [
     '$rootScope',
     function($rootScope) {
@@ -311,6 +345,9 @@
     }
   ]);
 
+  /*
+   * Map directive
+   */
   directives.directive('guaraniMap', [
     'GuaraniService',
     'guaraniMapService',
@@ -337,10 +374,11 @@
             zoom: scope.zoom
           });
 
+          // Store map leaflet object on map service
           Map.setMap(map);
 
+          // Add base layers
           map.addLayer(gm_hybrid);
-
           var baselayers = {
             'Mapa Mapbox': mapbox_streets,
             'Satélite Mapbox': mapbox_satellite,
@@ -353,6 +391,7 @@
           var layersControl = new L.Control.Layers(baselayers, {});
           map.addControl(layersControl);
 
+          // Watch layer toggling to display legends
           map.on('layeradd', function(ev) {
             if(ev.layer.name && scope.interactiveLayers[ev.layer.name])
               map.addControl(scope.interactiveLayers[ev.layer.name].legend);
@@ -362,6 +401,7 @@
               map.removeControl(scope.interactiveLayers[ev.layer.name].legend);
           });
 
+          // Cluster click callback
           var clusterClick = function(ev, type) {
             if(ev.data) {
               if(ev.data.id == 0) {
@@ -381,6 +421,7 @@
             }
           };
 
+          // Start interactive layers object (lands, sites and villages)
           scope.interactiveLayers = {};
 
           /*
@@ -413,6 +454,7 @@
             });
             return div;
           };
+          // Store interactive layer configuration object
           scope.interactiveLayers.lands = {
             tile: landsLayer,
             grid: landsGridLayer,
@@ -445,6 +487,7 @@
               div.innerHTML += '<p><span class="point-item" style="background-color: #5CA2D1;"></span> <strong>Sítios arqueológicos</strong></p>';
               return div;
             };*/
+            // Store interactive layer configuration object
             scope.interactiveLayers.sites = {
               tile: sitesLayer,
               grid: sitesGridLayer,
@@ -478,6 +521,7 @@
               div.innerHTML += '<p><span class="point-item" style="background-color: #e7ec13;"></span> <strong>Aldeias Indígenas</strong></p>';
               return div;
             };*/
+            // Store interactive layer configuration object
             scope.interactiveLayers.villages = {
               tile: villagesLayer,
               grid: villagesGridLayer,
@@ -489,6 +533,7 @@
             map.addLayer(villagesGridLayer);
           });
 
+          // Watch layer toggle to hide/display layer on leaflet
           $rootScope.$on('mapaguarani.toggleLayer', function(ev, layer) {
               if(scope.interactiveLayers[layer]) {
                 if(scope.interactiveLayers[layer].active) {
