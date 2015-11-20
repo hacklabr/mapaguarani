@@ -371,7 +371,8 @@
 
           var map = L.map(attrs.id, {
             center: scope.center,
-            zoom: scope.zoom
+            zoom: scope.zoom,
+            zoomControl: false
           });
 
           // Store map leaflet object on map service
@@ -390,6 +391,9 @@
 
           var layersControl = new L.Control.Layers(baselayers, {});
           map.addControl(layersControl);
+
+          var zoomControl = new L.control.zoom({'position': 'topright'});
+          map.addControl(zoomControl);
 
           // Watch layer toggling to display legends
           map.on('layeradd', function(ev) {
@@ -447,11 +451,11 @@
                 div.innerHTML += '<p><span class="bg-item" style="background-color:' + tenure.map_color + ';"></span> ' + tenure.name + '</p>';
               });
             });
-            Guarani.tenures_status.query(function(tenures) {
-              _.each(tenures, function(tenure) {
-                div.innerHTML += '<p><span class="border-item" style="border-color:' + tenure.map_color + ';"></span> ' + tenure.name + '</p>';
-              });
-            });
+//            Guarani.tenures_status.query(function(tenures) {
+//              _.each(tenures, function(tenure) {
+//                div.innerHTML += '<p><span class="border-item" style="border-color:' + tenure.map_color + ';"></span> ' + tenure.name + '</p>';
+//              });
+//            });
             return div;
           };
           // Store interactive layer configuration object
@@ -482,11 +486,11 @@
               clusterClick(ev, 'site');
             });
             var sitesLegend = L.control({'position': 'bottomright'});
-            /*sitesLegend.onAdd = function(map) {
+            sitesLegend.onAdd = function(map) {
               var div = L.DomUtil.create('div', 'info legend sites');
               div.innerHTML += '<p><span class="point-item" style="background-color: #5CA2D1;"></span> <strong>Sítios arqueológicos</strong></p>';
               return div;
-            };*/
+            };
             // Store interactive layer configuration object
             scope.interactiveLayers.sites = {
               tile: sitesLayer,
@@ -516,11 +520,11 @@
               clusterClick(ev, 'village');
             });
             var villagesLegend = L.control({'position': 'bottomright'});
-            /*villagesLegend.onAdd = function(map) {
+            villagesLegend.onAdd = function(map) {
               var div = L.DomUtil.create('div', 'info legend villages');
               div.innerHTML += '<p><span class="point-item" style="background-color: #e7ec13;"></span> <strong>Aldeias Indígenas</strong></p>';
               return div;
-            };*/
+            };
             // Store interactive layer configuration object
             scope.interactiveLayers.villages = {
               tile: villagesLayer,
