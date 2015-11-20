@@ -21,54 +21,43 @@
     'guaraniMapService',
     function ($scope, $state, $stateParams, villages, lands, sites, Guarani, Map) {
 
+      // State dependencies resolved, emit event to hide loading message
       $scope.$emit('mapaguarani.loaded');
 
+      // Init filtered results object
       $scope.filtered = {};
 
+      // Store state resolved data on scope
       $scope.lands = lands;
       $scope.villages = villages;
       $scope.sites = sites;
 
-      // console.log($scope.sites);
-
-      var filter = false;
-
+      // Watch and store map from MapService
       var map;
-
       $scope.$watch(function() {
         return Map.getMap();
       }, function(m) {
         map = m;
       });
 
-      // $scope.$watch('filtered', _.debounce(function(filtered) {
-      //   filter = filtered;
-      //   if(map && $state.current.name == 'home') {
-      //     var focusLayer = L.featureGroup();
-      //     for(var key in filtered) {
-      //       if(filtered[key] && filtered[key].length) {
-      //         L.geoJson(Guarani.toGeoJSON(filtered[key])).addTo(focusLayer);
-      //       }
-      //     }
-      //     map.fitBounds(focusLayer.getBounds());
-      //     focusLayer = null;
-      //   }
-      // }, 600), true);
-
+      // On state change update map bounds if state is home and "focus" is true
       $scope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
         if(to.name == 'home' && fromParams.focus) {
           Map.updateBounds();
         }
       });
 
+      // Update state when viewing content is changed
       $scope.$on('mapaguarani.contentChanged', function(ev, content) {
         $state.go('home', {'content': content});
       });
 
+      // Update state when viewing filter updates
       $scope.$on('mapaguarani.filterChanged', _.debounce(function(ev, filter) {
         $state.go('home', {'filter': JSON.stringify(filter)});
       }, 700));
 
+      // Update state when page changes
       $scope.$on('mapaguarani.pageChanged', function(ev, page) {
         var param;
         if(page == 0) {
@@ -79,6 +68,7 @@
         $state.go('home', {'page': param});
       });
 
+      // Watch "clustered" params (related to cluster click) to show "area results"
       $scope.$watch(function() {
         return $state.params;
       }, function(params) {
@@ -94,6 +84,7 @@
         }
       });
 
+      // Clear "area results"
       $scope.clearClustered = function() {
         $state.go('home', {clustered: null});
       };
@@ -108,14 +99,17 @@
     'guaraniMapService',
     'GuaraniService',
     function($state, $scope, data, Map, Guarani) {
+
+      // State dependencies resolved, emit event to hide loading message
       $scope.$emit('mapaguarani.loaded');
 
-      console.log(data);
-
+      // Store content type on scope
       $scope.type = $state.current.data.contentType;
+
+      // Store resolved item data on scope
       $scope.data = data;
-      $scope.map = {};
-      $scope.map[$scope.type] = [$scope.data];
+
+      // If focus, fit map bounds to item location
       if($state.params.focus) {
         $scope.$watch(function() {
           return Map.getMap();
