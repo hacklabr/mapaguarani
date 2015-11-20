@@ -7,6 +7,7 @@ class IndigenousLandSerializer(serializers.ModelSerializer):
 
     associated_land = serializers.PrimaryKeyRelatedField(read_only=True)
     bbox = serializers.SerializerMethodField()
+    guarani_presence = serializers.SerializerMethodField()
 
     class Meta:
         model = IndigenousLand
@@ -18,8 +19,14 @@ class IndigenousLandSerializer(serializers.ModelSerializer):
         if obj.geometry.extent:
             return [[obj.geometry.extent[0], obj.geometry.extent[1]], [obj.geometry.extent[2], obj.geometry.extent[3]]]
 
+    @staticmethod
+    def get_guarani_presence(obj):
+        return obj.ethnic_groups.filter(name='Guarani').exists()
+
 
 class IndigenousVillageSerializer(serializers.ModelSerializer):
+
+    guarani_presence = serializers.ReadOnlyField()
 
     class Meta:
         model = IndigenousVillage

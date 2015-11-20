@@ -124,7 +124,7 @@ class IndigenousVillage(IndigenousPlace):
         try:
             return self.guarani_presence_annual_series.latest().presence
         except GuaraniPresence.DoesNotExist:
-            return 0
+            return False
 
     @property
     def city(self):
