@@ -42,7 +42,7 @@ SELECT ST_Centroid(g) geometry, points_count, id, id_list, 'smalls' as src, arra
     [src = 'smalls'] {marker-width: 32 * 0.5; }
     [src = 'mids'] {marker-width: 32 * 0.75;}
     [src = 'bigs'] { marker-width: 32; }
-    [zoom>11]{marker-width: 32;}
+    [zoom>11]{marker-width: 32 * 0.3; }
   }
   #layer::lables {
     [src = 'smalls'],
