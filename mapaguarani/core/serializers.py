@@ -68,7 +68,7 @@ class LandTenureStatusSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LandTenureStatus
-        fields = ['id', 'name', 'map_color', 'indigenous_lands']
+        fields = ['id', 'name', 'map_color', 'dashed_border', 'indigenous_lands']
 
 
 class IndigenousPlaceGeojsonSerializer(GeoFeatureModelSerializer):

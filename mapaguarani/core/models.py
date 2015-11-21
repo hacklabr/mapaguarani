@@ -188,6 +188,7 @@ class LandTenure(models.Model):
 class LandTenureStatus(models.Model):
     name = models.CharField(_('Name'), max_length=255)
     map_color = models.CharField(_('Color in Map'), max_length=64, blank=True, null=True)
+    dashed_border = models.BooleanField(_('Dasshed border'), default=False)
 
     class Meta:
         verbose_name = _('Land Tenure Status')
