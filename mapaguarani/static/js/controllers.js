@@ -116,14 +116,23 @@
         $scope.$watch(function() {
           return Map.getMap();
         }, function(map) {
-          var focusLayer = L.featureGroup();
-          for(var key in $scope.map) {
-            if($scope.map[key] && $scope.map[key].length) {
-              L.geoJson(Guarani.toGeoJSON($scope.map[key])).addTo(focusLayer);
+          if($scope.data.geometry) {
+            var focusLayer = L.featureGroup();
+            for(var key in $scope.map) {
+              if($scope.map[key] && $scope.map[key].length) {
+                console.log($scope.map[key]);
+                L.geoJson(Guarani.toGeoJSON($scope.map[key])).addTo(focusLayer);
+              }
             }
+            map.fitBounds(focusLayer.getBounds());
+            focusLayer = null;
+          } else if($scope.data.bbox) {
+            var bbox = $scope.data.bbox;
+            map.fitBounds(L.latLngBounds([
+              [bbox[1][1], bbox[0][0]],
+              [bbox[0][1], bbox[0][0]]
+            ]));
           }
-          map.fitBounds(focusLayer.getBounds());
-          focusLayer = null;
         });
       }
     }
