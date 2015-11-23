@@ -34,6 +34,9 @@
     -webkit-box-shadow: 0 0 0;
     -o-box-shadow: 0 0 0;
   }
+  .leaflet-control-zoom {
+    margin-top: 15px !important;
+  }
   .village-guarani-marker {
     background: #e7ec13;
     border-radius: 100%;
