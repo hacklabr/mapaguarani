@@ -407,7 +407,6 @@
 
           // Cluster click callback
           var clusterClick = function(ev, type) {
-            console.log(ev);
             if(ev.data) {
               if(ev.data.id == 0) {
                 // if(map.getZoom() < 16) {
