@@ -58,7 +58,7 @@
       .state('village', {
         url: '/villages/:id/',
         controller: 'SingleCtrl',
-        templateUrl: '/static/views/single.html',
+        templateUrl: '/static/views/single-village.html',
         data: {
           contentType: 'sites',
         },
@@ -78,7 +78,7 @@
       .state('land', {
         url: '/lands/:id/',
         controller: 'SingleCtrl',
-        templateUrl: '/static/views/single.html',
+        templateUrl: '/static/views/single-land.html',
         data: {
           contentType: 'sites',
         },
@@ -98,7 +98,7 @@
       .state('site', {
         url: '/sites/:id/',
         controller: 'SingleCtrl',
-        templateUrl: '/static/views/single.html',
+        templateUrl: '/static/views/single-archaeological.html',
         data: {
           contentType: 'sites',
         },

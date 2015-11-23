@@ -1,0 +1,55 @@
+<article class="single">
+  <a class="close" ui-sref="home">X</a>
+  <h2>{{data.name}}</h2>
+  <table>
+    <tbody>
+      <tr ng-show="data.other_names">
+        <th>Outros nomes</th>
+        <td>{{data.other_names}}</td>
+      </tr>
+      <tr ng-show="data.ethnic_groups.length">
+        <th>Grupos étnicos</th>
+        <td>{{data.ethnic_groups | listObj:'name'}}</td>
+      </tr>
+      <tr ng-show="data.prominent_subgroup.length">
+        <th>Subgrupo proeminente</th>
+        <td>{{data.prominent_subgroup | listObj:'name'}}</td>
+      </tr>
+      <tr ng-show="data.land_tenure">
+        <th>Posse</th>
+        <td>{{data.land_tenure.name}}</td>
+      </tr>
+      <tr ng-show="data.land_tenure_status">
+        <th>Situação da posse</th>
+        <td>{{data.land_tenure_status.name}}</td>
+      </tr>
+      <tr ng-show="data.population">
+        <th>População</th>
+        <td>{{data.population}}</td>
+      </tr>
+      <tr ng-show="data.population">
+        <th>Área Official</th>
+        <td>{{data.official_area}}</td>
+      </tr>
+      <tr ng-show="data.guarani_presence">
+        <th>Presença Guarani</th>
+        <td ng-if="data.guarani_presence">Sim</td>
+        <td ng-if="!data.guarani_presence">Não</td>
+      </tr>
+      <tr ng-show="data.guarani_exclusive_possession_area_portion">
+        <th>Área em posse exclusiva dos Guaranis</th>
+        <td>{{data.guarani_exclusive_possession_area_portion}}</td>
+      </tr>
+      <tr ng-show="data.documents">
+        <th>Documentos</th>
+        <td>
+          <div ng-repeat="document in data.documents">
+            <p>Nome: <a ng-href="{{document.file}}">{{ document.name }}</a></p>
+            <p>Data: {{ document.date }}</p>
+            <p>Descrição: {{ document.description }}</p>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</article>

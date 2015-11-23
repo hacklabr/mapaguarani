@@ -27,6 +27,7 @@ class IndigenousLandSerializer(serializers.ModelSerializer):
 class IndigenousVillageSerializer(serializers.ModelSerializer):
 
     guarani_presence = serializers.ReadOnlyField()
+    population = serializers.ReadOnlyField()
 
     class Meta:
         model = IndigenousVillage

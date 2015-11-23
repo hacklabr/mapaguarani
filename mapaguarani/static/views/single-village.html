@@ -1,0 +1,29 @@
+<article class="single">
+  <a class="close" ui-sref="home">X</a>
+  <h2>{{data.name}}</h2>
+  <table>
+    <tbody>
+      <tr ng-show="data.other_names">
+        <th>Outros nomes</th>
+        <td>{{data.other_names}}</td>
+      </tr>
+      <tr ng-show="data.ethnic_groups.length">
+        <th>Grupos étnicos</th>
+        <td>{{data.ethnic_groups | listObj:'name'}}</td>
+      </tr>
+      <tr ng-show="data.prominent_subgroup.length">
+        <th>Subgrupo proeminente</th>
+        <td>{{data.prominent_subgroup | listObj:'name'}}</td>
+      </tr>
+      <tr ng-show="data.population">
+        <th>População</th>
+        <td>{{data.population}}</td>
+      </tr>
+      <tr ng-show="data.guarani_presence">
+        <th>Presença Guarani</th>
+        <td ng-if="data.guarani_presence">Sim</td>
+        <td ng-if="!data.guarani_presence">Não</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
