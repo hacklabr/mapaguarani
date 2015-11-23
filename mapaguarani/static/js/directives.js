@@ -510,7 +510,7 @@
            */
 
           Guarani.sqlTiles('cluster_indigenousvillage', {
-            interactivity: ['id','cdb_list','src']
+            interactivity: ['id','cdb_list','src', 'presence']
           }).then(function(token) {
             var villagesLayer = L.tileLayer('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.png', {
               zIndex: 5
