@@ -1,9 +1,13 @@
 <script type="sql/html" id="sql_template">
-WITH meta AS (
-  SELECT ext, ST_XMin(ext) xmin, ST_YMin(ext) ymin FROM (SELECT ST_SetSRID(!bbox!::box3d, 3857) as ext) a
-),
-filtered_table AS (
-  SELECT t.*, geometry g FROM core_indigenousvillage t, meta m WHERE t.geometry && m.ext
+WITH filtered_table AS (
+  SELECT
+    t.*,
+    geometry g,
+    p.presence
+  FROM
+    core_indigenousvillage t
+    LEFT JOIN core_guaranipresence p
+      ON p.village_id = t.id
 ),
 b as (
  select st_collect(g) as g, count(*) as points_count, 0 as id, array_agg(id) AS id_list
@@ -22,13 +26,13 @@ s as (
  WHERE id NOT IN (SELECT unnest(id_list) FROM b) AND id NOT IN (SELECT unnest(id_list) FROM m)
  GROUP BY st_snaptogrid(g, greatest(!pixel_width!,!pixel_height!) * 0.5 * 32, greatest(!pixel_width!,!pixel_height!) * 0.5 * 32)
  HAVING count(*) > GREATEST(32 * 0.1, 2) )
-SELECT g geometry, 1 points_count, id, ARRAY[id] as id_list, 'origin' as src, id::text cdb_list FROM filtered_table WHERE id NOT IN (SELECT unnest(id_list) FROM b) AND id NOT IN (SELECT unnest(id_list) FROM m) AND id NOT IN (SELECT unnest(id_list) FROM s)
+SELECT g geometry, 1 points_count, id, ARRAY[id] as id_list, presence, 'origin' as src, id::text cdb_list FROM filtered_table WHERE id NOT IN (SELECT unnest(id_list) FROM b) AND id NOT IN (SELECT unnest(id_list) FROM m) AND id NOT IN (SELECT unnest(id_list) FROM s)
 UNION ALL
-SELECT ST_Centroid(g) geometry, points_count, id, id_list, 'bigs' as src, array_to_string(id_list, ',') cdb_list FROM b
+SELECT ST_Centroid(g) geometry, points_count, id, id_list, FALSE presence, 'bigs' as src, array_to_string(id_list, ',') cdb_list FROM b
 UNION ALL
-SELECT ST_Centroid(g) geometry, points_count, id, id_list, 'mids' as src, array_to_string(id_list, ',') cdb_list FROM m
+SELECT ST_Centroid(g) geometry, points_count, id, id_list, FALSE presence, 'mids' as src, array_to_string(id_list, ',') cdb_list FROM m
 UNION ALL
-SELECT ST_Centroid(g) geometry, points_count, id, id_list, 'smalls' as src, array_to_string(id_list, ',') cdb_list FROM s
+SELECT ST_Centroid(g) geometry, points_count, id, id_list, FALSE presence, 'smalls' as src, array_to_string(id_list, ',') cdb_list FROM s
 </script>
 <script type="sql/html" id="cartocss_template">
   Map {buffer-size: 256;}
