@@ -20,6 +20,7 @@
     // margin: 0 -20px -20px;
     color: #666;
     border-bottom: 1px solid #e7e7e7;
+    font-size: 12px;
     tr {
       border-left: 1px solid #e7e7e7;
       border-right: 1px solid #e7e7e7;
@@ -27,10 +28,10 @@
       border-top: 1px solid #e7e7e7;
       th {
         width: 40%;
-        padding: 20px;
+        padding: 10px;
       }
       td {
-        padding: 20px;
+        padding: 10px;
         border-left: 1px solid #e4e4e4;
       }
     }
@@ -324,12 +325,15 @@
   }
   article.single {
     background: #fff;
+    box-sizing: border-box;
+    max-width: 340px;
     pointer-events: auto;
     padding: 20px;
     h1,
     h2 {
-      margin-top: 0;
-      margin-bottom: 20px;
+      font-size: 16px;
+      font-weight: 800;
+      margin: 0 0 15px;
     }
   }
 }
