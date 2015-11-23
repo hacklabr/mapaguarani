@@ -4,7 +4,7 @@
   height: 100%;
   margin: 50px 0 0; 
   width: 390px;
-  overflow: auto;
+  overflow: hidden;
   -webkit-transition: all 0.25s ease-out;
     -moz-transition: all 0.25s ease-out;
     transition: all 0.25s ease-out;
@@ -326,9 +326,12 @@
   article.single {
     background: #fff;
     box-sizing: border-box;
+    height: 90%;
     max-width: 340px;
-    pointer-events: auto;
+    overflow: auto;
     padding: 20px;
+    pointer-events: auto;
+    position: absolute;
     h1,
     h2 {
       font-size: 16px;
