@@ -108,6 +108,8 @@
 
       // Store resolved item data on scope
       $scope.data = data;
+      $scope.map = {};
+      $scope.map[$scope.type] = [$scope.data];
 
       // If focus, fit map bounds to item location
       if($state.params.focus) {

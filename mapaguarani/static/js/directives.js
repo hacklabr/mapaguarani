@@ -409,16 +409,18 @@
           var clusterClick = function(ev, type) {
             if(ev.data) {
               if(ev.data.id == 0) {
-                if(map.getZoom() < 16) {
+                // if(map.getZoom() < 16) {
                   map.setView(ev.latlng, map.getZoom() + 1);
-                }
-                if(ev.data.src == 'smalls' || map.getZoom() > 14) {
-                  var cluster = {
-                    type: type,
-                    ids: _.map(ev.data.cdb_list.split(','), function(id) { return parseInt(id); })
-                  };
-                  $state.go('home', {clustered: JSON.stringify(cluster)});
-                }
+                  // map.zoomIn();
+                  map.invalidateSize(true);
+                // }
+                // if(ev.data.src == 'smalls' || map.getZoom() > 14) {
+                //   var cluster = {
+                //     type: type,
+                //     ids: _.map(ev.data.cdb_list.split(','), function(id) { return parseInt(id); })
+                //   };
+                //   $state.go('home', {clustered: JSON.stringify(cluster)});
+                // }
               } else {
                 $state.go(type, {id: ev.data.id, focus: false});
               }
