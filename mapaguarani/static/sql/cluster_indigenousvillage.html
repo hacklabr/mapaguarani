@@ -37,18 +37,25 @@ SELECT ST_Centroid(g) geometry, points_count, id, id_list, FALSE presence, 'smal
 <script type="sql/html" id="cartocss_template">
   Map {buffer-size: 256;}
   #layer {
-    marker-width: 32 * 0.15;
-    marker-fill: #e7ec13;
+    marker-width: 32 * 0.22;
+    marker-fill: transparent;
     marker-opacity: 0.8;
-    marker-line-width: 0;
+    marker-line-width: 2;
+    marker-line-color: #e7ec13;
     marker-allow-overlap: true;
     marker-comp-op: dst-atop;
-    [src = 'smalls'] { marker-width: 32 * 0.5; }
-    [src = 'mids'] { marker-width: 32 * 0.75; }
-    [src = 'bigs'] { marker-width: 32; }
+    [zoom>8] {
+      marker-width: 32 * 0.3
+    }
+    [src = 'smalls'] { marker-width: 32 * 0.5; marker-fill: #e7ec13; }
+    [src = 'mids'] { marker-width: 32 * 0.75; marker-fill: #e7ec13; }
+    [src = 'bigs'] { marker-width: 32; marker-fill: #e7ec13; }
     [zoom>6] [src = 'smalls'] { marker-opacity: 0.7; }
     [zoom>6] [src = 'mids'] { marker-opacity: 0.7; }
     [zoom>6] [src = 'bigs'] { marker-opacity: 0.7; }
+    [presence = true] {
+      marker-fill: #e7ec13;
+    }
   }
   #layer::labels {
     [src = 'smalls'],

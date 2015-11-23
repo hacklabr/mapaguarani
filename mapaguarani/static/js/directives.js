@@ -422,7 +422,6 @@
                 //   $state.go('home', {clustered: JSON.stringify(cluster)});
                 // }
               } else {
-                console.log(ev.data);
                 $state.go(type, {id: ev.data.id, focus: false});
               }
             }
