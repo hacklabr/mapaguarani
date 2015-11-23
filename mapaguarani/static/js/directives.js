@@ -450,7 +450,11 @@
             div.innerHTML += '<p><strong>Terras indígenas</strong></p>';
             Guarani.tenures.query(function(tenures) {
               _.each(tenures, function(tenure) {
-                div.innerHTML += '<p><span class="bg-item" style="background-color:' + tenure.map_color + ';"></span> ' + tenure.name + '</p>';
+                div.innerHTML += '<p><span class="bg-item" style="background-color:' + tenure.map_color + ';"></span> ' + tenure.name + '</p>
+                <p class="divider"></p>
+                <p><span class="point-item legend1"></span> delimitadas, declaradas, homologadas ou desapropriadas/adquiridas</p>
+                <p><span class="point-item legend2"></span> em reestudo</p>
+                <p><span class="point-item legend3"></span> não delimitadas</p>';
               });
             });
 //            Guarani.tenures_status.query(function(tenures) {
@@ -524,7 +528,9 @@
             var villagesLegend = L.control({'position': 'bottomright'});
             villagesLegend.onAdd = function(map) {
               var div = L.DomUtil.create('div', 'info legend villages');
-              div.innerHTML += '<p><span class="point-item" style="background-color: #e7ec13;"></span> <strong>Aldeias Indígenas</strong></p>';
+              div.innerHTML += '<p><strong>Aldeias Indígenas</strong></p>
+              <p><span class="point-item legend1"></span> antigas áreas de uso ou áreas esbulhadas</p>
+              <p><span class="point-item legend2"></span> habitadas em 2015</p>';
               return div;
             };
             // Store interactive layer configuration object

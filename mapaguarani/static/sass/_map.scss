@@ -117,5 +117,35 @@
       background: transparent;
       border: 1px solid #000;
     }
+    .divider {
+      border-top: 1px solid #ccc;
+    }
+  }
+  &.villages {
+    .legend1 {
+      background: #e7ec13;
+    }
+    .legend2 {
+      background-color: transparent;
+      border: 3px solid #e7ec13;
+    }
+  }
+  &.lands {
+    .point-item {
+      background: transparent;
+      height: 30px;
+      width: 30px;
+    }
+    .legend1 {
+      border: 2px solid #e7ec13;
+      border-radius: 0;
+    }
+    .legend2 {
+      border: 2px dotted #e7ec13;
+      border-radius: 0;
+    }
+    .legend3 {
+      border: 2px dotted #e7ec13;
+    }
   }
 }
