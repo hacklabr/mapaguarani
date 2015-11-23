@@ -9,6 +9,7 @@ $font-family-sans-serif:  "Roboto", "Helvetica Neue", Helvetica, Arial, sans-ser
 @import "_fonts.scss";
 @import "_sidebar.scss";
 @import "_map.scss";
+@import "_modal.scss";
 
 
 html, body, #container {
@@ -167,10 +168,4 @@ input[type="radio"], input[type="checkbox"] {
   color: #b94a48;
   background-color: #f2dede;
   border-color: #eed3d7;
-}
-
-// fix modal z-index
-
-.modal {
-  z-index: 9999;
 }

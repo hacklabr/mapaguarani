@@ -1,0 +1,35 @@
+// fix modal z-index
+
+.modal {
+  z-index: 9999;
+}
+
+#aboutModal {
+  .tab-content {
+    padding: 30px 20px 20px;
+    p {
+      line-height: 160%;
+      margin-bottom: 15px;
+    } 
+    h4, h5 {
+      margin: 15px 0;
+    }
+    .logos {
+      a {
+        display: block;
+        margin-top: 30px; 
+        width: 100%;
+        @media screen and (max-width: $screen-xs-max) {
+          margin: 30px auto 0; 
+          max-width: 250px;
+          &.logo-yvyrupa {
+            max-width: 140px;
+          }
+        }
+      }
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
