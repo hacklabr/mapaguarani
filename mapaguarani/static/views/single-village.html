@@ -24,6 +24,23 @@
         <td ng-if="data.guarani_presence">Sim</td>
         <td ng-if="!data.guarani_presence">Não</td>
       </tr>
+      <tr ng-show="data.position_precision">
+        <th>Precisão da localização</th>
+        <td>{{data.position_precision}}</td>
+      </tr>
+      <tr ng-show="data.position_source">
+        <th>Fonte da localização</th>
+        <td>{{data.position_source}}</td>
+      </tr>
+      <tr ng-show="data.public_comments">
+        <th>Observações</th>
+        <td>{{data.public_comments}}</td>
+      </tr>
+      <!--TODO: exibir apenas para usuarios logados -->
+      <!--<tr ng-show="data.private_comments">-->
+        <!--<th>Observações (Restritas)</th>-->
+        <!--<td>{{data.private_comments}}</td>-->
+      <!--</tr>-->
     </tbody>
   </table>
 </article>

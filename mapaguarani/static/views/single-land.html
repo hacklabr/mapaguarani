@@ -16,40 +16,47 @@
         <td>{{data.prominent_subgroup | listObj:'name'}}</td>
       </tr>
       <tr ng-show="data.land_tenure">
-        <th>Posse</th>
+        <th>Situação fundiárea</th>
         <td>{{data.land_tenure.name}}</td>
       </tr>
-      <tr ng-show="data.land_tenure_status">
-        <th>Situação da posse</th>
-        <td>{{data.land_tenure_status.name}}</td>
-      </tr>
+      <!--TODO: exibir apenas para usuarios logados -->
+      <!--<tr ng-show="data.land_tenure_status">-->
+        <!--<th>Status de revisão</th>-->
+        <!--<td>{{data.land_tenure_status.name}}</td>-->
+      <!--</tr>-->
       <tr ng-show="data.population">
         <th>População</th>
         <td>{{data.population}}</td>
       </tr>
-      <tr ng-show="data.population">
-        <th>Área Official</th>
+      <tr ng-show="data.official_area">
+        <th>Área</th>
         <td>{{data.official_area}}</td>
-      </tr>
-      <tr ng-show="data.guarani_presence">
-        <th>Presença Guarani</th>
-        <td ng-if="data.guarani_presence">Sim</td>
-        <td ng-if="!data.guarani_presence">Não</td>
       </tr>
       <tr ng-show="data.guarani_exclusive_possession_area_portion">
         <th>Área em posse exclusiva dos Guaranis</th>
         <td>{{data.guarani_exclusive_possession_area_portion}}</td>
       </tr>
-      <tr ng-show="data.documents">
+      <tr ng-show="data.documents.length>0">
         <th>Documentos</th>
         <td>
           <div ng-repeat="document in data.documents">
-            <p>Nome: <a ng-href="{{document.file}}">{{ document.name }}</a></p>
-            <p>Data: {{ document.date }}</p>
-            <p>Descrição: {{ document.description }}</p>
+            <p><a ng-href="{{document.file}}"> {{ document.description }}</a></p>
           </div>
         </td>
       </tr>
+      <tr ng-show="data.source">
+        <th>Fonte do polígono</th>
+        <td>{{data.source}}</td>
+      </tr>
+      <tr ng-show="data.public_comments">
+        <th>Observações</th>
+        <td>{{data.public_comments}}</td>
+      </tr>
+      <!--TODO: exibir apenas para usuarios logados -->
+      <!--<tr ng-show="data.private_comments">-->
+        <!--<th>Observações (Restritas)</th>-->
+        <!--<td>{{data.private_comments}}</td>-->
+      <!--</tr>-->
     </tbody>
   </table>
 </article>
