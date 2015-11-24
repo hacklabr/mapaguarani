@@ -459,7 +459,7 @@
               div.innerHTML += '<p><span class="bg-item" style="background-color:' + tenure_map['Declarada'] + ';"></span> Declarada</p>';
               div.innerHTML += '<p><span class="bg-item" style="background-color:' + tenure_map['Homologada'] + ';"></span> Homologada ou Regularizada</p>';
               div.innerHTML += '<p class="divider"></p>';
-              div.innerHTML += '<p><span class="bg-item" style="background-color:' + tenure_map['Em processo de desapropriação'] + ';"></span> Em processo de desapropriação ou aquisição</p>';
+              div.innerHTML += '<p><span class="bg-item" style="background-color:' + tenure_map['Em processo de desapropriação ou aquisição'] + ';"></span> Em processo de desapropriação ou aquisição</p>';
               div.innerHTML += '<p><span class="bg-item" style="background-color:' + tenure_map['Adquirida'] + ';"></span> Desapropriada ou Adquirida</p>';
 
               div.innerHTML += '<p class="divider"></p>' +
