@@ -449,13 +449,23 @@
             var div = L.DomUtil.create('div', 'info legend lands');
             div.innerHTML += '<p><strong>Terras indígenas</strong></p>';
             Guarani.tenures.query(function(tenures) {
+              var tenure_map = {};
               _.each(tenures, function(tenure) {
-                div.innerHTML += '<p><span class="bg-item" style="background-color:' + tenure.map_color + ';"></span> ' + tenure.name + '</p>
-                <p class="divider"></p>
-                <p><span class="point-item legend1"></span> delimitadas, declaradas, homologadas ou desapropriadas/adquiridas</p>
-                <p><span class="point-item legend2"></span> em reestudo</p>
-                <p><span class="point-item legend3"></span> não delimitadas</p>';
+                tenure_map[tenure.name] = tenure.map_color
               });
+              div.innerHTML += '<p><span class="bg-item" style="background-color:' + tenure_map['Sem providências'] + ';"></span> Sem providências</p>';
+              div.innerHTML += '<p><span class="bg-item" style="background-color:' + tenure_map['Em estudo'] + ';"></span> Em estudo</p>';
+              div.innerHTML += '<p><span class="bg-item" style="background-color:' + tenure_map['Delimitada'] + ';"></span> Delimitada</p>';
+              div.innerHTML += '<p><span class="bg-item" style="background-color:' + tenure_map['Declarada'] + ';"></span> Declarada</p>';
+              div.innerHTML += '<p><span class="bg-item" style="background-color:' + tenure_map['Homologada'] + ';"></span> Homologada ou Regularizada</p>';
+              div.innerHTML += '<p class="divider"></p>';
+              div.innerHTML += '<p><span class="bg-item" style="background-color:' + tenure_map['Em processo de desapropriação'] + ';"></span> Em processo de desapropriação ou aquisição</p>';
+              div.innerHTML += '<p><span class="bg-item" style="background-color:' + tenure_map['Adquirida'] + ';"></span> Desapropriada ou Adquirida</p>';
+
+              div.innerHTML += '<p class="divider"></p>' +
+              '<p><span class="point-item legend1"></span> delimitadas, declaradas, homologadas ou desapropriadas/adquiridas</p>' +
+              '<p><span class="point-item legend2"></span> em reestudo</p>' +
+              '<p><span class="point-item legend3"></span> não delimitadas</p>';
             });
 //            Guarani.tenures_status.query(function(tenures) {
 //              _.each(tenures, function(tenure) {
@@ -528,9 +538,9 @@
             var villagesLegend = L.control({'position': 'bottomright'});
             villagesLegend.onAdd = function(map) {
               var div = L.DomUtil.create('div', 'info legend villages');
-              div.innerHTML += '<p><strong>Aldeias Indígenas</strong></p>
-              <p><span class="point-item legend1"></span> antigas áreas de uso ou áreas esbulhadas</p>
-              <p><span class="point-item legend2"></span> habitadas em 2015</p>';
+              div.innerHTML += '<p><strong>Aldeias Indígenas</strong></p>' +
+              '<p><span class="point-item legend2"></span> antigas áreas de uso ou áreas esbulhadas</p>' +
+              '<p><span class="point-item legend1"></span> habitadas em 2015</p>';
               return div;
             };
             // Store interactive layer configuration object

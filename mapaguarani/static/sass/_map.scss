@@ -121,7 +121,7 @@
       border-top: 1px solid #ccc;
     }
   }
-  &.villages {
+  .villages {
     .legend1 {
       background: #e7ec13;
     }
@@ -130,11 +130,11 @@
       border: 3px solid #e7ec13;
     }
   }
-  &.lands {
+  .lands {
     .point-item {
       background: transparent;
-      height: 30px;
-      width: 30px;
+      height: 14px;
+      width: 14px;
     }
     .legend1 {
       border: 2px solid #e7ec13;
@@ -145,7 +145,7 @@
       border-radius: 0;
     }
     .legend3 {
-      border: 2px dotted #e7ec13;
+      border: 2px dotted #e7ec13 !important;
     }
   }
 }
