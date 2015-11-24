@@ -540,7 +540,7 @@
               var div = L.DomUtil.create('div', 'info legend villages');
               div.innerHTML += '<p><strong>Aldeias Indígenas</strong></p>' +
               '<p><span class="point-item legend2"></span> antigas áreas de uso ou áreas esbulhadas</p>' +
-              '<p><span class="point-item legend1"></span> habitadas em 2015</p>';
+              '<p><span class="point-item legend1"></span> habitadas atualmente</p>';
               return div;
             };
             // Store interactive layer configuration object
