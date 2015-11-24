@@ -394,7 +394,7 @@
 
           var zoomControl = new L.control.zoom({'position': 'topright'});
           map.addControl(zoomControl);
-
+          L.control.scale({'position':'bottomright','imperial':false }).addTo(map);;
           // Watch layer toggling to display legends
           map.on('layeradd', function(ev) {
             if(ev.layer.name && scope.interactiveLayers[ev.layer.name])
