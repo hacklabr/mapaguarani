@@ -41,11 +41,11 @@
       });
 
       // On state change update map bounds if state is home and "focus" is true
-      $scope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
-        if(to.name == 'home' && fromParams.focus) {
-          Map.updateBounds();
-        }
-      });
+//      $scope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+//        if(to.name == 'home' && fromParams.focus) {
+//          Map.updateBounds();
+//        }
+//      });
 
       // Update state when viewing content is changed
       $scope.$on('mapaguarani.contentChanged', function(ev, content) {

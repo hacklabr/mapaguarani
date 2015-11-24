@@ -372,7 +372,8 @@
           var map = L.map(attrs.id, {
             center: scope.center,
             zoom: scope.zoom,
-            zoomControl: false
+            zoomControl: false,
+            attributionControl: false
           });
 
           // Store map leaflet object on map service
@@ -389,10 +390,10 @@
             'Terreno Google': gm_terrain
           };
 
-          var layersControl = new L.Control.Layers(baselayers, {});
+          var layersControl = new L.Control.Layers(baselayers, {}, {'position': 'topleft'});
           map.addControl(layersControl);
 
-          var zoomControl = new L.control.zoom({'position': 'topright'});
+          var zoomControl = new L.control.zoom({'position': 'topleft'});
           map.addControl(zoomControl);
           L.control.scale({'position':'bottomright','imperial':false }).addTo(map);;
           // Watch layer toggling to display legends
