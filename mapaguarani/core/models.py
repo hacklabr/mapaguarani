@@ -127,6 +127,10 @@ class IndigenousVillage(IndigenousPlace):
             return False
 
     @property
+    def land(self):
+        return IndigenousLand.objects.filter(geometry__covers=self.geometry)
+
+    @property
     def city(self):
         # TODO georeferential query
         return ''
@@ -241,18 +245,19 @@ class IndigenousLand(IndigenousPlace):
 
     @property
     def villages(self):
-        # TODO georeferential query VillageLayer
-        pass
+        # return IndigenousVillage.objects.filter(geometry__contained=self.geometry)
+        return IndigenousVillage.objects.filter(geometry__coveredby=self.geometry)
 
     @property
     def population(self):
-        # TODO georeferential query VillageLayer: sum of villages populations
-        pass
+        population = 0
+        for village in self.villages:
+            population += village.population
+        return population
 
     @property
     def calculated_area(self):
-        # TODO shape field calc: only make sense depending on Land situation
-        pass
+        return self.geometry.transform(27700, clone=True).area
 
 
 class LegalProceedings(models.Model):

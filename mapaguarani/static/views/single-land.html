@@ -16,6 +16,18 @@
         <th>Subgrupo proeminente</th>
         <td>{{data.prominent_subgroup | listObj:'name'}}</td>
       </tr>
+      <tr ng-show="data.villages">
+        <th>Aldeias nesta terra indígena</th>
+        <td>
+          <p ng-repeat="village in data.villages">
+            <a ng-href="/#!/villages/{{village.id}}/"> {{ village.name }}</a>
+          </p>
+        </td>
+      </tr>
+      <tr ng-show="data.population">
+        <th>População total</th>
+        <td>{{data.population}}</td>
+      </tr>
       <tr ng-show="data.land_tenure">
         <th>Situação fundiárea</th>
         <td>{{data.land_tenure.name}}</td>
@@ -29,10 +41,16 @@
         <th>População</th>
         <td>{{data.population}}</td>
       </tr>
+      <!--TODO: Adicionar unidade (m2?, hectares?) -->
       <tr ng-show="data.official_area">
         <th>Área</th>
         <td>{{data.official_area}}</td>
       </tr>
+      <!--TODO: exibir apenas para usuarios logados, verificar unidade -->
+      <!--<tr ng-show="data.calculated_area">-->
+        <!--<th>Área calculada pelo polígono</th>-->
+        <!--<td>{{data.calculated_area}}</td>-->
+      <!--</tr>-->
       <tr ng-show="data.guarani_exclusive_possession_area_portion">
         <th>Área em posse exclusiva dos Guaranis</th>
         <td>{{data.guarani_exclusive_possession_area_portion}}</td>

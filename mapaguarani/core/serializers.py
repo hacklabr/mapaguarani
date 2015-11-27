@@ -3,14 +3,35 @@ from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from .models import IndigenousLand, IndigenousVillage, ArchaeologicalPlace, LandTenure, LandTenureStatus
 
 
+class SimpleIndigenousVillageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = IndigenousVillage
+        fields = ['id', 'name']
+
+
+class IndigenousLandListSerializer(serializers.ListSerializer):
+
+    exclude_field = ['villages', 'population', 'calculated_area', ]
+
+    def __init__(self, *args, **kwargs):
+        super(IndigenousLandListSerializer, self).__init__(*args, **kwargs)
+        for field in self.exclude_field:
+            self.child.fields.pop(field)
+
+
 class IndigenousLandSerializer(serializers.ModelSerializer):
 
     associated_land = serializers.PrimaryKeyRelatedField(read_only=True)
     bbox = serializers.SerializerMethodField()
     guarani_presence = serializers.SerializerMethodField()
+    villages = serializers.SerializerMethodField()
+    population = serializers.ReadOnlyField()
+    calculated_area = serializers.ReadOnlyField()
 
     class Meta:
         model = IndigenousLand
+        list_serializer_class = IndigenousLandListSerializer
         exclude = ['geometry']
         depth = 1
 
@@ -23,15 +44,45 @@ class IndigenousLandSerializer(serializers.ModelSerializer):
     def get_guarani_presence(obj):
         return obj.ethnic_groups.filter(name='Guarani').exists()
 
+    @staticmethod
+    def get_villages(obj):
+        return SimpleIndigenousVillageSerializer(obj.villages, many=True).data
+
+
+class SimpleIndigenousLandSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = IndigenousLand
+        fields = ['id', 'name']
+
+
+class ListIndigenousVillageSerializer(serializers.ListSerializer):
+
+    exclude_field = ['land', 'population', ]
+
+    def __init__(self, *args, **kwargs):
+        super(ListIndigenousVillageSerializer, self).__init__(*args, **kwargs)
+        for field in self.exclude_field:
+            self.child.fields.pop(field)
+
 
 class IndigenousVillageSerializer(serializers.ModelSerializer):
 
     guarani_presence = serializers.ReadOnlyField()
     population = serializers.ReadOnlyField()
+    land = serializers.SerializerMethodField()
 
     class Meta:
         model = IndigenousVillage
+        list_serializer_class = ListIndigenousVillageSerializer
         depth = 1
+
+    @staticmethod
+    def get_land(obj):
+        # import ipdb;ipdb.set_trace()
+        if obj.land:
+            land = obj.land[0]
+            return SimpleIndigenousLandSerializer(land).data
 
 
 class ArchaeologicalPlaceListSerializer(serializers.ListSerializer):

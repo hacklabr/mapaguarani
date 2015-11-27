@@ -16,6 +16,23 @@
         <th>Subgrupo proeminente</th>
         <td>{{data.prominent_subgroup | listObj:'name'}}</td>
       </tr>
+      <tr ng-show="data.land">
+        <th>Aldeias nesta terra indígena</th>
+        <td>
+          <p>
+            <a ng-href="/#!/lands/{{data.land.id}}/"> {{ data.land.name }}</a>
+          </p>
+        </td>
+      </tr>
+      <!-- TODO: Pensar se isso é viável -->
+      <!--<tr ng-show="data.land">-->
+        <!--<th>Outras Aldeias na mesma terra indígena</th>-->
+        <!--<td>-->
+          <!--<p>-->
+            <!--<a ng-href="/#!/lands/{{data.land.id}}/"> {{ data.land.name }}</a>-->
+          <!--</p>-->
+        <!--</td>-->
+      <!--</tr>-->
       <tr ng-show="data.population">
         <th>População</th>
         <td>{{data.population}}</td>
