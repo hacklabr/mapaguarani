@@ -36,3 +36,7 @@ utm==0.4
 
 # shapefile export
 Fiona==1.6.1
+
+# Protected areas
+-e git+https://github.com/hacklabr/geodjango-protected-areas
+

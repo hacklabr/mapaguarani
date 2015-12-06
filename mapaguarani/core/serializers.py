@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from .models import IndigenousLand, IndigenousVillage, ArchaeologicalPlace, LandTenure, LandTenureStatus
+from protected_areas.serializers import BaseProtectedAreaSerializers
 
 
 class SimpleIndigenousVillageSerializer(serializers.ModelSerializer):
@@ -12,7 +13,7 @@ class SimpleIndigenousVillageSerializer(serializers.ModelSerializer):
 
 class IndigenousLandListSerializer(serializers.ListSerializer):
 
-    exclude_field = ['villages', 'population', 'calculated_area', ]
+    exclude_field = ['villages', 'population', 'calculated_area', 'protected_areas', ]
 
     def __init__(self, *args, **kwargs):
         super(IndigenousLandListSerializer, self).__init__(*args, **kwargs)
@@ -28,6 +29,7 @@ class IndigenousLandSerializer(serializers.ModelSerializer):
     villages = serializers.SerializerMethodField()
     population = serializers.ReadOnlyField()
     calculated_area = serializers.ReadOnlyField()
+    protected_areas = serializers.SerializerMethodField()
 
     class Meta:
         model = IndigenousLand
@@ -48,6 +50,11 @@ class IndigenousLandSerializer(serializers.ModelSerializer):
     def get_villages(obj):
         return SimpleIndigenousVillageSerializer(obj.villages, many=True).data
 
+    @staticmethod
+    def get_protected_areas(obj):
+        if obj.protected_areas:
+            return BaseProtectedAreaSerializers(obj.protected_areas, many=True).data
+
 
 class SimpleIndigenousLandSerializer(serializers.ModelSerializer):
 
@@ -58,7 +65,7 @@ class SimpleIndigenousLandSerializer(serializers.ModelSerializer):
 
 class ListIndigenousVillageSerializer(serializers.ListSerializer):
 
-    exclude_field = ['land', 'population', ]
+    exclude_field = ['land', 'population', 'protected_areas', ]
 
     def __init__(self, *args, **kwargs):
         super(ListIndigenousVillageSerializer, self).__init__(*args, **kwargs)
@@ -71,6 +78,7 @@ class IndigenousVillageSerializer(serializers.ModelSerializer):
     guarani_presence = serializers.ReadOnlyField()
     population = serializers.ReadOnlyField()
     land = serializers.SerializerMethodField()
+    protected_areas = serializers.SerializerMethodField()
 
     class Meta:
         model = IndigenousVillage
@@ -79,10 +87,14 @@ class IndigenousVillageSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_land(obj):
-        # import ipdb;ipdb.set_trace()
         if obj.land:
             land = obj.land[0]
             return SimpleIndigenousLandSerializer(land).data
+
+    @staticmethod
+    def get_protected_areas(obj):
+        if obj.protected_areas:
+            return BaseProtectedAreaSerializers(obj.protected_areas, many=True).data
 
 
 class ArchaeologicalPlaceListSerializer(serializers.ListSerializer):

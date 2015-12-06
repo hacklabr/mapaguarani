@@ -1,5 +1,6 @@
 from django.contrib.gis.db import models
 from django.utils.translation import ugettext_lazy as _
+from protected_areas.models import BaseProtectedArea
 
 
 class MapLayer(models.Model):
@@ -131,6 +132,10 @@ class IndigenousVillage(IndigenousPlace):
         return IndigenousLand.objects.filter(geometry__covers=self.geometry)
 
     @property
+    def protected_areas(self):
+        return BaseProtectedArea.objects.filter(geometry__covers=self.geometry)
+
+    @property
     def city(self):
         # TODO georeferential query
         return ''
@@ -258,6 +263,10 @@ class IndigenousLand(IndigenousPlace):
     @property
     def calculated_area(self):
         return self.geometry.transform(27700, clone=True).area
+
+    @property
+    def protected_areas(self):
+        return BaseProtectedArea.objects.filter(geometry__intersects=self.geometry)
 
 
 class LegalProceedings(models.Model):

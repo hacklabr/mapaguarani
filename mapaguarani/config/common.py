@@ -57,6 +57,7 @@ THIRD_PARTY_APPS = (
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
+    'protected_areas',
     'users',
     'core',
 )
@@ -175,7 +176,7 @@ USE_I18N = True
 USE_L10N = True
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
-USE_TZ = True
+USE_TZ = False
 # END GENERAL CONFIGURATION
 
 # TEMPLATE CONFIGURATION
@@ -240,6 +241,7 @@ MEDIA_URL = '/media/'
 
 COMPRESS_ENABLED = True
 COMPRESS_URL = STATIC_URL
+# COMPRESS_OUTPUT_DIR = str(APPS_DIR.path('static'))
 COMPRESS_ROOT = str(APPS_DIR.path('static'))
 
 COMPRESS_PRECOMPILERS = (
