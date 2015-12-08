@@ -17,10 +17,18 @@
         <td>{{data.prominent_subgroup | listObj:'name'}}</td>
       </tr>
       <tr ng-show="data.land">
-        <th>Aldeias nesta terra indígena</th>
+        <th>Terra indígena em que esta aldeia está inserida</th>
         <td>
           <p>
             <a ng-href="/#!/lands/{{data.land.id}}/"> {{ data.land.name }}</a>
+          </p>
+        </td>
+      </tr>
+      <tr ng-show="data.protected_areas">
+        <th>Área de preservação em que esta aldeia está inserida</th>
+        <td>
+          <p ng-repeat="protected_area in data.protected_areas">
+            {{ protected_area.name }}
           </p>
         </td>
       </tr>

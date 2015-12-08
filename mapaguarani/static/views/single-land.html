@@ -24,6 +24,14 @@
           </p>
         </td>
       </tr>
+      <tr ng-show="data.protected_areas">
+        <th>Áreas de preservação com área comum à esta terra indígena</th>
+        <td>
+          <p ng-repeat="protected_area in data.protected_areas">
+            {{ protected_area.name }}
+          </p>
+        </td>
+      </tr>
       <tr ng-show="data.population">
         <th>População total</th>
         <td>{{data.population}}</td>
