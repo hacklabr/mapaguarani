@@ -24,9 +24,9 @@ djangorestframework-gis==0.9.3
 
 django-rosetta==0.7
 
-django-compressor
-libsass==0.8.2
-django-libsass==0.3
+django-compressor==1.6
+libsass==0.9.3
+django-libsass==0.6
 
 # django-moderation
 -e git+https://github.com/dominno/django-moderation#egg=django-moderation
@@ -38,5 +38,10 @@ utm==0.4
 Fiona==1.6.1
 
 # Protected areas
--e git+https://github.com/hacklabr/geodjango-protected-areas
+-e git+https://github.com/hacklabr/geodjango-protected-areas#egg=geodjango-protected-areas
 
+# Administrative boundaries
+# -e git+https://github.com/hacklabr/geodjango-boundaries#egg=geodjango-boundaries
+
+# Hydrography
+# -e git+https://github.com/hacklabr/geodjango-hydrography#egg=geodjango-hydrography
