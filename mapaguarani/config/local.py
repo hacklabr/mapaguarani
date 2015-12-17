@@ -38,6 +38,12 @@ CACHES = {
     }
 }
 
+# django-extensions
+# ------------------------------------------------------------------------------
+INSTALLED_APPS += (
+    'django_extensions',
+)
+
 # django-debug-toolbar
 # ------------------------------------------------------------------------------
 # MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)

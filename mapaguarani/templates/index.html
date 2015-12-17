@@ -2,7 +2,7 @@
 {% load staticfiles i18n %}
 
 {% block content %}
-<div class="map-container" ng-app="mapaguarani" ng-controller="MainCtrl">
+<div class="map-container" ng-controller="MainCtrl">
   <div class="navbar navbar-fixed-top" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -15,7 +15,7 @@
       <div class="navbar-collapse navbar-right collapse">
         <ul class="nav navbar-nav">
           <li><a href="{% url 'admin:login' %}" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Entrar</a></li>
-          <!--<li><a href="javascript:void(0);" data-toggle="modal" data-target="#reportsModal" id="about-btn"><i class="fa fa-question-circle white"></i>&nbsp;&nbsp;Relatórios</a></li>-->
+          <li><a href="javascript:void(0);" data-toggle="modal" data-target="#reportsModal" id="about-btn"><i class="fa fa-question-circle white"></i>&nbsp;&nbsp;Relatórios</a></li>
           <li><a href="javascript:void(0);" data-toggle="modal" data-target="#aboutModal" id="about-btn"><i class="fa fa-question-circle white"></i>&nbsp;&nbsp;Sobre</a></li>
         </ul>
       </div><!--/.navbar-collapse -->
@@ -38,7 +38,7 @@
 {% block modal %}
 <div class="modal fade" id="reportsModal" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+    <div class="modal-content" ng-controller="LandTenureReportCtrl">
       <div class="modal-header">
         <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title">Relatórios sobre as Terras Indígenas</h4>
@@ -50,7 +50,7 @@
         </ul>
         <div class="tab-content" id="aboutTabsContent">
           <div id="tijuridic" class="tab-pane fade active in">
-            <p>Aqui vai a tabela de situação Jurídica</p>
+            <p>::{{ variavel }}::</p>
 
           </div>
           <div id="titable" class="tab-pane fade">

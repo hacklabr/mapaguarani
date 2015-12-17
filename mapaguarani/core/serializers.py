@@ -182,3 +182,11 @@ class ArchaeologicalPlaceGeojsonSerializer(GeoFeatureModelSerializer):
         model = ArchaeologicalPlace
         geo_field = 'geometry'
         exclude = ['id', 'layer', ]
+
+
+class LandTenureReportSerializer(serializers.ModelSerializer):
+    total_lands = serializers.IntegerField()
+
+    class Meta:
+        model = LandTenure
+        fields = ['id', 'name', 'map_color', 'total_lands', ]

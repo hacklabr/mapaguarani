@@ -138,4 +138,17 @@
     }
   ]);
 
+  controllers.controller('LandTenureReportCtrl', [
+    '$state',
+    '$scope',
+    'Data',
+    'guaraniMapService',
+    'GuaraniService',
+    function($state, $scope, data, Map, Guarani) {
+      console.log('test');
+      $scope.variavel = 'oi mundo';
+      console.log($scope.variavel);
+    }
+  ]);
+
 })(angular, L, _);
