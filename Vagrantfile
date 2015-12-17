@@ -1,4 +1,5 @@
 $setup = <<SCRIPT
+    sed -i '1i deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse' /etc/apt/sources.list
     DEBIAN_FRONTEND=noninteractive apt-get update
 SCRIPT
 
