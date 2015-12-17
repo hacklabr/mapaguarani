@@ -83,10 +83,13 @@ $runserver = <<SCRIPT
     # must run with vagrant user
     cd /vagrant
     /home/vagrant/mapaguarani-env/bin/python3 manage.py migrate
-    /home/vagrant/mapaguarani-env/bin/python3 manage.py runserver 0.0.0.0:8000 &
+
+    tmux -2 new-session -d -s vagrant -n 'django'
+    tmux send-keys "/home/vagrant/mapaguarani-env/bin/python3 manage.py runserver 0.0.0.0:8000" C-m
 
     # run the windshaft maptiles
-    node /home/vagrant/mapaguarani-tiler/app.js &
+    tmux new-window -t vagrant:1 -n 'windshaft'
+    tmux send-keys -t vagrant:1 "node /home/vagrant/mapaguarani-tiler/app.js" C-m 
 
 SCRIPT
 
