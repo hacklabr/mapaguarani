@@ -139,15 +139,21 @@
   ]);
 
   controllers.controller('LandTenureReportCtrl', [
-    '$state',
     '$scope',
-    'Data',
-    'guaraniMapService',
     'GuaraniService',
-    function($state, $scope, data, Map, Guarani) {
-      console.log('test');
-      $scope.variavel = 'oi mundo';
-      console.log($scope.variavel);
+    function($scope, GuaraniService) {
+      $scope.tenures = [];
+      var query = window.query = GuaraniService.tenures_report.query();
+
+      query && query.$promise.then(function(tenures){
+        $scope.tenures = tenures;
+      });
+
+      $scope.tenures_sum = function(key) {
+        return $scope.tenures.reduce(function(sum, tenure){
+          return sum + (tenure[key] || 0);
+        }, 0);
+      };
     }
   ]);
 

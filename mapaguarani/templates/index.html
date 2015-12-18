@@ -50,8 +50,50 @@
         </ul>
         <div class="tab-content" id="aboutTabsContent">
           <div id="tijuridic" class="tab-pane fade active in">
-            <p>::{{ variavel }}::</p>
-
+            <table class="table">
+              <thead>
+                <tr>
+                  <th rowspan="2"></th>
+                  <th rowspan="2">Situação</th>
+                  <th rowspan="2">Total de terras</th>
+                  <th colspan="6">Total de terras por estado</th>
+                </tr>
+                <tr>
+                  <th>ES</th>
+                  <th>PR</th>
+                  <th>RJ</th>
+                  <th>RS</th>
+                  <th>SC</th>
+                  <th>SP</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="t in tenures">
+                  <td><span ng-style="{'color': t.map_color || 'transparent'}">&#x2b24;</span></td>
+                  <td ng-bind="t.name"></td>
+                  <td ng-bind="t.total_lands_count"></td>
+                  <td ng-bind="t.es_lands_count">3</td>
+                  <td ng-bind="t.pr_lands_count">4</td>
+                  <td ng-bind="t.rj_lands_count">5</td>
+                  <td ng-bind="t.rs_lands_count">6</td>
+                  <td ng-bind="t.sc_lands_count">7</td>
+                  <td ng-bind="t.sp_lands_count">8</td>
+                </tr>
+              </tbody>
+              <tfooter>
+                <tr>
+                  <th></th>
+                  <th>Total final</th>
+                  <th ng-bind="tenures_sum('total_lands_count')"></th>
+                  <th ng-bind="tenures_sum('es_lands_count')">2</th>
+                  <th ng-bind="tenures_sum('pr_lands_count')">3</th>
+                  <th ng-bind="tenures_sum('rj_lands_count')">4</th>
+                  <th ng-bind="tenures_sum('rs_lands_count')">5</th>
+                  <th ng-bind="tenures_sum('sc_lands_count')">6</th>
+                  <th ng-bind="tenures_sum('sp_lands_count')">7</th>
+                </tr>
+              </tfooter>
+            </table>
           </div>
           <div id="titable" class="tab-pane fade">
             <p><a href="#">Clique aqui para baixar a tabela de terras indigenas</a></p>

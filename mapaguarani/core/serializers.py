@@ -185,8 +185,16 @@ class ArchaeologicalPlaceGeojsonSerializer(GeoFeatureModelSerializer):
 
 
 class LandTenureReportSerializer(serializers.ModelSerializer):
-    total_lands = serializers.IntegerField()
+    total_lands_count = serializers.IntegerField()
+    es_lands_count = serializers.IntegerField()
+    pr_lands_count = serializers.IntegerField()
+    rj_lands_count = serializers.IntegerField()
+    rs_lands_count = serializers.IntegerField()
+    sc_lands_count = serializers.IntegerField()
+    sp_lands_count = serializers.IntegerField()
 
     class Meta:
         model = LandTenure
-        fields = ['id', 'name', 'map_color', 'total_lands', ]
+        fields = ['id', 'name', 'map_color', 'total_lands_count',
+                  'es_lands_count', 'pr_lands_count', 'rj_lands_count',
+                  'rs_lands_count', 'sc_lands_count', 'sp_lands_count', ]

@@ -39,7 +39,7 @@
             cache: true
           }
         }),
-        tenures: $resource('api/landtenurereport', {}, {
+        tenures_report: $resource('api/landtenurereport', {}, {
           query: {
             method: 'GET',
             isArray: true,
