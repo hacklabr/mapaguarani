@@ -41,7 +41,7 @@ Fiona==1.6.1
 -e git+https://github.com/hacklabr/geodjango-protected-areas#egg=geodjango-protected-areas
 
 # Administrative boundaries
-# -e git+https://github.com/hacklabr/geodjango-boundaries#egg=geodjango-boundaries
+-e git+https://github.com/hacklabr/geodjango-boundaries#egg=geodjango-boundaries
 
 # Hydrography
 # -e git+https://github.com/hacklabr/geodjango-hydrography#egg=geodjango-hydrography
