@@ -60,6 +60,12 @@ $import_layers = <<SCRIPT
     /home/vagrant/mapaguarani-env/bin/python3 manage.py import_village_layer /home/vagrant/camadas-cti/camada-aldeias-importacao.shp
     /home/vagrant/mapaguarani-env/bin/python3 manage.py import_archaeological_layer /home/vagrant/camadas-cti/sitios.csv
 
+    /home/vagrant/mapaguarani-env/bin/python3 manage.py import_protected_areas_layer /home/vagrant/camadas-cti/Unidades_conservacao.shp
+
+    /home/vagrant/mapaguarani-env/bin/python3 manage.py import_countries_layer /home/vagrant/camadas-cti/limites/brasil.shp
+    /home/vagrant/mapaguarani-env/bin/python3 manage.py import_states_layer /home/vagrant/camadas-cti/limites/estados_brasileiros.shp
+    /home/vagrant/mapaguarani-env/bin/python3 manage.py import_cities_layer /home/vagrant/camadas-cti/limites/municipios_brasil.shp
+
 SCRIPT
 
 $windshaft = <<SCRIPT
