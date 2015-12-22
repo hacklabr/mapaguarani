@@ -3,7 +3,6 @@ from django.views.generic import View
 from django.contrib.gis.db.models.fields import GeometryField
 from django.db.models import Count, F
 import rest_framework_gis
-from djgeojson.views import GeoJSONLayerView
 from rest_framework import viewsets, relations, serializers
 from .models import (IndigenousLand, IndigenousVillage,
                      ArchaeologicalPlace, LandTenure, LandTenureStatus,)
@@ -17,12 +16,6 @@ import zipfile
 from fiona.crs import from_epsg
 import fiona
 import tempfile
-
-
-class IndigenousLandsLayerView(GeoJSONLayerView):
-
-    precision = 8   # float
-    simplify = 0.001  # generalization
 
 
 class IndigenousLandViewSet(viewsets.ReadOnlyModelViewSet):
