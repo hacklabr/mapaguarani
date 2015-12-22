@@ -3,7 +3,6 @@ from django.views.generic import View
 from django.contrib.gis.db.models.fields import GeometryField
 from django.db.models import Count, F
 import rest_framework_gis
-from djgeojson.views import GeoJSONLayerView
 from rest_framework import viewsets, relations, serializers
 from import_export import admin
 
@@ -24,12 +23,6 @@ import tempfile
 
 
 IMPORT_EXPORT_FORMATS = [format().get_title() for format in admin.DEFAULT_FORMATS]
-
-
-class IndigenousLandsLayerView(GeoJSONLayerView):
-
-    precision = 8   # float
-    simplify = 0.001  # generalization
 
 
 class IndigenousLandViewSet(viewsets.ReadOnlyModelViewSet):
@@ -93,7 +86,6 @@ class ShapefileView(View):
 
         field_type = type(field_type)
         if field_type not in self.ENGINE_FIONA_MAPPING:
-            import ipdb;ipdb.set_trace()
             raise AttributeError("Mapping not supported with Fiona.")
 
         fiona_type = self.ENGINE_FIONA_MAPPING[field_type]
