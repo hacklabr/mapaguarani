@@ -5,7 +5,8 @@ from djgeojson.views import TiledGeoJSONLayerView
 from core.views import (IndigenousLandsLayerView, IndigenousLandViewSet, IndigenousVillageViewSet,
                         ArchaeologicalPlaceViewSet, LandTenureViewSet, LandTenureStatusViewSet,
                         IndigenousLandsShapefileView, IndigenousVillagesShapefileView,
-                        ArchaeologicalPlacesShapefileView, LandTenureReportViewSet,)
+                        ArchaeologicalPlacesShapefileView, LandTenureReportViewSet,
+                        IndigenousVillageReportExport,)
 from core.models import IndigenousVillage, IndigenousLand, ArchaeologicalPlace
 from moderation.helpers import auto_discover
 from rest_framework import routers
@@ -64,7 +65,9 @@ urlpatterns = [
             properties=['id', 'name',],
         ), name='data'),
 
-     url(r'^shapefiles/villages/$', IndigenousVillagesShapefileView.as_view(), name='villages_shapefiles'),
+    url(r'^export/villages/$', IndigenousVillageReportExport.as_view(), name='export_villages'),
+
+    url(r'^shapefiles/villages/$', IndigenousVillagesShapefileView.as_view(), name='villages_shapefiles'),
 
     url(r'^shapefiles/lands/$', IndigenousLandsShapefileView.as_view(), name='lands_shapefiles'),
 

@@ -5,6 +5,8 @@ from django.db.models import Count, F
 import rest_framework_gis
 from djgeojson.views import GeoJSONLayerView
 from rest_framework import viewsets, relations, serializers
+from import_export import admin
+
 from .models import (IndigenousLand, IndigenousVillage,
                      ArchaeologicalPlace, LandTenure, LandTenureStatus,)
 from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
@@ -12,11 +14,16 @@ from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           LandTenureStatusSerializer, IndigenousLandGeojsonSerializer,
                           IndigenousVillageGeojsonSerializer, ArchaeologicalPlaceGeojsonSerializer,
                           LandTenureReportSerializer)
+from .resources import IndigenousVillageResource
+
 from io import BytesIO
 import zipfile
 from fiona.crs import from_epsg
 import fiona
 import tempfile
+
+
+IMPORT_EXPORT_FORMATS = [format().get_title() for format in admin.DEFAULT_FORMATS]
 
 
 class IndigenousLandsLayerView(GeoJSONLayerView):
@@ -211,3 +218,18 @@ class LandTenureReportViewSet(viewsets.ReadOnlyModelViewSet):
         sp_lands_count=F('id') * 0
     )
     serializer_class = LandTenureReportSerializer
+
+
+class IndigenousVillageReportExport(View):
+
+    def get(self, request):
+        format = request.GET.get('format', 'csv')
+        if format not in IMPORT_EXPORT_FORMATS:
+            format = 'csv'
+
+        resource = IndigenousVillageResource()
+        dataset = resource.export()
+
+        response = HttpResponse(getattr(dataset, format), content_type=format)
+        response['Content-Disposition'] = 'attachment; filename=filename.%s' % format
+        return response

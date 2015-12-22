@@ -45,3 +45,6 @@ Fiona==1.6.1
 
 # Hydrography
 # -e git+https://github.com/hacklabr/geodjango-hydrography#egg=geodjango-hydrography
+
+# Export to CSV, XLS and other
+django-import-export==0.2.8

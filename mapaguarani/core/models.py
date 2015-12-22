@@ -1,4 +1,6 @@
 from django.contrib.gis.db import models
+from django.contrib.gis.db.models import Max, Sum
+from django.contrib.gis.db.models.aggregates import Collect
 from django.utils.translation import ugettext_lazy as _
 from protected_areas.models import BaseProtectedArea
 
@@ -255,10 +257,11 @@ class IndigenousLand(IndigenousPlace):
 
     @property
     def population(self):
-        population = 0
-        for village in self.villages:
-            population += village.population
-        return population
+        total = Population.objects.filter(village__geometry__coveredby=self.geometry)\
+                                  .values('population').annotate(latest=Max('village'))\
+                                  .aggregate(total_population=Sum('population'))\
+                                  .get('total_population')
+        return total or 0
 
     @property
     def calculated_area(self):
