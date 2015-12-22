@@ -138,4 +138,23 @@
     }
   ]);
 
+  controllers.controller('LandTenureReportCtrl', [
+    '$scope',
+    'GuaraniService',
+    function($scope, GuaraniService) {
+      $scope.tenures = [];
+      var query = window.query = GuaraniService.tenures_report.query();
+
+      query && query.$promise.then(function(tenures){
+        $scope.tenures = tenures;
+      });
+
+      $scope.tenures_sum = function(key) {
+        return $scope.tenures.reduce(function(sum, tenure){
+          return sum + (tenure[key] || 0);
+        }, 0);
+      };
+    }
+  ]);
+
 })(angular, L, _);

@@ -5,7 +5,7 @@ from djgeojson.views import TiledGeoJSONLayerView
 from core.views import (IndigenousLandsLayerView, IndigenousLandViewSet, IndigenousVillageViewSet,
                         ArchaeologicalPlaceViewSet, LandTenureViewSet, LandTenureStatusViewSet,
                         IndigenousLandsShapefileView, IndigenousVillagesShapefileView,
-                        ArchaeologicalPlacesShapefileView, )
+                        ArchaeologicalPlacesShapefileView, LandTenureReportViewSet,)
 from core.models import IndigenousVillage, IndigenousLand, ArchaeologicalPlace
 from moderation.helpers import auto_discover
 from rest_framework import routers
@@ -20,6 +20,7 @@ router.register(r'land_tenures', LandTenureViewSet)
 router.register(r'land_tenures_status', LandTenureStatusViewSet)
 router.register(r'villages', IndigenousVillageViewSet)
 router.register(r'archaeological', ArchaeologicalPlaceViewSet)
+router.register(r'landtenurereport', LandTenureReportViewSet)
 
 urlpatterns = [
 

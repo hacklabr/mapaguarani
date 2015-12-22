@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.views.generic import View
 from django.contrib.gis.db.models.fields import GeometryField
+from django.db.models import Count, F
 import rest_framework_gis
 from djgeojson.views import GeoJSONLayerView
 from rest_framework import viewsets, relations, serializers
@@ -9,7 +10,8 @@ from .models import (IndigenousLand, IndigenousVillage,
 from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           ArchaeologicalPlaceSerializer, LandTenureSerializer,
                           LandTenureStatusSerializer, IndigenousLandGeojsonSerializer,
-                          IndigenousVillageGeojsonSerializer, ArchaeologicalPlaceGeojsonSerializer)
+                          IndigenousVillageGeojsonSerializer, ArchaeologicalPlaceGeojsonSerializer,
+                          LandTenureReportSerializer)
 from io import BytesIO
 import zipfile
 from fiona.crs import from_epsg
@@ -196,3 +198,16 @@ class ArchaeologicalPlacesShapefileView(ShapefileView):
     geo_field = 'geometry'
     geometry_type = 'Point'
     file_name = 'sitios_arqueologicos'
+
+
+class LandTenureReportViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = LandTenure.objects.annotate(
+        total_lands_count=Count('indigenous_lands'),
+        es_lands_count=F('id') * 0,
+        pr_lands_count=F('id') * 0,
+        rj_lands_count=F('id') * 0,
+        rs_lands_count=F('id') * 0,
+        sc_lands_count=F('id') * 0,
+        sp_lands_count=F('id') * 0
+    )
+    serializer_class = LandTenureReportSerializer
