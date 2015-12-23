@@ -9,7 +9,8 @@
     'mapaguarani.filters',
     'mapaguarani.directives',
     'mapaguarani.controllers',
-    'mapaguarani.services'
+    'mapaguarani.services',
+    'djangular'
   ]);
 
   app.config([

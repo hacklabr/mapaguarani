@@ -40,25 +40,29 @@
         <th>Situação fundiárea</th>
         <td>{{data.land_tenure.name}}</td>
       </tr>
-      <!--TODO: exibir apenas para usuarios logados -->
-      <!--<tr ng-show="data.land_tenure_status">-->
-        <!--<th>Status de revisão</th>-->
-        <!--<td>{{data.land_tenure_status.name}}</td>-->
-      <!--</tr>-->
-      <tr ng-show="data.population">
-        <th>População</th>
-        <td>{{data.population}}</td>
+      <tr ng-if="user.is_autenticated && data.land_tenure_status">
+        <th>Status de revisão</th>
+        <td>{{data.land_tenure_status.name}}</td>
       </tr>
+
+      <tr ng-if="user.is_autenticated && data.clain">
+        <th>Reinvidicação</th>
+        <td>{{data.claim}}</td>
+      </tr>
+      <tr ng-if="user.is_autenticated && data.demand">
+        <th>Demanda</th>
+        <td>{{data.demand}}</td>
+      </tr>
+
       <!--TODO: Adicionar unidade (m2?, hectares?) -->
       <tr ng-show="data.official_area">
         <th>Área</th>
         <td>{{data.official_area}}</td>
       </tr>
-      <!--TODO: exibir apenas para usuarios logados, verificar unidade -->
-      <!--<tr ng-show="data.calculated_area">-->
-        <!--<th>Área calculada pelo polígono</th>-->
-        <!--<td>{{data.calculated_area}}</td>-->
-      <!--</tr>-->
+      <tr ng-if="user.is_autenticated && data.calculated_area">
+        <th>Área calculada pelo polígono</th>
+        <td>{{data.calculated_area}}</td>
+      </tr>
       <tr ng-show="data.guarani_exclusive_possession_area_portion">
         <th>Área em posse exclusiva dos Guaranis</th>
         <td>{{data.guarani_exclusive_possession_area_portion}}</td>
@@ -67,7 +71,7 @@
         <th>Documentos</th>
         <td>
           <div ng-repeat="document in data.documents">
-            <p><a ng-href="{{document.file}}"> {{ document.description }}</a></p>
+            <p><a ng-href="{{document.file}}" target="_blank"> {{ document.description }}</a></p>
           </div>
         </td>
       </tr>
@@ -79,11 +83,10 @@
         <th>Observações</th>
         <td>{{data.public_comments}}</td>
       </tr>
-      <!--TODO: exibir apenas para usuarios logados -->
-      <!--<tr ng-show="data.private_comments">-->
-        <!--<th>Observações (Restritas)</th>-->
-        <!--<td>{{data.private_comments}}</td>-->
-      <!--</tr>-->
+      <tr ng-if="user.is_autenticated && data.private_comments">
+        <th>Observações (Restritas)</th>
+        <td>{{data.private_comments}}</td>
+      </tr>
     </tbody>
   </table>
 </article>
