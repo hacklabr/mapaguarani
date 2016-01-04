@@ -202,12 +202,6 @@ class ArchaeologicalPlacesShapefileView(ShapefileView):
 class LandTenureReportViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = LandTenure.objects.annotate(
         total_lands_count=Count('indigenous_lands'),
-        es_lands_count=F('id') * 0,
-        pr_lands_count=F('id') * 0,
-        rj_lands_count=F('id') * 0,
-        rs_lands_count=F('id') * 0,
-        sc_lands_count=F('id') * 0,
-        sp_lands_count=F('id') * 0
     )
     serializer_class = LandTenureReportSerializer
 

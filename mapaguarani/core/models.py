@@ -4,6 +4,8 @@ from django.contrib.gis.db.models.aggregates import Collect
 from django.utils.translation import ugettext_lazy as _
 from protected_areas.models import BaseProtectedArea
 
+from boundaries.models import State
+
 
 class MapLayer(models.Model):
     name = models.CharField(_('name'), max_length=255)
@@ -195,6 +197,30 @@ class LandTenure(models.Model):
     def __str__(self):
         return self.name
 
+    def state_lands_count(self, acronym):
+        state = State.objects.filter(acronym=acronym).first()
+        if state:
+            return self.indigenous_lands.filter(geometry__coveredby=state.geometry).count()
+        return 0
+
+    def es_lands_count(self):
+        return self.state_lands_count('ES')
+
+    def pr_lands_count(self):
+        return self.state_lands_count('PR')
+
+    def rj_lands_count(self):
+        return self.state_lands_count('RJ')
+
+    def rs_lands_count(self):
+        return self.state_lands_count('RS')
+
+    def sc_lands_count(self):
+        return self.state_lands_count('SC')
+
+    def sp_lands_count(self):
+        return self.state_lands_count('SP')
+
 
 class LandTenureStatus(models.Model):
     name = models.CharField(_('Name'), max_length=255)
@@ -244,7 +270,7 @@ class IndigenousLand(IndigenousPlace):
         verbose_name=_('Associated Land'),
         blank=True, null=True)
     geometry = models.MultiPolygonField(_('Indigenous Land Spatial Data'))
-    layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='indigenous_lads')
+    layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='indigenous_lads')  # TODO: fix typo
 
     class Meta:
         verbose_name = _('Indigenous Land')
