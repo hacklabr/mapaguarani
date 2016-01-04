@@ -37,6 +37,7 @@
   var gm_roadmap = new L.Google('ROADMAP');
   var gm_terrain = new L.Google('TERRAIN');
   var gm_hybrid = new L.Google('HYBRID');
+  var gm_satellite = new L.Google('SATELLITE');
 
   // Mapbox - leaflet 1.0 compatible
   var access_token = 'pk.eyJ1IjoiYnJ1bm9zbWFydGluIiwiYSI6IjM1MTAyYTJjMWQ3NmVmYTg0YzQ0ZWFjZTg0MDZiYzQ3In0.ThelegmeGkO5Vwd6KTu6xA';
@@ -380,14 +381,15 @@
           Map.setMap(map);
 
           // Add base layers
-          map.addLayer(gm_hybrid);
+          map.addLayer(gm_satellite);
           var baselayers = {
             'Mapa Mapbox': mapbox_streets,
             'Satélite Mapbox': mapbox_satellite,
             'Híbrido Mapbox': mapbox_hybrid,
             'Mapa Google': gm_roadmap,
             'Híbrido Google': gm_hybrid,
-            'Terreno Google': gm_terrain
+            'Terreno Google': gm_terrain,
+            'Satélite Google': gm_satellite
           };
 
           var layersControl = new L.Control.Layers(baselayers, {}, {'position': 'topleft'});

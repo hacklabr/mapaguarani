@@ -22,13 +22,14 @@
         <th>Situação da posse</th>
         <td>{{item.land_tenure_status.name}}</td>
       </tr>
-      <tr ng-show="item.population">
-        <th>População</th>
-        <td>{{item.population}}</td>
-      </tr>
-      <tr ng-show="item.guarani_presence">
-        <th>Presença Guarani</th>
-        <td>{{item.guarani_presence}}</td>
+      <!--<tr ng-show="item.population">-->
+        <!--<th>População</th>-->
+        <!--<td>{{item.population}}</td>-->
+      <!--</tr>-->
+      <tr>
+        <th>Presença Guarani atual</th>
+        <td ng-if="item.guarani_presence">Sim</td>
+        <td ng-if="!item.guarani_presence">Não</td>
       </tr>
     </tbody>
   </table>

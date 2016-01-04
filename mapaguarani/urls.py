@@ -44,4 +44,8 @@ urlpatterns = [
 
     url(r'^i18n/', include('django.conf.urls.i18n')),
 
+    url(r'^djangular.js',
+        TemplateView.as_view(template_name='djangular.js', content_type = 'text/javascript'),
+        name='djangular'),
+
 ]

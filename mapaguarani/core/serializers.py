@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
-from .models import IndigenousLand, IndigenousVillage, ArchaeologicalPlace, LandTenure, LandTenureStatus
+from .models import (IndigenousLand, IndigenousVillage, ArchaeologicalPlace, LandTenure, LandTenureStatus,
+                    GuaraniPresence, Population,)
 from protected_areas.serializers import BaseProtectedAreaSerializers
 
 
@@ -9,6 +10,18 @@ class SimpleIndigenousVillageSerializer(serializers.ModelSerializer):
     class Meta:
         model = IndigenousVillage
         fields = ['id', 'name']
+
+
+class PopulationSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = Population
+
+
+class GuaraniPresenceSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = GuaraniPresence
 
 
 class IndigenousLandListSerializer(serializers.ListSerializer):
@@ -75,10 +88,12 @@ class ListIndigenousVillageSerializer(serializers.ListSerializer):
 
 class IndigenousVillageSerializer(serializers.ModelSerializer):
 
-    guarani_presence = serializers.ReadOnlyField()
-    population = serializers.ReadOnlyField()
     land = serializers.SerializerMethodField()
     protected_areas = serializers.SerializerMethodField()
+    position_precision = serializers.SerializerMethodField()
+    population = serializers.SerializerMethodField()
+    guarani_presence = serializers.SerializerMethodField()
+
 
     class Meta:
         model = IndigenousVillage
@@ -95,6 +110,30 @@ class IndigenousVillageSerializer(serializers.ModelSerializer):
     def get_protected_areas(obj):
         if obj.protected_areas:
             return BaseProtectedAreaSerializers(obj.protected_areas, many=True).data
+
+    @staticmethod
+    def get_position_precision(obj):
+        if obj.position_precision:
+            return dict(IndigenousVillage.POSITION_PRECISION).get(obj.position_precision)
+
+    @staticmethod
+    def get_population(obj):
+        try:
+            population = obj.population_annual_series.latest()
+        except Population.DoesNotExist:
+            # FIXME
+            population = Population(population=0)
+
+        return PopulationSerializer(population).data
+
+    @staticmethod
+    def get_guarani_presence(obj):
+        try:
+            presence = obj.guarani_presence_annual_series.latest()
+        except GuaraniPresence.DoesNotExist:
+            presence = GuaraniPresence(presence=False)
+
+        return GuaraniPresenceSerializer(presence).data
 
 
 class ArchaeologicalPlaceListSerializer(serializers.ListSerializer):

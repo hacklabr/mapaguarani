@@ -43,12 +43,24 @@
       <!--</tr>-->
       <tr ng-show="data.population">
         <th>População</th>
-        <td>{{data.population}}</td>
+        <td>
+          <p>
+            <strong>{{data.population.population}}</strong>
+          </p>
+          <p ng-if="data.population.source">
+            Fonte: {{data.population.source}} <span ng-if="data.population.date">({{data.population.date | date :'yyyy'}})</span>
+          </p>
+        </td>
       </tr>
-      <tr>
-        <th>Presença Guarani atual</th>
-        <td ng-if="data.guarani_presence">Sim</td>
-        <td ng-if="!data.guarani_presence">Não</td>
+      <tr ng-show="data.guarani_presence">
+        <th>Presença Guarani</th>
+        <td>
+          <p ng-if="data.guarani_presence.presence">Sim</p>
+          <p ng-if="!data.guarani_presence.presence">Não</p>
+          <p ng-if="data.guarani_presence.source">
+            Fonte: {{data.guarani_presence.source}} <span ng-if="data.guarani_presence.date">({{data.guarani_presence.date | date :'yyyy'}})</span>
+          </p>
+        </td>
       </tr>
       <tr ng-show="data.position_precision">
         <th>Precisão da localização</th>
@@ -62,11 +74,10 @@
         <th>Observações</th>
         <td>{{data.public_comments}}</td>
       </tr>
-      <!--TODO: exibir apenas para usuarios logados -->
-      <!--<tr ng-show="data.private_comments">-->
-        <!--<th>Observações (Restritas)</th>-->
-        <!--<td>{{data.private_comments}}</td>-->
-      <!--</tr>-->
+      <tr ng-if="user.is_autenticated && data.private_comments">
+        <th>Observações (Restritas)</th>
+        <td>{{data.private_comments}}</td>
+      </tr>
     </tbody>
   </table>
 </article>

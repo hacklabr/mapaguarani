@@ -19,7 +19,8 @@
     'SitesData',
     'GuaraniService',
     'guaraniMapService',
-    function ($scope, $state, $stateParams, villages, lands, sites, Guarani, Map) {
+    'user',
+    function ($scope, $state, $stateParams, villages, lands, sites, Guarani, Map, user) {
 
       // State dependencies resolved, emit event to hide loading message
       $scope.$emit('mapaguarani.loaded');
@@ -31,6 +32,7 @@
       $scope.lands = lands;
       $scope.villages = villages;
       $scope.sites = sites;
+      $scope.user = user;
 
       // Watch and store map from MapService
       var map;
@@ -98,7 +100,8 @@
     'Data',
     'guaraniMapService',
     'GuaraniService',
-    function($state, $scope, data, Map, Guarani) {
+    'user',
+    function($state, $scope, data, Map, Guarani, user) {
 
       // State dependencies resolved, emit event to hide loading message
       $scope.$emit('mapaguarani.loaded');
@@ -110,6 +113,7 @@
       $scope.data = data;
       $scope.map = {};
       $scope.map[$scope.type] = [$scope.data];
+      $scope.user = user;
 
       // If focus, fit map bounds to item location
       if($state.params.focus) {
