@@ -20,6 +20,20 @@ class IndigenousVillageResource(resources.ModelResource):
                         'guarani_presence', 'official_area', 'land_tenure', 'documents',
                         'cities', 'states',)
 
+    def get_export_headers(self):
+        return [
+            'Terra Indígena TI - (Aldeias Guarani)',
+            'Outras denominações da TI',
+            'Grupo(s) étnico(s)',
+            'Subgrupo proeminente',
+            'Presença Guarani',
+            'Área da TI (ha)',
+            'Situação Jurídica',
+            'Documentação',
+            'Município',
+            'UF',
+        ]
+
     def dehydrate_ethnic_groups(self, obj):
         return '; '.join(obj.ethnic_groups.values_list('name', flat=True))
 
