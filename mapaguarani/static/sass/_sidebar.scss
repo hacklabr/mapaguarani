@@ -12,6 +12,30 @@
   @media screen and (max-width: $screen-xs-min) {
     width: 100%;
   }
+  &.open {
+    left: 0;
+    transition: left 1s ease;
+    ~ .menu-open {
+      opacity: 0;
+    }
+    ~ .menu-close {
+      display: block;
+    }
+  }
+  &.closed {
+    left: -360px;
+    transition: left 1s ease;
+    ~ .menu-open {
+      opacity: 1;
+      transition: opacity 0s linear 0.8s;
+    }
+    ~ .menu-close {
+      left: -40px;
+    }
+  }
+  &.closed ~ guarani-map #map .leaflet-control-container .leaflet-top.leaflet-left {
+    left: 0px;
+  }
   .nav > li > a {
     padding: 10px 5px;
   }
@@ -39,63 +63,6 @@
   #sidebar-main-content {
     position: relative;
     width: 340px;
-    .button-menu {
-      cursor: pointer; 
-      position: absolute;
-      pointer-events: auto;
-      text-align: center; 
-      width: 40px;
-      z-index: 0;
-      .text {
-        color: #fff;
-        display: block;
-        font-size: 11px;
-        font-weight: bold;
-        margin-bottom: 3px;
-        text-transform: uppercase;
-      }
-      .bubble {
-        background-color: #fff;
-        border: 1px solid rgba(0,0,0,0.3);
-        border-radius: 50%;
-        box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
-        box-sizing: border-box;      
-        display: block; 
-        height: 40px;
-        width: 40px;
-        .fa {
-          font-size: 22px;
-          &-caret-left {
-            margin: 7px 0 0 12px;
-          }
-          &-caret-right {
-            margin: 7px 0 0 5px;
-          }
-        }
-      }
-    }
-    &.open {
-      left: 0;
-      transition: left 1s ease;
-      .button-menu {
-        top: 113px;
-        right: -20px;
-        .menu-open {
-          display: none;
-        }
-      }
-    }
-    &.closed {
-      left: -340px;
-      transition: left 1s ease;
-      .button-menu {
-        top: 104px;
-        right: -50px;
-        .menu-close {
-          display: none;
-        }
-      }
-    }
     .content {
       pointer-events: auto;
       background: #fff; 
@@ -341,5 +308,49 @@
       font-weight: 800;
       margin: 0 0 15px;
     }
+  }
+}
+.button-menu {
+  cursor: pointer; 
+  position: absolute;
+  pointer-events: auto;
+  text-align: center; 
+  width: 40px;
+  top: 165px;
+  left: 322px;
+  z-index: 1999;
+  transition: left 1s ease;
+  .text {
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+  }
+  .button-inside {
+    display: inline-block;
+  }
+  .bubble {
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,0.3);
+    border-radius: 50%;
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+    box-sizing: border-box;      
+    display: block; 
+    height: 40px;
+    width: 40px;
+    .fa {
+      font-size: 22px;
+      &-caret-left {
+        margin: 7px 0 0 12px;
+      }
+      &-caret-right {
+        margin: 7px 0 0 5px;
+      }
+    }
+  }
+  &.menu-open {
+    left: 20px;
   }
 }
