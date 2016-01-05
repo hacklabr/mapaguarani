@@ -4,7 +4,7 @@ from django.contrib.gis.db.models.aggregates import Collect
 from django.utils.translation import ugettext_lazy as _
 from protected_areas.models import BaseProtectedArea
 
-from boundaries.models import State
+from boundaries.models import City, State
 
 
 class MapLayer(models.Model):
@@ -296,6 +296,12 @@ class IndigenousLand(IndigenousPlace):
     @property
     def protected_areas(self):
         return BaseProtectedArea.objects.filter(geometry__intersects=self.geometry)
+
+    def get_cities_intersected(self):
+        return City.objects.filter(geometry__intersects=self.geometry)
+
+    def get_states_intersected(self):
+        return State.objects.filter(geometry__intersects=self.geometry)
 
 
 class LegalProceedings(models.Model):
