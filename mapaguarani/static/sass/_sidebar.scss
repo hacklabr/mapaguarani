@@ -75,6 +75,8 @@
       }
     }
     &.open {
+      left: 0;
+      transition: left 1s ease;
       .button-menu {
         top: 113px;
         right: -20px;
@@ -85,6 +87,7 @@
     }
     &.closed {
       left: -340px;
+      transition: left 1s ease;
       .button-menu {
         top: 104px;
         right: -50px;
