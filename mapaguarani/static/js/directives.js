@@ -46,6 +46,15 @@
   var mapbox_streets   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets', access_token: access_token});
   var mapbox_hybrid   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets-satellite', access_token: access_token});
 
+  // Official layers
+  var default_host = window.location.hostname;
+  var protected_areas_tile = L.tileLayer('http://' + default_host + ':4000/protected_areas_baseprotectedarea/{z}/{x}/{y}.png', {});
+  var boundaries_cities_tile = L.tileLayer('http://' + default_host + ':4000/boundaries_city/{z}/{x}/{y}.png', {
+    zIndex: 40
+  });
+  var boundaries_states_tile = L.tileLayer('http://' + default_host + ':4000/boundaries_state/{z}/{x}/{y}.png', {});
+  var boundaries_countries_tile = L.tileLayer('http://' + default_host + ':4000/boundaries_country/{z}/{x}/{y}.png', {});
+
   /*
    * Loading message
    */
@@ -392,7 +401,14 @@
             'Satélite Google': gm_satellite
           };
 
-          var layersControl = new L.Control.Layers(baselayers, {}, {'position': 'topleft'});
+          var official_layers = {
+            'Áreas de proteção': protected_areas_tile,
+            'Limites Cidades': boundaries_cities_tile,
+            'Limites Estados': boundaries_states_tile,
+            'Limites Países': boundaries_countries_tile
+          };
+
+          var layersControl = new L.Control.Layers(baselayers, official_layers, {'position': 'topleft'});
           map.addControl(layersControl);
 
           var zoomControl = new L.control.zoom({'position': 'topleft'});
