@@ -4,6 +4,8 @@ from django.contrib.gis.db.models.fields import GeometryField
 from django.db.models import Count, F
 import rest_framework_gis
 from rest_framework import viewsets, relations, serializers
+from import_export import admin
+
 from .models import (IndigenousLand, IndigenousVillage,
                      ArchaeologicalPlace, LandTenure, LandTenureStatus,)
 from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
@@ -11,11 +13,16 @@ from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           LandTenureStatusSerializer, IndigenousLandGeojsonSerializer,
                           IndigenousVillageGeojsonSerializer, ArchaeologicalPlaceGeojsonSerializer,
                           LandTenureReportSerializer)
+from .resources import IndigenousVillageResource
+
 from io import BytesIO
 import zipfile
 from fiona.crs import from_epsg
 import fiona
 import tempfile
+
+
+IMPORT_EXPORT_FORMATS = [format().get_title() for format in admin.DEFAULT_FORMATS]
 
 
 class IndigenousLandViewSet(viewsets.ReadOnlyModelViewSet):
@@ -79,7 +86,6 @@ class ShapefileView(View):
 
         field_type = type(field_type)
         if field_type not in self.ENGINE_FIONA_MAPPING:
-            import ipdb;ipdb.set_trace()
             raise AttributeError("Mapping not supported with Fiona.")
 
         fiona_type = self.ENGINE_FIONA_MAPPING[field_type]
@@ -196,11 +202,20 @@ class ArchaeologicalPlacesShapefileView(ShapefileView):
 class LandTenureReportViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = LandTenure.objects.annotate(
         total_lands_count=Count('indigenous_lands'),
-        es_lands_count=F('id') * 0,
-        pr_lands_count=F('id') * 0,
-        rj_lands_count=F('id') * 0,
-        rs_lands_count=F('id') * 0,
-        sc_lands_count=F('id') * 0,
-        sp_lands_count=F('id') * 0
     )
     serializer_class = LandTenureReportSerializer
+
+
+class IndigenousVillageReportExport(View):
+
+    def get(self, request):
+        format = request.GET.get('format', 'csv')
+        if format not in IMPORT_EXPORT_FORMATS:
+            format = 'csv'
+
+        resource = IndigenousVillageResource()
+        dataset = resource.export()
+
+        response = HttpResponse(getattr(dataset, format), content_type=format)
+        response['Content-Disposition'] = 'attachment; filename=filename.%s' % format
+        return response

@@ -4,7 +4,8 @@ from django.views.generic.base import TemplateView
 from core.views import (IndigenousLandViewSet, IndigenousVillageViewSet,
                         ArchaeologicalPlaceViewSet, LandTenureViewSet, LandTenureStatusViewSet,
                         IndigenousLandsShapefileView, IndigenousVillagesShapefileView,
-                        ArchaeologicalPlacesShapefileView, LandTenureReportViewSet,)
+                        ArchaeologicalPlacesShapefileView, LandTenureReportViewSet,
+                        IndigenousVillageReportExport,)
 from moderation.helpers import auto_discover
 from rest_framework import routers
 
@@ -26,6 +27,8 @@ urlpatterns = [
 
     # Services
     url(r'^api/', include(router.urls)),
+
+    url(r'^export/villages/$', IndigenousVillageReportExport.as_view(), name='export_villages'),
 
     url(r'^shapefiles/villages/$', IndigenousVillagesShapefileView.as_view(), name='villages_shapefiles'),
 

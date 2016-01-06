@@ -53,6 +53,7 @@ THIRD_PARTY_APPS = (
     'rest_framework',
     'rest_framework_gis',
     'moderation',
+    'import_export',
 )
 
 # Apps specific for this project go here.

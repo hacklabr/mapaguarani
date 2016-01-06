@@ -1,6 +1,10 @@
 from django.contrib.gis.db import models
+from django.contrib.gis.db.models import Max, Sum
+from django.contrib.gis.db.models.aggregates import Collect
 from django.utils.translation import ugettext_lazy as _
 from protected_areas.models import BaseProtectedArea
+
+from boundaries.models import City, State
 
 
 class MapLayer(models.Model):
@@ -193,6 +197,30 @@ class LandTenure(models.Model):
     def __str__(self):
         return self.name
 
+    def state_lands_count(self, acronym):
+        state = State.objects.filter(acronym=acronym).first()
+        if state:
+            return self.indigenous_lands.filter(geometry__coveredby=state.geometry).count()
+        return 0
+
+    def es_lands_count(self):
+        return self.state_lands_count('ES')
+
+    def pr_lands_count(self):
+        return self.state_lands_count('PR')
+
+    def rj_lands_count(self):
+        return self.state_lands_count('RJ')
+
+    def rs_lands_count(self):
+        return self.state_lands_count('RS')
+
+    def sc_lands_count(self):
+        return self.state_lands_count('SC')
+
+    def sp_lands_count(self):
+        return self.state_lands_count('SP')
+
 
 class LandTenureStatus(models.Model):
     name = models.CharField(_('Name'), max_length=255)
@@ -242,7 +270,7 @@ class IndigenousLand(IndigenousPlace):
         verbose_name=_('Associated Land'),
         blank=True, null=True)
     geometry = models.MultiPolygonField(_('Indigenous Land Spatial Data'))
-    layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='indigenous_lads')
+    layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='indigenous_lads')  # TODO: fix typo
 
     class Meta:
         verbose_name = _('Indigenous Land')
@@ -255,10 +283,11 @@ class IndigenousLand(IndigenousPlace):
 
     @property
     def population(self):
-        population = 0
-        for village in self.villages:
-            population += village.population
-        return population
+        total = Population.objects.filter(village__geometry__coveredby=self.geometry)\
+                                  .values('population').annotate(latest=Max('village'))\
+                                  .aggregate(total_population=Sum('population'))\
+                                  .get('total_population')
+        return total or 0
 
     @property
     def calculated_area(self):
@@ -267,6 +296,12 @@ class IndigenousLand(IndigenousPlace):
     @property
     def protected_areas(self):
         return BaseProtectedArea.objects.filter(geometry__intersects=self.geometry)
+
+    def get_cities_intersected(self):
+        return City.objects.filter(geometry__intersects=self.geometry)
+
+    def get_states_intersected(self):
+        return State.objects.filter(geometry__intersects=self.geometry)
 
 
 class LegalProceedings(models.Model):
