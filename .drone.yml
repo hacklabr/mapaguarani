@@ -13,7 +13,6 @@ deploy:
       - /home/mapaguarani/mapaguarani-env/bin/pip install -r /home/mapaguarani/mapaguarani/requirements/production.txt;
       - /home/mapaguarani/mapaguarani-env/bin/python /home/mapaguarani/mapaguarani/manage.py migrate;
       - /home/mapaguarani/mapaguarani-env/bin/python /home/mapaguarani/mapaguarani/manage.py compress;
-      - /home/mapaguarani/mapaguarani-env/bin/python /home/mapaguarani/mapaguarani/manage.py compress;
       - /home/mapaguarani/mapaguarani-env/bin/python /home/mapaguarani/mapaguarani/manage.py collectstatic --noinput;
       - git -C /home/mapaguarani/mapaguarani-tiler pull;
       - (cd /home/mapaguarani/mapaguarani-tiler; npm install);
