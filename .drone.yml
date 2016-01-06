@@ -1,0 +1,23 @@
+image: montefuscolo/ubuntu-trusty-git
+
+deploy:
+  ssh:
+    host: mapaguarani.yvyrupa.org.br
+    user: mapaguarani
+    port: 22
+    commands:
+      - git -C /home/mapaguarani/mapaguarani reset -q --hard;
+      - git -C /home/mapaguarani/mapaguarani clean -f -d;
+      - git -C /home/mapaguarani/mapaguarani pull;
+      - source /home/mapaguarani/mapaguarani-env.sh
+      - /home/mapaguarani/mapaguarani-env/bin/pip install -r /home/mapaguarani/mapaguarani/requirements/production.txt;
+      - /home/mapaguarani/mapaguarani-env/bin/python /home/mapaguarani/mapaguarani/manage.py migrate;
+      - /home/mapaguarani/mapaguarani-env/bin/python /home/mapaguarani/mapaguarani/manage.py compress;
+      - /home/mapaguarani/mapaguarani-env/bin/python /home/mapaguarani/mapaguarani/manage.py compress;
+      - /home/mapaguarani/mapaguarani-env/bin/python /home/mapaguarani/mapaguarani/manage.py collectstatic --noinput;
+      - git -C /home/mapaguarani/mapaguarani-tiler pull;
+      - (cd /home/mapaguarani/mapaguarani-tiler; npm install);
+      - sudo service mapaguarani restart
+      - sudo service mapaguarani-tiler restart
+    when:
+      branch: stable
