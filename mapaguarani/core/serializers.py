@@ -26,7 +26,8 @@ class GuaraniPresenceSerializer(serializers.ModelSerializer):
 
 class IndigenousLandListSerializer(serializers.ListSerializer):
 
-    exclude_field = ['villages', 'population', 'calculated_area', 'protected_areas', ]
+    exclude_field = ['villages', 'population', 'calculated_area',
+                     'protected_areas_integral', 'protected_areas_conservation', ]
 
     def __init__(self, *args, **kwargs):
         super(IndigenousLandListSerializer, self).__init__(*args, **kwargs)
@@ -42,7 +43,8 @@ class IndigenousLandSerializer(serializers.ModelSerializer):
     villages = serializers.SerializerMethodField()
     population = serializers.ReadOnlyField()
     calculated_area = serializers.ReadOnlyField()
-    protected_areas = serializers.SerializerMethodField()
+    protected_areas_integral = serializers.SerializerMethodField()
+    protected_areas_conservation = serializers.SerializerMethodField()
 
     class Meta:
         model = IndigenousLand
@@ -64,9 +66,14 @@ class IndigenousLandSerializer(serializers.ModelSerializer):
         return SimpleIndigenousVillageSerializer(obj.villages, many=True).data
 
     @staticmethod
-    def get_protected_areas(obj):
+    def get_protected_areas_integral(obj):
         if obj.protected_areas:
-            return BaseProtectedAreaSerializers(obj.protected_areas, many=True).data
+            return BaseProtectedAreaSerializers(obj.protected_areas.filter(type='PI'), many=True).data
+
+    @staticmethod
+    def get_protected_areas_conservation(obj):
+        if obj.protected_areas:
+            return BaseProtectedAreaSerializers(obj.protected_areas.filter(type='UC'), many=True).data
 
 
 class SimpleIndigenousLandSerializer(serializers.ModelSerializer):
@@ -78,7 +85,7 @@ class SimpleIndigenousLandSerializer(serializers.ModelSerializer):
 
 class ListIndigenousVillageSerializer(serializers.ListSerializer):
 
-    exclude_field = ['land', 'population', 'protected_areas', ]
+    exclude_field = ['land', 'population', 'protected_areas_integral', 'protected_areas_conservation', ]
 
     def __init__(self, *args, **kwargs):
         super(ListIndigenousVillageSerializer, self).__init__(*args, **kwargs)
@@ -89,7 +96,8 @@ class ListIndigenousVillageSerializer(serializers.ListSerializer):
 class IndigenousVillageSerializer(serializers.ModelSerializer):
 
     land = serializers.SerializerMethodField()
-    protected_areas = serializers.SerializerMethodField()
+    protected_areas_integral = serializers.SerializerMethodField()
+    protected_areas_conservation = serializers.SerializerMethodField()
     position_precision = serializers.SerializerMethodField()
     population = serializers.SerializerMethodField()
     guarani_presence = serializers.SerializerMethodField()
@@ -107,9 +115,14 @@ class IndigenousVillageSerializer(serializers.ModelSerializer):
             return SimpleIndigenousLandSerializer(land).data
 
     @staticmethod
-    def get_protected_areas(obj):
+    def get_protected_areas_integral(obj):
         if obj.protected_areas:
-            return BaseProtectedAreaSerializers(obj.protected_areas, many=True).data
+            return BaseProtectedAreaSerializers(obj.protected_areas.filter(type='PI'), many=True).data
+
+    @staticmethod
+    def get_protected_areas_conservation(obj):
+        if obj.protected_areas:
+            return BaseProtectedAreaSerializers(obj.protected_areas.filter(type='UC'), many=True).data
 
     @staticmethod
     def get_position_precision(obj):

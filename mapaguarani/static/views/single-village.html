@@ -24,10 +24,19 @@
           </p>
         </td>
       </tr>
-      <tr ng-show="data.protected_areas">
-        <th>Área de preservação em que esta aldeia está inserida</th>
+
+      <tr ng-show="data.protected_areas_integral.length">
+        <th>Sobreposição com Unidade de Conservação de Proteção Integral</th>
         <td>
-          <p ng-repeat="protected_area in data.protected_areas">
+          <p ng-repeat="protected_area in data.protected_areas_integral">
+            {{ protected_area.name }}
+          </p>
+        </td>
+      </tr>
+      <tr ng-show="data.protected_areas_conservation.length">
+        <th>Sobreposição com Unidade de Conservação de Uso Sustentável</th>
+        <td>
+          <p ng-repeat="protected_area in data.protected_areas_conservation">
             {{ protected_area.name }}
           </p>
         </td>
