@@ -60,7 +60,7 @@
           bounds.extend(features[x].geometry.getBounds());
       }
 
-      geodjango_polygon.map.zoomToExtent(bounds, false);
+      {{ module }}.map.zoomToExtent(bounds, false);
   }
 
   function process(kml) {
@@ -68,17 +68,20 @@
       if (kml == null || kml == '') {
           return '';
       }
+      // Clear
+      {{ module }}.clearFeatures()
+      {{ module }}.deleteFeatures()
 
       // Convert kml to features.
       var features = convertKmlToFeatures(kml);
+      {{ module }}.write_wkt(features[0])
 
       // Display features.
-      geodjango_polygon.map.layers[1].addFeatures(features);
+      {{ module }}.map.layers[1].addFeatures(features);
 
       // Zoom to the features.
       zoomToPolygon(features);
   }
-
 
   function handleFileSelect(evt) {
     var kml_file = evt.target.files[0]; // FileList object
@@ -87,7 +90,6 @@
       var text = reader.result;
       process(text);
     };
-
     reader.readAsText(kml_file);
   }
 

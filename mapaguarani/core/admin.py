@@ -19,12 +19,12 @@ class PopulationInLine(admin.TabularInline):
 class IndigenousVillageAdmin(geoadmin.GeoModelAdmin):
     # extra_js = [GMAP.api_url + GMAP.key]
     # map_template = 'gis/admin/google.html'
-
+    map_template = 'openlayers.html'
     list_display = ('name', 'other_names', 'get_ethnic_groups', 'get_prominent_subgroup',
                     'population', 'get_guarani_presence',
                     'position_precision', 'position_source', 'geometry',
                     'public_comments', 'private_comments',)
-    search_fields = ['name', 'other_names',]
+    search_fields = ['name', 'other_names', ]
     list_per_page = 500
     inlines = [
         PopulationInLine,
