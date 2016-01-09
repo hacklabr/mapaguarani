@@ -46,7 +46,7 @@
       return function(input, filter, config) {
         if(filter && config) {
           for(var key in config) {
-            if(filter[key]) {
+            if(filter[key] !== undefined) {
               input = _.filter(input, function(item) {
                 if(angular.isArray(item[key])) {
                   return _.find(item[key], function(propVal) {

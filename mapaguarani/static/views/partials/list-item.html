@@ -26,10 +26,15 @@
         <!--<th>População</th>-->
         <!--<td>{{item.population}}</td>-->
       <!--</tr>-->
-      <tr>
-        <th>Presença Guarani atual</th>
-        <td ng-if="item.guarani_presence">Sim</td>
-        <td ng-if="!item.guarani_presence">Não</td>
+      <tr ng-show="item.guarani_presence">
+        <th>Presença Guarani</th>
+        <td>
+          <p ng-if="item.guarani_presence.presence">Sim</p>
+          <p ng-if="!item.guarani_presence.presence">Não</p>
+          <p ng-if="item.guarani_presence.source">
+            Fonte: {{item.guarani_presence.source}} <span ng-if="item.guarani_presence.date">({{item.guarani_presence.date | date :'yyyy'}})</span>
+          </p>
+        </td>
       </tr>
     </tbody>
   </table>

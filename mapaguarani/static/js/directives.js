@@ -206,11 +206,14 @@
            */
           scope.adv = {};
           scope.adv.villages = {
-            ethnic_groups: {
-              name: 'Grupos étnicos',
-              ref: 'id',
+            guarani_presence: {
+              name: 'Presença Guarani',
+              ref: 'presence',
               label: 'name',
-              options: Guarani.getUniq(scope.villages, 'ethnic_groups', 'id')
+              options: [
+                {presence: true, name: 'Sim'},
+                {presence: false, name: 'Não'}
+              ]
             },
             prominent_subgroup: {
               name: 'Subgrupo de destaque',
@@ -226,24 +229,24 @@
               label: 'name',
               options: Guarani.getUniq(scope.lands, 'ethnic_groups', 'id')
             },
-            prominent_subgroup: {
-              name: 'Subgrupo de destaque',
-              ref: 'id',
-              label: 'name',
-              options: Guarani.getUniq(scope.lands, 'prominent_subgroup', 'id')
-            },
+//            prominent_subgroup: {
+//              name: 'Subgrupo de destaque',
+//              ref: 'id',
+//              label: 'name',
+//              options: Guarani.getUniq(scope.lands, 'prominent_subgroup', 'id')
+//            },
             land_tenure: {
-              name: 'Posse',
+              name: 'Situação fundiária',
               ref: 'id',
               label: 'name',
               options: Guarani.getUniq(scope.lands, 'land_tenure', 'id')
-            },
-            land_tenure_status: {
-              name: 'Situação da posse',
-              ref: 'id',
-              label: 'name',
-              options: Guarani.getUniq(scope.lands, 'land_tenure_status', 'id')
             }
+//            land_tenure_status: {
+//              name: 'Situação da posse',
+//              ref: 'id',
+//              label: 'name',
+//              options: Guarani.getUniq(scope.lands, 'land_tenure_status', 'id')
+//            }
           };
 
           /*
