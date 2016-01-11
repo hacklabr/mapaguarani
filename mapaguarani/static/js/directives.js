@@ -405,8 +405,8 @@
           };
 
           var official_layers = {
-            'Áreas de proteção': protected_areas_tile,
-            'Limites Cidades': boundaries_cities_tile,
+            'Áreas de proteção ambiental': protected_areas_tile,
+            'Limites Municípios': boundaries_cities_tile,
             'Limites Estados': boundaries_states_tile,
             'Limites Países': boundaries_countries_tile
           };
