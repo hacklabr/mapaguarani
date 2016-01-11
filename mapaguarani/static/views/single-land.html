@@ -65,15 +65,15 @@
       <!--TODO: Adicionar unidade (m2?, hectares?) -->
       <tr ng-show="data.official_area">
         <th>Área</th>
-        <td>{{data.official_area}}</td>
+        <td>{{data.official_area}} ha</td>
       </tr>
       <tr ng-if="user.is_autenticated && data.calculated_area">
         <th>Área calculada pelo polígono</th>
-        <td>{{data.calculated_area}}</td>
+        <td>{{data.calculated_area}} ha</td>
       </tr>
       <tr ng-show="data.guarani_exclusive_possession_area_portion">
         <th>Área em posse exclusiva dos Guaranis</th>
-        <td>{{data.guarani_exclusive_possession_area_portion}}</td>
+        <td>{{data.guarani_exclusive_possession_area_portion}} ha</td>
       </tr>
       <tr ng-show="data.documents.length>0">
         <th>Documentos</th>
