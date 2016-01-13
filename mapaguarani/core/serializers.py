@@ -35,7 +35,23 @@ class IndigenousLandListSerializer(serializers.ListSerializer):
             self.child.fields.pop(field)
 
 
-class IndigenousLandSerializer(serializers.ModelSerializer):
+class IndigenousPlaceSerializer(serializers.ModelSerializer):
+
+    protected_areas_integral = serializers.SerializerMethodField()
+    protected_areas_conservation = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_protected_areas_integral(obj):
+        if obj.protected_areas:
+            return BaseProtectedAreaSerializers(obj.protected_areas.filter(type='PI'), many=True).data
+
+    @staticmethod
+    def get_protected_areas_conservation(obj):
+        if obj.protected_areas:
+            return BaseProtectedAreaSerializers(obj.protected_areas.filter(type='US'), many=True).data
+
+
+class IndigenousLandSerializer(IndigenousPlaceSerializer):
 
     associated_land = serializers.PrimaryKeyRelatedField(read_only=True)
     bbox = serializers.SerializerMethodField()
@@ -43,8 +59,6 @@ class IndigenousLandSerializer(serializers.ModelSerializer):
     villages = serializers.SerializerMethodField()
     population = serializers.ReadOnlyField()
     calculated_area = serializers.ReadOnlyField()
-    protected_areas_integral = serializers.SerializerMethodField()
-    protected_areas_conservation = serializers.SerializerMethodField()
 
     class Meta:
         model = IndigenousLand
@@ -65,16 +79,6 @@ class IndigenousLandSerializer(serializers.ModelSerializer):
     def get_villages(obj):
         return SimpleIndigenousVillageSerializer(obj.villages, many=True).data
 
-    @staticmethod
-    def get_protected_areas_integral(obj):
-        if obj.protected_areas:
-            return BaseProtectedAreaSerializers(obj.protected_areas.filter(type='PI'), many=True).data
-
-    @staticmethod
-    def get_protected_areas_conservation(obj):
-        if obj.protected_areas:
-            return BaseProtectedAreaSerializers(obj.protected_areas.filter(type='UC'), many=True).data
-
 
 class SimpleIndigenousLandSerializer(serializers.ModelSerializer):
 
@@ -93,7 +97,7 @@ class ListIndigenousVillageSerializer(serializers.ListSerializer):
             self.child.fields.pop(field)
 
 
-class IndigenousVillageSerializer(serializers.ModelSerializer):
+class IndigenousVillageSerializer(IndigenousPlaceSerializer):
 
     land = serializers.SerializerMethodField()
     protected_areas_integral = serializers.SerializerMethodField()
@@ -101,7 +105,6 @@ class IndigenousVillageSerializer(serializers.ModelSerializer):
     position_precision = serializers.SerializerMethodField()
     population = serializers.SerializerMethodField()
     guarani_presence = serializers.SerializerMethodField()
-
 
     class Meta:
         model = IndigenousVillage
@@ -113,16 +116,6 @@ class IndigenousVillageSerializer(serializers.ModelSerializer):
         if obj.land:
             land = obj.land[0]
             return SimpleIndigenousLandSerializer(land).data
-
-    @staticmethod
-    def get_protected_areas_integral(obj):
-        if obj.protected_areas:
-            return BaseProtectedAreaSerializers(obj.protected_areas.filter(type='PI'), many=True).data
-
-    @staticmethod
-    def get_protected_areas_conservation(obj):
-        if obj.protected_areas:
-            return BaseProtectedAreaSerializers(obj.protected_areas.filter(type='UC'), many=True).data
 
     @staticmethod
     def get_position_precision(obj):
@@ -194,10 +187,10 @@ class IndigenousPlaceGeojsonSerializer(GeoFeatureModelSerializer):
     prominent_subgroup = serializers.SerializerMethodField()
 
     def get_ethnic_groups(self, obj):
-        return " ".join([ethnic_groups.name for ethnic_groups in obj.ethnic_groups.all()])
+        return ", ".join([ethnic_groups.name for ethnic_groups in obj.ethnic_groups.all()])
 
     def get_prominent_subgroup(self, obj):
-        return " ".join([prominent_sub.name for prominent_sub in obj.prominent_subgroup.all()])
+        return ", ".join([prominent_sub.name for prominent_sub in obj.prominent_subgroup.all()])
 
 
 class IndigenousLandGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
@@ -216,6 +209,14 @@ class IndigenousLandGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
         model = IndigenousLand
         geo_field = 'geometry'
         exclude = ['id', 'documents', 'layer', ]
+
+
+# class IndigenousVillageGeojsonSerializer(IndigenousVillageSerializer, IndigenousPlaceGeojsonSerializer):
+#
+#     class Meta:
+#         model = IndigenousVillage
+#         geo_field = 'geometry'
+#         exclude = ['land', 'protected_areas_integral', 'protected_areas_conservation', ]
 
 
 class IndigenousVillageGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
