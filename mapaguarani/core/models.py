@@ -141,18 +141,16 @@ class IndigenousVillage(IndigenousPlace):
 
     @property
     def city(self):
-        # TODO georeferential query
-        return ''
+        return City.objects.get(geometry__covers=self.geometry)
 
     @property
     def state(self):
-        # TODO georeferential query
-        return ''
+        return State.objects.get(geometry__covers=self.geometry)
 
     @property
     def country(self):
-        # TODO georeferential query
-        return ''
+        # TODO: Verificar se uma terra indigena pode ter mais de um pais
+        return 'Brasil'
 
 
 class GuaraniPresence(models.Model):
@@ -291,7 +289,8 @@ class IndigenousLand(IndigenousPlace):
 
     @property
     def calculated_area(self):
-        return self.geometry.transform(27700, clone=True).area
+        return False
+        # return self.geometry.transform(27700, clone=True).area / 10000
 
     @property
     def protected_areas(self):
