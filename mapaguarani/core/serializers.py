@@ -27,7 +27,8 @@ class GuaraniPresenceSerializer(serializers.ModelSerializer):
 class IndigenousLandListSerializer(serializers.ListSerializer):
 
     exclude_field = ['villages', 'population', 'calculated_area',
-                     'protected_areas_integral', 'protected_areas_conservation', ]
+                     'protected_areas_integral', 'protected_areas_conservation',
+                     'cities', 'states', ]
 
     def __init__(self, *args, **kwargs):
         super(IndigenousLandListSerializer, self).__init__(*args, **kwargs)
@@ -60,6 +61,9 @@ class IndigenousLandSerializer(IndigenousPlaceSerializer):
     population = serializers.ReadOnlyField()
     calculated_area = serializers.ReadOnlyField()
 
+    cities = serializers.SerializerMethodField()
+    states = serializers.SerializerMethodField()
+
     class Meta:
         model = IndigenousLand
         list_serializer_class = IndigenousLandListSerializer
@@ -79,6 +83,18 @@ class IndigenousLandSerializer(IndigenousPlaceSerializer):
     def get_villages(obj):
         return SimpleIndigenousVillageSerializer(obj.villages, many=True).data
 
+    @staticmethod
+    def get_cities(obj):
+        cities = obj.get_cities_intersected()
+        if cities:
+            return ", ".join([city.name for city in cities])
+
+    @staticmethod
+    def get_states(obj):
+        states = obj.get_states_intersected()
+        if states:
+            return ", ".join([state.name or state.acronym for state in states])
+
 
 class SimpleIndigenousLandSerializer(serializers.ModelSerializer):
 
@@ -89,7 +105,8 @@ class SimpleIndigenousLandSerializer(serializers.ModelSerializer):
 
 class ListIndigenousVillageSerializer(serializers.ListSerializer):
 
-    exclude_field = ['land', 'population', 'protected_areas_integral', 'protected_areas_conservation', ]
+    exclude_field = ['land', 'population', 'protected_areas_integral', 'protected_areas_conservation',
+                     'city', 'state', ]
 
     def __init__(self, *args, **kwargs):
         super(ListIndigenousVillageSerializer, self).__init__(*args, **kwargs)
@@ -105,6 +122,9 @@ class IndigenousVillageSerializer(IndigenousPlaceSerializer):
     position_precision = serializers.SerializerMethodField()
     population = serializers.SerializerMethodField()
     guarani_presence = serializers.SerializerMethodField()
+
+    city = serializers.SerializerMethodField()
+    state = serializers.SerializerMethodField()
 
     class Meta:
         model = IndigenousVillage
@@ -141,6 +161,20 @@ class IndigenousVillageSerializer(IndigenousPlaceSerializer):
 
         return GuaraniPresenceSerializer(presence).data
 
+    @staticmethod
+    def get_villages(obj):
+        return SimpleIndigenousVillageSerializer(obj.villages, many=True).data
+
+    @staticmethod
+    def get_city(obj):
+        if obj.city:
+            return obj.city.name
+
+    @staticmethod
+    def get_state(obj):
+        if obj.state:
+            return obj.state.name or obj.state.acronym
+
 
 class ArchaeologicalPlaceListSerializer(serializers.ListSerializer):
 
@@ -149,7 +183,6 @@ class ArchaeologicalPlaceListSerializer(serializers.ListSerializer):
         # Instantiate the child serializer.
         kwargs['child'] = cls()
         # Instantiate the parent list serializer.
-        # import ipdb;ipdb.set_trace()
         return ArchaeologicalPlaceListSerializer(*args, **kwargs)
 
     class Meta:
@@ -182,52 +215,116 @@ class LandTenureStatusSerializer(serializers.ModelSerializer):
 
 class IndigenousPlaceGeojsonSerializer(GeoFeatureModelSerializer):
 
+    """
+    This serializer is used to generate the shapefile
+    """
+
+    cti_id = serializers.ReadOnlyField(source='id')
     ethnic_groups = serializers.SerializerMethodField()
-
     prominent_subgroup = serializers.SerializerMethodField()
+    layer = serializers.SerializerMethodField()
+    country = serializers.SerializerMethodField()
 
-    def get_ethnic_groups(self, obj):
+    @staticmethod
+    def get_ethnic_groups(obj):
         return ", ".join([ethnic_groups.name for ethnic_groups in obj.ethnic_groups.all()])
 
-    def get_prominent_subgroup(self, obj):
+    @staticmethod
+    def get_prominent_subgroup(obj):
         return ", ".join([prominent_sub.name for prominent_sub in obj.prominent_subgroup.all()])
+
+    @staticmethod
+    def get_layer(obj):
+        if obj.layer:
+            return obj.layer.name
+
+    @staticmethod
+    def get_country(obj):
+        return 'Brasil'
+        # TODO: Verificar se uma terra indigena pode ter mais de um pais
+        # if countries:
+        #     return ", ".join([country.name for country in countries])
 
 
 class IndigenousLandGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
 
-    land_tenure = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='name'
-    )
+    """
+    This serializer is used to generate the shapefile
+    """
 
-    land_tenure_status = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='name'
-    )
+    land_tenure = serializers.SlugRelatedField(read_only=True, slug_field='name')
+    land_tenure_status = serializers.SlugRelatedField(read_only=True, slug_field='name')
+    documents = serializers.SerializerMethodField()
+    cities = serializers.SerializerMethodField()
+    states = serializers.SerializerMethodField()
+    villages = serializers.SerializerMethodField()
+    # guarani_presence = serializers.SerializerMethodField()
 
     class Meta:
         model = IndigenousLand
         geo_field = 'geometry'
-        exclude = ['id', 'documents', 'layer', ]
 
+    @staticmethod
+    def get_documents(obj):
+        if obj.documents:
+            return "\n".join([document.description for document in obj.documents.all()])
+            # return obj.documents.description
 
-# class IndigenousVillageGeojsonSerializer(IndigenousVillageSerializer, IndigenousPlaceGeojsonSerializer):
-#
-#     class Meta:
-#         model = IndigenousVillage
-#         geo_field = 'geometry'
-#         exclude = ['land', 'protected_areas_integral', 'protected_areas_conservation', ]
+    @staticmethod
+    def get_cities(obj):
+        cities = obj.get_cities_intersected()
+        if cities:
+            return ", ".join([city.name for city in cities])
+
+    @staticmethod
+    def get_states(obj):
+        states = obj.get_states_intersected()
+        if states:
+            return ", ".join([state.name or state.acronym for state in states])
+
+    @staticmethod
+    def get_villages(obj):
+        if obj.villages:
+            return ", ".join([village.name for village in obj.villages])
 
 
 class IndigenousVillageGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
 
+    """
+    This serializer is used to generate the shapefile
+    """
+
+    guarani_presence = serializers.SerializerMethodField()
+    city = serializers.SerializerMethodField()
+    state = serializers.SerializerMethodField()
+
     class Meta:
         model = IndigenousVillage
         geo_field = 'geometry'
-        fields = ['ethnic_groups', 'prominent_subgroup', 'population', 'guarani_presence', 'name', 'other_names',
-        'public_comments', 'private_comments', 'position_precision', 'position_source', 'geometry']
+        # fields = ['ethnic_groups', 'prominent_subgroup', 'population', 'guarani_presence', 'name', 'other_names',
+        # 'public_comments', 'private_comments', 'position_precision', 'position_source', 'geometry']
         # exclude = ['id', 'layer', ]
 
+    @staticmethod
+    def get_guarani_presence(obj):
+        try:
+            presence = obj.guarani_presence_annual_series.latest()
+            if presence.presence:
+                return 'Sim (Fonte: {})'.format(presence.source)
+            else:
+                'Não (Fonte: {})'.format(presence.source)
+        except GuaraniPresence.DoesNotExist:
+            return ''
+
+    @staticmethod
+    def get_city(obj):
+        if obj.city:
+            return obj.city.name
+
+    @staticmethod
+    def get_state(obj):
+        if obj.state:
+            return obj.state.name or obj.state.acronym
 
 class ArchaeologicalPlaceGeojsonSerializer(GeoFeatureModelSerializer):
 

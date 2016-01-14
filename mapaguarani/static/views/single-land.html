@@ -75,6 +75,14 @@
         <th>Área em posse exclusiva dos Guaranis</th>
         <td>{{data.guarani_exclusive_possession_area_portion}} ha</td>
       </tr>
+      <tr ng-show="data.cities">
+        <th>Município</th>
+        <td>{{data.cities}}</td>
+      </tr>
+      <tr ng-show="data.states">
+        <th>Estado</th>
+        <td>{{data.states}}</td>
+      </tr>
       <tr ng-show="data.documents.length>0">
         <th>Documentos</th>
         <td>

@@ -79,6 +79,14 @@
         <th>Fonte da localização</th>
         <td>{{data.position_source}}</td>
       </tr>
+      <tr ng-show="data.city">
+        <th>Sobreposição com Municípios</th>
+        <td>{{data.city}}</td>
+      </tr>
+      <tr ng-show="data.state">
+        <th>Estados</th>
+        <td>{{data.state}}</td>
+      </tr>
       <tr ng-show="data.public_comments">
         <th>Observações</th>
         <td>{{data.public_comments}}</td>
