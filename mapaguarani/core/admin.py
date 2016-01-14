@@ -15,6 +15,10 @@ class PopulationInLine(admin.TabularInline):
     model = Population
 
 
+class GuaraniPresenceInLine(admin.TabularInline):
+    model = GuaraniPresence
+
+
 @admin.register(IndigenousVillage)
 class IndigenousVillageAdmin(geoadmin.GeoModelAdmin):
     # extra_js = [GMAP.api_url + GMAP.key]
@@ -28,6 +32,7 @@ class IndigenousVillageAdmin(geoadmin.GeoModelAdmin):
     list_per_page = 500
     inlines = [
         PopulationInLine,
+        GuaraniPresenceInLine,
     ]
 
     def get_guarani_presence(self, obj):
