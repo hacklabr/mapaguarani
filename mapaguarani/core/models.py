@@ -290,6 +290,7 @@ class IndigenousLand(IndigenousPlace):
     @property
     def calculated_area(self):
         return False
+        # TODO test 29101 (http://spatialreference.org/ref/epsg/29101/)
         # return self.geometry.transform(27700, clone=True).area / 10000
 
     @property
