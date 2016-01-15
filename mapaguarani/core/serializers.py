@@ -337,6 +337,7 @@ class IndigenousVillageGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
     guarani_presence = serializers.SerializerMethodField()
     city = serializers.SerializerMethodField()
     state = serializers.SerializerMethodField()
+    land = serializers.SerializerMethodField()
 
     class Meta:
         model = IndigenousVillage
