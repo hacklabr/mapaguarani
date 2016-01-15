@@ -3,6 +3,7 @@ from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from .models import (IndigenousLand, IndigenousVillage, ArchaeologicalPlace, LandTenure, LandTenureStatus,
                     GuaraniPresence, Population,)
 from protected_areas.serializers import BaseProtectedAreaSerializers
+from django.utils.translation import ugettext as _
 
 
 class SimpleIndigenousVillageSerializer(serializers.ModelSerializer):
@@ -78,6 +79,15 @@ class IndigenousLandSerializer(IndigenousPlaceSerializer):
     @staticmethod
     def get_guarani_presence(obj):
         return obj.ethnic_groups.filter(name='Guarani').exists()
+        # presences = []
+        # for village in obj.villages:
+        #     try:
+        #         presence = village.guarani_presence_annual_series.latest()
+        #         presences.append(GuaraniPresenceSerializer(presence).data)
+        #     except GuaraniPresence.DoesNotExist:
+        #         pass
+        #
+        # return presences
 
     @staticmethod
     def get_villages(obj):
@@ -241,9 +251,6 @@ class IndigenousPlaceGeojsonSerializer(GeoFeatureModelSerializer):
     @staticmethod
     def get_country(obj):
         return 'Brasil'
-        # TODO: Verificar se uma terra indigena pode ter mais de um pais
-        # if countries:
-        #     return ", ".join([country.name for country in countries])
 
 
 class IndigenousLandGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
@@ -258,11 +265,17 @@ class IndigenousLandGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
     cities = serializers.SerializerMethodField()
     states = serializers.SerializerMethodField()
     villages = serializers.SerializerMethodField()
-    # guarani_presence = serializers.SerializerMethodField()
+    guarani_presence = serializers.SerializerMethodField()
 
     class Meta:
         model = IndigenousLand
         geo_field = 'geometry'
+        fields = ['land_tenure', 'official_area', 'claim', 'country', 'others_exclusive_possession_area_portion',
+                  'land_tenure_status', 'demand', 'prominent_subgroup', 'associated_land', 'ethnic_groups',
+                  'cities', 'private_comments', 'other_names', 'cti_id', 'layer',
+                  'guarani_exclusive_possession_area_portion', 'public_comments', 'name',
+                  'source', 'states', 'villages', 'documents', 'guarani_presence']
+        # exclude = ['id', ]
 
     @staticmethod
     def get_documents(obj):
@@ -275,6 +288,18 @@ class IndigenousLandGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
         cities = obj.get_cities_intersected()
         if cities:
             return ", ".join([city.name for city in cities])
+        # try:
+        #     cities = obj.get_cities_intersected()
+        #     if cities:
+        #         return ", ".join([city.name for city in cities])
+        # except:
+        #     if not obj.geometry.valid:
+        #         return 'Não foi possível determinar os ' \
+        #                'Municípios em sobreposição por que o ' \
+        #                'polígono é inválido. Erro: {}'.format(obj.geometry.valid_reason)
+        #     else:
+        #         return 'Erro desconhecido ao determinar os ' \
+        #                'Municípios em sobreposição'
 
     @staticmethod
     def get_states(obj):
@@ -286,6 +311,21 @@ class IndigenousLandGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
     def get_villages(obj):
         if obj.villages:
             return ", ".join([village.name for village in obj.villages])
+
+    @staticmethod
+    def get_guarani_presence(obj):
+        land_presence = False
+        for village in obj.villages:
+            try:
+                presence = village.guarani_presence_annual_series.latest()
+                land_presence = land_presence or presence.presence
+            except GuaraniPresence.DoesNotExist:
+                pass
+
+        if land_presence:
+            return _('Yes')
+        else:
+            return _('No')
 
 
 class IndigenousVillageGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
@@ -301,9 +341,10 @@ class IndigenousVillageGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
     class Meta:
         model = IndigenousVillage
         geo_field = 'geometry'
-        # fields = ['ethnic_groups', 'prominent_subgroup', 'population', 'guarani_presence', 'name', 'other_names',
-        # 'public_comments', 'private_comments', 'position_precision', 'position_source', 'geometry']
-        # exclude = ['id', 'layer', ]
+        # only the id field is excluded
+        fields = ['private_comments', 'country', 'other_names', 'public_comments', 'position_source',
+                  'ethnic_groups', 'position_precision', 'guarani_presence', 'cti_id', 'prominent_subgroup',
+                  'state', 'city', 'layer', 'name', 'land']
 
     @staticmethod
     def get_guarani_presence(obj):
@@ -317,6 +358,12 @@ class IndigenousVillageGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
             return ''
 
     @staticmethod
+    def get_land(obj):
+        if obj.land:
+            land = obj.land[0]
+            return land.name
+
+    @staticmethod
     def get_city(obj):
         if obj.city:
             return obj.city.name
@@ -325,6 +372,7 @@ class IndigenousVillageGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
     def get_state(obj):
         if obj.state:
             return obj.state.name or obj.state.acronym
+
 
 class ArchaeologicalPlaceGeojsonSerializer(GeoFeatureModelSerializer):
 
