@@ -25,16 +25,34 @@ class GuaraniPresenceSerializer(serializers.ModelSerializer):
             model = GuaraniPresence
 
 
-class IndigenousLandListSerializer(serializers.ListSerializer):
+class BaseListSerializerMixin(serializers.ListSerializer):
+
+    """
+    This class exclude the field listed in exclude_field variable when the serializer instance is a list.
+    """
+
+    exclude_field = []
+
+    def __init__(self, *args, **kwargs):
+        super(BaseListSerializerMixin, self).__init__(*args, **kwargs)
+        for field in self.exclude_field:
+            self.child.fields.pop(field)
+
+    def update(self, instance, validated_data):
+        super(BaseListSerializerMixin, self).update(instance, validated_data)
+
+
+class ListIndigenousVillageSerializer(BaseListSerializerMixin):
+
+    exclude_field = ['land', 'population', 'protected_areas_integral', 'protected_areas_conservation',
+                     'city', 'state', ]
+
+
+class IndigenousLandListSerializer(BaseListSerializerMixin):
 
     exclude_field = ['villages', 'population', 'calculated_area',
                      'protected_areas_integral', 'protected_areas_conservation',
                      'cities', 'states', ]
-
-    def __init__(self, *args, **kwargs):
-        super(IndigenousLandListSerializer, self).__init__(*args, **kwargs)
-        for field in self.exclude_field:
-            self.child.fields.pop(field)
 
 
 class IndigenousPlaceSerializer(serializers.ModelSerializer):
@@ -113,28 +131,18 @@ class SimpleIndigenousLandSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
-class ListIndigenousVillageSerializer(serializers.ListSerializer):
-
-    exclude_field = ['land', 'population', 'protected_areas_integral', 'protected_areas_conservation',
-                     'city', 'state', ]
-
-    def __init__(self, *args, **kwargs):
-        super(ListIndigenousVillageSerializer, self).__init__(*args, **kwargs)
-        for field in self.exclude_field:
-            self.child.fields.pop(field)
-
-
 class IndigenousVillageSerializer(IndigenousPlaceSerializer):
 
-    land = serializers.SerializerMethodField()
     protected_areas_integral = serializers.SerializerMethodField()
     protected_areas_conservation = serializers.SerializerMethodField()
+
     position_precision = serializers.SerializerMethodField()
     population = serializers.SerializerMethodField()
-    guarani_presence = serializers.SerializerMethodField()
 
+    guarani_presence = serializers.SerializerMethodField()
     city = serializers.SerializerMethodField()
     state = serializers.SerializerMethodField()
+    land = serializers.SerializerMethodField()
 
     class Meta:
         model = IndigenousVillage
@@ -343,6 +351,8 @@ class IndigenousVillageGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
         model = IndigenousVillage
         geo_field = 'geometry'
         # only the id field is excluded
+        fields = []
+
         fields = ['private_comments', 'country', 'other_names', 'public_comments', 'position_source',
                   'ethnic_groups', 'position_precision', 'guarani_presence', 'cti_id', 'prominent_subgroup',
                   'state', 'city', 'layer', 'name', 'land']
@@ -352,9 +362,9 @@ class IndigenousVillageGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
         try:
             presence = obj.guarani_presence_annual_series.latest()
             if presence.presence:
-                return 'Sim (Fonte: {})'.format(presence.source)
+                return 'Sim (Fonte: {0} - {1})'.format(presence.source, presence.date.year)
             else:
-                'Não (Fonte: {})'.format(presence.source)
+                'Não (Fonte: {0} - {1})'.format(presence.source, presence.date.year)
         except GuaraniPresence.DoesNotExist:
             return ''
 
