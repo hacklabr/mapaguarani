@@ -52,6 +52,7 @@ THIRD_PARTY_APPS = (
     'compressor',
     'rest_framework',
     'rest_framework_gis',
+    'rest_framework_serializer_field_permissions',
     'moderation',
     'import_export',
 )

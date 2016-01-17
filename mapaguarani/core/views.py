@@ -4,6 +4,7 @@ from django.contrib.gis.db.models.fields import GeometryField
 from django.db.models import Count, F
 import rest_framework_gis
 from rest_framework import viewsets, relations, serializers
+from rest_framework_serializer_field_permissions import fields
 from import_export import admin
 
 from .models import (IndigenousLand, IndigenousVillage,
@@ -80,6 +81,8 @@ class ShapefileView(View):
         serializers.ChoiceField: "str",
         serializers.ReadOnlyField: "str",
         serializers.Field: "str",
+        # rest_framework_serializer_field_permissions fields
+        fields.ReadOnlyField: "str",
     }
 
     def _get_fiona_type(self, field_type):

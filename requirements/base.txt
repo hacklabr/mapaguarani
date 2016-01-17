@@ -16,6 +16,8 @@ Pillow==2.8.1
 # REST API
 djangorestframework==3.1.3
 djangorestframework-gis==0.10.1
+# django-rest-serializer-field-permissions==1.0.0
+-e git+https://github.com/hacklabr/django-rest-serializer-field-permissions#egg=django-rest-serializer-field-permissions
 
 # django-geojson>=2.8.1
 -e git+https://github.com/hacklabr/django-geojson#egg=django-geojson

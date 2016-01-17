@@ -44,6 +44,15 @@
         <th>População total</th>
         <td>{{data.population}}</td>
       </tr>
+
+        <tr ng-show="data.guarani_presence">
+        <th>Presença Guarani</th>
+        <td>
+          <p ng-if="data.guarani_presence">Sim</p>
+          <p ng-if="!data.guarani_presence">Não</p>
+        </td>
+      </tr>
+
       <tr ng-show="data.land_tenure">
         <th>Situação fundiárea</th>
         <td>{{data.land_tenure.name}}</td>

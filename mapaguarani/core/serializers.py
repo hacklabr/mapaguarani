@@ -1,16 +1,12 @@
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
+from rest_framework_serializer_field_permissions import fields
+from rest_framework_serializer_field_permissions.serializers import FieldPermissionSerializerMixin
+from rest_framework_serializer_field_permissions.permissions import IsAuthenticated
 from .models import (IndigenousLand, IndigenousVillage, ArchaeologicalPlace, LandTenure, LandTenureStatus,
-                    GuaraniPresence, Population,)
+                     GuaraniPresence, Population,)
 from protected_areas.serializers import BaseProtectedAreaSerializers
 from django.utils.translation import ugettext as _
-
-
-class SimpleIndigenousVillageSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = IndigenousVillage
-        fields = ['id', 'name']
 
 
 class PopulationSerializer(serializers.ModelSerializer):
@@ -52,7 +48,7 @@ class IndigenousLandListSerializer(BaseListSerializerMixin):
 
     exclude_field = ['villages', 'population', 'calculated_area',
                      'protected_areas_integral', 'protected_areas_conservation',
-                     'cities', 'states', ]
+                     'cities', 'states', 'guarani_presence']
 
 
 class IndigenousPlaceSerializer(serializers.ModelSerializer):
@@ -71,57 +67,37 @@ class IndigenousPlaceSerializer(serializers.ModelSerializer):
             return BaseProtectedAreaSerializers(obj.protected_areas.filter(type='US'), many=True).data
 
 
-class IndigenousLandSerializer(IndigenousPlaceSerializer):
+class IndigenousPlaceGeojsonSerializer(FieldPermissionSerializerMixin, GeoFeatureModelSerializer):
 
-    associated_land = serializers.PrimaryKeyRelatedField(read_only=True)
-    bbox = serializers.SerializerMethodField()
-    guarani_presence = serializers.SerializerMethodField()
-    villages = serializers.SerializerMethodField()
-    population = serializers.ReadOnlyField()
-    calculated_area = serializers.ReadOnlyField()
+    """
+    This serializer is used to generate the shapefile
+    """
 
-    cities = serializers.SerializerMethodField()
-    states = serializers.SerializerMethodField()
+    cti_id = serializers.ReadOnlyField(source='id')
+    ethnic_groups = serializers.SerializerMethodField()
+    prominent_subgroup = serializers.SerializerMethodField()
+    layer = serializers.SerializerMethodField()
+    country = serializers.SerializerMethodField()
 
-    class Meta:
-        model = IndigenousLand
-        list_serializer_class = IndigenousLandListSerializer
-        exclude = ['geometry']
-        depth = 1
+    # Private fields
+    private_comments = fields.ReadOnlyField(permission_classes=(IsAuthenticated(), ))
 
     @staticmethod
-    def get_bbox(obj):
-        if obj.geometry.extent:
-            return [[obj.geometry.extent[0], obj.geometry.extent[1]], [obj.geometry.extent[2], obj.geometry.extent[3]]]
+    def get_ethnic_groups(obj):
+        return ", ".join([ethnic_groups.name for ethnic_groups in obj.ethnic_groups.all()])
 
     @staticmethod
-    def get_guarani_presence(obj):
-        return obj.ethnic_groups.filter(name='Guarani').exists()
-        # presences = []
-        # for village in obj.villages:
-        #     try:
-        #         presence = village.guarani_presence_annual_series.latest()
-        #         presences.append(GuaraniPresenceSerializer(presence).data)
-        #     except GuaraniPresence.DoesNotExist:
-        #         pass
-        #
-        # return presences
+    def get_prominent_subgroup(obj):
+        return ", ".join([prominent_sub.name for prominent_sub in obj.prominent_subgroup.all()])
 
     @staticmethod
-    def get_villages(obj):
-        return SimpleIndigenousVillageSerializer(obj.villages, many=True).data
+    def get_layer(obj):
+        if obj.layer:
+            return obj.layer.name
 
     @staticmethod
-    def get_cities(obj):
-        cities = obj.get_cities_intersected()
-        if cities:
-            return ", ".join([city.name for city in cities])
-
-    @staticmethod
-    def get_states(obj):
-        states = obj.get_states_intersected()
-        if states:
-            return ", ".join([state.name or state.acronym for state in states])
+    def get_country(obj):
+        return 'Brasil'
 
 
 class SimpleIndigenousLandSerializer(serializers.ModelSerializer):
@@ -133,12 +109,8 @@ class SimpleIndigenousLandSerializer(serializers.ModelSerializer):
 
 class IndigenousVillageSerializer(IndigenousPlaceSerializer):
 
-    protected_areas_integral = serializers.SerializerMethodField()
-    protected_areas_conservation = serializers.SerializerMethodField()
-
     position_precision = serializers.SerializerMethodField()
     population = serializers.SerializerMethodField()
-
     guarani_presence = serializers.SerializerMethodField()
     city = serializers.SerializerMethodField()
     state = serializers.SerializerMethodField()
@@ -148,12 +120,6 @@ class IndigenousVillageSerializer(IndigenousPlaceSerializer):
         model = IndigenousVillage
         list_serializer_class = ListIndigenousVillageSerializer
         depth = 1
-
-    @staticmethod
-    def get_land(obj):
-        if obj.land:
-            land = obj.land[0]
-            return SimpleIndigenousLandSerializer(land).data
 
     @staticmethod
     def get_position_precision(obj):
@@ -193,72 +159,136 @@ class IndigenousVillageSerializer(IndigenousPlaceSerializer):
         if obj.state:
             return obj.state.name or obj.state.acronym
 
-
-class ArchaeologicalPlaceListSerializer(serializers.ListSerializer):
-
-    @classmethod
-    def many_init(cls, *args, **kwargs):
-        # Instantiate the child serializer.
-        kwargs['child'] = cls()
-        # Instantiate the parent list serializer.
-        return ArchaeologicalPlaceListSerializer(*args, **kwargs)
-
-    class Meta:
-        model = ArchaeologicalPlace
-        depth = 1
+    @staticmethod
+    def get_land(obj):
+        if obj.land:
+            land = obj.land[0]
+            return SimpleIndigenousLandSerializer(land).data
 
 
-class ArchaeologicalPlaceSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = ArchaeologicalPlace
-        # list_serializer_class = ArchaeologicalPlaceListSerializer
-        # exclude = ['geometry']
-        depth = 1
-
-
-class LandTenureSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = LandTenure
-        fields = ['id', 'name', 'map_color', 'indigenous_lands']
-
-
-class LandTenureStatusSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = LandTenureStatus
-        fields = ['id', 'name', 'map_color', 'dashed_border', 'indigenous_lands']
-
-
-class IndigenousPlaceGeojsonSerializer(GeoFeatureModelSerializer):
+class IndigenousVillageGeojsonSerializer(IndigenousVillageSerializer, IndigenousPlaceGeojsonSerializer):
 
     """
     This serializer is used to generate the shapefile
     """
 
-    cti_id = serializers.ReadOnlyField(source='id')
-    ethnic_groups = serializers.SerializerMethodField()
-    prominent_subgroup = serializers.SerializerMethodField()
-    layer = serializers.SerializerMethodField()
-    country = serializers.SerializerMethodField()
+    class Meta:
+        model = IndigenousVillage
+        geo_field = 'geometry'
+        # only the id field is excluded
+        fields = []
+
+        fields = ['name', 'other_names', 'land',  'guarani_presence', 'population',
+                  'ethnic_groups', 'prominent_subgroup',
+                  'city', 'state', 'country',
+                  'position_source', 'position_precision', 'public_comments',
+                  'private_comments', 'cti_id', 'layer']
 
     @staticmethod
-    def get_ethnic_groups(obj):
-        return ", ".join([ethnic_groups.name for ethnic_groups in obj.ethnic_groups.all()])
+    def get_guarani_presence(obj):
+        # FIXME tranlations
+        try:
+            presence = obj.guarani_presence_annual_series.latest()
+            if presence.presence:
+                return 'Sim (Fonte: {} - {})'.format(presence.source, presence.date.year)
+            else:
+                'Não (Fonte: {} - {})'.format(presence.source, presence.date.year)
+        except GuaraniPresence.DoesNotExist:
+            return ''
 
     @staticmethod
-    def get_prominent_subgroup(obj):
-        return ", ".join([prominent_sub.name for prominent_sub in obj.prominent_subgroup.all()])
+    def get_population(obj):
+        try:
+            population = obj.population_annual_series.latest()
+            return _('{population} (Source: {source} - {year})').format(
+                population=population.population,
+                source=population.source,
+                year=population.date.year
+            )
+        except Population.DoesNotExist:
+            return _('No information')
 
     @staticmethod
-    def get_layer(obj):
-        if obj.layer:
-            return obj.layer.name
+    def get_position_precision(obj):
+        if obj.position_precision:
+            return str(dict(IndigenousVillage.POSITION_PRECISION).get(obj.position_precision))
 
     @staticmethod
-    def get_country(obj):
-        return 'Brasil'
+    def get_land(obj):
+        if obj.land:
+            land = obj.land[0]
+            return land.name
+
+    @staticmethod
+    def get_city(obj):
+        if obj.city:
+            return obj.city.name
+
+    @staticmethod
+    def get_state(obj):
+        if obj.state:
+            return obj.state.name or obj.state.acronym
+
+
+class SimpleIndigenousVillageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = IndigenousVillage
+        fields = ['id', 'name']
+
+
+class IndigenousLandSerializer(IndigenousPlaceSerializer):
+
+    associated_land = serializers.PrimaryKeyRelatedField(read_only=True)
+    bbox = serializers.SerializerMethodField()
+    guarani_presence = serializers.SerializerMethodField()
+    villages = serializers.SerializerMethodField()
+    population = serializers.ReadOnlyField()
+    calculated_area = serializers.ReadOnlyField()
+
+    cities = serializers.SerializerMethodField()
+    states = serializers.SerializerMethodField()
+
+    class Meta:
+        model = IndigenousLand
+        list_serializer_class = IndigenousLandListSerializer
+        exclude = ['geometry']
+        depth = 1
+
+    @staticmethod
+    def get_bbox(obj):
+        if obj.geometry.extent:
+            return [[obj.geometry.extent[0], obj.geometry.extent[1]], [obj.geometry.extent[2], obj.geometry.extent[3]]]
+
+    @staticmethod
+    def get_guarani_presence(obj):
+        guarani_presence = False
+        # presences = []
+        for village in obj.villages:
+            try:
+                presence = village.guarani_presence_annual_series.latest()
+                guarani_presence = guarani_presence or presence.presence
+                # presences.append(GuaraniPresenceSerializer(presence).data)
+            except GuaraniPresence.DoesNotExist:
+                pass
+
+        return guarani_presence
+
+    @staticmethod
+    def get_villages(obj):
+        return SimpleIndigenousVillageSerializer(obj.villages, many=True).data
+
+    @staticmethod
+    def get_cities(obj):
+        cities = obj.get_cities_intersected()
+        if cities:
+            return ", ".join([city.name for city in cities])
+
+    @staticmethod
+    def get_states(obj):
+        states = obj.get_states_intersected()
+        if states:
+            return ", ".join([state.name or state.acronym for state in states])
 
 
 class IndigenousLandGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
@@ -269,6 +299,7 @@ class IndigenousLandGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
 
     land_tenure = serializers.SlugRelatedField(read_only=True, slug_field='name')
     land_tenure_status = serializers.SlugRelatedField(read_only=True, slug_field='name')
+
     documents = serializers.SerializerMethodField()
     cities = serializers.SerializerMethodField()
     states = serializers.SerializerMethodField()
@@ -296,18 +327,6 @@ class IndigenousLandGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
         cities = obj.get_cities_intersected()
         if cities:
             return ", ".join([city.name for city in cities])
-        # try:
-        #     cities = obj.get_cities_intersected()
-        #     if cities:
-        #         return ", ".join([city.name for city in cities])
-        # except:
-        #     if not obj.geometry.valid:
-        #         return 'Não foi possível determinar os ' \
-        #                'Municípios em sobreposição por que o ' \
-        #                'polígono é inválido. Erro: {}'.format(obj.geometry.valid_reason)
-        #     else:
-        #         return 'Erro desconhecido ao determinar os ' \
-        #                'Municípios em sobreposição'
 
     @staticmethod
     def get_states(obj):
@@ -336,61 +355,35 @@ class IndigenousLandGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
             return _('No')
 
 
-class IndigenousVillageGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
-
-    """
-    This serializer is used to generate the shapefile
-    """
-
-    guarani_presence = serializers.SerializerMethodField()
-    city = serializers.SerializerMethodField()
-    state = serializers.SerializerMethodField()
-    land = serializers.SerializerMethodField()
+class ArchaeologicalPlaceSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = IndigenousVillage
-        geo_field = 'geometry'
-        # only the id field is excluded
-        fields = []
-
-        fields = ['private_comments', 'country', 'other_names', 'public_comments', 'position_source',
-                  'ethnic_groups', 'position_precision', 'guarani_presence', 'cti_id', 'prominent_subgroup',
-                  'state', 'city', 'layer', 'name', 'land']
-
-    @staticmethod
-    def get_guarani_presence(obj):
-        try:
-            presence = obj.guarani_presence_annual_series.latest()
-            if presence.presence:
-                return 'Sim (Fonte: {0} - {1})'.format(presence.source, presence.date.year)
-            else:
-                'Não (Fonte: {0} - {1})'.format(presence.source, presence.date.year)
-        except GuaraniPresence.DoesNotExist:
-            return ''
-
-    @staticmethod
-    def get_land(obj):
-        if obj.land:
-            land = obj.land[0]
-            return land.name
-
-    @staticmethod
-    def get_city(obj):
-        if obj.city:
-            return obj.city.name
-
-    @staticmethod
-    def get_state(obj):
-        if obj.state:
-            return obj.state.name or obj.state.acronym
+        model = ArchaeologicalPlace
+        # list_serializer_class = ArchaeologicalPlaceListSerializer
+        # exclude = ['geometry']
+        depth = 1
 
 
-class ArchaeologicalPlaceGeojsonSerializer(GeoFeatureModelSerializer):
+class ArchaeologicalPlaceGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
 
     class Meta:
         model = ArchaeologicalPlace
         geo_field = 'geometry'
-        exclude = ['id', 'layer', ]
+        exclude = ['id', 'ethnic_groups', 'prominent_subgroup', ]
+
+
+class LandTenureSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = LandTenure
+        fields = ['id', 'name', 'map_color', 'indigenous_lands']
+
+
+class LandTenureStatusSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = LandTenureStatus
+        fields = ['id', 'name', 'map_color', 'dashed_border', 'indigenous_lands']
 
 
 class LandTenureReportSerializer(serializers.ModelSerializer):
