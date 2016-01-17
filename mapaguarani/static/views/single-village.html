@@ -91,7 +91,7 @@
         <th>Observações</th>
         <td>{{data.public_comments}}</td>
       </tr>
-      <tr ng-if="user.is_autenticated && data.private_comments">
+      <tr ng-if="user.is_authenticated && data.private_comments">
         <th>Observações (Restritas)</th>
         <td>{{data.private_comments}}</td>
       </tr>

@@ -48,29 +48,27 @@
         <th>Situação fundiárea</th>
         <td>{{data.land_tenure.name}}</td>
       </tr>
-      <tr ng-if="user.is_autenticated && data.land_tenure_status">
+      <tr ng-if="user.is_authenticated && data.land_tenure_status">
         <th>Status de revisão</th>
         <td>{{data.land_tenure_status.name}}</td>
       </tr>
 
-      <tr ng-if="user.is_autenticated && data.clain">
+      <tr ng-if="user.is_authenticated && data.clain">
         <th>Reinvidicação</th>
         <td>{{data.claim}}</td>
       </tr>
-      <tr ng-if="user.is_autenticated && data.demand">
+      <tr ng-if="user.is_authenticated && data.demand">
         <th>Demanda</th>
         <td>{{data.demand}}</td>
       </tr>
-
-      <!--TODO: Adicionar unidade (m2?, hectares?) -->
       <tr ng-show="data.official_area">
         <th>Área</th>
         <td>{{data.official_area}} ha</td>
       </tr>
-      <tr ng-if="user.is_autenticated && data.calculated_area">
-        <th>Área calculada pelo polígono</th>
-        <td>{{data.calculated_area}} ha</td>
-      </tr>
+      <!--<tr ng-if="user.is_authenticated && data.calculated_area">-->
+        <!--<th>Área calculada pelo polígono</th>-->
+        <!--<td>{{data.calculated_area}} ha</td>-->
+      <!--</tr>-->
       <tr ng-show="data.guarani_exclusive_possession_area_portion">
         <th>Área em posse exclusiva dos Guaranis</th>
         <td>{{data.guarani_exclusive_possession_area_portion}} ha</td>
@@ -99,7 +97,7 @@
         <th>Observações</th>
         <td>{{data.public_comments}}</td>
       </tr>
-      <tr ng-if="user.is_autenticated && data.private_comments">
+      <tr ng-if="user.is_authenticated && data.private_comments">
         <th>Observações (Restritas)</th>
         <td>{{data.private_comments}}</td>
       </tr>
