@@ -81,7 +81,8 @@
     '$stateParams',
     'GuaraniService',
     'guaraniMapService',
-    function($rootScope, $stateParams, Guarani, Map) {
+    'user',
+    function($rootScope, $stateParams, Guarani, Map, user) {
       return {
         restrict: 'E',
         scope: {
@@ -92,6 +93,9 @@
         },
         templateUrl: '/static/views/partials/list.html',
         link: function(scope, element, attrs) {
+
+          // Set current user
+          scope.user = user;
 
           /*
            * Content type

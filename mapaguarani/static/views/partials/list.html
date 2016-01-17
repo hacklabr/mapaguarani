@@ -26,10 +26,10 @@
             <span class="text">listar</span>
             <span class="fa fa-list"></span>
           </a>
-          <a href="/shapefiles/villages/">
-            <span class="text">baixar</span>
-            <span class="fa fa-cloud-download"></span>
-          </a>
+          <!--<a href="/shapefiles/villages/">-->
+            <!--<span class="text">baixar</span>-->
+            <!--<span class="fa fa-cloud-download"></span>-->
+          <!--</a>-->
           <a href="javascript:void(0);" ng-click="toggleLayer('villages')" title="Visualizar/esconder camada do mapa">
             <span class="text">visível</span>
             <span class="fa fa-eye"></span>
@@ -72,10 +72,10 @@
             <span class="text">listar</span>
             <span class="fa fa-list"></span>
           </a>
-          <a href="/shapefiles/lands/">
-            <span class="text">baixar</span>
-            <span class="fa fa-cloud-download"></span>
-          </a>
+          <!--<a href="/shapefiles/lands/">-->
+            <!--<span class="text">baixar</span>-->
+            <!--<span class="fa fa-cloud-download"></span>-->
+          <!--</a>-->
           <a href="javascript:void(0);" ng-click="toggleLayer('lands')" title="Visualizar/esconder camada do mapa">
             <span class="text">visível</span>
             <span class="fa fa-eye"></span>
@@ -83,7 +83,7 @@
         </p>
         <h2><a href="javascript:void(0);" ng-click="toggleContent('lands')"><span class="icon-color"></span>Terras indígenas</a></h2>
         <div class="content-item-body" ng-show="content == 'lands'" sidebar-height="content == 'lands'">
-          <nav id="village-filters" class="content-filters" ng-show="adv.lands">
+          <nav id="lands-filters" class="content-filters" ng-show="adv.lands">
             <a class="toggle-adv" ng-click="toggleAdv()" href="javascript:void(0);" ng-hide="showAdv">Busca avançada</a>
             <form role="search" ng-show="showAdv">
               <a class="close" href="javascript:void(0);" title="Fechar busca avançada" ng-click="toggleAdv()">x</a>
@@ -112,52 +112,54 @@
           </nav>
         </div>
       </li>
-      <!--<li id="sites" class="content-item" ng-class="{active: content == 'sites', 'active-layer': activeLayers.sites}">-->
-        <!--<p class="actions">-->
-          <!--<a href="javascript:void(0);" ng-click="toggleContent('sites')">-->
-            <!--<span class="text">listar</span>-->
-            <!--<span class="fa fa-list"></span>-->
-          <!--</a>-->
+      <li id="sites" class="content-item"
+          ng-class="{active: content == 'sites', 'active-layer': activeLayers.sites}"
+          ng-if="user.is_authenticated">
+        <p class="actions">
+          <a href="javascript:void(0);" ng-click="toggleContent('sites')">
+            <span class="text">listar</span>
+            <span class="fa fa-list"></span>
+          </a>
           <!--<a href="/shapefiles/archaeological/">-->
             <!--<span class="text">baixar</span>-->
             <!--<span class="fa fa-cloud-download"></span>-->
           <!--</a>-->
-          <!--<a href="javascript:void(0);" ng-click="toggleLayer('sites')" title="Visualizar/esconder camada do mapa">-->
-            <!--<span class="text">visível</span>-->
-            <!--<span class="fa fa-eye"></span>-->
-          <!--</a>-->
-        <!--</p>-->
-        <!--<h2><a href="javascript:void(0);" ng-click="toggleContent('sites')"><span class="icon-color"></span>Sítios arqueológicos</a></h2>-->
-        <!--<div class="content-item-body" ng-show="content == 'sites'" sidebar-height="content == 'sites'">-->
-          <!--<nav id="village-filters" class="content-filters" ng-show="adv.sites">-->
-            <!--<a class="toggle-adv" ng-click="toggleAdv()" href="javascript:void(0);" ng-hide="showAdv">Busca avançada</a>-->
-            <!--<form role="search" ng-show="showAdv">-->
-              <!--<a class="close" href="javascript:void(0);" title="Fechar busca avançada" ng-click="toggleAdv()">x</a>-->
-              <!--<div class="dropdown-filters">-->
-                <!--<p class="dropdown-filter" ng-repeat="(k,f) in adv.sites">-->
-                  <!--<label for="sites_adv_filter_{{k}}">{{f.name}}</label>-->
-                  <!--<select id="sites_adv_filter_{{k}}" ng-model="filter.advanced[k]" ng-options="option[f.ref] as option[f.label] for option in f.options">-->
-                    <!--<option value="">-&#45;&#45;</option>-->
-                  <!--</select>-->
-                <!--</p>-->
-              <!--</div>-->
-            <!--</form>-->
-          <!--</nav>-->
-          <!--<ul class="site list">-->
-            <!--<li guarani-item item="site" class="site item" ng-repeat="site in filtered.sites = (sites | contentType:'sites':content:filter.text | filter:filter.text) | offset:curPage*perPage | limitTo:perPage"></li>-->
-          <!--</ul>-->
-          <!--<nav class="sidebar-pagination">-->
-            <!--<ul class="pager">-->
-              <!--<li class="previous">-->
-                <!--<a href="javascript:void(0);" ng-click="prevPage();" ng-hide="curPage == 0"><span aria-hidden="true">&larr;</span> Página anterior</a>-->
-              <!--</li>-->
-              <!--<li class="next">-->
-                <!--<a href="javascript:void(0);" ng-click="nextPage();" ng-hide="curPage >= pageCount()">Próxima página <span aria-hidden="true">&rarr;</span></a>-->
-              <!--</li>-->
-            <!--</ul>-->
-          <!--</nav>-->
-        <!--</div>-->
-      <!--</li>-->
+          <a href="javascript:void(0);" ng-click="toggleLayer('sites')" title="Visualizar/esconder camada do mapa">
+            <span class="text">visível</span>
+            <span class="fa fa-eye"></span>
+          </a>
+        </p>
+        <h2><a href="javascript:void(0);" ng-click="toggleContent('sites')"><span class="icon-color"></span>Sítios arqueológicos</a></h2>
+        <div class="content-item-body" ng-show="content == 'sites'" sidebar-height="content == 'sites'">
+          <nav id="site-filters" class="content-filters" ng-show="adv.sites">
+            <a class="toggle-adv" ng-click="toggleAdv()" href="javascript:void(0);" ng-hide="showAdv">Busca avançada</a>
+            <form role="search" ng-show="showAdv">
+              <a class="close" href="javascript:void(0);" title="Fechar busca avançada" ng-click="toggleAdv()">x</a>
+              <div class="dropdown-filters">
+                <p class="dropdown-filter" ng-repeat="(k,f) in adv.sites">
+                  <label for="sites_adv_filter_{{k}}">{{f.name}}</label>
+                  <select id="sites_adv_filter_{{k}}" ng-model="filter.advanced[k]" ng-options="option[f.ref] as option[f.label] for option in f.options">
+                    <option value="">---</option>
+                  </select>
+                </p>
+              </div>
+            </form>
+          </nav>
+          <ul class="site list">
+            <li guarani-item item="site" class="site item" ng-repeat="site in filtered.sites = (sites | contentType:'sites':content:filter.text | filter:filter.text) | offset:curPage*perPage | limitTo:perPage"></li>
+          </ul>
+          <nav class="sidebar-pagination">
+            <ul class="pager">
+              <li class="previous">
+                <a href="javascript:void(0);" ng-click="prevPage();" ng-hide="curPage == 0"><span aria-hidden="true">&larr;</span> Página anterior</a>
+              </li>
+              <li class="next">
+                <a href="javascript:void(0);" ng-click="nextPage();" ng-hide="curPage >= pageCount()">Próxima página <span aria-hidden="true">&rarr;</span></a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </li>
     </ul>
   </div>
 </section>
