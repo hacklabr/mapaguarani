@@ -56,10 +56,13 @@
       </div>
       <div class="modal-body">
         <ul class="nav nav-tabs" id="aboutTabs">
+          {% if user.is_authenticated %}
           <li class="active"><a href="#tijuridic" data-toggle="tab">Situação Jurídica</a></li>
-          <li><a href="#titable" data-toggle="tab">Tabela de Terras Indígenas</a></li>
+          {% endif %}
+          <li {% if not user.is_authenticated %} class="active" {% endif %}><a href="#titable" data-toggle="tab">Tabela de Terras Indígenas</a></li>
         </ul>
         <div class="tab-content" id="aboutTabsContent">
+          {% if user.is_authenticated %}
           <div id="tijuridic" class="tab-pane fade active in">
             <table class="table">
               <thead>
@@ -106,14 +109,16 @@
               </tfooter>
             </table>
           </div>
-
-          <div id="titable" class="tab-pane fade">
+          {% endif %}
+          <div id="titable" class="tab-pane fade {% if not user.is_authenticated %} active in {% endif %}">
             <hr/>
             <p class="lead text-center">Você pode baixar a planilha das terras indigenas, e os shapefiles das camadas de Aldeias e Terras Indígenas</p>
             <p class="lead text-center">A geração destes arquivos pode demorar vários minutos, por favor aguarde o download começar após clicar abaixo no arquivo abaixo desejado.</p>
+            {% if user.is_authenticated %}
             <p class="text-center">
               <a class="btn btn-lg btn-success" href="{% url 'export_villages' %}">baixar Planilha das terras indigenas</a>
             </p>
+            {% endif %}
             <p class="text-center">
               <a class="btn btn-lg btn-success" href="{% url 'lands_shapefiles' %}">baixar shapefile das terras indigenas</a>
             </p>
