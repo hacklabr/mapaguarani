@@ -67,7 +67,7 @@ class IndigenousPlaceSerializer(serializers.ModelSerializer):
             return BaseProtectedAreaSerializers(obj.protected_areas.filter(type='US'), many=True).data
 
 
-class IndigenousPlaceGeojsonSerializer(FieldPermissionSerializerMixin, GeoFeatureModelSerializer):
+class IndigenousPlaceGeojsonSerializer(GeoFeatureModelSerializer):
 
     """
     This serializer is used to generate the shapefile
@@ -78,9 +78,6 @@ class IndigenousPlaceGeojsonSerializer(FieldPermissionSerializerMixin, GeoFeatur
     prominent_subgroup = serializers.SerializerMethodField()
     layer = serializers.SerializerMethodField()
     country = serializers.SerializerMethodField()
-
-    # Private fields
-    private_comments = fields.ReadOnlyField(permission_classes=(IsAuthenticated(), ))
 
     @staticmethod
     def get_ethnic_groups(obj):
@@ -107,7 +104,7 @@ class SimpleIndigenousLandSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
-class IndigenousVillageSerializer(IndigenousPlaceSerializer):
+class IndigenousVillageSerializer(FieldPermissionSerializerMixin, IndigenousPlaceSerializer):
 
     position_precision = serializers.SerializerMethodField()
     population = serializers.SerializerMethodField()
@@ -115,6 +112,9 @@ class IndigenousVillageSerializer(IndigenousPlaceSerializer):
     city = serializers.SerializerMethodField()
     state = serializers.SerializerMethodField()
     land = serializers.SerializerMethodField()
+
+    # Private fields
+    private_comments = fields.ReadOnlyField(permission_classes=(IsAuthenticated(), ))
 
     class Meta:
         model = IndigenousVillage
@@ -166,18 +166,20 @@ class IndigenousVillageSerializer(IndigenousPlaceSerializer):
             return SimpleIndigenousLandSerializer(land).data
 
 
-class IndigenousVillageGeojsonSerializer(IndigenousVillageSerializer, IndigenousPlaceGeojsonSerializer):
+class IndigenousVillageGeojsonSerializer(IndigenousVillageSerializer,
+                                         IndigenousPlaceGeojsonSerializer):
 
     """
     This serializer is used to generate the shapefile
     """
 
+    # Private fields
+    private_comments = fields.ReadOnlyField(permission_classes=(IsAuthenticated(), ))
+
     class Meta:
         model = IndigenousVillage
         geo_field = 'geometry'
         # only the id field is excluded
-        fields = []
-
         fields = ['name', 'other_names', 'land',  'guarani_presence', 'population',
                   'ethnic_groups', 'prominent_subgroup',
                   'city', 'state', 'country',
@@ -194,7 +196,7 @@ class IndigenousVillageGeojsonSerializer(IndigenousVillageSerializer, Indigenous
             else:
                 'Não (Fonte: {} - {})'.format(presence.source, presence.date.year)
         except GuaraniPresence.DoesNotExist:
-            return ''
+            return _('No information')
 
     @staticmethod
     def get_population(obj):
@@ -237,17 +239,23 @@ class SimpleIndigenousVillageSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
-class IndigenousLandSerializer(IndigenousPlaceSerializer):
+class IndigenousLandSerializer(FieldPermissionSerializerMixin, IndigenousPlaceSerializer):
 
     associated_land = serializers.PrimaryKeyRelatedField(read_only=True)
+
     bbox = serializers.SerializerMethodField()
     guarani_presence = serializers.SerializerMethodField()
     villages = serializers.SerializerMethodField()
+
     population = serializers.ReadOnlyField()
-    calculated_area = serializers.ReadOnlyField()
+    # calculated_area = serializers.ReadOnlyField()
 
     cities = serializers.SerializerMethodField()
     states = serializers.SerializerMethodField()
+
+    private_comments = fields.ReadOnlyField(permission_classes=(IsAuthenticated(), ))
+    claim = fields.ReadOnlyField(permission_classes=(IsAuthenticated(), ))
+    demand = fields.ReadOnlyField(permission_classes=(IsAuthenticated(), ))
 
     class Meta:
         model = IndigenousLand
@@ -291,48 +299,38 @@ class IndigenousLandSerializer(IndigenousPlaceSerializer):
             return ", ".join([state.name or state.acronym for state in states])
 
 
-class IndigenousLandGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
+class IndigenousLandGeojsonSerializer(IndigenousLandSerializer, IndigenousPlaceGeojsonSerializer):
 
     """
     This serializer is used to generate the shapefile
     """
 
-    land_tenure = serializers.SlugRelatedField(read_only=True, slug_field='name')
-    land_tenure_status = serializers.SlugRelatedField(read_only=True, slug_field='name')
-
     documents = serializers.SerializerMethodField()
-    cities = serializers.SerializerMethodField()
-    states = serializers.SerializerMethodField()
-    villages = serializers.SerializerMethodField()
-    guarani_presence = serializers.SerializerMethodField()
+    population = serializers.SerializerMethodField()
+    cti_id = fields.ReadOnlyField(source='id', permission_classes=(IsAuthenticated(), ))
 
     class Meta:
         model = IndigenousLand
         geo_field = 'geometry'
-        fields = ['land_tenure', 'official_area', 'claim', 'country', 'others_exclusive_possession_area_portion',
-                  'land_tenure_status', 'demand', 'prominent_subgroup', 'associated_land', 'ethnic_groups',
-                  'cities', 'private_comments', 'other_names', 'cti_id', 'layer',
-                  'guarani_exclusive_possession_area_portion', 'public_comments', 'name',
-                  'source', 'states', 'villages', 'documents', 'guarani_presence']
-        # exclude = ['id', ]
+        fields = ['cti_id', 'name', 'other_names', 'ethnic_groups', 'prominent_subgroup', 'villages', 'population',
+                  'guarani_presence', 'official_area', 'land_tenure',
+                  'land_tenure_status', 'associated_land',
+                  'guarani_exclusive_possession_area_portion', 'others_exclusive_possession_area_portion',
+                  'documents',
+                  'cities', 'states', 'demand', 'claim', 'public_comments', 'source',
+                  'private_comments', 'layer']
 
     @staticmethod
     def get_documents(obj):
         if obj.documents:
-            return "\n".join([document.description for document in obj.documents.all()])
-            # return obj.documents.description
+            return "; \n".join([document.description for document in obj.documents.all()])
 
     @staticmethod
-    def get_cities(obj):
-        cities = obj.get_cities_intersected()
-        if cities:
-            return ", ".join([city.name for city in cities])
-
-    @staticmethod
-    def get_states(obj):
-        states = obj.get_states_intersected()
-        if states:
-            return ", ".join([state.name or state.acronym for state in states])
+    def get_population(obj):
+        if obj.population == 0:
+            return _('No information')
+        else:
+            return obj.population
 
     @staticmethod
     def get_villages(obj):
