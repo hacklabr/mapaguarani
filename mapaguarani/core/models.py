@@ -248,7 +248,7 @@ class IndigenousLand(IndigenousPlace):
     claim = models.TextField(_('Clain'), blank=True, null=True)
     # private field
     demand = models.TextField(_('Demand'), blank=True, null=True)
-    # private field???
+
     source = models.CharField(_('Source'), max_length=512)
     # Situação Fundiária
     land_tenure = models.ForeignKey(
