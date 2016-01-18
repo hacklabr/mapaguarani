@@ -149,7 +149,6 @@ class IndigenousVillage(IndigenousPlace):
 
     @property
     def country(self):
-        # TODO: Verificar se uma terra indigena pode ter mais de um pais
         return 'Brasil'
 
 

@@ -3,9 +3,10 @@ from django.views.generic import View
 from django.contrib.gis.db.models.fields import GeometryField
 from django.db.models import Count, F
 import rest_framework_gis
-from rest_framework import viewsets, relations, serializers
+from rest_framework import viewsets, relations, serializers, generics
 from rest_framework_serializer_field_permissions import fields
 from import_export import admin
+from collections import OrderedDict
 
 from .models import (IndigenousLand, IndigenousVillage,
                      ArchaeologicalPlace, LandTenure, LandTenureStatus,)
@@ -51,7 +52,7 @@ class LandTenureStatusViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = LandTenureStatusSerializer
 
 
-class ShapefileView(View):
+class ShapefileView(generics.GenericAPIView):
 
     serializer_class = None
     queryset = None
@@ -109,11 +110,13 @@ class ShapefileView(View):
             % self.__class__.__name__
         )
 
-        layer = self.serializer_class(self.queryset, many=True)
+        queryset = self.get_queryset()
+        layer = self.get_serializer(queryset, many=True)
 
         # first = self.queryset.first()
         # geometry_type = first.geometry.geom_type
 
+        # FIXME take it from self.geo_field
         geo_field = None
         for field in self.queryset.model._meta.fields:
             if isinstance(field, GeometryField) and field.name == self.geo_field:
@@ -122,14 +125,14 @@ class ShapefileView(View):
         crs = from_epsg(geo_field.srid)
         if self.geometry_type:
             geometry_type = self.geometry_type
-            # first = self.queryset.first()
-            # geometry_type = first.geometry.geom_type
         else:
             geometry_type = geo_field.geom_type
-        properties = layer.child.get_fields().copy()
+
+        serializer_fields = OrderedDict(layer.child.fields)
+        properties = serializer_fields.copy()
         properties.pop(self.geo_field)
 
-        for field_name, field_type in layer.child.get_fields().items():
+        for field_name, field_type in serializer_fields.items():
             if isinstance(field_type, relations.ManyRelatedField):
                 raise AttributeError("All Many to Many fields should be exclude from serializer.")
             if not isinstance(field_type, rest_framework_gis.fields.GeometryField):
@@ -146,10 +149,8 @@ class ShapefileView(View):
                 driver='ESRI Shapefile',
                 crs=crs,
                 schema=schema,
-                encoding='utf-8', ) as shapefile:
-
-            # for feat in layer.data['features']:
-            #     shapefile.write(feat)
+                encoding='iso-8859-1', ) as shapefile:
+                # encoding='utf-8', ) as shapefile:
 
             shapefile.writerecords(layer.data['features'])
 
@@ -216,7 +217,14 @@ class IndigenousVillageReportExport(View):
         if format not in IMPORT_EXPORT_FORMATS:
             format = 'csv'
 
-        resource = IndigenousVillageResource()
+        queryset = IndigenousVillage.objects.all()
+        # resource = IndigenousVillageResource()
+        from import_export import resources
+        resource = resources.Resource()
+
+        layer = IndigenousVillageGeojsonSerializer(queryset, many=True)
+        import ipdb;ipdb.set_trace()
+        resource.instance = layer.instance
         dataset = resource.export()
 
         response = HttpResponse(getattr(dataset, format), content_type=format)
