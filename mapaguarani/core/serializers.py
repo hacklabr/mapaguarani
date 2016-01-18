@@ -46,7 +46,8 @@ class ListIndigenousVillageSerializer(BaseListSerializerMixin):
 
 class IndigenousLandListSerializer(BaseListSerializerMixin):
 
-    exclude_field = ['villages', 'population', 'calculated_area',
+    exclude_field = ['villages', 'population',
+                     # 'calculated_area',
                      'protected_areas_integral', 'protected_areas_conservation',
                      'cities', 'states', 'guarani_presence']
 
