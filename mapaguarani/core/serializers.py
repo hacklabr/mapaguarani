@@ -169,13 +169,9 @@ class IndigenousVillageSerializer(FieldPermissionSerializerMixin, IndigenousPlac
 
 class IndigenousVillageGeojsonSerializer(IndigenousVillageSerializer,
                                          IndigenousPlaceGeojsonSerializer):
-
     """
     This serializer is used to generate the shapefile
     """
-
-    # Private fields
-    private_comments = fields.ReadOnlyField(permission_classes=(IsAuthenticated(), ))
 
     class Meta:
         model = IndigenousVillage
@@ -189,7 +185,7 @@ class IndigenousVillageGeojsonSerializer(IndigenousVillageSerializer,
 
     @staticmethod
     def get_guarani_presence(obj):
-        # FIXME tranlations
+        # FIXME translations
         try:
             presence = obj.guarani_presence_annual_series.latest()
             if presence.presence:
@@ -231,6 +227,17 @@ class IndigenousVillageGeojsonSerializer(IndigenousVillageSerializer,
     def get_state(obj):
         if obj.state:
             return obj.state.name or obj.state.acronym
+
+    @property
+    def fields(self):
+        ret = super(IndigenousVillageGeojsonSerializer, self).fields
+        request = self._context["request"]
+
+        for field_name, field in ret.items():
+            if hasattr(field, 'check_permission') and (not field.check_permission(request)):
+                ret.pop(field_name)
+
+        return ret
 
 
 class SimpleIndigenousVillageSerializer(serializers.ModelSerializer):
@@ -352,6 +359,17 @@ class IndigenousLandGeojsonSerializer(IndigenousLandSerializer, IndigenousPlaceG
             return _('Yes')
         else:
             return _('No')
+
+    @property
+    def fields(self):
+        ret = super(IndigenousLandGeojsonSerializer, self).fields
+        request = self._context["request"]
+
+        for field_name, field in ret.items():
+            if hasattr(field, 'check_permission') and (not field.check_permission(request)):
+                ret.pop(field_name)
+
+        return ret
 
 
 class ArchaeologicalPlaceSerializer(serializers.ModelSerializer):
