@@ -228,17 +228,6 @@ class IndigenousVillageGeojsonSerializer(IndigenousVillageSerializer,
         if obj.state:
             return obj.state.name or obj.state.acronym
 
-    @property
-    def fields(self):
-        ret = super(IndigenousVillageGeojsonSerializer, self).fields
-        request = self._context["request"]
-
-        for field_name, field in ret.items():
-            if hasattr(field, 'check_permission') and (not field.check_permission(request)):
-                ret.pop(field_name)
-
-        return ret
-
 
 class SimpleIndigenousVillageSerializer(serializers.ModelSerializer):
 
@@ -359,17 +348,6 @@ class IndigenousLandGeojsonSerializer(IndigenousLandSerializer, IndigenousPlaceG
             return _('Yes')
         else:
             return _('No')
-
-    @property
-    def fields(self):
-        ret = super(IndigenousLandGeojsonSerializer, self).fields
-        request = self._context["request"]
-
-        for field_name, field in ret.items():
-            if hasattr(field, 'check_permission') and (not field.check_permission(request)):
-                ret.pop(field_name)
-
-        return ret
 
 
 class ArchaeologicalPlaceSerializer(serializers.ModelSerializer):

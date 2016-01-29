@@ -39,6 +39,7 @@ class IndigenousVillageAdmin(IndigenousPlaceAdmin):
                     'position_precision', 'position_source', 'geometry',
                     'public_comments', 'private_comments',)
     search_fields = ['name', 'other_names', ]
+    list_per_page = 500
     inlines = [
         PopulationInLine,
         GuaraniPresenceInLine,

@@ -182,7 +182,7 @@ class IndigenousLandsShapefileView(ShapefileView):
     # self.readme = readme
     geo_field = 'geometry'
     geometry_type = 'MultiPolygon'
-    file_name = 'terras_indigenas_final'
+    file_name = 'terras_indigenas'
 
 
 class IndigenousVillagesShapefileView(ShapefileView):
@@ -191,7 +191,7 @@ class IndigenousVillagesShapefileView(ShapefileView):
     # self.readme = readme
     geo_field = 'geometry'
     geometry_type = 'Point'
-    file_name = 'aldeias_indigenas_final'
+    file_name = 'aldeias_indigenas'
 
 
 class ArchaeologicalPlacesShapefileView(ShapefileView):
