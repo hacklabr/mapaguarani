@@ -35,15 +35,18 @@ class Command(BaseCommand):
 
                 archaeological_place = ArchaeologicalPlace(**kwargs)
 
-                if row['aprox']:
-                    archaeological_place.position_precision = 'by_city'
-                else:
-                    archaeological_place.position_precision = 'exact'
+                # if row['aprox']:
+                #     archaeological_place.position_precision = 'by_city'
+                # else:
+                #     archaeological_place.position_precision = 'exact'
 
                 # import ipdb;ipdb.set_trace()
                 coords = row['coords'].split()
 
-                latitude, longitude = utm.to_latlon(int(coords[1]), int(coords[2]), int(coords[0][0:2]), coords[0][-1])
+                try:
+                    latitude, longitude = utm.to_latlon(int(coords[1]), int(coords[2]), int(coords[0][0:2]), coords[0][-1])
+                except:
+                    import ipdb;ipdb.set_trace()
 
                 archaeological_place.geometry = Point(longitude, latitude)
                 archaeological_place.save()

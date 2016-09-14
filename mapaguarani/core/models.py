@@ -141,15 +141,22 @@ class IndigenousVillage(IndigenousPlace):
 
     @property
     def city(self):
-        return City.objects.get(geometry__covers=self.geometry)
+        try:
+            return City.objects.get(geometry__covers=self.geometry)
+        except City.DoesNotExist:
+            return
 
     @property
     def state(self):
-        return State.objects.get(geometry__covers=self.geometry)
+        try:
+            return State.objects.get(geometry__covers=self.geometry)
+        except State.DoesNotExist:
+            return
 
     @property
     def country(self):
-        return 'Brasil'
+        return None
+        # return 'Brasil'
 
 
 class GuaraniPresence(models.Model):

@@ -30,8 +30,7 @@ django-compressor==1.6
 libsass==0.9.3
 django-libsass==0.6
 
-# django-moderation
--e git+https://github.com/dominno/django-moderation#egg=django-moderation
+django-moderation==0.4.0
 
 # Bidirectional UTM-WGS84 coordinates converter for python, used only in archaeological layer import
 utm==0.4

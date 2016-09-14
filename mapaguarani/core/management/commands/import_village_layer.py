@@ -18,10 +18,6 @@ class Command(BaseCommand):
         ds = DataSource(shapefile_path)
         source_layer = ds[0]
 
-        villages_layer, _ = MapLayer.objects.get_or_create(name='Aldeias Indígenas')
-        villages_layer.description = 'Camada de Aldeias Indígenas dos povos Guarani'
-        villages_layer.save()
-
         def _get_ethnic_group(groups):
 
             groups_names = []
@@ -84,6 +80,10 @@ class Command(BaseCommand):
                     print('\n')
 
         for feat in source_layer:
+
+            villages_layer, _ = MapLayer.objects.get_or_create(name=feat.get('CAMADA'))
+            villages_layer.save()
+
             kwargs = {
                 'layer': villages_layer,
                 'name': feat.get('ALDEIA_GUA'),
