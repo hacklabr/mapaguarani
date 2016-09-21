@@ -4,7 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 from .models import (
     IndigenousVillage, IndigenousLand, LegalProceedings, DocumentType,
     Document, EthnicGroup, ProminentEthnicSubGroup, GuaraniPresence, Population,
-    ArchaeologicalPlace, ArchaeologicalImage, LandTenure, LandTenureStatus
+    ArchaeologicalPlace, ArchaeologicalImage, LandTenure, LandTenureStatus,
+    MapLayer,
 )
 from moderation.admin import ModerationAdmin
 
@@ -20,6 +21,7 @@ class GuaraniPresenceInLine(admin.TabularInline):
 class IndigenousPlaceAdmin(geoadmin.GeoModelAdmin, ModerationAdmin):
     map_template = 'openlayers.html'
     list_per_page = 500
+    list_filter = ('layer', )
 
     def get_ethnic_groups(self, obj):
         return ", ".join([ethnic_group.name for ethnic_group in obj.ethnic_groups.all()])
@@ -69,11 +71,12 @@ class ArchaeologicalImageInLine(admin.TabularInline):
 class ArchaeologicalPlaceAdmin(admin.ModelAdmin):
     list_display = ('get_name', 'code', 'acronym', 'cnsa', 'biblio_references',
                     'position_precision', 'position_comments', 'geometry',)
-    search_fields = ['name', 'code', 'acronym', 'cnsa', 'biblio_references',]
+    search_fields = ['name', 'code', 'acronym', 'cnsa', 'biblio_references', ]
     list_per_page = 500
     inlines = [
         ArchaeologicalImageInLine,
     ]
+    list_filter = ('layer', )
 
     def get_name(self, obj):
         if obj.name:
@@ -96,3 +99,4 @@ admin.site.register(LandTenure)
 admin.site.register(LandTenureStatus)
 admin.site.register(GuaraniPresence)
 admin.site.register(Population)
+admin.site.register(MapLayer)
