@@ -515,35 +515,35 @@
            * Init archaeological sites layer
            */
 
-//          Guarani.sqlTiles('cluster_archaeologicalplace', {
-//            interactivity: ['id','cdb_list','src']
-//          }).then(function(token) {
-//            var sitesLayer = L.tileLayer('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.png', {
-//              zIndex: 4
-//            });
-//            var sitesGridLayer = new L.UtfGrid('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.grid.json', {
-//              useJsonP: false
-//            });
-//            sitesGridLayer.on('click', function(ev) {
-//              clusterClick(ev, 'site');
-//            });
-//            var sitesLegend = L.control({'position': 'bottomright'});
-//            sitesLegend.onAdd = function(map) {
-//              var div = L.DomUtil.create('div', 'info legend sites');
-//              div.innerHTML += '<p><span class="point-item" style="background-color: #5CA2D1;"></span> <strong>Sítios arqueológicos</strong></p>';
-//              return div;
-//            };
-//            // Store interactive layer configuration object
-//            scope.interactiveLayers.sites = {
-//              tile: sitesLayer,
-//              grid: sitesGridLayer,
-//              legend: sitesLegend,
-//              active: true
-//            };
-//            sitesLayer.name = 'sites';
-//            map.addLayer(sitesLayer);
-//            map.addLayer(sitesGridLayer);
-//          });
+         Guarani.sqlTiles('cluster_archaeologicalplace', {
+           interactivity: ['id','cdb_list','src']
+         }).then(function(token) {
+           var sitesLayer = L.tileLayer('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.png', {
+             zIndex: 4
+           });
+           var sitesGridLayer = new L.UtfGrid('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.grid.json', {
+             useJsonP: false
+           });
+           sitesGridLayer.on('click', function(ev) {
+             clusterClick(ev, 'site');
+           });
+           var sitesLegend = L.control({'position': 'bottomright'});
+           sitesLegend.onAdd = function(map) {
+             var div = L.DomUtil.create('div', 'info legend sites');
+             div.innerHTML += '<p><span class="point-item" style="background-color: #5CA2D1;"></span> <strong>Sítios arqueológicos</strong></p>';
+             return div;
+           };
+           // Store interactive layer configuration object
+           scope.interactiveLayers.sites = {
+             tile: sitesLayer,
+             grid: sitesGridLayer,
+             legend: sitesLegend,
+             active: true
+           };
+           sitesLayer.name = 'sites';
+           map.addLayer(sitesLayer);
+           map.addLayer(sitesGridLayer);
+         });
 
           /*
            * Init villages layer
