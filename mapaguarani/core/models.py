@@ -1,10 +1,17 @@
 from django.contrib.gis.db import models
 from django.contrib.gis.db.models import Max, Sum
-from django.contrib.gis.db.models.aggregates import Collect
 from django.utils.translation import ugettext_lazy as _
 from protected_areas.models import BaseProtectedArea
 
 from boundaries.models import City, State
+
+
+class Organization(models.Model):
+    name = models.CharField(_('name'), max_length=255)
+    description = models.TextField(_('description'), blank=True, null=True)
+    address = models.CharField(_('address'), max_length=512, blank=False, null=True)
+    phone = models.CharField(_('phone number'), max_length=255, blank=False, null=True)
+    email = models.EmailField(_('email'), blank=False, null=True)
 
 
 class MapLayer(models.Model):
@@ -17,6 +24,69 @@ class MapLayer(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ActionField(models.Model):
+    name = models.CharField(_('name'), max_length=255)
+    description = models.TextField(_('description'), blank=True, null=True)
+    layers = models.ManyToManyField(
+        MapLayer,
+        verbose_name=_('Layers'),
+        related_name='action_fields',
+        blank=True
+    )
+    organizations = models.ManyToManyField(
+        Organization,
+        verbose_name=_('Organization'),
+        related_name='action_fields',
+        blank=True
+    )
+    projects = models.ManyToManyField(
+        'Project',
+        verbose_name=_('Project'),
+        related_name='action_fields',
+        blank=True
+    )
+
+
+class Project(models.Model):
+    name = models.CharField(_('name'), max_length=255)
+    description = models.TextField(_('description'), blank=True, null=True)
+    start_date = models.DateField(_('start date'))
+    end_date = models.DateField(_('and date'))
+    # files
+    # flicker
+    # youtube/videos
+    indigenous_villages = models.ManyToManyField(
+        'IndigenousVillage',
+        verbose_name=_('Indigenous Village'),
+        related_name='projects',
+        blank=True
+    )
+    indigenous_lands = models.ManyToManyField(
+        'IndigenousLand',
+        verbose_name=_('Indigenous Land'),
+        related_name='projects',
+        blank=True
+    )
+    archaeological_places = models.ManyToManyField(
+        'ArchaeologicalPlace',
+        verbose_name=_('Archaeological Place'),
+        related_name='projects',
+        blank=True
+    )
+    organizations = models.ManyToManyField(
+        Organization,
+        verbose_name=_('Organization'),
+        related_name='projects',
+        blank=True
+    )
+    layers = models.ManyToManyField(
+        MapLayer,
+        verbose_name=_('Layers'),
+        related_name='projects',
+        blank=True
+    )
 
 
 class DocumentType(models.Model):
@@ -69,6 +139,12 @@ class ProminentEthnicSubGroup(models.Model):
 
 
 class IndigenousPlace(models.Model):
+
+    STATUS = (
+        ('public', _('Public')),
+        ('restricted', _('Restricted')),
+    )
+
     name = models.CharField(_('name'), max_length=255)
     other_names = models.CharField(_('Others names'), max_length=512, blank=True, null=True)
     ethnic_groups = models.ManyToManyField(
@@ -85,6 +161,12 @@ class IndigenousPlace(models.Model):
     )
     public_comments = models.TextField(_('Comments'), blank=True, null=True)
     private_comments = models.TextField(_('Private comments'), blank=True, null=True)
+    status = models.CharField(
+        _('Status'),
+        choices=STATUS,
+        max_length=256,
+        default=STATUS[1][0]
+    )
 
     objects = models.GeoManager()
 
@@ -338,6 +420,11 @@ class ArchaeologicalPlace(models.Model):
         ('no_position', _('No position')),
     )
 
+    STATUS = (
+        ('public', _('Public')),
+        ('restricted', _('Restricted')),
+    )
+
     name = models.CharField(_('name'), max_length=255)
     code = models.CharField(_('Code'), max_length=255, blank=True, null=True)
     acronym = models.CharField(_('Acronym'), max_length=512, blank=True, null=True)
@@ -349,6 +436,13 @@ class ArchaeologicalPlace(models.Model):
         max_length=128)
     position_comments = models.TextField(_('Position Comments'))
     biblio_references = models.CharField(_('Source'), max_length=512, blank=True, null=True)
+
+    status = models.CharField(
+        _('Status'),
+        choices=STATUS,
+        max_length=256,
+        default=STATUS[1][0]
+    )
 
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='archaeological_places')
 

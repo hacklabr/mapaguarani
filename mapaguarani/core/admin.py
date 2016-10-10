@@ -5,7 +5,7 @@ from .models import (
     IndigenousVillage, IndigenousLand, LegalProceedings, DocumentType,
     Document, EthnicGroup, ProminentEthnicSubGroup, GuaraniPresence, Population,
     ArchaeologicalPlace, ArchaeologicalImage, LandTenure, LandTenureStatus,
-    MapLayer,
+    MapLayer, Organization, ActionField, Project,
 )
 from moderation.admin import ModerationAdmin
 
@@ -100,3 +100,6 @@ admin.site.register(LandTenureStatus)
 admin.site.register(GuaraniPresence)
 admin.site.register(Population)
 admin.site.register(MapLayer)
+admin.site.register(Organization)
+admin.site.register(ActionField)
+admin.site.register(Project)
