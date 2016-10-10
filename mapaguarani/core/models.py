@@ -161,12 +161,12 @@ class IndigenousPlace(models.Model):
     )
     public_comments = models.TextField(_('Comments'), blank=True, null=True)
     private_comments = models.TextField(_('Private comments'), blank=True, null=True)
-    status = models.CharField(
-        _('Status'),
-        choices=STATUS,
-        max_length=256,
-        default=STATUS[1][0]
-    )
+    # status = models.CharField(
+    #     _('Status'),
+    #     choices=STATUS,
+    #     max_length=256,
+    #     default=STATUS[1][0]
+    # )
 
     objects = models.GeoManager()
 
@@ -437,12 +437,12 @@ class ArchaeologicalPlace(models.Model):
     position_comments = models.TextField(_('Position Comments'))
     biblio_references = models.CharField(_('Source'), max_length=512, blank=True, null=True)
 
-    status = models.CharField(
-        _('Status'),
-        choices=STATUS,
-        max_length=256,
-        default=STATUS[1][0]
-    )
+    # status = models.CharField(
+    #     _('Status'),
+    #     choices=STATUS,
+    #     max_length=256,
+    #     default=STATUS[1][0]
+    # )
 
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='archaeological_places')
 
