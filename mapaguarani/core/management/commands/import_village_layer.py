@@ -1,5 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
-from django.contrib.gis.utils import LayerMapping
+from django.core.management.base import BaseCommand
 from django.contrib.gis.gdal import DataSource
 from core.models import IndigenousVillage, MapLayer, EthnicGroup, GuaraniPresence, Population, ProminentEthnicSubGroup
 
@@ -20,64 +19,26 @@ class Command(BaseCommand):
 
         def _get_ethnic_group(groups):
 
-            groups_names = []
-            group_list = groups.split()
-            if len(group_list) == 1:
-                groups_names.append(group_list[0])
-            elif 'e' in group_list and len(group_list) == 3:
-                groups_names.append(group_list[0])
-                groups_names.append(group_list[2])
-            elif len(group_list) == 4:
-                groups_names.append(group_list[0][:-1])
-                groups_names.append(group_list[1])
-                groups_names.append(group_list[3])
-            else:
-                print('EthnicGroup:')
-                print(group_list)
+            groups_names = groups.split(',')
 
             for group_name in groups_names:
-                try:
-                    yield EthnicGroup.objects.get(name=group_name)
-                except EthnicGroup.DoesNotExist:
-                    print('Não achou EthnicGroup: ' + group_name)
+                group_name = group_name.strip()
+                if group_name:
+                    group, created = EthnicGroup.objects.get_or_create(name=group_name)
+                    if created:
+                        print('Criado grupo etnico: ' + group_name)
+                    yield group
 
         def _get_ethnic_subgroup(groups):
-            groups_names = []
-            group_list = groups.split()
-            if len(group_list) == 1:
-                if '/' not in group_list[0]:
-                    groups_names.append(group_list[0])
-                else:
-                    group_list = groups.split('/')
-                    if len(group_list) == 2:
-                        groups_names.append(group_list[0])
-                        groups_names.append(group_list[1])
-            elif '/' in groups:
-                if group_list and len(group_list) == 3:
-                    groups_names.append(group_list[0])
-                    if '/' in group_list[2]:
-                        group_list2 = group_list[2].split('/')
-                        groups_names.append(group_list2[0])
-                        groups_names.append(group_list2[1])
-                    else:
-                        groups_names.append(group_list[2])
-                else:
-                    for group in group_list:
-                        if not '/' in group:
-                            groups_names.append(group)
-                        else:
-                            if len(group) > 1:
-                                groups_names.append(group.split('/')[1])
-            else:
-                print(group_list)
+            groups_names = groups.split(',')
 
             for group_name in groups_names:
-                try:
-                    yield ProminentEthnicSubGroup.objects.get(name=group_name)
-                except ProminentEthnicSubGroup.DoesNotExist:
-                    print('Não achou: ' + group_name)
-                    print(groups)
-                    print('\n')
+                group_name = group_name.strip()
+                if group_name:
+                    group, created = ProminentEthnicSubGroup.objects.get_or_create(name=group_name)
+                    if created:
+                        print('Criado subgrupo etnico: ' + group_name)
+                    yield group
 
         for feat in source_layer:
 
