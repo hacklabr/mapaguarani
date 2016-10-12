@@ -1,29 +1,27 @@
 <article class="single">
   <a class="close" ui-sref="home">X</a>
   <span>Sítio arqueológico</span>
-  <h2>{{data.name}}</h2>
+  <h2>{{ data.name }}</h2>
   <table>
     <tbody>
-      <tr ng-show="data.other_names">
-        <th>Outros nomes</th>
-        <td>{{data.other_names}}</td>
+      <tr ng-show="data.cnsa">
+        <th>CNSA</th>
+        <td>{{ data.cnsa }}</td>
       </tr>
-      <tr ng-show="data.ethnic_groups.length">
-        <th>Grupos étnicos</th>
-        <td>{{data.ethnic_groups | listObj:'name'}}</td>
+      <tr ng-show="data.position_precision">
+        <th>Precisão da posição</th>
+        <td ng-if="data.position_precision == 'exact'">Exata</td>
+        <td ng-if="data.position_precision == 'estimated'">Estimada</td>
+        <td ng-if="data.position_precision == 'by_city'">Por cidade</td>
+        <td ng-if="data.position_precision == 'no_position'">Sem posição</td>
       </tr>
-      <tr ng-show="data.prominent_subgroup.length">
-        <th>Subgrupo proeminente</th>
-        <td>{{data.prominent_subgroup | listObj:'name'}}</td>
+      <tr ng-show="data.position_comments">
+        <th>Observações sobre a posiçao</th>
+        <td>{{ data.position_comments }}</td>
       </tr>
-      <tr ng-show="data.population">
-        <th>População</th>
-        <td>{{data.population}}</td>
-      </tr>
-      <tr ng-show="data.guarani_presence">
-        <th>Presença Guarani</th>
-        <td ng-if="data.guarani_presence">Sim</td>
-        <td ng-if="!data.guarani_presence">Não</td>
+      <tr ng-show="data.biblio_references">
+        <th>Referências</th>
+        <td>{{ data.biblio_references }}</td>
       </tr>
     </tbody>
   </table>
