@@ -1,9 +1,13 @@
 <section id="sidebar-main-content">
   <div class="content">
+
+    <!-- Search form -->
     <form id="main-search" role="search">
       <input id="searchbox" type="text" placeholder="Pesquisar..." class="form-control" ng-model="filter.text">
       <span id="searchicon" class="fa fa-search form-control-feedback"></span>
     </form>
+    <!-- end search form -->
+
     <div class="content-item-body" ng-show="filter.text && !content" sidebar-height="filter.text && !content">
       <ul class="all list">
         <li guarani-item item="item" class="all item" ng-repeat="item in filtered.all = (_all | filter:filter.text) | offset:curPage*perPage | limitTo:perPage"></li>
@@ -19,7 +23,9 @@
         </ul>
       </nav>
     </div>
+
     <ul class="content-list">
+      <!-- villages -->
       <li id="villages" class="content-item" ng-class="{active: content == 'villages', 'active-layer': activeLayers.villages}">
         <p class="actions">
           <a href="javascript:void(0);" ng-click="toggleContent('villages')">
@@ -66,6 +72,9 @@
           </nav>
         </div>
       </li>
+      <!-- villages -->
+
+      <!-- lands -->
       <li id="lands" class="content-item" ng-class="{active: content == 'lands', 'active-layer': activeLayers.lands}">
         <p class="actions">
           <a href="javascript:void(0);" ng-click="toggleContent('lands')">
@@ -112,6 +121,9 @@
           </nav>
         </div>
       </li>
+      <!-- end lands -->
+
+      <!-- archaeological places -->
       <li id="sites" class="content-item"
           ng-class="{active: content == 'sites', 'active-layer': activeLayers.sites}"
           ng-if="user.is_authenticated">
@@ -146,7 +158,10 @@
             </form>
           </nav>
           <ul class="site list">
-            <li guarani-item item="site" class="site item" ng-repeat="site in filtered.sites = (sites | contentType:'sites':content:filter.text | filter:filter.text) | offset:curPage*perPage | limitTo:perPage"></li>
+            <li guarani-item item="site"
+                class="site item"
+                ng-repeat="site in filtered.sites = (sites | contentType:'sites':content:filter.text | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
+            </li>
           </ul>
           <nav class="sidebar-pagination">
             <ul class="pager">
@@ -160,6 +175,7 @@
           </nav>
         </div>
       </li>
+      <!-- end archaeological places -->
     </ul>
   </div>
 </section>
