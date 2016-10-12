@@ -33,12 +33,15 @@ SELECT ST_Centroid(g) geometry, points_count, id, id_list, 'smalls' as src, arra
 <script type="sql/html" id="cartocss_template">
   Map {buffer-size: 256;}
   #layer {
-    marker-width: 32 * 0.15;
+    marker-width: 32 * 0.22;
     marker-fill: #5CA2D1;
     marker-opacity: 0.8;
     marker-line-width: 0;
     marker-allow-overlap: true;
     marker-comp-op: dst-atop;
+    [zoom>8] {
+      marker-width: 32 * 0.3
+    }
     [src = 'smalls'] { marker-width: 32 * 0.5; }
     [src = 'mids'] { marker-width: 32 * 0.75; }
     [src = 'bigs'] { marker-width: 32; }
