@@ -299,28 +299,13 @@
       return {
         restrict: 'EA',
         scope: {
-          'item': '='
+          'item': '=',
+          'layerType': '@layer'
         },
         templateUrl: '/static/views/partials/list-item.html',
         link: function(scope, element, attrs) {
-
-          // Identify content type from item layer name
-          var type;
-          switch(scope.item.layer.name) {
-            case 'Aldeias Indígenas':
-              type = 'village';
-              break;
-            case 'Terras Indígenas':
-              type = 'land';
-              break;
-            case 'Sítios Arqueológicos':
-              type = 'site';
-              break;
-          }
-
           // Get item url
-          scope.url = $state.href(type, {id: scope.item.id}, {inherit: false});
-
+          scope.url = $state.href(scope.layerType, {id: scope.item.id}, {inherit: false});
         }
       }
     }

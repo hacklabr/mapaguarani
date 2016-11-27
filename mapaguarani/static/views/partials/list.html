@@ -58,7 +58,11 @@
             </form>
           </nav>
           <ul class="village list">
-            <li guarani-item item="village" class="village item" ng-repeat="village in filtered.villages = (villages | contentType:'villages':content:filter.text | filter:filter.text | advancedSearch:filter.advanced:adv.villages) | offset:curPage*perPage | limitTo:perPage"></li>
+            <li guarani-item
+                item="village"
+                layer="village"
+                class="village item"
+                ng-repeat="village in filtered.villages = (villages | contentType:'villages':content:filter.text | filter:filter.text | advancedSearch:filter.advanced:adv.villages) | offset:curPage*perPage | limitTo:perPage"></li>
           </ul>
           <nav class="sidebar-pagination">
             <ul class="pager">
@@ -107,7 +111,11 @@
             </form>
           </nav>
           <ul class="land list">
-            <li guarani-item item="land" class="land item" ng-repeat="land in filtered.lands = (lands | contentType:'lands':content:filter.text | filter:filter.text | advancedSearch:filter.advanced:adv.lands) | offset:curPage*perPage | limitTo:perPage"></li>
+            <li guarani-item
+                item="land"
+                layer="land"
+                class="land item"
+                ng-repeat="land in filtered.lands = (lands | contentType:'lands':content:filter.text | filter:filter.text | advancedSearch:filter.advanced:adv.lands) | offset:curPage*perPage | limitTo:perPage"></li>
           </ul>
           <nav class="sidebar-pagination">
             <ul class="pager">
@@ -157,7 +165,9 @@
             </form>
           </nav>
           <ul class="site list">
-            <li guarani-item item="site"
+            <li guarani-item
+                item="site"
+                layer="site"
                 class="site item"
                 ng-repeat="site in filtered.sites = (sites | contentType:'sites':content:filter.text | filter:filter.text) | offset:curPage*perPage | limitTo:perPage">
             </li>
