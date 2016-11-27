@@ -45,6 +45,74 @@
     -moz-border-radius: 100%;
     -o-border-radius: 100%;
   }
+
+
+  // TODO: Refactor this
+  .village-marker-cluster-big {
+    background: #e7ec13;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -o-border-radius: 100%;
+    text-align: center;
+    line-height: 30px;
+    font-size: 14px;
+    opacity: 0.7;
+  }
+  .village-marker-cluster-md {
+    background: #e7ec13;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -o-border-radius: 100%;
+    text-align: center;
+    line-height: 20px;
+    opacity: 0.7;
+  }
+  .village-marker-cluster-sm {
+    background: #e7ec13;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -o-border-radius: 100%;
+    text-align: center;
+    line-height: 10px;
+    opacity: 0.7;
+  }
+  .site-marker-cluster-big {
+    background: #5CA2D1;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -o-border-radius: 100%;
+    text-align: center;
+    line-height: 30px;
+    font-size: 14px;
+    opacity: 0.7;
+  }
+  .site-marker-cluster-md {
+    background: #5CA2D1;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -o-border-radius: 100%;
+    text-align: center;
+    line-height: 20px;
+    opacity: 0.7;
+  }
+  .site-marker-cluster-sm {
+    background: #5CA2D1;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -o-border-radius: 100%;
+    text-align: center;
+    line-height: 10px;
+    opacity: 0.7;
+  }
+  // TODO end refactor
+
+
   .village-other-marker {
     background: #f57a14;
     border-radius: 100%;

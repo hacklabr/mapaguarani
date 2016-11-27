@@ -1,6 +1,6 @@
 {
   "name": "mapaguarani",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/hacklabr/mapaguarani",
   "authors": [
     "Bruno Martin <bruno.martin@hacklab.com.br>"
@@ -19,17 +19,25 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "1.4.x",
-    "angular-resource": "1.4.x",
-    "leaflet": "0.7.x",
-    "leaflet-plugins": "*",
+    "angular": "1.5.x",
+    "angular-resource": "1.5.x",
+    "leaflet": "1.0.x",
+    "leaflet.markercluster": "1.0.x",
+    "Leaflet.GridLayer": "https://gitlab.com/IvanSanchez/Leaflet.GridLayer.GoogleMutant.git",
+    "angular-ui-router": "0.3.x",
+    "font-awesome": "^4.6.3",
+
+    "leaflet.vectorgrid": "https://github.com/Leaflet/Leaflet.VectorGrid.git",
+
     "leaflet-tilelayer-geojson": "*",
     "Leaflet.MakiMarkers": "*",
     "bootstrap": "~3.3.4",
-    "leaflet.markercluster": "~0.4.0",
     "bootstrap-sass": "~3.3.5",
     "underscore": "~1.8.3",
-    "angular-ui-router": "~0.2.15",
+
     "Leaflet.utfgrid": "https://github.com/danzel/Leaflet.utfgrid.git"
+  },
+  "resolutions": {
+    "leaflet": ">= 1.0.0"
   }
 }

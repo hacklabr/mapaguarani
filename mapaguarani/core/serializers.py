@@ -236,6 +236,25 @@ class SimpleIndigenousVillageSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
+class SimpleIndigenousGeojsonVillageSerializer(GeoFeatureModelSerializer):
+
+    guarani_presence = serializers.SerializerMethodField()
+
+    class Meta:
+        model = IndigenousVillage
+        geo_field = 'geometry'
+        fields = ['id', 'name', 'guarani_presence', 'geometry']
+
+    @staticmethod
+    def get_guarani_presence(obj):
+        try:
+            presence = obj.guarani_presence_annual_series.latest()
+        except GuaraniPresence.DoesNotExist:
+            presence = GuaraniPresence(presence=False)
+
+        return GuaraniPresenceSerializer(presence).data
+
+
 class IndigenousLandSerializer(FieldPermissionSerializerMixin, IndigenousPlaceSerializer):
 
     associated_land = serializers.PrimaryKeyRelatedField(read_only=True)
@@ -365,6 +384,14 @@ class ArchaeologicalPlaceGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
         model = ArchaeologicalPlace
         geo_field = 'geometry'
         exclude = ['id', 'ethnic_groups', 'prominent_subgroup', ]
+
+
+class SimpleArchaeologicalPlaceGeojsonSerializer(GeoFeatureModelSerializer):
+
+    class Meta:
+        model = ArchaeologicalPlace
+        geo_field = 'geometry'
+        fields = ['id', 'name', 'geometry']
 
 
 class LandTenureSerializer(serializers.ModelSerializer):

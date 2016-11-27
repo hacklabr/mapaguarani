@@ -33,13 +33,11 @@
   /*
    * Store map layers
    */
-  //Google maps - leaflet 0.7 only
-  var gm_roadmap = new L.Google('ROADMAP');
-  var gm_terrain = new L.Google('TERRAIN');
-  var gm_hybrid = new L.Google('HYBRID');
-  var gm_satellite = new L.Google('SATELLITE');
+  var gm_roadmap = new L.gridLayer.googleMutant({type: 'roadmap'});
+  var gm_terrain = new L.gridLayer.googleMutant({type: 'terrain'});
+  var gm_hybrid = new L.gridLayer.googleMutant({type: 'hybrid'});
+  var gm_satellite = new L.gridLayer.googleMutant({type: 'satellite'});
 
-  // Mapbox - leaflet 1.0 compatible
   var access_token = 'pk.eyJ1IjoiYnJ1bm9zbWFydGluIiwiYSI6IjM1MTAyYTJjMWQ3NmVmYTg0YzQ0ZWFjZTg0MDZiYzQ3In0.ThelegmeGkO5Vwd6KTu6xA';
   var mapbox_url = 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={access_token}';
   var mapbox_satellite = L.tileLayer(mapbox_url, {mapid: 'mapbox.satellite', access_token: access_token});
@@ -372,7 +370,8 @@
     '$state',
     '$window',
     '$timeout',
-    function(Guarani, Map, $rootScope, $state, $window, $timeout) {
+    '$http',
+    function(Guarani, Map, $rootScope, $state, $window, $timeout, $http) {
       return {
         restrict: 'E',
         scope: {
@@ -390,7 +389,8 @@
             center: scope.center,
             zoom: scope.zoom,
             zoomControl: false,
-            attributionControl: false
+            attributionControl: false,
+            preferCanvas: true
           });
 
           // Store map leaflet object on map service
@@ -431,26 +431,10 @@
               map.removeControl(scope.interactiveLayers[ev.layer.name].legend);
           });
 
-          // Cluster click callback
-          var clusterClick = function(ev, type) {
-            if(ev.data) {
-              if(ev.data.id == 0) {
-                // if(map.getZoom() < 16) {
-                  map.setView(ev.latlng, map.getZoom() + 1);
-                  // map.zoomIn();
-                  map.invalidateSize(true);
-                // }
-                // if(ev.data.src == 'smalls' || map.getZoom() > 14) {
-                //   var cluster = {
-                //     type: type,
-                //     ids: _.map(ev.data.cdb_list.split(','), function(id) { return parseInt(id); })
-                //   };
-                //   $state.go('home', {clustered: JSON.stringify(cluster)});
-                // }
-              } else {
-                $state.go(type, {id: ev.data.id, focus: false});
+          var markerClick = function(ev, type) {
+              if(ev.target && ev.target.feature && ev.target.feature.id) {
+                $state.go(type, {id: ev.target.feature.id, focus: false});
               }
-            }
           };
 
           // Start interactive layers object (lands, sites and villages)
@@ -461,7 +445,7 @@
            */
           var default_host = $window.location.hostname;
           var landsLayer = L.tileLayer('http://' + default_host + ':4000/indigenousland/{z}/{x}/{y}.png', {
-           zIndex: 3
+           zIndex: 10
           });
           var landsGridLayer = new L.UtfGrid('http://' + default_host + ':4000/indigenousland/{z}/{x}/{y}.grid.json?interactivity=id,name', {
            useJsonP: false
@@ -470,6 +454,7 @@
             if(ev.data)
               $state.go('land', {id: ev.data.id, focus: false});
           });
+
           var landsLegend = L.control({'position': 'bottomright'});
           landsLegend.onAdd = function(map) {
             var div = L.DomUtil.create('div', 'info legend lands');
@@ -514,72 +499,165 @@
           /*
            * Init archaeological sites layer
            */
-
-         Guarani.sqlTiles('cluster_archaeologicalplace', {
-           interactivity: ['id','cdb_list','src']
-         }).then(function(token) {
-           var sitesLayer = L.tileLayer('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.png', {
-             zIndex: 4
-           });
-           var sitesGridLayer = new L.UtfGrid('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.grid.json', {
-             useJsonP: false
-           });
-           sitesGridLayer.on('click', function(ev) {
-             clusterClick(ev, 'site');
-           });
-           var sitesLegend = L.control({'position': 'bottomright'});
-           sitesLegend.onAdd = function(map) {
-             var div = L.DomUtil.create('div', 'info legend sites');
-             div.innerHTML += '<p><span class="point-item" style="background-color: #5CA2D1;"></span> <strong>Sítios arqueológicos</strong></p>';
-             return div;
-           };
-           // Store interactive layer configuration object
-           scope.interactiveLayers.sites = {
-             tile: sitesLayer,
-             grid: sitesGridLayer,
-             legend: sitesLegend,
-             active: true
-           };
-           sitesLayer.name = 'sites';
-           map.addLayer(sitesLayer);
-           map.addLayer(sitesGridLayer);
-         });
-
-          /*
-           * Init villages layer
-           */
-
-          Guarani.sqlTiles('cluster_indigenousvillage', {
-            interactivity: ['id','cdb_list','src', 'presence']
-          }).then(function(token) {
-            var villagesLayer = L.tileLayer('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.png', {
-              zIndex: 5
+        $http.get('/api/arch_geojson/').then(function (response){
+            var sites_geojson = response.data;
+            var sitesPointsLayer = L.geoJSON(sites_geojson, {
+                onEachFeature: function (feature, layer) {
+                    layer.on('click', function(ev) {
+                      markerClick(ev, 'site');
+                    });
+                },
+                pointToLayer: function (feature, latlng) {
+                    var marker = L.circleMarker(latlng, {
+                        radius: 4,
+                        fillColor: "#5CA2D1",
+                        color: "#5CA2D1",
+                        weight: 2,
+                        opacity: 0.8,
+                        fillOpacity: 0.8,
+                    });
+                    return marker
+                }
             });
-            var villagesGridLayer = new L.UtfGrid('http://' + default_host + ':4000/api/' + token + '/{z}/{x}/{y}.grid.json', {
-              useJsonP: false
+            var sitesLayer = L.markerClusterGroup({
+                maxClusterRadius: 20,
+                iconCreateFunction: function (cluster) {
+                    var childCount = cluster.getChildCount();
+                    var radius;
+                    var class_sufix;
+                    // If the ranges below changes, then village-marker-cluster-[big/md/sm]
+                    // css class in _map.scss must change too
+                    if (childCount >= 50) {
+                        radius = 32;
+                        class_sufix = 'big';
+                    } else if (15 < childCount < 30) {
+                        radius = 20;
+                        class_sufix = 'md';
+                    } else {
+                        radius = 10;
+                        class_sufix = 'sm';
+                    }
+                    return L.divIcon({html: '<div><span>' + childCount + '</span></div>',
+                                      className: 'site-marker-cluster-' + class_sufix,
+                                      iconSize: L.point(radius, radius)});
+                },
             });
-            villagesGridLayer.on('click', function(ev) {
-              clusterClick(ev, 'village');
-            });
-            var villagesLegend = L.control({'position': 'bottomright'});
-            villagesLegend.onAdd = function(map) {
-              var div = L.DomUtil.create('div', 'info legend villages');
-              div.innerHTML += '<p><strong>Aldeias Indígenas</strong></p>' +
-              '<p><span class="point-item legend2"></span> antigas áreas de uso ou áreas esbulhadas</p>' +
-              '<p><span class="point-item legend1"></span> habitadas atualmente</p>';
+            sitesLayer.addLayer(sitesPointsLayer);
+            var sitesLegend = L.control({'position': 'bottomright'});
+            sitesLegend.onAdd = function(map) {
+              var div = L.DomUtil.create('div', 'info legend sites');
+              div.innerHTML += '<p><span class="point-item" style="background-color: #5CA2D1;"></span> <strong>Sítios arqueológicos</strong></p>';
               return div;
             };
             // Store interactive layer configuration object
-            scope.interactiveLayers.villages = {
-              tile: villagesLayer,
-              grid: villagesGridLayer,
-              legend: villagesLegend,
+            scope.interactiveLayers.sites = {
+              tile: sitesLayer,
+              legend: sitesLegend,
               active: true
             };
-            villagesLayer.name = 'villages';
-            map.addLayer(villagesLayer);
-            map.addLayer(villagesGridLayer);
-          });
+            sitesLayer.name = 'sites';
+
+            // Add Layer to map
+            map.addLayer(sitesLayer);
+        });
+
+           /*
+           * Init villages layer
+           */
+            $http.get('/api/villages_geojson/').then(function (response){
+                var villages_geojson = response.data;
+                var villagesLayerMarkers = L.geoJSON(villages_geojson, {
+                    onEachFeature: function (feature, layer) {
+                        layer.on('click', function(ev) {
+                          markerClick(ev, 'village');
+                        });
+                    },
+                    pointToLayer: function (feature, latlng) {
+                        // presence factor is 0, if no presence, or 1, if there is presence
+                        var factor = 0;
+                        if (feature.properties.guarani_presence.presence)
+                            factor = 1;
+                        var marker = L.circleMarker(latlng, {
+                            radius: 4,
+                            fillColor: "#e7ec13",
+                            color: "#e7ec13",
+                            weight: 2,
+                            opacity: 0.8 * (1 - factor),
+                            fillOpacity: 0.8 * factor,
+                        });
+                        return marker
+                    }
+                });
+                // var villagesLayer = L.vectorGrid.slicer(villages_geojson);
+                // map.addLayer(villagesLayer);
+                var villagesLayer = L.markerClusterGroup({
+                    maxClusterRadius: 20,
+                    iconCreateFunction: function (cluster) {
+                        var childCount = cluster.getChildCount();
+                        var radius;
+                        var class_sufix;
+                        // If the ranges below changes, then village-marker-cluster-[big/md/sm]
+                        // css class in _map.scss must change too
+                        if (childCount >= 50) {
+                            radius = 32;
+                            class_sufix = 'big';
+                        } else if (15 < childCount < 30) {
+                            radius = 20;
+                            class_sufix = 'md';
+                        } else {
+                            radius = 10;
+                            class_sufix = 'sm';
+                        }
+                        return L.divIcon({html: '<div><span>' + childCount + '</span></div>',
+                                          className: 'village-marker-cluster-' + class_sufix,
+                                          iconSize: L.point(radius, radius)});
+                    },
+                });
+                villagesLayer.addLayer(villagesLayerMarkers);
+
+                var villagesLegend = L.control({'position': 'bottomright'});
+                villagesLegend.onAdd = function(map) {
+                  var div = L.DomUtil.create('div', 'info legend villages');
+                  div.innerHTML += '<p><strong>Aldeias Indígenas</strong></p>' +
+                  '<p><span class="point-item legend2"></span> antigas áreas de uso ou áreas esbulhadas</p>' +
+                  '<p><span class="point-item legend1"></span> habitadas atualmente</p>';
+                  return div;
+                };
+                // Store interactive layer configuration object
+                scope.interactiveLayers.villages = {
+                  tile: villagesLayer,
+                  legend: villagesLegend,
+                  active: true
+                };
+                villagesLayer.name = 'villages';
+
+                // Add Layer to map
+                map.addLayer(villagesLayer);
+
+                var show_label_zoom = 9; // zoom level threshold for showing/hiding labels
+                var labels_visible = false;
+
+                map.on('zoomend', function (e) {
+                    var cur_zoom = map.getZoom();
+                    if (labels_visible && cur_zoom < show_label_zoom) {
+                        labels_visible = false;
+                        villagesLayerMarkers.eachLayer(function (layer) {
+                            // Show label
+                            layer.unbindTooltip();
+                        });
+                    } else if(!labels_visible && cur_zoom >= show_label_zoom) {
+                        labels_visible = true;
+                        villagesLayerMarkers.eachLayer(function (layer) {
+                            // Show label
+                            layer.bindTooltip(layer.feature.properties.name, {
+                                permanent: true,
+                                direction: 'bottom',
+                                opacity: 0.7,
+                            });
+                        });
+                    }
+                });
+            });
 
           // Watch layer toggle to hide/display layer on leaflet
           $rootScope.$on('mapaguarani.toggleLayer', function(ev, layer) {
@@ -593,7 +671,6 @@
                   map.addLayer(scope.interactiveLayers[layer].tile);
                   map.addLayer(scope.interactiveLayers[layer].grid);
                 }
-
               }
           });
         }

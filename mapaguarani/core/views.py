@@ -14,8 +14,9 @@ from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           ArchaeologicalPlaceSerializer, LandTenureSerializer,
                           LandTenureStatusSerializer, IndigenousLandGeojsonSerializer,
                           IndigenousVillageGeojsonSerializer, ArchaeologicalPlaceGeojsonSerializer,
-                          LandTenureReportSerializer)
-from .resources import IndigenousVillageResource
+                          LandTenureReportSerializer, SimpleIndigenousVillageSerializer,
+                          SimpleIndigenousGeojsonVillageSerializer,
+                          SimpleArchaeologicalPlaceGeojsonSerializer,)
 
 from io import BytesIO
 import zipfile
@@ -35,6 +36,16 @@ class IndigenousLandViewSet(viewsets.ReadOnlyModelViewSet):
 class IndigenousVillageViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = IndigenousVillage.objects.all()
     serializer_class = IndigenousVillageSerializer
+
+
+class IndigenousVillageGeojsonView(viewsets.ReadOnlyModelViewSet):
+    queryset = IndigenousVillage.objects.all()
+    serializer_class = SimpleIndigenousGeojsonVillageSerializer
+
+
+class ArchaeologicalPlaceGeojsonView(viewsets.ReadOnlyModelViewSet):
+    queryset = ArchaeologicalPlace.objects.all()
+    serializer_class = SimpleArchaeologicalPlaceGeojsonSerializer
 
 
 class ArchaeologicalPlaceViewSet(viewsets.ReadOnlyModelViewSet):

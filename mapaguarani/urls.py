@@ -5,7 +5,8 @@ from core.views import (IndigenousLandViewSet, IndigenousVillageViewSet,
                         ArchaeologicalPlaceViewSet, LandTenureViewSet, LandTenureStatusViewSet,
                         IndigenousLandsShapefileView, IndigenousVillagesShapefileView,
                         ArchaeologicalPlacesShapefileView, LandTenureReportViewSet,
-                        IndigenousVillageReportExport,)
+                        IndigenousVillageReportExport, IndigenousVillageTileView,
+                        IndigenousVillageGeojsonView, ArchaeologicalPlaceGeojsonView,)
 from moderation.helpers import auto_discover
 from rest_framework import routers
 
@@ -18,6 +19,8 @@ router.register(r'lands', IndigenousLandViewSet)
 router.register(r'land_tenures', LandTenureViewSet)
 router.register(r'land_tenures_status', LandTenureStatusViewSet)
 router.register(r'villages', IndigenousVillageViewSet)
+router.register(r'villages_geojson', IndigenousVillageGeojsonView)
+router.register(r'arch_geojson', ArchaeologicalPlaceGeojsonView)
 router.register(r'archaeological', ArchaeologicalPlaceViewSet)
 router.register(r'landtenurereport', LandTenureReportViewSet)
 
