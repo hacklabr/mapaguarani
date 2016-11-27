@@ -180,7 +180,7 @@ class IndigenousVillageGeojsonSerializer(IndigenousVillageSerializer,
         model = IndigenousVillage
         geo_field = 'geometry'
         # only the id field is excluded
-        fields = ['name', 'other_names', 'land',  'guarani_presence', 'population',
+        fields = ['name', 'other_names', 'land', 'guarani_presence', 'population',
                   'ethnic_groups', 'prominent_subgroup',
                   'city', 'state', 'country',
                   'position_source', 'position_precision', 'public_comments',

@@ -129,10 +129,10 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     'default': {
-         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-         'NAME': 'mapaguarani',
-         'USER': '',
-     }
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'mapaguarani',
+        'USER': '',
+    }
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 # DATABASES = values.DatabaseURLValue('postgres://localhost/django-template')
