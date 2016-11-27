@@ -369,9 +369,8 @@
     '$rootScope',
     '$state',
     '$window',
-    '$timeout',
     '$http',
-    function(Guarani, Map, $rootScope, $state, $window, $timeout, $http) {
+    function(Guarani, Map, $rootScope, $state, $window, $http) {
       return {
         restrict: 'E',
         scope: {

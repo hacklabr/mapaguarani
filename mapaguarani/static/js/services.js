@@ -102,51 +102,6 @@
             geojson.features.push(feature);
           });
           return geojson;
-        },
-        sqlTiles: function(name, options) {
-
-          var deferred = $q.defer();
-
-          $.get('/static/sql/' + name + '.html', function(html) {
-            var sql = $(html).filter('#sql_template').html();
-            var cartocss = $(html).filter('#cartocss_template').html();
-
-            var settings = _.extend({
-              sql: sql,
-              cartocss: cartocss,
-              cartocss_version: '2.1.1',
-              geom_column: 'geometry',
-              geom_type: 'geometry'
-            }, options || {});
-
-            var data = {
-              layers: [
-                {
-                  type: 'mapnik',
-                  options: settings
-                }
-              ]
-            };
-            $.ajax({
-              type: 'POST',
-              // url: 'http://localhost:4000/api',
-              // url: 'http://guarani.map.as:4000/api',
-              url: 'http://' + $window.location.hostname + ':4000/api',
-              data: JSON.stringify(data),
-              contentType: 'application/json; charset=utf-8',
-              dataType: 'json',
-              success: function(data) {
-                deferred.resolve(data.layergroupid);
-              },
-              error: function(jqXHR, textStatus, error) {
-                console.log(error);
-                deferred.reject(error);
-              }
-            });
-
-          });
-
-          return deferred.promise;
         }
       }
     }
