@@ -618,7 +618,7 @@
                 // Add Layer to map
                 map.addLayer(villagesLayer);
 
-                var show_label_zoom = 9; // zoom level threshold for showing/hiding labels
+                var show_label_zoom = 11; // zoom level threshold for showing/hiding labels
                 var labels_visible = false;
 
                 map.on('zoomend', function (e) {
