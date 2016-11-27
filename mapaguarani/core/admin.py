@@ -39,7 +39,7 @@ class IndigenousVillageAdmin(IndigenousPlaceAdmin):
     list_display = ('name', 'other_names', 'get_ethnic_groups', 'get_prominent_subgroup',
                     'population', 'get_guarani_presence',
                     'position_precision', 'position_source', 'geometry',
-                    'public_comments', 'private_comments',)
+                    'public_comments', 'private_comments', 'status',)
     search_fields = ['name', 'other_names', ]
     list_per_page = 500
     inlines = [
@@ -56,7 +56,8 @@ class IndigenousVillageAdmin(IndigenousPlaceAdmin):
 @admin.register(IndigenousLand)
 class IndigenousLandAdmin(IndigenousPlaceAdmin):
     list_display = ('name', 'other_names', 'get_prominent_subgroup', 'official_area', 'claim', 'demand', 'source',
-                    'land_tenure', 'land_tenure_status', 'public_comments', 'private_comments', 'associated_land')
+                    'land_tenure', 'land_tenure_status', 'public_comments', 'private_comments', 'associated_land',
+                    'status',)
     # list_editable = ('other_names', 'official_area', 'claim', 'demand', 'source', 'land_tenure',
     #                  'land_tenure_status', 'public_comments', 'private_comments')
     search_fields = ['name', 'other_names', 'claim', 'demand', 'source', 'land_tenure__name',
@@ -70,7 +71,7 @@ class ArchaeologicalImageInLine(admin.TabularInline):
 @admin.register(ArchaeologicalPlace)
 class ArchaeologicalPlaceAdmin(admin.ModelAdmin):
     list_display = ('get_name', 'code', 'acronym', 'cnsa', 'biblio_references',
-                    'position_precision', 'position_comments', 'geometry',)
+                    'position_precision', 'position_comments', 'geometry', 'status',)
     search_fields = ['name', 'code', 'acronym', 'cnsa', 'biblio_references', ]
     list_per_page = 500
     inlines = [

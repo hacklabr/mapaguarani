@@ -2,6 +2,7 @@ from django.contrib.gis.db import models
 from django.contrib.gis.db.models import Max, Sum
 from django.utils.translation import ugettext_lazy as _
 from protected_areas.models import BaseProtectedArea
+from django.contrib.sites.models import Site
 
 from boundaries.models import City, State
 
@@ -17,6 +18,7 @@ class Organization(models.Model):
 class MapLayer(models.Model):
     name = models.CharField(_('name'), max_length=255)
     description = models.TextField(_('Description'))
+    sites = models.ManyToManyField(Site)
 
     class Meta:
         verbose_name = _('Map Layer')
@@ -35,6 +37,7 @@ class ActionField(models.Model):
         related_name='action_fields',
         blank=True
     )
+
     organizations = models.ManyToManyField(
         Organization,
         verbose_name=_('Organization'),
@@ -161,12 +164,12 @@ class IndigenousPlace(models.Model):
     )
     public_comments = models.TextField(_('Comments'), blank=True, null=True)
     private_comments = models.TextField(_('Private comments'), blank=True, null=True)
-    # status = models.CharField(
-    #     _('Status'),
-    #     choices=STATUS,
-    #     max_length=256,
-    #     default=STATUS[1][0]
-    # )
+    status = models.CharField(
+        _('Status'),
+        choices=STATUS,
+        max_length=256,
+        default=STATUS[1][0]
+    )
 
     objects = models.GeoManager()
 
@@ -437,12 +440,12 @@ class ArchaeologicalPlace(models.Model):
     position_comments = models.TextField(_('Position Comments'))
     biblio_references = models.CharField(_('Source'), max_length=512, blank=True, null=True)
 
-    # status = models.CharField(
-    #     _('Status'),
-    #     choices=STATUS,
-    #     max_length=256,
-    #     default=STATUS[1][0]
-    # )
+    status = models.CharField(
+        _('Status'),
+        choices=STATUS,
+        max_length=256,
+        default=STATUS[1][0]
+    )
 
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='archaeological_places')
 
@@ -454,13 +457,17 @@ class ArchaeologicalPlace(models.Model):
 
     @property
     def city(self):
-        # TODO georeferential query
-        pass
+        try:
+            return City.objects.get(geometry__covers=self.geometry)
+        except City.DoesNotExist:
+            return
 
     @property
     def state(self):
-        # TODO georeferential query
-        pass
+        try:
+            return State.objects.get(geometry__covers=self.geometry)
+        except State.DoesNotExist:
+            return
 
     @property
     def country(self):

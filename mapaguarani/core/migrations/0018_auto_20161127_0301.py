@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models, migrations
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
@@ -14,16 +14,16 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='archaeologicalplace',
             name='status',
-            field=models.CharField(choices=[('public', 'Public'), ('restricted', 'Restricted')], default='restricted', max_length=256, verbose_name='Status'),
+            field=models.CharField(default='public', verbose_name='Status', choices=[('public', 'Public'), ('restricted', 'Restricted')], max_length=256),
         ),
         migrations.AddField(
             model_name='indigenousland',
             name='status',
-            field=models.CharField(choices=[('public', 'Public'), ('restricted', 'Restricted')], default='restricted', max_length=256, verbose_name='Status'),
+            field=models.CharField(default='public', verbose_name='Status', choices=[('public', 'Public'), ('restricted', 'Restricted')], max_length=256),
         ),
         migrations.AddField(
             model_name='indigenousvillage',
             name='status',
-            field=models.CharField(choices=[('public', 'Public'), ('restricted', 'Restricted')], default='restricted', max_length=256, verbose_name='Status'),
+            field=models.CharField(default='public', verbose_name='Status', choices=[('public', 'Public'), ('restricted', 'Restricted')], max_length=256),
         ),
     ]
