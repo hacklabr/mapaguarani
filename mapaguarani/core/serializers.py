@@ -13,12 +13,14 @@ class PopulationSerializer(serializers.ModelSerializer):
 
         class Meta:
             model = Population
+            fields = '__all__'
 
 
 class GuaraniPresenceSerializer(serializers.ModelSerializer):
 
         class Meta:
             model = GuaraniPresence
+            fields = '__all__'
 
 
 class BaseListSerializerMixin(serializers.ListSerializer):
@@ -121,6 +123,7 @@ class IndigenousVillageSerializer(FieldPermissionSerializerMixin, IndigenousPlac
         model = IndigenousVillage
         list_serializer_class = ListIndigenousVillageSerializer
         depth = 1
+        fields = '__all__'
 
     @staticmethod
     def get_position_precision(obj):
@@ -376,6 +379,7 @@ class ArchaeologicalPlaceSerializer(serializers.ModelSerializer):
         # list_serializer_class = ArchaeologicalPlaceListSerializer
         # exclude = ['geometry']
         depth = 1
+        fields = '__all__'
 
 
 class ArchaeologicalPlaceGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
