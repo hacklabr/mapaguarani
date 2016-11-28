@@ -14,13 +14,10 @@
     '$scope',
     '$state',
     '$stateParams',
-    'VillagesData',
-    'LandsData',
-    'SitesData',
     'GuaraniService',
     'guaraniMapService',
     'user',
-    function ($scope, $state, $stateParams, villages, lands, sites, Guarani, Map, user) {
+    function ($scope, $state, $stateParams, Guarani, Map, user) {
 
       // State dependencies resolved, emit event to hide loading message
       $scope.$emit('mapaguarani.loaded');
@@ -28,10 +25,26 @@
       // Init filtered results object
       $scope.filtered = {};
 
+      function generate_urls(features, type) {
+          angular.forEach(features, function(item){
+              item.url = $state.href(type, {id: item.id}, {inherit: false});
+          });
+          return features;
+      }
+
       // Store state resolved data on scope
-      $scope.lands = lands;
-      $scope.villages = villages;
-      $scope.sites = sites;
+      Guarani.villages.query({}, function(villages){
+          $scope.villages = generate_urls(villages, 'village');
+      })
+
+      Guarani.lands.query({}, function(lands){
+          $scope.lands = generate_urls(lands, 'land');
+      })
+
+      Guarani.sites.query({}, function(sites){
+          $scope.sites = generate_urls(sites, 'site');
+      })
+
       $scope.user = user;
 
       // Watch and store map from MapService
