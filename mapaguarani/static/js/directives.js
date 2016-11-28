@@ -649,11 +649,13 @@
                 if(scope.interactiveLayers[layer].active) {
                   scope.interactiveLayers[layer].active = false;
                   map.removeLayer(scope.interactiveLayers[layer].tile);
-                  map.removeLayer(scope.interactiveLayers[layer].grid);
+                  if (layer === 'lands')
+                    map.removeLayer(scope.interactiveLayers[layer].grid);
                 } else {
                   scope.interactiveLayers[layer].active = true;
                   map.addLayer(scope.interactiveLayers[layer].tile);
-                  map.addLayer(scope.interactiveLayers[layer].grid);
+                  if (layer === 'lands')
+                    map.addLayer(scope.interactiveLayers[layer].grid);
                 }
               }
           });
