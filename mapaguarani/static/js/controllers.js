@@ -82,28 +82,6 @@
         }
         $state.go('home', {'page': param});
       });
-
-      // Watch "clustered" params (related to cluster click) to show "area results"
-      $scope.$watch(function() {
-        return $state.params;
-      }, function(params) {
-        if(params.clustered) {
-          var clustered = JSON.parse(params.clustered);
-          if(clustered && clustered.ids.length) {
-            $scope.clustered = _.filter($scope[clustered.type + 's'], function(item) { return clustered.ids.indexOf(item.id) !== -1; });
-          } else {
-            $scope.clustered = {};
-          }
-        } else {
-          $scope.clustered = {};
-        }
-      });
-
-      // Clear "area results"
-      $scope.clearClustered = function() {
-        $state.go('home', {clustered: null});
-      };
-
     }
   ]);
 
