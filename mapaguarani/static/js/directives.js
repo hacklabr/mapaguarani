@@ -364,14 +364,14 @@
         },
         link: function(scope, element, attrs) {
 
-          scope.center = scope.center || [-16.107747, -51.103348];
-          scope.zoom = scope.zoom || 5;
+          var center = scope.center || [-16.107747, -51.103348];
+          var zoom = scope.zoom || 5;
 
           angular.element(element).append('<div id="' + attrs.id + '"></div>"').attr('id', '');
 
           var map = L.map(attrs.id, {
-            center: scope.center,
-            zoom: scope.zoom,
+            center: center,
+            zoom: zoom,
             zoomControl: false,
             attributionControl: false,
             preferCanvas: true
