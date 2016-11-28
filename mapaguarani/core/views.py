@@ -17,6 +17,7 @@ from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           LandTenureReportSerializer, SimpleIndigenousVillageSerializer,
                           SimpleIndigenousGeojsonVillageSerializer,
                           SimpleArchaeologicalPlaceGeojsonSerializer,)
+# from .resources import IndigenousVillageResource
 
 from io import BytesIO
 import zipfile
@@ -37,16 +38,19 @@ class IndigenousVillageMixin(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         queryset = super(IndigenousVillageMixin, self).get_queryset()
-        queryset = queryset.filter(status='public')
 
         # TODO: refatorar para determinar camadas pelo dominio do site
-        camadas_brasil = ['Guarani Sul e Sudeste - Aldeias', 'Guarani MS - Aldeias']
-        camadas_la = ['Guarani Paraguai - Aldeias', 'Guarani Bolívia - Aldeias', 'Guarani Argentina - Aldeias']
+        camadas_brasil = ['Guarani Sul e Sudeste - Aldeias',
+                          'Guarani MS - Aldeias']
+        camadas_la = ['Guarani Paraguai - Aldeias',
+                      'Guarani Bolívia - Aldeias',
+                      'Guarani Argentina - Aldeias']
         # import ipdb;ipdb.set_trace()
         if self.request.user.is_authenticated():
             camadas = camadas_brasil + camadas_la
         else:
             camadas = camadas_brasil
+            queryset = queryset.filter(status='public')
         queryset = queryset.filter(layer__name__in=camadas)
 
         return queryset
