@@ -141,13 +141,20 @@
            * Filters
            */
           scope.filtered = scope.filtered || {};
+          scope.filtered.villages = [];
+          scope.filtered.lands = [];
+          scope.filtered.sites = [];
+          scope._all = [];
 
           // Get every available content for "search all" results
           scope.getAll = function() {
             var all = [];
-            all = all.concat(angular.copy(scope.villages));
-            all = all.concat(angular.copy(scope.lands));
-            all = all.concat(angular.copy(scope.sites));
+            if (scope.villages !== undefined)
+                all = all.concat(angular.copy(scope.villages));
+            if (scope.lands !== undefined)
+                all = all.concat(angular.copy(scope.lands));
+            if (scope.sites !== undefined)
+                all = all.concat(angular.copy(scope.sites));
             return all;
           };
 
@@ -159,16 +166,14 @@
 
           // Watch lands content changes for filterable collection
           scope.$watch('lands', function(lands) {
-            if(typeof lands == 'object') {
+            if(typeof lands == 'object')
               scope.filtered.lands = angular.copy(lands);
-            }
           });
 
           // Watch sites content changes for filterable collection
           scope.$watch('sites', function(sites) {
-            if(typeof sites == 'object') {
+            if(typeof sites == 'object')
               scope.filtered.sites = angular.copy(sites);
-            }
           });
 
           // Watch all content changes to store `getAll` on scope
@@ -258,9 +263,9 @@
           scope.curPage = (parseInt($stateParams.page)-1) || 0;
 
           scope.pageCount = function() {
-            if(scope.filtered[scope.content] && scope.filtered[scope.content].length)
+            if(scope.filtered[scope.content] && scope.filtered[scope.content].length) {
               return Math.ceil(scope.filtered[scope.content].length/scope.perPage)-1;
-            else if(scope.filter.text) {
+            } else if(scope.filter.text) {
               return Math.ceil(scope.filtered.all.length/scope.perPage)-1;
             } else {
               return 0;
@@ -300,13 +305,8 @@
         restrict: 'EA',
         scope: {
           'item': '=',
-          'layerType': '@layer'
         },
         templateUrl: '/static/views/partials/list-item.html',
-        link: function(scope, element, attrs) {
-          // Get item url
-          scope.url = $state.href(scope.layerType, {id: scope.item.id}, {inherit: false});
-        }
       }
     }
   ]);

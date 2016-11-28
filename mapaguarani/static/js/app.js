@@ -35,26 +35,6 @@
         params: {
           'clustered': undefined
         },
-        resolve: {
-          VillagesData: [
-            'GuaraniService',
-            function(Guarani) {
-              return Guarani.villages.query().$promise;
-            }
-          ],
-          LandsData: [
-            'GuaraniService',
-            function(Guarani) {
-              return Guarani.lands.query().$promise;
-            }
-          ],
-          SitesData: [
-            'GuaraniService',
-            function(Guarani) {
-              return Guarani.sites.query().$promise;
-            }
-          ]
-        }
       })
       .state('village', {
         url: '/villages/:id/',
