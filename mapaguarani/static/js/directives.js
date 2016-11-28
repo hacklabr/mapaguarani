@@ -483,7 +483,7 @@
           /*
            * Init archaeological sites layer
            */
-        $http.get('/api/arch_geojson/').then(function (response){
+        var sites_promisse = $http.get('/api/arch_geojson/').then(function (response){
             var sites_geojson = response.data;
             var sitesPointsLayer = L.geoJSON(sites_geojson, {
                 onEachFeature: function (feature, layer) {
@@ -548,7 +548,7 @@
            /*
            * Init villages layer
            */
-            $http.get('/api/villages_geojson/').then(function (response){
+            var villages_promisse = $http.get('/api/villages_geojson/').then(function (response){
                 var villages_geojson = response.data;
                 var villagesLayerMarkers = L.geoJSON(villages_geojson, {
                     onEachFeature: function (feature, layer) {
@@ -658,6 +658,39 @@
                     map.addLayer(scope.interactiveLayers[layer].grid);
                 }
               }
+          });
+
+          // Control legend map display according to device display Width ($window.innerWidth)
+          if ($window.innerWidth < 800) {
+              scope.display_legends = false;
+              $rootScope.menuIsClosed = true;
+              map.removeControl(scope.interactiveLayers.lands.legend);
+          } else {
+              scope.display_legends = true;
+          }
+
+          villages_promisse.then(function (){
+              if (!scope.display_legends)
+                map.removeControl(scope.interactiveLayers.villages.legend);
+          })
+
+          sites_promisse.then(function (){
+              if (!scope.display_legends)
+                map.removeControl(scope.interactiveLayers.sites.legend);
+          })
+
+          angular.element($window).bind('resize', function () {
+            if (!scope.display_legends && $window.innerWidth >= 800) {
+                scope.display_legends = true;
+                map.addControl(scope.interactiveLayers.villages.legend);
+                map.addControl(scope.interactiveLayers.sites.legend);
+                map.addControl(scope.interactiveLayers.lands.legend);
+            } else if (scope.display_legends && $window.innerWidth < 800) {
+                scope.display_legends = false;
+                map.removeControl(scope.interactiveLayers.villages.legend);
+                map.removeControl(scope.interactiveLayers.sites.legend);
+                map.removeControl(scope.interactiveLayers.lands.legend);
+            }
           });
         }
       }
