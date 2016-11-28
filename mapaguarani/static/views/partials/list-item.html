@@ -35,6 +35,26 @@
             Fonte: {{item.guarani_presence.source}} <span ng-if="item.guarani_presence.date">({{item.guarani_presence.date | date :'yyyy'}})</span>
           </p>
         </td>
+        <!-- Archaeological Sites related fields -->
+        <tr ng-show="item.cnsa">
+          <th>CNSA</th>
+          <td>{{ item.cnsa }}</td>
+        </tr>
+        <tr ng-show="item.position_precision">
+          <th>Precisão da posição</th>
+          <td ng-if="item.position_precision == 'exact'">Exata</td>
+          <td ng-if="item.position_precision == 'estimated'">Estimada</td>
+          <td ng-if="item.position_precision == 'by_city'">Por cidade</td>
+          <td ng-if="item.position_precision == 'no_position'">Sem posição</td>
+        </tr>
+        <tr ng-show="item.position_comments">
+          <th>Observações sobre a posiçao</th>
+          <td>{{ item.position_comments }}</td>
+        </tr>
+        <tr ng-show="item.biblio_references">
+          <th>Referências</th>
+          <td>{{ item.biblio_references }}</td>
+        </tr>
       </tr>
     </tbody>
   </table>
