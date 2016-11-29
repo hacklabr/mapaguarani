@@ -53,6 +53,7 @@ THIRD_PARTY_APPS = (
     'rest_framework',
     'rest_framework_gis',
     'rest_framework_serializer_field_permissions',
+    'rest_framework_cache',
     'moderation',
     'import_export',
 )
@@ -143,8 +144,8 @@ DATABASES['default']['ATOMIC_REQUESTS'] = True
 # memcacheify (used on heroku) is painful to install on windows.
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': ''
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
     }
 }
 # END CACHING

@@ -19,6 +19,8 @@ djangorestframework-gis==0.10.1
 # django-rest-serializer-field-permissions==1.0.0
 -e git+https://github.com/hacklabr/django-rest-serializer-field-permissions#egg=django-rest-serializer-field-permissions
 
+rest-framework-cache==0.1
+
 # django-geojson>=2.8.1
 -e git+https://github.com/hacklabr/django-geojson#egg=django-geojson
 

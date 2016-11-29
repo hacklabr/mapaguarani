@@ -8,6 +8,7 @@ $dependencies = <<SCRIPT
     apt-get install -y postgresql postgresql-contrib postgis postgresql-9.3-postgis-2.1 postgresql-9.3-postgis-2.1-scripts libpq-dev
     apt-get install -y postgresql-server-dev-all plpython-9.3
     apt-get install -y build-essential git python-dev python3-dev libjpeg-dev zlib1g-dev python-virtualenv binutils libproj-dev gdal-bin
+    apt-get install -y memcached
 
     # Needed to install Fiona via pip
     apt-get install -y libgdal-dev

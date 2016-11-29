@@ -7,6 +7,8 @@ from .models import (IndigenousLand, IndigenousVillage, ArchaeologicalPlace, Lan
                      GuaraniPresence, Population,)
 from protected_areas.serializers import BaseProtectedAreaSerializers
 from django.utils.translation import ugettext as _
+from rest_framework_cache.serializers import CachedSerializerMixin
+from rest_framework_cache.registry import cache_registry
 
 
 class PopulationSerializer(serializers.ModelSerializer):
@@ -107,7 +109,9 @@ class SimpleIndigenousLandSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
-class IndigenousVillageSerializer(FieldPermissionSerializerMixin, IndigenousPlaceSerializer):
+class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
+                                  IndigenousPlaceSerializer,
+                                  CachedSerializerMixin):
 
     position_precision = serializers.SerializerMethodField()
     population = serializers.SerializerMethodField()
@@ -168,6 +172,8 @@ class IndigenousVillageSerializer(FieldPermissionSerializerMixin, IndigenousPlac
         if obj.land:
             land = obj.land[0]
             return SimpleIndigenousLandSerializer(land).data
+
+cache_registry.register(IndigenousVillageSerializer)
 
 
 class IndigenousVillageGeojsonSerializer(IndigenousVillageSerializer,
@@ -239,7 +245,8 @@ class SimpleIndigenousVillageSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
-class SimpleIndigenousGeojsonVillageSerializer(GeoFeatureModelSerializer):
+class SimpleIndigenousGeojsonVillageSerializer(GeoFeatureModelSerializer,
+                                               CachedSerializerMixin):
 
     guarani_presence = serializers.SerializerMethodField()
 
@@ -256,6 +263,8 @@ class SimpleIndigenousGeojsonVillageSerializer(GeoFeatureModelSerializer):
             presence = GuaraniPresence(presence=False)
 
         return GuaraniPresenceSerializer(presence).data
+
+cache_registry.register(SimpleIndigenousGeojsonVillageSerializer)
 
 
 class IndigenousLandSerializer(FieldPermissionSerializerMixin, IndigenousPlaceSerializer):

@@ -9,10 +9,12 @@ from core.views import (IndigenousLandViewSet, IndigenousVillageViewSet,
                         ArchaeologicalPlaceGeojsonView,)
 from moderation.helpers import auto_discover
 from rest_framework import routers
+from rest_framework_cache.registry import cache_registry
 
 
 auto_discover()
 admin.autodiscover()
+cache_registry.autodiscover()
 
 router = routers.SimpleRouter()
 router.register(r'lands', IndigenousLandViewSet)
