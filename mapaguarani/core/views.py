@@ -34,7 +34,7 @@ class IndigenousLandViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = IndigenousLandSerializer
 
 
-class IndigenousVillageMixin(viewsets.ReadOnlyModelViewSet):
+class IndigenousVillageMixin(object):
 
     def get_queryset(self):
         queryset = super(IndigenousVillageMixin, self).get_queryset()
@@ -56,12 +56,12 @@ class IndigenousVillageMixin(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 
-class IndigenousVillageViewSet(IndigenousVillageMixin):
+class IndigenousVillageViewSet(IndigenousVillageMixin, viewsets.ReadOnlyModelViewSet):
     queryset = IndigenousVillage.objects.all()
     serializer_class = IndigenousVillageSerializer
 
 
-class IndigenousVillageGeojsonView(IndigenousVillageMixin):
+class IndigenousVillageGeojsonView(IndigenousVillageMixin, viewsets.ReadOnlyModelViewSet):
     queryset = IndigenousVillage.objects.all()
     serializer_class = SimpleIndigenousGeojsonVillageSerializer
 
