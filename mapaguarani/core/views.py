@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.views.generic import View
 from django.contrib.gis.db.models.fields import GeometryField
-from django.db.models import Count, F
+from django.db.models import Count
 import rest_framework_gis
 from rest_framework import viewsets, relations, serializers, generics
 from rest_framework_serializer_field_permissions import fields
