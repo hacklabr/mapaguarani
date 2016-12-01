@@ -20,6 +20,7 @@ djangorestframework-gis==0.10.1
 -e git+https://github.com/hacklabr/django-rest-serializer-field-permissions#egg=django-rest-serializer-field-permissions
 
 rest-framework-cache==0.1
+python-memcached
 
 rest-pandas==0.5.0
 xlwt==1.1.2
