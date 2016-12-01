@@ -8,6 +8,8 @@ from .models import (
     MapLayer, Organization, ActionField, Project,
 )
 from moderation.admin import ModerationAdmin
+from mapwidgets.widgets import GooglePointFieldWidget
+from django.contrib.gis.db import models
 
 
 class PopulationInLine(admin.TabularInline):
@@ -18,8 +20,8 @@ class GuaraniPresenceInLine(admin.TabularInline):
     model = GuaraniPresence
 
 
-class IndigenousPlaceAdmin(geoadmin.GeoModelAdmin, ModerationAdmin):
-    map_template = 'openlayers.html'
+# class IndigenousPlaceAdmin(geoadmin.GeoModelAdmin, ModerationAdmin):
+class IndigenousPlaceAdmin(ModerationAdmin):
     list_per_page = 500
     list_filter = ('layer', )
 
@@ -33,6 +35,7 @@ class IndigenousPlaceAdmin(geoadmin.GeoModelAdmin, ModerationAdmin):
 
 
 @admin.register(IndigenousVillage)
+# class IndigenousVillageAdmin(IndigenousPlaceAdmin):
 class IndigenousVillageAdmin(IndigenousPlaceAdmin):
     # extra_js = [GMAP.api_url + GMAP.key]
     # map_template = 'gis/admin/google.html'
@@ -46,6 +49,9 @@ class IndigenousVillageAdmin(IndigenousPlaceAdmin):
         PopulationInLine,
         GuaraniPresenceInLine,
     ]
+    formfield_overrides = {
+        models.PointField: {"widget": GooglePointFieldWidget}
+    }
 
     def get_guarani_presence(self, obj):
         return obj.guarani_presence
@@ -54,7 +60,9 @@ class IndigenousVillageAdmin(IndigenousPlaceAdmin):
 
 
 @admin.register(IndigenousLand)
-class IndigenousLandAdmin(IndigenousPlaceAdmin):
+class IndigenousLandAdmin(geoadmin.GeoModelAdmin,
+                          IndigenousPlaceAdmin):
+    map_template = 'openlayers.html'
     list_display = ('name', 'other_names', 'get_prominent_subgroup', 'official_area', 'claim', 'demand', 'source',
                     'land_tenure', 'land_tenure_status', 'public_comments', 'private_comments', 'associated_land',
                     'status',)
@@ -69,7 +77,7 @@ class ArchaeologicalImageInLine(admin.TabularInline):
 
 
 @admin.register(ArchaeologicalPlace)
-class ArchaeologicalPlaceAdmin(admin.ModelAdmin):
+class ArchaeologicalPlaceAdmin(ModerationAdmin):
     list_display = ('get_name', 'code', 'acronym', 'cnsa', 'biblio_references',
                     'position_precision', 'position_comments', 'geometry', 'status',)
     search_fields = ['name', 'code', 'acronym', 'cnsa', 'biblio_references', ]
@@ -78,6 +86,9 @@ class ArchaeologicalPlaceAdmin(admin.ModelAdmin):
         ArchaeologicalImageInLine,
     ]
     list_filter = ('layer', )
+    formfield_overrides = {
+        models.PointField: {"widget": GooglePointFieldWidget}
+    }
 
     def get_name(self, obj):
         if obj.name:

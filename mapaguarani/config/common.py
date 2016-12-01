@@ -54,6 +54,7 @@ THIRD_PARTY_APPS = (
     'rest_framework_serializer_field_permissions',
     'rest_framework_cache',
     'moderation',
+    'mapwidgets',
 )
 
 # Apps specific for this project go here.
@@ -281,6 +282,10 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = 'users:redirect'
 LOGIN_URL = 'account_login'
 # END Custom user app defaults
+
+MAP_WIDGETS = {
+    "GOOGLE_MAP_API_KEY": "AIzaSyB89T4uE1P-WRJCPTLwdlOA7bbLHmvIkC4",
+}
 
 # SLUGLIFIER
 # AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
