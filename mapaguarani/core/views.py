@@ -5,6 +5,7 @@ import rest_framework_gis
 from rest_framework import viewsets, relations, serializers, generics
 from rest_framework_serializer_field_permissions import fields
 from collections import OrderedDict
+from rest_pandas import PandasView
 
 from .models import (IndigenousLand, IndigenousVillage,
                      ArchaeologicalPlace, LandTenure, LandTenureStatus,)
@@ -12,10 +13,10 @@ from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           ArchaeologicalPlaceSerializer, LandTenureSerializer,
                           LandTenureStatusSerializer, IndigenousLandGeojsonSerializer,
                           IndigenousVillageGeojsonSerializer, ArchaeologicalPlaceGeojsonSerializer,
-                          LandTenureReportSerializer, SimpleIndigenousVillageSerializer,
+                          LandTenureReportSerializer,
                           SimpleIndigenousGeojsonVillageSerializer,
-                          SimpleArchaeologicalPlaceGeojsonSerializer,)
-# from .resources import IndigenousVillageResource
+                          SimpleArchaeologicalPlaceGeojsonSerializer,
+                          IndigenousVillageExportSerializer,)
 
 from io import BytesIO
 import zipfile
@@ -39,7 +40,7 @@ class IndigenousVillageMixin(object):
                           'Guarani MS - Aldeias']
         camadas_la = ['Guarani Paraguai - Aldeias',
                       'Guarani Bolívia - Aldeias',
-                      'Guarani Argentina - Aldeias']
+                      'Guarani Argentina - Aldeias', ]
         # import ipdb;ipdb.set_trace()
         if self.request.user.is_authenticated():
             camadas = camadas_brasil + camadas_la
@@ -59,6 +60,11 @@ class IndigenousVillageViewSet(IndigenousVillageMixin, viewsets.ReadOnlyModelVie
 class IndigenousVillageGeojsonView(IndigenousVillageMixin, viewsets.ReadOnlyModelViewSet):
     queryset = IndigenousVillage.objects.all()
     serializer_class = SimpleIndigenousGeojsonVillageSerializer
+
+
+class IndigenousVillageExportView(IndigenousVillageMixin, PandasView):
+    queryset = IndigenousVillage.objects.all()
+    serializer_class = IndigenousVillageExportSerializer
 
 
 class ArchaeologicalPlaceGeojsonView(viewsets.ReadOnlyModelViewSet):
@@ -123,11 +129,7 @@ class ShapefileView(generics.GenericAPIView):
 
         fiona_type = self.ENGINE_FIONA_MAPPING[field_type]
         if fiona_type == "str":
-            try:
-                max_length = field.max_length or 255
-            except:
-                max_length = 255
-
+            max_length = 255
             fiona_type += ":%s" % max_length
 
         return fiona_type
@@ -163,7 +165,7 @@ class ShapefileView(generics.GenericAPIView):
 
         for field_name, field_type in serializer_fields.items():
             if isinstance(field_type, relations.ManyRelatedField):
-                raise AttributeError("All Many to Many fields should be exclude from serializer.")
+                raise AttributeError("All Many to Many fields should be exclude from serializer. Field: " + field_name)
             if not isinstance(field_type, rest_framework_gis.fields.GeometryField):
                 properties[field_name] = self._get_fiona_type(field_type)
 

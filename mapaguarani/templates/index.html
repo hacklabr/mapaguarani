@@ -114,22 +114,27 @@
             <hr/>
             <p class="lead text-center">Você pode baixar a planilha das terras indigenas, e os shapefiles das camadas de Aldeias e Terras Indígenas</p>
             <p class="lead text-center">A geração destes arquivos pode demorar vários minutos, por favor aguarde o download começar após clicar abaixo no arquivo abaixo desejado.</p>
-            {% if user.is_authenticated %}
-            <p class="text-center">
-              <a class="btn btn-lg btn-success" href="{% url 'export_villages' %}">baixar Planilha das terras indigenas</a>
+
+            <p class="lead text-left">
+              Arquivos Terras Indígenas
+              <a class="btn btn-lg btn-success" href="{% url 'export_xls_villages' %}.xls">baixar Planilha Excel</a>
+              {% if user.is_authenticated %}
+              <a class="btn btn-lg btn-success" href="{% url 'lands_shapefiles' %}">baixar Shapefile</a>
+              {% endif %}
             </p>
-            {% endif %}
-            <p class="text-center">
-              <a class="btn btn-lg btn-success" href="{% url 'lands_shapefiles' %}">baixar shapefile das terras indigenas</a>
-            </p>
-            <p class="text-center">
-              <a class="btn btn-lg btn-success" href="{% url 'villages_shapefiles' %}">baixar shapefile das aldeias indigenas</a>
+
+            <p class="lead text-left">
+              Arquivos Aldeias Indígenas
+              <a class="btn btn-lg btn-success" href="{% url 'export_xls_villages' %}.xls">baixar Planilha Excel</a>
+              {% if user.is_authenticated %}
+              <a class="btn btn-lg btn-success" href="{% url 'villages_shapefiles' %}">baixar Shapefile</a>
+              {% endif %}
             </p>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

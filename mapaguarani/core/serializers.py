@@ -56,7 +56,7 @@ class IndigenousLandListSerializer(BaseListSerializerMixin):
                      'cities', 'states', 'guarani_presence']
 
 
-class IndigenousPlaceSerializer(serializers.ModelSerializer):
+class ProtectedAreasMixinSerializer(serializers.ModelSerializer):
 
     protected_areas_integral = serializers.SerializerMethodField()
     protected_areas_conservation = serializers.SerializerMethodField()
@@ -72,13 +72,12 @@ class IndigenousPlaceSerializer(serializers.ModelSerializer):
             return BaseProtectedAreaSerializers(obj.protected_areas.filter(type='US'), many=True).data
 
 
-class IndigenousPlaceGeojsonSerializer(GeoFeatureModelSerializer):
+class IndigenousPlaceExportSerializer(object):
 
     """
     This serializer is used to generate the shapefile
     """
 
-    cti_id = serializers.ReadOnlyField(source='id')
     ethnic_groups = serializers.SerializerMethodField()
     prominent_subgroup = serializers.SerializerMethodField()
     layer = serializers.SerializerMethodField()
@@ -99,6 +98,7 @@ class IndigenousPlaceGeojsonSerializer(GeoFeatureModelSerializer):
 
     @staticmethod
     def get_country(obj):
+        # FIXME
         return 'Brasil'
 
 
@@ -110,7 +110,7 @@ class SimpleIndigenousLandSerializer(serializers.ModelSerializer):
 
 
 class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
-                                  IndigenousPlaceSerializer,
+                                  ProtectedAreasMixinSerializer,
                                   CachedSerializerMixin):
 
     position_precision = serializers.SerializerMethodField()
@@ -139,7 +139,8 @@ class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
         try:
             population = obj.population_annual_series.latest()
         except Population.DoesNotExist:
-            # FIXME
+            # FIXME: if no population object is found, then there is no
+            # information about it, what is diferent than Population = 0.
             population = Population(population=0)
 
         return PopulationSerializer(population).data
@@ -176,21 +177,28 @@ class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
 cache_registry.register(IndigenousVillageSerializer)
 
 
-class IndigenousVillageGeojsonSerializer(IndigenousVillageSerializer,
-                                         IndigenousPlaceGeojsonSerializer):
+class IndigenousVillageExportSerializer(IndigenousPlaceExportSerializer,
+                                        IndigenousVillageSerializer,
+                                        CachedSerializerMixin):
     """
-    This serializer is used to generate the shapefile
+    This serializer is used to generate the shapefile and xls
     """
+
+    ethnic_groups = serializers.SerializerMethodField()
+    prominent_subgroup = serializers.SerializerMethodField()
+    layer = serializers.SerializerMethodField()
+    country = serializers.SerializerMethodField()
+    position_precision = serializers.SerializerMethodField()
 
     class Meta:
         model = IndigenousVillage
-        geo_field = 'geometry'
+        # geo_field = 'geometry'
         # only the id field is excluded
-        fields = ['name', 'other_names', 'land', 'guarani_presence', 'population',
+        fields = ['id', 'name', 'other_names', 'land', 'guarani_presence', 'population',
                   'ethnic_groups', 'prominent_subgroup',
                   'city', 'state', 'country',
                   'position_source', 'position_precision', 'public_comments',
-                  'private_comments', 'cti_id', 'layer']
+                  'private_comments', 'layer']
 
     @staticmethod
     def get_guarani_presence(obj):
@@ -227,19 +235,46 @@ class IndigenousVillageGeojsonSerializer(IndigenousVillageSerializer,
             land = obj.land[0]
             return land.name
 
-    @staticmethod
-    def get_city(obj):
-        if obj.city:
-            return obj.city.name
+    # @staticmethod
+    # def get_city(obj):
+    #     if obj.city:
+    #         return obj.city.name
 
-    @staticmethod
-    def get_state(obj):
-        if obj.state:
-            return obj.state.name or obj.state.acronym
+    # @staticmethod
+    # def get_state(obj):
+    #     if obj.state:
+    #         return obj.state.name or obj.state.acronym
+
+cache_registry.register(IndigenousVillageExportSerializer)
+
+
+class IndigenousVillageGeojsonSerializer(GeoFeatureModelSerializer,
+                                         IndigenousVillageExportSerializer,
+                                         CachedSerializerMixin):
+    """
+    This serializer is used to generate the shapefile
+    """
+
+    cti_id = serializers.ReadOnlyField(source='id')
+
+    class Meta:
+        model = IndigenousVillage
+        geo_field = 'geometry'
+        # only the id field is excluded
+        fields = ['name', 'other_names', 'land', 'guarani_presence', 'population',
+                  'ethnic_groups', 'prominent_subgroup',
+                  'city', 'state', 'country',
+                  'position_source', 'position_precision', 'public_comments',
+                  'private_comments', 'cti_id', 'layer']
+
+cache_registry.register(IndigenousVillageGeojsonSerializer)
 
 
 class SimpleIndigenousVillageSerializer(serializers.ModelSerializer):
 
+    """
+    This serializer is used in some relations fields in others serializers
+    """
     class Meta:
         model = IndigenousVillage
         fields = ['id', 'name']
@@ -267,7 +302,7 @@ class SimpleIndigenousGeojsonVillageSerializer(GeoFeatureModelSerializer,
 cache_registry.register(SimpleIndigenousGeojsonVillageSerializer)
 
 
-class IndigenousLandSerializer(FieldPermissionSerializerMixin, IndigenousPlaceSerializer):
+class IndigenousLandSerializer(FieldPermissionSerializerMixin, ProtectedAreasMixinSerializer):
 
     associated_land = serializers.PrimaryKeyRelatedField(read_only=True)
 
@@ -327,7 +362,9 @@ class IndigenousLandSerializer(FieldPermissionSerializerMixin, IndigenousPlaceSe
             return ", ".join([state.name or state.acronym for state in states])
 
 
-class IndigenousLandGeojsonSerializer(IndigenousLandSerializer, IndigenousPlaceGeojsonSerializer):
+class IndigenousLandGeojsonSerializer(IndigenousPlaceExportSerializer,
+                                      GeoFeatureModelSerializer,
+                                      IndigenousLandSerializer):
 
     """
     This serializer is used to generate the shapefile
@@ -336,6 +373,10 @@ class IndigenousLandGeojsonSerializer(IndigenousLandSerializer, IndigenousPlaceG
     documents = serializers.SerializerMethodField()
     population = serializers.SerializerMethodField()
     cti_id = fields.ReadOnlyField(source='id', permission_classes=(IsAuthenticated(), ))
+    ethnic_groups = serializers.SerializerMethodField()
+    prominent_subgroup = serializers.SerializerMethodField()
+    layer = serializers.SerializerMethodField()
+    # country = serializers.SerializerMethodField()
 
     class Meta:
         model = IndigenousLand
@@ -391,7 +432,7 @@ class ArchaeologicalPlaceSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ArchaeologicalPlaceGeojsonSerializer(IndigenousPlaceGeojsonSerializer):
+class ArchaeologicalPlaceGeojsonSerializer(IndigenousPlaceExportSerializer):
 
     class Meta:
         model = ArchaeologicalPlace

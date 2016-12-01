@@ -5,11 +5,12 @@ from core.views import (IndigenousLandViewSet, IndigenousVillageViewSet,
                         ArchaeologicalPlaceViewSet, LandTenureViewSet, LandTenureStatusViewSet,
                         IndigenousLandsShapefileView, IndigenousVillagesShapefileView,
                         ArchaeologicalPlacesShapefileView, LandTenureReportViewSet,
-                        IndigenousVillageReportExport, IndigenousVillageGeojsonView,
-                        ArchaeologicalPlaceGeojsonView,)
+                        IndigenousVillageGeojsonView,
+                        ArchaeologicalPlaceGeojsonView, IndigenousVillageExportView,)
 from moderation.helpers import auto_discover
 from rest_framework import routers
 from rest_framework_cache.registry import cache_registry
+from rest_framework.urlpatterns import format_suffix_patterns
 
 
 auto_discover()
@@ -33,7 +34,7 @@ urlpatterns = [
     # Services
     url(r'^api/', include(router.urls)),
 
-    url(r'^export/villages/$', IndigenousVillageReportExport.as_view(), name='export_villages'),
+    url(r'^export/villages$', IndigenousVillageExportView.as_view(), name='export_xls_villages'),
 
     url(r'^shapefiles/villages/$', IndigenousVillagesShapefileView.as_view(), name='villages_shapefiles'),
 
@@ -54,3 +55,5 @@ urlpatterns = [
         name='djangular'),
 
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
