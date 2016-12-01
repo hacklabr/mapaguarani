@@ -1,11 +1,9 @@
 from django.http import HttpResponse
-from django.views.generic import View
 from django.contrib.gis.db.models.fields import GeometryField
 from django.db.models import Count
 import rest_framework_gis
 from rest_framework import viewsets, relations, serializers, generics
 from rest_framework_serializer_field_permissions import fields
-from import_export import admin
 from collections import OrderedDict
 
 from .models import (IndigenousLand, IndigenousVillage,
@@ -24,9 +22,6 @@ import zipfile
 from fiona.crs import from_epsg
 import fiona
 import tempfile
-
-
-IMPORT_EXPORT_FORMATS = [format().get_title() for format in admin.DEFAULT_FORMATS]
 
 
 class IndigenousLandViewSet(viewsets.ReadOnlyModelViewSet):
@@ -242,25 +237,3 @@ class LandTenureReportViewSet(viewsets.ReadOnlyModelViewSet):
         total_lands_count=Count('indigenous_lands'),
     )
     serializer_class = LandTenureReportSerializer
-
-
-class IndigenousVillageReportExport(View):
-
-    def get(self, request):
-        format = request.GET.get('format', 'csv')
-        if format not in IMPORT_EXPORT_FORMATS:
-            format = 'csv'
-
-        queryset = IndigenousVillage.objects.all()
-        # resource = IndigenousVillageResource()
-        from import_export import resources
-        resource = resources.Resource()
-
-        layer = IndigenousVillageGeojsonSerializer(queryset, many=True)
-        import ipdb;ipdb.set_trace()
-        resource.instance = layer.instance
-        dataset = resource.export()
-
-        response = HttpResponse(getattr(dataset, format), content_type=format)
-        response['Content-Disposition'] = 'attachment; filename=filename.%s' % format
-        return response

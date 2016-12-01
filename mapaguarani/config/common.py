@@ -47,7 +47,6 @@ THIRD_PARTY_APPS = (
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
-    'djgeojson',
     'rosetta',
     'compressor',
     'rest_framework',
@@ -55,7 +54,6 @@ THIRD_PARTY_APPS = (
     'rest_framework_serializer_field_permissions',
     'rest_framework_cache',
     'moderation',
-    'import_export',
 )
 
 # Apps specific for this project go here.

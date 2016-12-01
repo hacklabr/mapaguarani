@@ -21,10 +21,6 @@ djangorestframework-gis==0.10.1
 
 rest-framework-cache==0.1
 
-# django-geojson>=2.8.1
--e git+https://github.com/hacklabr/django-geojson#egg=django-geojson
-
-# django-leaflet==0.16
 
 django-rosetta==0.7
 
@@ -48,6 +44,3 @@ Fiona==1.6.1
 
 # Hydrography
 # -e git+https://github.com/hacklabr/geodjango-hydrography#egg=geodjango-hydrography
-
-# Export to CSV, XLS and other
-django-import-export==0.2.8
