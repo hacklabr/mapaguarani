@@ -42,8 +42,8 @@ class IndigenousVillageAdmin(IndigenousPlaceAdmin):
                     'population', 'get_guarani_presence',
                     'position_precision', 'position_source', 'geometry',
                     'public_comments', 'private_comments', )
-    search_fields = ['name', 'other_names',]
-    filter_horizontal = ['ethnic_groups', 'prominent_subgroup',]
+    search_fields = ['name', 'other_names', ]
+    filter_horizontal = ['ethnic_groups', 'prominent_subgroup', ]
     list_per_page = 500
     inlines = [
         PopulationInLine,
