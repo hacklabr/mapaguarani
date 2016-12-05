@@ -52,14 +52,59 @@ class ActionField(models.Model):
     )
 
 
+class ProjectFile(models.Model):
+
+    TYPE = (
+        ('photo', _('Photo')),
+        ('video', _('Video')),
+        ('audio', _('Audio')),
+        ('pdf', _('PDF')),
+        ('others', _('Others')),
+    )
+    name = models.CharField(_('Name'), max_length=255, blank=True, null=True)
+    desc = models.TextField(_('Description'), blank=True, null=True)
+    credits = models.CharField(_('Credits (for photos)'), max_length=512, blank=True, null=True)
+    type = models.CharField(
+        _('Type'),
+        choices=TYPE,
+        max_length=256,
+        default=TYPE[1][0]
+    )
+    file = models.FileField(_('File'))
+
+
+class ProjectLink(models.Model):
+
+    TYPE = (
+        ('youtube', _('youtube')),
+        ('vimeo', _('vimeo')),
+        ('flickr', _('flickr')),
+        ('instagram', _('instagram')),
+        ('others', _('Others')),
+    )
+    name = models.CharField(_('Name'), max_length=255, blank=True, null=True)
+    desc = models.TextField(_('Description'), blank=True, null=True)
+    url = models.CharField(_('Link'), max_length=512)
+    embed_code = models.TextField(_('Embed code'), blank=True, null=True)
+
+
 class Project(models.Model):
     name = models.CharField(_('name'), max_length=255)
     description = models.TextField(_('description'), blank=True, null=True)
     start_date = models.DateField(_('start date'))
     end_date = models.DateField(_('and date'))
-    # files
-    # flicker
-    # youtube/videos
+    files = models.ManyToManyField(
+        'ProjectFile',
+        verbose_name=_('Files'),
+        related_name='files',
+        blank=True
+    )
+    links = models.ManyToManyField(
+        'ProjectLink',
+        verbose_name=_('Links (Youtube, instagram, etc)'),
+        related_name='links',
+        blank=True
+    )
     indigenous_villages = models.ManyToManyField(
         'IndigenousVillage',
         verbose_name=_('Indigenous Village'),

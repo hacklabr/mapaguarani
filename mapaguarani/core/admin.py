@@ -5,7 +5,7 @@ from .models import (
     IndigenousVillage, IndigenousLand, LegalProceedings, DocumentType,
     Document, EthnicGroup, ProminentEthnicSubGroup, GuaraniPresence, Population,
     ArchaeologicalPlace, ArchaeologicalImage, LandTenure, LandTenureStatus,
-    MapLayer, Organization, ActionField, Project,
+    MapLayer, Organization, ActionField, Project, ProjectFile, ProjectLink
 )
 from moderation.admin import ModerationAdmin
 from mapwidgets.widgets import GooglePointFieldWidget
@@ -106,6 +106,13 @@ class LegalProceedingsAdmin(admin.ModelAdmin):
     pass
 
 
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    filter_horizontal = ('indigenous_villages', 'indigenous_lands',
+                         'archaeological_places', 'organizations',
+                         'layers',)
+
+
 admin.site.register(DocumentType)
 admin.site.register(Document)
 admin.site.register(EthnicGroup)
@@ -117,4 +124,5 @@ admin.site.register(Population)
 admin.site.register(MapLayer)
 admin.site.register(Organization)
 admin.site.register(ActionField)
-admin.site.register(Project)
+admin.site.register(ProjectLink)
+admin.site.register(ProjectFile)
