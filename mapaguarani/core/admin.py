@@ -20,10 +20,10 @@ class GuaraniPresenceInLine(admin.TabularInline):
     model = GuaraniPresence
 
 
-# class IndigenousPlaceAdmin(geoadmin.GeoModelAdmin, ModerationAdmin):
 class IndigenousPlaceAdmin(ModerationAdmin):
     list_per_page = 500
     list_filter = ('layer', )
+    list_editable = ('status',)
 
     def get_ethnic_groups(self, obj):
         return ", ".join([ethnic_group.name for ethnic_group in obj.ethnic_groups.all()])
@@ -35,15 +35,15 @@ class IndigenousPlaceAdmin(ModerationAdmin):
 
 
 @admin.register(IndigenousVillage)
-# class IndigenousVillageAdmin(IndigenousPlaceAdmin):
 class IndigenousVillageAdmin(IndigenousPlaceAdmin):
     # extra_js = [GMAP.api_url + GMAP.key]
     # map_template = 'gis/admin/google.html'
-    list_display = ('name', 'other_names', 'get_ethnic_groups', 'get_prominent_subgroup',
+    list_display = ('name', 'status', 'other_names', 'get_ethnic_groups', 'get_prominent_subgroup',
                     'population', 'get_guarani_presence',
                     'position_precision', 'position_source', 'geometry',
-                    'public_comments', 'private_comments', 'status',)
-    search_fields = ['name', 'other_names', ]
+                    'public_comments', 'private_comments', )
+    search_fields = ['name', 'other_names',]
+    filter_horizontal = ['ethnic_groups', 'prominent_subgroup',]
     list_per_page = 500
     inlines = [
         PopulationInLine,
@@ -63,11 +63,13 @@ class IndigenousVillageAdmin(IndigenousPlaceAdmin):
 class IndigenousLandAdmin(geoadmin.GeoModelAdmin,
                           IndigenousPlaceAdmin):
     map_template = 'openlayers.html'
+    filter_horizontal = ('ethnic_groups', 'prominent_subgroup', 'documents', )
     list_display = ('name', 'other_names', 'get_prominent_subgroup', 'official_area', 'claim', 'demand', 'source',
                     'land_tenure', 'land_tenure_status', 'public_comments', 'private_comments', 'associated_land',
                     'status',)
     # list_editable = ('other_names', 'official_area', 'claim', 'demand', 'source', 'land_tenure',
     #                  'land_tenure_status', 'public_comments', 'private_comments')
+
     search_fields = ['name', 'other_names', 'claim', 'demand', 'source', 'land_tenure__name',
                      'land_tenure_status__name', 'public_comments', 'private_comments']
 
@@ -80,6 +82,7 @@ class ArchaeologicalImageInLine(admin.TabularInline):
 class ArchaeologicalPlaceAdmin(ModerationAdmin):
     list_display = ('get_name', 'code', 'acronym', 'cnsa', 'biblio_references',
                     'position_precision', 'position_comments', 'geometry', 'status',)
+    list_editable = ('status',)
     search_fields = ['name', 'code', 'acronym', 'cnsa', 'biblio_references', ]
     list_per_page = 500
     inlines = [
