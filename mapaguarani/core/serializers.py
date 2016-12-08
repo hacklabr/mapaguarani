@@ -138,12 +138,9 @@ class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
     def get_population(obj):
         try:
             population = obj.population_annual_series.latest()
+            return PopulationSerializer(population).data
         except Population.DoesNotExist:
-            # FIXME: if no population object is found, then there is no
-            # information about it, what is diferent than Population = 0.
-            population = Population(population=0)
-
-        return PopulationSerializer(population).data
+            return None
 
     @staticmethod
     def get_guarani_presence(obj):
