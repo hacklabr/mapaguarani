@@ -66,9 +66,6 @@
         <td>
           <p ng-if="data.guarani_presence.presence">Sim</p>
           <p ng-if="!data.guarani_presence.presence">Não</p>
-          <p ng-if="data.guarani_presence.source">
-            Fonte: {{data.guarani_presence.source}} <span ng-if="data.guarani_presence.date">({{data.guarani_presence.date | date :'yyyy'}})</span>
-          </p>
         </td>
       </tr>
       <tr ng-show="data.position_precision">
