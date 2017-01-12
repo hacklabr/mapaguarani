@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.contrib.gis.db.models.fields import GeometryField
+from django.contrib.sites.shortcuts import get_current_site
 from django.db.models import Count
 import rest_framework_gis
 from rest_framework import viewsets, relations, serializers, generics
@@ -7,7 +8,7 @@ from rest_framework_serializer_field_permissions import fields
 from collections import OrderedDict
 from rest_pandas import PandasView
 
-from .models import (IndigenousLand, IndigenousVillage,
+from .models import (IndigenousLand, IndigenousVillage, MapLayer,
                      ArchaeologicalPlace, LandTenure, LandTenureStatus,)
 from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           ArchaeologicalPlaceSerializer, LandTenureSerializer,
@@ -35,19 +36,12 @@ class IndigenousVillageMixin(object):
     def get_queryset(self):
         queryset = super(IndigenousVillageMixin, self).get_queryset()
 
-        # TODO: refatorar para determinar camadas pelo dominio do site
-        camadas_brasil = ['Guarani Sul e Sudeste - Aldeias',
-                          'Guarani MS - Aldeias']
-        camadas_la = ['Guarani Paraguai - Aldeias',
-                      'Guarani Bolívia - Aldeias',
-                      'Guarani Argentina - Aldeias', ]
-        # import ipdb;ipdb.set_trace()
-        if self.request.user.is_authenticated():
-            camadas = camadas_brasil + camadas_la
-        else:
-            camadas = camadas_brasil
+        if not self.request.user.is_authenticated():
+
+            current_site = get_current_site(self.request)
+            layers = MapLayer.objects.filter(sites=current_site)
+            queryset = queryset.filter(layer__in=layers)
             queryset = queryset.filter(status='public')
-        queryset = queryset.filter(layer__name__in=camadas)
 
         return queryset
 

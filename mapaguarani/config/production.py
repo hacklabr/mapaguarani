@@ -20,7 +20,10 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 # Hosts/domain names that are valid for this site
 # See https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ["*"]
-SITE_ID = 1
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
+SITE_ID = env("SITE_ID", default=1)
+
 # END SITE CONFIGURATION
 
 INSTALLED_APPS += ("gunicorn", )
