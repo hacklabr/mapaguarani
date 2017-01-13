@@ -381,15 +381,15 @@
           Map.setMap(map);
 
           // Add base layers
-          map.addLayer(gm_satellite);
+          map.addLayer(gm_hybrid);
           var baselayers = {
-            'Mapa Mapbox': mapbox_streets,
-            'Satélite Mapbox': mapbox_satellite,
-            'Híbrido Mapbox': mapbox_hybrid,
-            'Mapa Google': gm_roadmap,
             'Híbrido Google': gm_hybrid,
+            'Satélite Google': gm_satellite,
+            'Mapa Google': gm_roadmap,
             'Terreno Google': gm_terrain,
-            'Satélite Google': gm_satellite
+            'Híbrido Mapbox': mapbox_hybrid,
+            'Satélite Mapbox': mapbox_satellite,
+            'Mapa Mapbox': mapbox_streets
           };
 
           var official_layers = {
