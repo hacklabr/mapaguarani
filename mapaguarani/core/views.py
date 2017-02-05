@@ -26,15 +26,10 @@ import fiona
 import tempfile
 
 
-class IndigenousLandViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = IndigenousLand.objects.all()
-    serializer_class = IndigenousLandSerializer
-
-
-class IndigenousVillageMixin(object):
+class IndigenousPlaceMixin(object):
 
     def get_queryset(self):
-        queryset = super(IndigenousVillageMixin, self).get_queryset()
+        queryset = super(IndigenousPlaceMixin, self).get_queryset()
 
         if not self.request.user.is_authenticated():
 
@@ -46,17 +41,22 @@ class IndigenousVillageMixin(object):
         return queryset
 
 
-class IndigenousVillageViewSet(IndigenousVillageMixin, viewsets.ReadOnlyModelViewSet):
+class IndigenousLandViewSet(IndigenousPlaceMixin, viewsets.ReadOnlyModelViewSet):
+    queryset = IndigenousLand.objects.all()
+    serializer_class = IndigenousLandSerializer
+
+
+class IndigenousVillageViewSet(IndigenousPlaceMixin, viewsets.ReadOnlyModelViewSet):
     queryset = IndigenousVillage.objects.all()
     serializer_class = IndigenousVillageSerializer
 
 
-class IndigenousVillageGeojsonView(IndigenousVillageMixin, viewsets.ReadOnlyModelViewSet):
+class IndigenousVillageGeojsonView(IndigenousPlaceMixin, viewsets.ReadOnlyModelViewSet):
     queryset = IndigenousVillage.objects.all()
     serializer_class = SimpleIndigenousGeojsonVillageSerializer
 
 
-class IndigenousVillageExportView(IndigenousVillageMixin, PandasView):
+class IndigenousVillageExportView(IndigenousPlaceMixin, PandasView):
     queryset = IndigenousVillage.objects.all()
     serializer_class = IndigenousVillageExportSerializer
 
@@ -201,7 +201,7 @@ class ShapefileView(generics.GenericAPIView):
         return response
 
 
-class IndigenousLandsShapefileView(ShapefileView):
+class IndigenousLandsShapefileView(IndigenousPlaceMixin, ShapefileView):
     serializer_class = IndigenousLandGeojsonSerializer
     queryset = IndigenousLand.objects.all()
     # self.readme = readme
@@ -210,7 +210,7 @@ class IndigenousLandsShapefileView(ShapefileView):
     file_name = 'terras_indigenas'
 
 
-class IndigenousVillagesShapefileView(ShapefileView):
+class IndigenousVillagesShapefileView(IndigenousPlaceMixin, ShapefileView):
     serializer_class = IndigenousVillageGeojsonSerializer
     queryset = IndigenousVillage.objects.all()
     # self.readme = readme
