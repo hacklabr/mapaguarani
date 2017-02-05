@@ -45,18 +45,49 @@ class Command(BaseCommand):
             villages_layer, _ = MapLayer.objects.get_or_create(name=feat.get('CAMADA'))
             villages_layer.save()
 
+            # FIXME surround all feat.get with try catch
             kwargs = {
                 'layer': villages_layer,
-                'name': feat.get('ALDEIA_GUA'),
-                'other_names': feat.get('OUTRAS_DEN'),
-                'position_source': feat.get('FONTE_LOCA'),
-                'private_comments': feat.get('OBSERVACOE'),
-                'public_comments': feat.get('OBSERVACO2'),
             }
+
+            try:
+                kwargs['name'] = feat.get('ALDEIA_GUA')
+            except:
+                kwargs['name'] = ''
+                # print('Nome da aldeia ausente')
+
+            try:
+                kwargs['other_names'] = feat.get('OUTRAS_DEN')
+            except:
+                kwargs['other_names'] = ''
+                # print('Outras denominações da aldeia ausente')
+
+            try:
+                kwargs['position_source'] = feat.get('FONTE_LOCA')
+            except:
+                kwargs['position_source'] = ''
+                # print('Fonte da localização da aldeia ausente')
+
+            try:
+                kwargs['private_comments'] = feat.get('OBSERVACOE')
+            except:
+                kwargs['private_comments'] = ''
+                # print('Observações restritas da aldeia ausente')
+
+            try:
+                kwargs['public_comments'] = feat.get('OBSERVACO2')
+            except:
+                kwargs['public_comments'] = ''
+                # print('Observações da aldeia ausente')
 
             indigenous_village = IndigenousVillage(**kwargs)
 
-            position_precision = feat.get('PRECISAO_D')
+            try:
+                position_precision = feat.get('PRECISAO_D')
+            except:
+                position_precision = None
+                # print('Nome da aldeia ausente')
+
             if position_precision == 'Exata' or position_precision == 'Exato':
                 indigenous_village.position_precision = 'exact'
             elif position_precision == 'Aproximada':
@@ -74,15 +105,26 @@ class Command(BaseCommand):
             except:
                 self.stdout.write('Falha ao salvar aldeia indígena\n')
 
-            ethnic_groups = _get_ethnic_group(feat.get('GRUPO_ETNI'))
-            for group in ethnic_groups:
-                indigenous_village.ethnic_groups.add(group)
+            try:
+                ethnic_groups_raw = feat.get('GRUPO_ETNI')
+                ethnic_groups = _get_ethnic_group(ethnic_groups_raw)
+                for group in ethnic_groups:
+                    indigenous_village.ethnic_groups.add(group)
+            except:
+                pass
 
-            ethnic_subgroups = _get_ethnic_subgroup(feat.get('SUB_GRUPO_'))
-            for ethnic_subgroup in ethnic_subgroups:
-                indigenous_village.prominent_subgroup.add(ethnic_subgroup)
+            try:
+                ethnic_subgroups_raw = feat.get('SUB_GRUPO_')
+                ethnic_subgroups = _get_ethnic_subgroup(ethnic_subgroups_raw)
+                for ethnic_subgroup in ethnic_subgroups:
+                    indigenous_village.prominent_subgroup.add(ethnic_subgroup)
+            except:
+                pass
 
-            guarani_presence = feat.get('PRESENCA_G')
+            try:
+                guarani_presence = feat.get('PRESENCA_G')
+            except:
+                guarani_presence = ''
             if guarani_presence == 'Sim':
                 # FIXME ver questão da fonte.
                 guarani_presence = GuaraniPresence(
@@ -93,7 +135,10 @@ class Command(BaseCommand):
             else:
                 self.stdout.write('Falha ao ler Presença Guarani. Valor: ' + guarani_presence)
 
-            population = feat.get('POPULACAO_')
+            try:
+                population = feat.get('POPULACAO_')
+            except:
+                population = None
             if population:
                 try:
                     population = int(population.split()[0])
