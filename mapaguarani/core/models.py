@@ -17,7 +17,7 @@ class Organization(models.Model):
 
 class MapLayer(models.Model):
     name = models.CharField(_('name'), max_length=255)
-    description = models.TextField(_('Description'))
+    description = models.TextField(_('Description'), blank=True, null=True)
     sites = models.ManyToManyField(Site)
 
     class Meta:
@@ -86,6 +86,12 @@ class ProjectLink(models.Model):
     desc = models.TextField(_('Description'), blank=True, null=True)
     url = models.CharField(_('Link'), max_length=512)
     embed_code = models.TextField(_('Embed code'), blank=True, null=True)
+    type = models.CharField(
+        _('Type'),
+        choices=TYPE,
+        max_length=256,
+        default=TYPE[1][0]
+    )
 
 
 class Project(models.Model):
@@ -292,7 +298,7 @@ class IndigenousVillage(IndigenousPlace):
 class GuaraniPresence(models.Model):
     presence = models.BooleanField(_('Guarani presence'))
     date = models.DateField(_('Date'))
-    source = models.CharField(_('name'), max_length=512)
+    source = models.CharField(_('Source'), max_length=512)
     village = models.ForeignKey(
         IndigenousVillage, verbose_name=_('Village'), related_name='guarani_presence_annual_series')
 
