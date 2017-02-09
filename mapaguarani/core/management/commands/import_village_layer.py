@@ -160,7 +160,7 @@ class Command(BaseCommand):
                     project, created = Project.objects.get_or_create(name=project_name)
                     project.indigenous_villages.add(indigenous_village)
                     project.save()
-                    if created
+                    if created:
                         self.stdout.write('Projeto ' + project_name + ' criado com sucesso!!!')
             except:
                 pass
