@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.contrib.gis.gdal import DataSource
-from core.models import IndigenousVillage, MapLayer, EthnicGroup, GuaraniPresence, Population, ProminentEthnicSubGroup
+from core.models import IndigenousVillage, MapLayer, EthnicGroup, GuaraniPresence, Population, ProminentEthnicSubGroup, Project
 
 import datetime
 
@@ -153,6 +153,17 @@ class Command(BaseCommand):
                     self.stdout.write('Falha ao ler população. População: ' + population)
 
             indigenous_village.save()
+
+            try:
+                project_name = feat.get('PROJETO')
+                if project_name:
+                    project, created = Project.objects.get_or_create(name=project_name)
+                    project.indigenous_villages.add(indigenous_village)
+                    project.save()
+                    if created
+                        self.stdout.write('Projeto ' + project_name + ' criado com sucesso!!!')
+            except:
+                pass
 
         self.stdout.write('\n')
         self.stdout.write(
