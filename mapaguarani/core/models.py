@@ -97,8 +97,8 @@ class ProjectLink(models.Model):
 class Project(models.Model):
     name = models.CharField(_('name'), max_length=255)
     description = models.TextField(_('description'), blank=True, null=True)
-    start_date = models.DateField(_('start date'))
-    end_date = models.DateField(_('and date'))
+    start_date = models.DateField(_('start date'), blank=True, null=True)
+    end_date = models.DateField(_('and date'), blank=True, null=True)
     files = models.ManyToManyField(
         'ProjectFile',
         verbose_name=_('Files'),
