@@ -16,9 +16,21 @@ class Organization(models.Model):
 
 
 class MapLayer(models.Model):
+
+    STATUS = (
+        ('public', _('Public')),
+        ('restricted', _('Restricted')),
+    )
+
     name = models.CharField(_('name'), max_length=255)
     description = models.TextField(_('Description'), blank=True, null=True)
     sites = models.ManyToManyField(Site)
+    status = models.CharField(
+        _('Status'),
+        choices=STATUS,
+        max_length=256,
+        default=STATUS[1][0]
+    )
 
     class Meta:
         verbose_name = _('Map Layer')

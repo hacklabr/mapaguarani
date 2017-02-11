@@ -31,12 +31,16 @@ class IndigenousPlaceMixin(object):
     def get_queryset(self):
         queryset = super(IndigenousPlaceMixin, self).get_queryset()
 
-        if not self.request.user.is_authenticated():
+        # Filter layers according to current site
+        current_site = get_current_site(self.request)
+        layers = MapLayer.objects.filter(sites=current_site)
+        queryset = queryset.filter(layer__in=layers)
 
-            current_site = get_current_site(self.request)
-            layers = MapLayer.objects.filter(sites=current_site)
-            queryset = queryset.filter(layer__in=layers)
+        # Only show restrited features to authenticated users
+        if not self.request.user.is_authenticated():
             queryset = queryset.filter(status='public')
+            public_layers = MapLayer.objects.filter(status='public')
+            queryset = queryset.filter(layer__in=public_layers)
 
         return queryset
 
@@ -61,12 +65,12 @@ class IndigenousVillageExportView(IndigenousPlaceMixin, PandasView):
     serializer_class = IndigenousVillageExportSerializer
 
 
-class ArchaeologicalPlaceGeojsonView(viewsets.ReadOnlyModelViewSet):
+class ArchaeologicalPlaceGeojsonView(IndigenousPlaceMixin, viewsets.ReadOnlyModelViewSet):
     queryset = ArchaeologicalPlace.objects.all()
     serializer_class = SimpleArchaeologicalPlaceGeojsonSerializer
 
 
-class ArchaeologicalPlaceViewSet(viewsets.ReadOnlyModelViewSet):
+class ArchaeologicalPlaceViewSet(IndigenousPlaceMixin, viewsets.ReadOnlyModelViewSet):
     queryset = ArchaeologicalPlace.objects.all()
     serializer_class = ArchaeologicalPlaceSerializer
 
@@ -219,7 +223,7 @@ class IndigenousVillagesShapefileView(IndigenousPlaceMixin, ShapefileView):
     file_name = 'aldeias_indigenas'
 
 
-class ArchaeologicalPlacesShapefileView(ShapefileView):
+class ArchaeologicalPlacesShapefileView(IndigenousPlaceMixin, ShapefileView):
     serializer_class = ArchaeologicalPlaceGeojsonSerializer
     queryset = ArchaeologicalPlace.objects.all()
     # self.readme = readme
