@@ -421,6 +421,13 @@ class IndigenousLandGeojsonSerializer(IndigenousPlaceExportSerializer,
 
 class ArchaeologicalPlaceSerializer(serializers.ModelSerializer):
 
+    position_precision = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_position_precision(obj):
+        if obj.position_precision:
+            return dict(IndigenousVillage.POSITION_PRECISION).get(obj.position_precision)
+
     class Meta:
         model = ArchaeologicalPlace
         # list_serializer_class = ArchaeologicalPlaceListSerializer

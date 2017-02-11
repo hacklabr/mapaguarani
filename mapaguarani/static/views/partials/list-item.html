@@ -42,10 +42,7 @@
         </tr>
         <tr ng-show="item.position_precision">
           <th>Precisão da posição</th>
-          <td ng-if="item.position_precision == 'exact'">Exata</td>
-          <td ng-if="item.position_precision == 'estimated'">Estimada</td>
-          <td ng-if="item.position_precision == 'by_city'">Por cidade</td>
-          <td ng-if="item.position_precision == 'no_position'">Sem posição</td>
+          <td>{{ item.position_precision }}</td>
         </tr>
         <tr ng-show="item.position_comments">
           <th>Observações sobre a posiçao</th>
