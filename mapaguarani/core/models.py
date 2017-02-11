@@ -14,6 +14,8 @@ class Organization(models.Model):
     phone = models.CharField(_('phone number'), max_length=255, blank=False, null=True)
     email = models.EmailField(_('email'), blank=False, null=True)
 
+    def __str__(self):
+        return self.name
 
 class MapLayer(models.Model):
 
@@ -63,6 +65,8 @@ class ActionField(models.Model):
         blank=True
     )
 
+    def __str__(self):
+        return self.name
 
 class ProjectFile(models.Model):
 
@@ -84,6 +88,8 @@ class ProjectFile(models.Model):
     )
     file = models.FileField(_('File'))
 
+    def __str__(self):
+        return self.name
 
 class ProjectLink(models.Model):
 
@@ -104,6 +110,9 @@ class ProjectLink(models.Model):
         max_length=256,
         default=TYPE[1][0]
     )
+
+    def __str__(self):
+        return self.name
 
 
 class Project(models.Model):
@@ -154,6 +163,9 @@ class Project(models.Model):
         blank=True
     )
 
+
+    def __str__(self):
+        return self.name
 
 class DocumentType(models.Model):
     name = models.CharField(_('name'), max_length=255)
