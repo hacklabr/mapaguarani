@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.contrib.gis.gdal import DataSource
-from core.models import IndigenousVillage, MapLayer, EthnicGroup, GuaraniPresence, Population, ProminentEthnicSubGroup, Project
+from core.models import IndigenousVillage, MapLayer, EthnicGroup, GuaraniPresence, Population, ProminentEthnicSubGroup, Project, ActionField
 
 import datetime
 
@@ -162,6 +162,17 @@ class Command(BaseCommand):
                     project.save()
                     if created:
                         self.stdout.write('Projeto ' + project_name + ' criado com sucesso!!!')
+            except:
+                pass
+
+            try:
+                action_field_name = feat.get('AREA_ATU')
+                if action_field_name:
+                    action_field, created = ActionField.objects.get_or_create(name=action_field_name)
+                    action_field.layers.add(villages_layer)
+                    action_field.save()
+                    if created:
+                        self.stdout.write('Área de atuação ' + action_field_name + ' criada com sucesso!!!')
             except:
                 pass
 
