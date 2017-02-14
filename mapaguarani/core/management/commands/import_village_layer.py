@@ -97,6 +97,8 @@ class Command(BaseCommand):
             else:
                 self.stdout.write('Precisão da posição não encontrata: ' + position_precision)
 
+            indigenous_village.status = 'public'
+
             indigenous_village.geometry = feat.geom.wkt
 
             try:
