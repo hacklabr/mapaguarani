@@ -15,8 +15,16 @@
       <div class="navbar-collapse navbar-right collapse">
         <ul class="nav navbar-nav">
           <li><a href="{% url 'admin:login' %}" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Entrar</a></li>
-          <li><a href="javascript:void(0);" data-toggle="modal" data-target="#reportsModal" id="about-btn"><i class="fa fa-question-circle white"></i>&nbsp;&nbsp;Relatórios</a></li>
-          <li><a href="javascript:void(0);" data-toggle="modal" data-target="#aboutModal" id="about-btn"><i class="fa fa-question-circle white"></i>&nbsp;&nbsp;Sobre</a></li>
+          <li>
+            <a href="" data-toggle="modal" data-target="#reportsModal" id="about-btn">
+              <i class="fa fa-question-circle white"></i>&nbsp;&nbsp;Relatórios
+            </a>
+          </li>
+          <li>
+            <a href="" data-toggle="modal" data-target="#aboutModal" id="about-btn">
+              <i class="fa fa-question-circle white"></i>&nbsp;&nbsp;Sobre
+            </a>
+          </li>
         </ul>
       </div><!--/.navbar-collapse -->
     </div>
@@ -49,7 +57,7 @@
 {% block modal %}
 <div class="modal fade" id="reportsModal" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content" ng-controller="LandTenureReportCtrl">
+    <div class="modal-content">
       <div class="modal-header">
         <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title">Relatórios sobre as Terras Indígenas</h4>
@@ -63,7 +71,9 @@
         </ul>
         <div class="tab-content" id="aboutTabsContent">
           {% if user.is_authenticated %}
-          <div id="tijuridic" class="tab-pane fade active in">
+          <div id="tijuridic"
+               ng-controller="LandTenureReportCtrl"
+               class="tab-pane fade active in">
             <table class="table">
               <thead>
                 <tr>
@@ -110,8 +120,8 @@
             </table>
           </div>
           {% endif %}
+
           <div id="titable" class="tab-pane fade {% if not user.is_authenticated %} active in {% endif %}">
-            <hr/>
             <p class="lead text-center">Você pode baixar a planilha das terras indigenas, e os shapefiles das camadas de Aldeias e Terras Indígenas</p>
             <p class="lead text-center">A geração destes arquivos pode demorar vários minutos, por favor aguarde o download começar após clicar abaixo no arquivo abaixo desejado.</p>
 
@@ -131,6 +141,7 @@
               {% endif %}
             </p>
           </div>
+
         </div>
       </div>
       <div class="modal-footer">
@@ -152,6 +163,7 @@
         <ul class="nav nav-tabs" id="aboutTabs">
           <li class="active"><a href="#apresentacao" data-toggle="tab">Apresentação</a></li>
           <li><a href="#ficha" data-toggle="tab">Ficha Técnica</a></li>
+          <li><a href="#projects-tab" data-toggle="tab">Projetos</a></li>
         </ul>
         <div class="tab-content" id="aboutTabsContent">
           <div id="apresentacao" class="tab-pane fade active in">
@@ -318,6 +330,17 @@
                   </a>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div id="projects-tab"
+               ng-controller="ProjectsCtrl"
+               class="tab-pane fade">
+            <h3>Projetos</h3>
+            <div ng-repeat="project in projects">
+              {% verbatim %}
+              <p><a ng-href="/#!/project/{{project.id}}" onclick="$('#aboutModal').modal('hide')"> {{project.name}} </a></p>
+              {% endverbatim %}
             </div>
           </div>
         </div>

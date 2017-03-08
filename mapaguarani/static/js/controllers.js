@@ -171,4 +171,14 @@
     }
   ]);
 
+  controllers.controller('ProjectsCtrl', [
+    '$scope',
+    'Project',
+    function($scope, Project) {
+      $scope.projects = Project.query({}, function(projects) {
+        $scope.projects = projects;
+      });
+    }
+  ]);
+
 })(angular, L, _);
