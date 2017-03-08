@@ -9,7 +9,8 @@ from collections import OrderedDict
 from rest_pandas import PandasView
 
 from .models import (IndigenousLand, IndigenousVillage, MapLayer,
-                     ArchaeologicalPlace, LandTenure, LandTenureStatus,)
+                     ArchaeologicalPlace, LandTenure, LandTenureStatus,
+                     Project,)
 from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           ArchaeologicalPlaceSerializer, LandTenureSerializer,
                           LandTenureStatusSerializer, IndigenousLandGeojsonSerializer,
@@ -17,13 +18,18 @@ from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           LandTenureReportSerializer,
                           SimpleIndigenousGeojsonVillageSerializer,
                           SimpleArchaeologicalPlaceGeojsonSerializer,
-                          IndigenousVillageExportSerializer,)
+                          IndigenousVillageExportSerializer, ProjectSerializer,)
 
 from io import BytesIO
 import zipfile
 from fiona.crs import from_epsg
 import fiona
 import tempfile
+
+
+class ProjectsViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
 
 
 class IndigenousPlaceMixin(object):

@@ -4,7 +4,7 @@ from rest_framework_serializer_field_permissions import fields
 from rest_framework_serializer_field_permissions.serializers import FieldPermissionSerializerMixin
 from rest_framework_serializer_field_permissions.permissions import IsAuthenticated
 from .models import (IndigenousLand, IndigenousVillage, ArchaeologicalPlace, LandTenure, LandTenureStatus,
-                     GuaraniPresence, Population,)
+                     GuaraniPresence, Population, Project, )
 from protected_areas.serializers import BaseProtectedAreaSerializers
 from django.utils.translation import ugettext as _
 from rest_framework_cache.serializers import CachedSerializerMixin
@@ -23,6 +23,32 @@ class GuaraniPresenceSerializer(serializers.ModelSerializer):
         class Meta:
             model = GuaraniPresence
             fields = '__all__'
+
+
+class SimpleProjectSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = Project
+            fields = ['id', 'name', 'description', 'start_date', 'end_date', ]
+
+
+class SimpleIndigenousLandSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = IndigenousLand
+        fields = ['id', 'name']
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+
+    indigenous_lands = SimpleIndigenousLandSerializer(many=True)
+
+    class Meta:
+        model = Project
+        fields = ['name', 'description', 'start_date', 'end_date', 'files',
+                  'links', 'indigenous_villages', 'indigenous_lands',
+                  'organizations',]
+        depth = 1
 
 
 class BaseListSerializerMixin(serializers.ListSerializer):
@@ -102,13 +128,6 @@ class IndigenousPlaceExportSerializer(object):
         return 'Brasil'
 
 
-class SimpleIndigenousLandSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = IndigenousLand
-        fields = ['id', 'name']
-
-
 class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
                                   ProtectedAreasMixinSerializer,
                                   CachedSerializerMixin):
@@ -119,6 +138,7 @@ class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
     city = serializers.SerializerMethodField()
     state = serializers.SerializerMethodField()
     land = serializers.SerializerMethodField()
+    projects = SimpleProjectSerializer(many=True)
 
     # Private fields
     private_comments = fields.ReadOnlyField(permission_classes=(IsAuthenticated(), ))
