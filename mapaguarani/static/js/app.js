@@ -95,6 +95,17 @@
             }
           ]
         }
+      })
+      .state('projetc', {
+        url: '/project/:id/',
+        controller: 'SingleProjectCtrl',
+        templateUrl: '/static/views/single-project.html',
+        data: {
+          contentType: 'project',
+        },
+        params: {
+          focus: true
+        },
       });
 
 

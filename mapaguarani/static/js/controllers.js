@@ -1,7 +1,7 @@
 (function(angular, L, _) {
   'use strict';
 
-  var controllers = angular.module('mapaguarani.controllers', []);
+  var controllers = angular.module('mapaguarani.controllers', ['ngSanitize']);
 
   controllers.controller('MainCtrl', [
     '$scope',
@@ -107,6 +107,7 @@
       $scope.user = user;
 
       // If focus, fit map bounds to item location
+      // FIXME refactor this like there is no tomorrow
       if($state.params.focus) {
         $scope.$watch(function() {
           return Map.getMap();
@@ -132,6 +133,24 @@
       }
     }
   ]);
+
+    controllers.controller('SingleProjectCtrl', [
+        '$state',
+        '$scope',
+        'Project',
+        'guaraniMapService',
+        'GuaraniService',
+        'user',
+        function($state, $scope, Project, guaraniMapService, GuaraniService, user) {
+
+            // State dependencies resolved, emit event to hide loading message
+            $scope.$emit('mapaguarani.loaded');
+
+            $scope.project = Project.get({id: $state.params.id}, function(project){
+                //  = project;
+            });
+        }
+    ]);
 
   controllers.controller('LandTenureReportCtrl', [
     '$scope',

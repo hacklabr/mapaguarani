@@ -5,6 +5,11 @@
     'ngResource'
   ]);
 
+    services.factory('Project', function($resource){
+        return $resource('/api/projects/:id/', {}, {
+        });
+    });
+
   services.factory('GuaraniService', [
     '$q',
     '$window',

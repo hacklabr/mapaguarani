@@ -1,0 +1,52 @@
+<article class="single">
+  <a class="close" ui-sref="home">X</a>
+  <span>Projeto</span>
+  <h2>{{project.name}}</h2>
+
+  <p ng-show="project.description"
+     ng-bind-html="project.description"></p>
+  <div ng-show="project.files.length>0">
+    <h3>Documentos</h3>
+    <div ng-repeat="project_file in project.files">
+      <p>
+        <a ng-href="{{project_file.file}}" target="_blank"> {{ project_file.desc }}</a>
+      </p>
+  </div>
+
+  <div ng-show="project.links.length>0">
+    <h3>Links</h3>
+    <div ng-repeat="project_link in project.links">
+      <p>
+        <a ng-href="{{project_link.url}}" target="_blank"> {{ project_link.name }}</a>
+      </p>
+    </div>
+  </div>
+
+  <div ng-show="project.indigenous_villages.length>0">
+    <h3>Aldeias</h3>
+    <div ng-repeat="indigenous_village in project.indigenous_villages">
+      <p>
+        <a ng-href="/#!/villages/{{indigenous_village.id}}/"> {{ indigenous_village.name }}</a>
+      </p>
+    </div>
+  </div>
+
+  <div ng-show="project.indigenous_lands.length>0">
+    <h3>Terras indígenas</h3>
+    <div ng-repeat="indigenous_land in project.indigenous_lands">
+      <p>
+        <a ng-href="/#!/lands/{{indigenous_land.id}}/"> {{ indigenous_land.name }}</a>
+      </p>
+    </div>
+  </div>
+
+  <div ng-show="project.organizations.length>0">
+    <h3>Organizações</h3>
+    <div ng-repeat="organization in project.organizations">
+      <p>
+        {{ organization.name }}
+      </p>
+    </div>
+  </div>
+
+</article>

@@ -1,6 +1,6 @@
 <article class="single">
   <a class="close" ui-sref="home">X</a>
-  <span>Aldeia</span>
+  <span>Projeto</span>
   <h2>{{data.name}}</h2>
   <table>
     <tbody>
@@ -91,6 +91,14 @@
       <tr ng-if="user.is_authenticated && data.private_comments">
         <th>Observações (Restritas)</th>
         <td>{{data.private_comments}}</td>
+      </tr>
+      <tr ng-show="data.projects">
+        <th>Projetos</th>
+        <td>
+            <div ng-repeat="project in data.projects">
+              <p><a ng-href="/#!/project/{{project.id}}"> {{project.name}} </a></p>
+            </div>
+        </td>
       </tr>
     </tbody>
   </table>

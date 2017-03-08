@@ -6,7 +6,8 @@ from core.views import (IndigenousLandViewSet, IndigenousVillageViewSet,
                         IndigenousLandsShapefileView, IndigenousVillagesShapefileView,
                         ArchaeologicalPlacesShapefileView, LandTenureReportViewSet,
                         IndigenousVillageGeojsonView,
-                        ArchaeologicalPlaceGeojsonView, IndigenousVillageExportView,)
+                        ArchaeologicalPlaceGeojsonView, IndigenousVillageExportView,
+                        ProjectsViewSet,)
 from moderation.helpers import auto_discover
 from rest_framework import routers
 from rest_framework_cache.registry import cache_registry
@@ -26,6 +27,7 @@ router.register(r'villages_geojson', IndigenousVillageGeojsonView)
 router.register(r'arch_geojson', ArchaeologicalPlaceGeojsonView)
 router.register(r'archaeological', ArchaeologicalPlaceViewSet)
 router.register(r'landtenurereport', LandTenureReportViewSet)
+router.register(r'projects', ProjectsViewSet)
 
 urlpatterns = [
 

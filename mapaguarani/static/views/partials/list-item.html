@@ -52,6 +52,14 @@
           <th>Referências</th>
           <td>{{ item.biblio_references }}</td>
         </tr>
+        <tr ng-show="data.projects">
+          <th>Projetos</th>
+          <td>
+              <div ng-repeat="project in data.projects">
+                <p><a ng-href="/#!/project/{{project.id}}"> {{project.name}} </a></p>
+              </div>
+          </td>
+        </tr>
       </tr>
     </tbody>
   </table>
