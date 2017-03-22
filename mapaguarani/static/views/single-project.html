@@ -5,12 +5,14 @@
 
   <p ng-show="project.description"
      ng-bind-html="project.description"></p>
+
   <div ng-show="project.files.length>0">
     <h3>Documentos</h3>
     <div ng-repeat="project_file in project.files">
       <p>
         <a ng-href="{{project_file.file}}" target="_blank"> {{ project_file.desc }}</a>
       </p>
+    </div>
   </div>
 
   <div ng-show="project.links.length>0">
