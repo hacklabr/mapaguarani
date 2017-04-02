@@ -129,8 +129,7 @@ class IndigenousPlaceExportSerializer(object):
 
 
 class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
-                                  ProtectedAreasMixinSerializer,
-                                  CachedSerializerMixin):
+                                  ProtectedAreasMixinSerializer):
 
     position_precision = serializers.SerializerMethodField()
     population = serializers.SerializerMethodField()
