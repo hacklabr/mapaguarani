@@ -47,7 +47,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = ['id', 'name', 'description', 'start_date', 'end_date', 'files',
                   'links', 'indigenous_villages', 'indigenous_lands',
-                  'organizations',]
+                  'organizations', 'archaeological_places',]
         depth = 1
 
 
@@ -335,6 +335,7 @@ class IndigenousLandSerializer(FieldPermissionSerializerMixin, ProtectedAreasMix
     private_comments = fields.ReadOnlyField(permission_classes=(IsAuthenticated(), ))
     claim = fields.ReadOnlyField(permission_classes=(IsAuthenticated(), ))
     demand = fields.ReadOnlyField(permission_classes=(IsAuthenticated(), ))
+    projects = SimpleProjectSerializer(many=True)
 
     class Meta:
         model = IndigenousLand
@@ -441,6 +442,7 @@ class IndigenousLandGeojsonSerializer(IndigenousPlaceExportSerializer,
 class ArchaeologicalPlaceSerializer(serializers.ModelSerializer):
 
     position_precision = serializers.SerializerMethodField()
+    projects = SimpleProjectSerializer(many=True)
 
     @staticmethod
     def get_position_precision(obj):

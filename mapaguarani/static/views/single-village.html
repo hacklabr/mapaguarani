@@ -92,7 +92,7 @@
         <th>Observações (Restritas)</th>
         <td>{{data.private_comments}}</td>
       </tr>
-      <tr ng-show="data.projects">
+      <tr ng-show="data.projects.length">
         <th>Projetos</th>
         <td>
             <div ng-repeat="project in data.projects">

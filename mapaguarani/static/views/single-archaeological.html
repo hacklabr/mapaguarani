@@ -23,6 +23,14 @@
         <th>Referências</th>
         <td>{{ data.biblio_references }}</td>
       </tr>
+      <tr ng-show="data.projects.length">
+        <th>Projetos</th>
+        <td>
+            <div ng-repeat="project in data.projects">
+              <p><a ng-href="/#!/project/{{project.id}}"> {{project.name}} </a></p>
+            </div>
+        </td>
+      </tr>
     </tbody>
   </table>
 </article>
