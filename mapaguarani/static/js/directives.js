@@ -419,6 +419,10 @@
               if(ev.target && ev.target.feature && ev.target.feature.id) {
                 $state.go(type, {id: ev.target.feature.id, focus: false});
               }
+              // Stop event propagation to avoid triger click event on land.
+              // Both ev.stopPropagation and ev.originalEvent.stopPropagation
+              // doesn't work.
+              L.DomEvent.stop(ev);
           };
 
           // Start interactive layers object (lands, sites and villages)
