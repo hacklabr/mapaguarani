@@ -42,6 +42,15 @@
     </div>
   </div>
 
+  <div ng-show="project.archaeological_places.length>0">
+    <h3>Sítios Arqueológicos</h3>
+    <div ng-repeat="archaeological_place in project.archaeological_places">
+      <p>
+        <a ng-href="/#!/sites/{{archaeological_place.id}}/"> {{ archaeological_place.name }}</a>
+      </p>
+    </div>
+  </div>
+
   <div ng-show="project.organizations.length>0">
     <h3>Organizações</h3>
     <div ng-repeat="organization in project.organizations">
