@@ -110,7 +110,7 @@ class LegalProceedingsAdmin(admin.ModelAdmin):
 class ProjectAdmin(admin.ModelAdmin):
     filter_horizontal = ('indigenous_villages', 'indigenous_lands',
                          'archaeological_places', 'organizations',
-                         'layers',)
+                         'layers', 'files', 'links', )
 
 
 admin.site.register(DocumentType)
