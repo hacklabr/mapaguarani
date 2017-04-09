@@ -1,10 +1,7 @@
-$setup = <<SCRIPT
-    sed -i '1i deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse' /etc/apt/sources.list
-    DEBIAN_FRONTEND=noninteractive apt-get update
-SCRIPT
 
 $dependencies = <<SCRIPT
-    export DEBIAN_FRONTEND=noninteractive
+    # export DEBIAN_FRONTEND=noninteractive
+
     apt-get install -y postgresql postgresql-contrib postgis postgresql-9.3-postgis-2.1 postgresql-9.3-postgis-2.1-scripts libpq-dev
     apt-get install -y postgresql-server-dev-all plpython-9.3
     apt-get install -y build-essential git python-dev python3-dev libjpeg-dev zlib1g-dev python-virtualenv binutils libproj-dev gdal-bin
@@ -111,7 +108,7 @@ Vagrant.configure('2') do |config|
     config.vm.network :forwarded_port, host: 8000, guest: 8000
     config.vm.network :forwarded_port, host: 4000, guest: 4000
 
-    config.vm.provision "shell", inline: $setup
+    # config.vm.provision "shell", inline: $setup
     config.vm.provision "shell", inline: $dependencies
     config.vm.provision "shell", inline: $virtualenv, privileged: false
     config.vm.provision "shell", inline: $import_layers, privileged: false
