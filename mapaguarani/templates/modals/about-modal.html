@@ -1,0 +1,630 @@
+{% load staticfiles i18n %}
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Sobre Mapa Guarani Yvyrupa</h4>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs" id="aboutTabs">
+          <li class="active"><a href="#mapa-gurani-digital" data-toggle="tab">Mapa Garani Digital</a></li>
+          <li><a href="#iniciativa" data-toggle="tab">Iniciativa</a></li>
+          <li><a href="#sobre-a-legenda" data-toggle="tab">Sobre a Legenda</a></li>
+
+          <!-- <li class="active"><a href="#apresentacao" data-toggle="tab">Apresentação</a></li> -->
+          <li><a href="#ficha" data-toggle="tab">Ficha Técnica</a></li>
+          <li><a href="#projects-tab" data-toggle="tab">Projetos</a></li>
+        </ul>
+        <div class="tab-content" id="aboutTabsContent">
+          <div id="mapa-gurani-digital" class="tab-pane fade active in">
+            <p>
+            O Mapa Guarani Digital é uma plataforma interativa e colaborativa
+            que tem por objetivo sistematizar e disponibilizar informações
+            sobre a situação territorial dos povos guarani por meio de um
+            sistema de dados georreferenciados projetados sobre imagens aéreas.
+            Pretende-se que esse sistema seja alimentado de maneira
+            descentralizada por uma rede de lideranças indígenas e
+            parceiros articulados em torno do monitoramento da regularização
+            das Terras e das reivindicações fundiárias dos Guarani.
+            </p>
+
+            <p>
+              Na primeira etapa de trabalho foram sistematizados dados
+              relativos à ocupação guarani no Sul e no Sudeste do Brasil,
+              levantados e organizados pelo
+              <a href="http://www.trabalhoindigenista.org.br/" target="_blank">
+                Centro de Trabalho Indigenista - CTI
+              </a>,
+              ao longo das últimas décadas, de maneira colaborativa com
+              parceiros que atuam nessas regiões e com a
+              <a href="http://www.yvyrupa.org.br/" target="_blank">
+                Comissão Guarani Yvyrupa – CGY
+              </a>.  Por meio de coordenadas geográficas foram
+              inseridas a localização das aldeias atualmente ocupadas e os
+              limites das terras indígenas, além do georreferenciamento das
+              aldeias recentemente desocupadas, quase sempre à força, e
+              referenciadas a partir da observação em campo ou da memória oral.
+              A par do mapeamento são disponibilizadas informações sobre os
+              respectivos processos de regularização das Terras Guarani.
+            </p>
+
+            <p>
+              Se o desenvolvimento dessa ferramenta se deve à iniciativa do CTI,
+              seu objetivo principal é
+              descentralizar cada vez mais a gestão dos dados, fortalecendo os
+              povos guarani, consolidando suas organizações e ampliando sua
+              rede de parceiros.
+            </p>
+
+            <p>
+              Em razão da ampla distribuição geográfica das aldeias dos povos
+              guarani na América do Sul - entrecortadas por cidades, estradas,
+              fazendas, pastos, monoculturas e, inseridas, portanto, em uma
+              malha fundiária em constante movimento - a produção de dados
+              sobre cada uma delas, assim como a representação gráfica da
+              totalidade dessas áreas, quase sempre pendentes de regularização,
+              implica em monitoramento permanente. Embora a circulação de
+              pessoas, conhecimentos, rituais, entre outros bens, permaneça
+              intensa entre aldeias situadas nas diversas regiões que conformam
+              o território de ocupação guarani, o que permite enxergá-lo em sua
+              totalidade, as informações coletadas são quase sempre fragmentadas
+              e localizadas. Nesse sentido, os trabalhos de sistematização de
+              dados globais, que, sem dúvida, contribuem para dar uma maior
+              visibilidade e compreensão acerca da territorialidade dos povos
+              guarani, são sempre intentos colaborativos que mobilizam ampla
+              rede de lideranças e parceiros. O Mapa Guarani Digital aparece,
+              portanto, como uma ferramenta fundamental para consolidar essas
+              diversas iniciativas dispersas.
+            </p>
+
+            <p>
+              O desenvolvimento da plataforma já favoreceu a ampliação das
+              redes de colaboração que permitiu agregar a publicação de 2 novas
+              etapas de levantamento:
+            </p>
+
+            <p>
+              - Um conjunto de informações georreferenciadas sobre os sítios
+              arqueológicos de tradição tupiguarani, classificados como
+              pertencentes aos ancestrais dos povos guarani, vem sendo
+              sistematizados, ao longo de décadas, pelo pesquisador Francisco
+              Noelli e revisados com apoio de  ngelo Corrêa. Inicialmente foram
+              revisados e publicados um conjunto de cerca de 800 sítios
+              arqueológicos, localizados no Sul e Sudeste do Brasil, nos
+              municípios onde hoje há ocupação atual de aldeias guarani.
+              Progressivamente, os arqueólogos responsáveis por essa camada de
+              dados vem revisando e inserindo no sistema as informações reunidas
+              em seu banco de dados que totalizarão cerca de 4500 sítios de
+              tradição tupiguarani.
+            </p>
+
+            <p>
+              - Um conjunto de informações georreferenciadas sobre as aldeias e
+              acampamentos de retomada dos povos Kaiowa e Guarani localizados no
+               Mato Grosso do Sul levantados no âmbito do Projeto Mapa
+               Continental Guarani 2016, por pesquisadores ligados à
+               Universidade Federal da Grande Dourados (UFGD) e ao Conselho
+               Indigenista Missionário (CIMI), em parceria com a Aty Guaçu –
+               Grande Conselho do Povo Guarani e Kaiowa no Mato Grosso do Sul.
+            </p>
+          </div>
+          <div id="iniciativa" class="tab-pane fade">
+            <p>
+              Desde o final da década de 1970, o
+              <a href="http://www.trabalhoindigenista.org.br/" target="_blank">
+                Centro de Trabalho Indigenista (CTI)
+              </a>
+              vem mapeando as aldeias Guarani, com ênfase no Sul e no
+              Sudeste do Brasil (1). Percorrendo com os índios os caminhos que
+              levavam às suas aldeias e a lugares perdidos ou sonhados, as
+              fontes primeiras vieram dos relatos de vida permeados de menções a
+              diferentes localidades, no Brasil e nos países vizinhos por onde
+              se estende a terra designada Yvyrupa (2). Ao longo do tempo,
+              elaboramos e disponibilizamos diversas versões de quadros e mapas
+              das Terras Guarani que contribuíram para uma melhor compreensão
+              da complexa territorialidade desse povo e para o acompanhamento
+              dos procedimentos de regularização de suas terras distribuídas
+              em seu território histórico de ocupação.
+            </p>
+
+            <p>
+              No final da década de 1980 algumas terras guarani, em São Paulo e no Rio Grande do Sul, começaram a ser regularizadas a partir das reivindicações dos próprios índios. Apoiando esse processo, o CTI ampliou suas pesquisas e, a partir dos anos 1990, passou a agregar, além das informações de nossos interlocutores guarani, dados da Funai e de pesquisadores do Sul e Sudeste do Brasil. O diálogo permanente com esses colaboradores levou-nos a realizar diferentes formas de sistematização.
+            </p>
+
+            <p>
+              Em 2004, o CTI publicou o livro
+              <a href="http://bd.trabalhoindigenista.org.br/node/2447" target="_blank">
+                Terras Guarani no Litoral
+              </a>
+              com mapas temáticos das principais ocupações dos Guarani na faixa
+              litorânea e um quadro geral das ocupações no Sul e Sudeste.
+            </p>
+
+            <p>
+              Em 2015, o CTI publicou o
+              <a href="http://bd.trabalhoindigenista.org.br/node/4931" target="_blank">
+                Atlas das Terras Guarani do Sul e Sudeste do Brasil
+              </a>
+              que consistiu no mapeamento das Terras Guarani por regiões,
+              acoplado a um quadro associado contendo informações relativas à
+              situação fundiária de cada Terra Indígena.
+            </p>
+
+            <p>
+              Para o Atlas, elaborado pelo CTI em parceria com a Comissão Guarani Yvyrupa, nos dedicamos ao trabalho de inserir todos os pontos e polígonos das aldeias e terras indígenas compiladas a partir de 1980 em uma base de dados georreferenciada que serviu para a elaboração da primeira etapa do site Mapa Guarani Digital.
+            </p>
+
+            <p>
+              Em 2008, várias organizações indígenas e indigenistas de diversos
+              países se associaram e realizaram levantamento colaborativo a
+              respeito da ocupação guarani na região da tríplice fronteira entre
+              Brasil, Paraguai e Argentina, o que resultou na publicação
+              <a href="http://bd.trabalhoindigenista.org.br/node/4692" target="_blank">
+                Guarani Retã 2008
+              </a>,
+              que atualmente chega em uma nova edição que culminará no Mapa
+              Guarani Continental 2016, ainda no prelo. A articulação em torno
+              desse último projeto já resultou na incorporação dos dados
+              referentes ao Mato Grosso do Sul, e pode culminar em novas
+              parcerias e articulações que permitam ampliar a descentralizar a
+              alimentação de dados na plataforma.
+            </p>
+
+            <p>
+              Representações gráficas, sejam mapas ou quadros, são sempre
+              reduções esquemáticas da realidade por demais complexa e implicada
+              nas territorialidades indígenas, que envolvem tanto a cosmologia,
+              como a organização social e política, em embate com uma história
+              violenta de colonização por parte da sociedade nacional.
+            </p>
+
+            <p>
+              Dessa forma, a construção de uma plataforma online surge como uma
+              possibilidade de permitir uma nova aproximação à territorialidade
+              guarani, que embora nunca vá superar as limitações de uma
+              representação gráfica, permite uma navegação interativa e dinâmica
+              que complementa os suportes físicos de que antes lançamos mão.
+            </p>
+
+            <p>
+              Além disso, o desenvolvimento desse sistema online também propicia
+              a descentralização da gestão dos dados e a ampliação das redes de
+              colaboradores que produzem informações sobre e para os Guarani.
+            </p>
+
+            <p>
+              <small>
+                1 - Nas regiões Sul e Sudeste, os Guarani, em sua maioria, são
+                falantes do dialeto mbya, com um contingente considerável também
+                de falantes dos dialetos nhandéva, ava-guarani e tupi. Fazem parte
+                de uma densa rede de relações que atinge a região oriental do
+                Paraguai e a província argentina de Misiones.
+              </small>
+            </p>
+
+            <p>
+              <small>
+                2 - Yvyrupa designa o mundo terrestre habitado, e é o termo que
+                melhor expressa a noção guarani de território. Numa tradução
+                literal, pode ser entendido como suporte ou plataforma terrestre:
+                Yvy (Terra) tupa (leito, esteio, base).
+              </small>
+            </p>
+
+            <p>
+            </p>
+
+            <p>
+            </p>
+
+          </div>
+          <div id="sobre-a-legenda" class="tab-pane fade">
+            <p>
+              <h5>Cores das Terras Indígenas = Fases do Processo de demarcação</h5>
+            </p>
+
+            <p>
+              O processo de demarcação das terras tradicionalmente ocupadas
+              pelos povos indígenas no Brasil tal como definidas pelo Artigo
+              231 da Constituição Federal de 1988 segue cinco fases,
+              determinadas pelo Decreto no 1775/1996. Já o processo de
+              regularização das terras adquiridas, desapropriadas ou reservadas
+              para uso exclusivo dos povos indígenas segue os trâmites previstos
+              pela Lei no 6001/1973.
+            </p>
+
+            <p>
+              As cores das terras indígenas refletem as fases dos processos de
+              regularização conforme a legenda.
+            </p>
+
+            <p>
+              Sem Providências: São as aldeias ocupadas que não tiveram nenhum
+              processo de regularização iniciado, seja para reconhecimento de
+              terra tradicional, seja para criação de reserva, aquisição ou
+              desapropriação.
+            </p>
+
+            <p>
+              <strong>Em estudo:</strong> Áreas de ocupação guarani com estudo iniciado pela FUNAI para reconhecimento de terra tradicionalmente ocupadas ou para reestudo de limites, a partir de Portaria publicada no Diário Oficial da União constituindo Grupo Técnico.
+            </p>
+            <p>
+              <strong>Delimitadas:</strong> Terras com limite reconhecido através de aprovação de estudos de Grupo Técnico pelo presidente da FUNAI, e resumo do Relatório Circunstanciado de Identificação e Delimitação (RCID) com mapa de delimitação publicado no Diário Oficial da União.
+            </p>
+            <p>
+              <strong>Declaradas:</strong> Terras Indígenas com Portaria Declaratória publicada pelo Ministro da Justiça no Diário Oficial da União reconhecendo os estudos elaborados pela FUNAI.
+            </p>
+            <p>
+              <strong>Homologadas:</strong> Terras Indígenas com Decreto de Homologação publicado pelo Presidente da República no Diário Oficial da União, homologando o processo de regularização.
+            </p>
+            <p>
+              <strong>Regularizadas:</strong> Terras Indígenas registradas no Serviço de Patrimônio da União.
+            </p>
+
+            <p>
+              ___
+            </p>
+
+            <p>
+              <strong>Em processo de desapropriação ou aquisição:</strong> Terras Indígenas com procedimento para aquisição ou desapropriação iniciada de acordo com a Lei no 6001/1973.
+            </p>
+
+            <p>
+              <strong>Desapropriada ou Adquirida:</strong> Terras Indígenas
+              desapropriadas ou adquiridas de acordo com a Lei no 6001/1973
+            </p>
+
+            <p>
+              <h5>Limites das Terras Indígenas</h5>
+            </p>
+
+            <p>
+              O estilo das linhas que formam os limites das terras indígenas
+              também trazem informações sobre os processos de regularização.
+            </p>
+
+            <p>
+              Para as aldeias ocupadas e sem definição de limites foi desenhado
+              um círculo genérico entorno do centróide da aldeia, com uma linha
+              tracejada. Nessa classe de terras, incluem-se aquelas sem nenhuma
+              providência, aquelas com estudo iniciado para reconhecimento de
+              terra tradicional ainda não aprovado, e aquelas com procedimento
+              para aquisição ou desapropriação iniciado mas sem definição do
+              perímetro.
+            </p>
+
+            <p>
+              Da mesma forma, foram representadas com linhas tracejadas as
+              terras cujos limites estão sendo reestudados pela FUNAI, por
+              inadequações na definição original.
+            </p>
+
+            <p>
+              <h5>Sobre os ícones de aldeias</h5>
+            </p>
+
+            <p>
+              Foram catalogadas além das aldeias atualmente ocupadas pelos Guarani, uma série de áreas desocupadas, na maioria das vezes forçadamente, e localizadas através da memória oral.
+            </p>
+
+            <p>
+              As aldeias atualmente ocupadas foram representadas com ícone circular preenchido de cor amarela, e as aldeias antigas foram representadas com ícones vazados, só com contorno amarelo, sem preenchimento.
+            </p>
+
+            <p>
+              Há aldeias antigas mapeadas dentro de terras já delimitadas, e outras que não incidem necessariamente dentro de uma terra indígena e não necessariamente representam uma demanda fundiária, embora expressem historicamente a territorialidade do povo guarani.
+            </p>
+          </div>
+          <!-- <div id="apresentacao" class="tab-pane fade active in">
+            <p>Desde o final da década de 1970, o Centro de Trabalho Indigenista (CTI) vem mapeando
+            as aldeias Guarani, com ênfase no Sul e no Sudeste do Brasil (1) . Percorrendo com os índios os caminhos
+            que levavam às suas aldeias e a lugares perdidos ou sonhados, as fontes primeiras vieram dos relatos
+            de vida permeados de menções a diferentes localidades, no Brasil e nos países vizinhos por onde se
+            estende a terra designada Yvyrupa (2) . Ao longo do tempo, elaboramos e disponibilizamos diversas
+            versões de quadros e mapas das Terras Guarani, que contribuíram para uma melhor compreensão da
+            complexa territorialidade desse povo e para o acompanhamento dos procedimentos de regularização
+            de suas terras distribuídas em seu território tradicionalmente ocupado.</p>
+
+            <p>Foi apenas no final da década de 1980 que algumas Terras Guarani, em São Paulo e no Rio
+            Grande do Sul, começaram a ser regularizadas a partir das reivindicações dos próprios índios.
+            Apoiando esse processo, o CTI amplia suas pesquisas e, a partir dos anos 1990, passou a agregar,
+            além das informações de nossos interlocutores guarani, dados da Funai e de pesquisadores do Sul
+            e Sudeste do Brasil. O diálogo permanente com esses colaboradores levou-nos a realizar diferentes
+            formas de sistematização, sendo que as informações coligidas estão contempladas e atualizadas na
+            edição que ora publicamos e que consiste no mapeamento das Terras Guarani por regiões, acoplado
+            a um quadro associado contendo informações relativas à situação fundiária de cada Terra Indígena.
+            Para esta nova edição, elaborada pelo CTI em parceria com a Comissão Guarani Yvyrupa, nos
+            dedicamos ao trabalho de inserir todos os pontos e polígonos das aldeias e terras indígenas compiladas
+            a partir de 1980 em uma base de dados georreferenciada que servirá para novos desdobramentos
+            deste trabalho.</p>
+
+            <p>No Sul e Sudeste, ao total, foram levantadas 258 aldeias, incluindo, além das 153 que se
+            encontram habitadas, 105 aldeias antigas, locais de uso ou áreas esbulhadas (3) . Sobre estas últimas,
+            as fontes de informação vieram da memória viva dos Guarani reunidas por nós e por nossos
+            parceiros e colaboradores. Não foram os documentos históricos, ou referências arqueológicas que
+            pautaram esse levantamento, embora certamente esses coincidam em muito com a memória oral
+            dos Guarani, vindo a referendá-la. Dessa forma, esse levantamento não reflete apenas um território
+            histórico de ocupação Guarani em oposição ao que seria a sua ocupação tradicional atual; todas as
+            localidades levantadas, tanto as ocupadas atualmente como as “de antigamente”, são constitutivas
+            da territorialidade guarani, uma vez que sua forma de relacionamento com o espaço é orientada pela
+            memória oral.</p>
+
+            <p>Em relação às aldeias antigas, em se tratando de história oral constituída por uma série de
+            testemunhos de distintas parentelas, estamos diante de um levantamento que é e será sempre
+            inevitavelmente incompleto, por duas razões. Primeiro porque mesmo tendo os Guarani indicado
+            locais de ocupações mais antigas que ocorreram em alguns casos até o início do século XX, as
+            fontes foram sempre a memória de indígenas com quem mantivemos contato apenas a partir do
+            final da década de 1970. Segundo porque cada grupo local tem sua própria história de ocupação,
+            tendo habitado localidades distintas e nunca será possível reconstituir a história de todas elas. Na
+            medida em que avançávamos, enriquecendo o levantamento com testemunhos distintos, outras
+            vozes se calavam para sempre, pela morte ou pelo esquecimento. Por todas essas razões, dada a
+            incompletude dos dados inerente a esse tipo de trabalho, tivemos cautela na divulgação.</p>
+
+            <p>Além disso, representações gráficas, sejam mapas ou quadros, são sempre reduções esquemáticas
+            que nunca poderão refletir a realidade por demais complexa implicada nas territorialidades indígenas,
+            que envolvem tanto a cosmologia, como a organização social e política, em embate com uma história
+            violenta de colonização por parte da sociedade nacional. Mesmo assim, esses mapas e quadros, em seu
+            conjunto, permitem uma visualização melhor de uma dinâmica na qual cada aldeia guarani atualmente
+            ocupada é cercada por uma série de outros pontos de ocupação pretérita, menos ou mais recentes,
+            dos quais a história de cada aldeia é tributária. Contribui para o entendimento de que a territorialidade
+            guarani se realiza a partir das redes de relações que ligam todos esses pontos mapeados, e muitos
+            outros perdidos na história recente, e não apenas em cada um desses pontos isoladamente.</p>
+
+            <p>Quando iniciou esse trabalho, o CTI testemunhou uma aversão dos Guarani, em especial dos
+            mais velhos, em relação à imposição de limites arbitrários à suas terras, que entendiam como uma
+            coerção a sua liberdade, por parte dos órgãos oficiais. Essa peculiaridade expressa uma história de
+            violências de que foram vítimas, marcada por remoções impostas, regimes de trabalho forçado e
+            uma série de outros abusos cometidos no período de atuação do Serviço de Proteção dos Índios
+            (SPI) e da Fundação Nacional do Índio (Funai) no regime militar. Essa atitude pode ser entendida
+            como marca da resistência guarani na luta pela preservação de sua territorialidade, e não deve ser
+            confundida como aversão à demarcação de terras em si.</p>
+
+            <p>Além de reunir informações sobre a situação jurídica das terras indígenas num determinado
+            período, os quadros e os mapas das terras indígenas, apesar de sua natureza esquemática, servem
+            como meio de verificação das normas institucionais 5 e das diligências e investimentos políticos do
+            governo em relação à regularização das Terras Indígenas, e para o conhecimento de um público maior.
+            O Quadro Resumo das Terras Indígenas Guarani no Sul e Sudeste do Brasil, que consta deste
+            Atlas, revela que quase tudo ainda há por fazer no que concerne à regularização das terras ocupadas
+            pelo povo guarani nessas regiões. Dão 153 terras ocupadas atualmente, apenas 17 estão plenamente
+            regularizadas para seu uso exclusivo e, somadas em conjunto, não totalizam nem 30.000 hectares,
+            para uma população de mais de 13.000 guaranis.</p>
+
+            <p>Nos últimos anos, entretanto, apesar do interminável e conflituoso processo de regularização de
+            suas Terras, os Guarani vem ampliando seus movimentos por reconhecimento de direitos territoriais
+            por meio de mobilizações, de manifestações direcionadas à Funai, ao Ministério Público Federal (MPF),
+            ao Ministério da justiça (MJ) e a outras instituições, e de ações de articulação entre suas comunidades
+            promovidas, em grande parte, pela Comissão Guarani Yvyrupa (CGY). Foram essas iniciativas que nos
+            motivaram a realizar uma sistematização mais apurada das informações a respeito das Terras Guarani,
+            de modo a transformá-las em instrumento para os próprios Guarani em suas reivindicações.</p>
+
+            <p>Esperamos que o resultado trazido a público nesse Atlas das Terras Guarani no Sul e Sudeste do
+            Brasil – 2015, embora incontornavelmente provisório, estimule novas pesquisas sobre a territorialidade
+            dos povos indígenas. Sobretudo, esperamos que contribua para a luta dos Guarani na garantia
+            de espaços para composição das aldeias que sustentam sua mobilidade nas suas mais diversas
+            acepções, num território ao mesmo tempo fragmentado espacialmente, mas indivisível sociológica e
+            cosmologicamente.</p>
+
+            <p>1 Nas regiões Sul e Sudeste, os Guarani, em sua maioria, são falantes do dialeto mbya, com um contingente considerável também de falantes dos dialetos
+            nhandéva, ava-guarani e tupi. Fazem parte de uma densa rede de relações que atinge a região oriental do Paraguai e a província argentina de Misiones.</p>
+            <p>2 Yvyrupa designa o mundo terrestre habitado, e é o termo que melhor expressa a noção guarani de território. Numa tradução literal, pode ser entendido
+            como suporte ou plataforma terrestre: Yvy (Terra) tupa (leito, esteio, base).</p>
+            <p>3 As ocupações dos grupos guarani cuja trajetória de vida, a partir do início do século XX, levou-os a ocuparem pequenas áreas em fazendas e em Terras
+            Indígenas de outros povos, no Mato Grosso, Tocantins, Maranhão e Pará, também constam desta edição, em mapa anexo, mas não estão contabilizadas
+            no quadro resumo. Embora falantes do dialeto mbya, foi somente a partir da década de 1980 que essas famílias conheceram comunidades guarani no
+            Sudeste do país, com as quais constituíram novas relações. Nos anos 1990, o CTI apoiou o processo de conquista de direitos para obterem uma terra
+            exclusiva para os Guarani, no município de Jacundá, PA.</p>
+            <p>4 A legislação específica que rege atualmente os trabalhos de identificação e delimitação de Terras Indígenas é composta do artigo 231 da Constituição
+            Federal de 1988, do decreto 1775 de 08 de Janeiro de 1996 e da Portaria 14 de 09 de Janeiro de 1996, bem como pela lei no6001/1973.</p>
+          </div> -->
+
+          <div id="ficha" class="tab-pane fade">
+
+          <h4>Projeto Mapa Yvyrupa: Cartografia digital do Território Guarani (Dados do Sul e Sudeste do Brasil)</h4>
+
+          <p>
+            Convênio no 811204/2014 entre Centro de Trabalho Indigenista – CTI e Instituto do Patrimônio Histórico e Artístico Nacional – IPHAN
+          </p>
+
+          <h5>Coordenação do Projeto</h5>
+
+          <p>
+            Daniel Calazans Pierri
+          </p>
+
+          <h5>Texto de apresentação do site</h5>
+          <p>
+            Maria Inês Ladeira e Daniel Pierri
+          </p>
+
+          <h5>Geoprocessamento</h5>
+          <p>
+            Camila Salles
+          </p>
+
+          <h5>Organização de dados</h5>
+          <p>
+            Camila Salles, Daniel Pierri, Eliza Castilla e Maria Inês Ladeira
+          </p>
+
+
+          <h5>Levantamento de dados de aldeias e Terras Indígenas</h5>
+          <p>
+            Colaborativo, conforme fichas das aldeias e terras indígenas
+          </p>
+
+          <h5>Levantamento de dados de sítios arqueológicos</h5>
+          <p>
+            Francisco Noelli e Angelo Correa
+          </p>
+
+            <h5>Bases cartográficas</h5>
+            <p>Unidades de Cconservação de Proteção Integral : Ministério do Meio Ambiente (MMA).</p>
+            <p>Limites Políticos: Instituto Brasileiro de Geografia e Estatística (IBGE).</p>
+            <p>Limites de Terras Indígenas: Fontes diversas, discriminada por TI</p>
+
+            <h5>Desenvolvimento</h5>
+            <p>
+              <a href="" target="_blank">hacklab/</a>
+            </p>
+
+            <h5>Código fonte</h5>
+            <p>
+              <a href="" target="_blank"></a>
+            </p>
+
+            <h5>Realização</h5>
+            <p>
+              Centro de Trabalho Indigenista – CTI, Comissão Guarani Yvyrupa – CGY e Instituto do Patrimônio Histórico e Artístico Nacional – IPHAN
+            </p>
+
+            <h5>Apoio</h5>
+            <p>
+              Embaixada Real da Noruega
+            </p>
+
+            <h4>Projeto Mapa Guarani Continental 2016 (Dados do Mato Grosso do Sul)</h4>
+
+            <h5>Gestão do Projeto</h5>
+            <p>
+              Conselho Indigenista Missionário
+            </p>
+
+            <h5>Articulação Internacional</h5>
+            <p>
+              Georg Grumberg, Levi Marques Pereira, Rosa Cólman
+            </p>
+
+            <h5>Levantamento de Dados do Mato Grosso do Sul</h5>
+            <p>
+              Conselho Indigenista Missionário – CIMI, Faculdade Intercultural
+              Indígena da Universidade Federal da Grande Dourados – FAIND- UFGD,
+              Aty Guaçu Guarani Kaiowa
+            </p>
+
+            <h5>Apoio</h5>
+            <p>
+              Embaixada Real da Noruega, Misereor – Ihr Hifswerk, DKA Áustria –
+              Hilfswerk der Katholischen Jungschar
+            </p>
+
+            <h5>Apoio Cartográfico</h5>
+            <p>
+              Instituto Socioambiental
+            </p>
+<!--
+
+            <h4>Atlas das Terras Guarani no Sul e Sudeste do Brasil</h4>
+            <h5>Oraganização e Edição</h5>
+            <p>Camila Salles, Daniel Pierri, Eliza Castilla e Maria Inês Ladeira</p>
+
+            <h5>Geoprocessamento</h5>
+            <p>Camila Salles</p>
+
+            <h5>Levantamento de dados</h5>
+            <p>Camila Salles, Daniel Pierri, Eliza Castilla e Maria Inês Ladeira</p>
+
+            <h5>Contribuições</h5>
+            <p>Carolina Comandulli, Cristhiano Kolinski, Diogo Oliveira, Flávio Gobbi, Ignácio Unkel, Maria Dorothea Post
+              Darella, Maria Lúcia Brandt de Carvalho, Nuno Nunes, Paulo Porto, Rafaela Printes, Rodrigo Venzon, Rodrigo
+              Thurler e colaboradores guarani.</p>
+
+
+
+            <h5>Projeto Mapa Yvyrupa: Cartografia digital do Território Guarani</h5>
+            <p>Convênio no 811204/2014 entre Centro de Trabalho Indigenista – CTI e Instituto do Patrimônio Histórico e
+              Artístico Nacional – IPHAN</p>
+
+            <h5></h5>
+            <p></p>
+
+            <p>O Centro de Trabalho Indigenista – CTI é uma organização não-governamental, sem fins lucrativos,
+              fundada em março de 1979, constituída por antropólogos e indigenistas com formação qualificada e
+              experiência sobre a realidade indígena no Brasil.</p>
+            <p> -->
+            <div class="logos">
+              <div class="row">
+                <div class="col-sm-5 col-sm-offset-1 col-md-3 col-md-offset-1">
+                  <a href="http://trabalhoindigenista.org.br/" class="logo-cti">
+                    <img src="{% static 'images/logo-CTI.png' %}" alt="Centro de Trabalho Indigenista">
+                  </a>
+                </div>
+                <div class="col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+                  <a href="http://trabalhoindigenista.org.br/" class="logo-yvyrupa">
+                    <img src="{% static 'images/logo-yvyrupa.svg' %}" alt="Comissão Guarani Yvyrupá">
+                  </a>
+                </div>
+                <div class="col-sm-5 col-sm-offset-4 col-md-3 col-md-offset-1">
+                  <a href="http://www.noruega.org.br/" class="logo-noruega">
+                    <img src="{% static 'images/logo-noruega.svg' %}" alt="Embaixada da Noruega">
+                  </a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5 col-sm-offset-1 col-md-4 col-md-offset-1">
+                  <a href="http://portal.iphan.gov.br/" class="logo-iphan">
+                    <img src="{% static 'images/logo-iphan.jpg' %}" alt="IPHAN">
+                  </a>
+                </div>
+                <div class="col-sm-5 col-md-offset-2 col-md-4">
+                  <a href="http://cultura.gov.br/" class="logo-minc">
+                    <img src="{% static 'images/logo-minc.svg' %}" alt="Ministério da Cultura">
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="projects-tab"
+               ng-controller="ProjectsCtrl"
+               class="tab-pane fade">
+            <p>
+              A plataforma “Mapa Guarani Digital” foi apoiada pelo Programa de
+              Valorização do Mundo Cultural Guarani, do Instituto do Patrimônio
+              Histórico e Artístico Nacional (IPHAN). O referido programa
+              constitui-se de um conjunto de projetos que vem sendo apoiados
+              pelo IPHAN com o objetivo de promover o inventário, registro e
+              salvaguarda do patrimônio cultural dos povos guarani, que
+              constituem no seu conjunto um dos maiores grupos étnicos presentes
+              no Brasil, e cujo território de ocupação se estende a outros
+              países da América do Sul, como Argentina, Paraguai, Bolívia e
+              Uruguai.
+            </p>
+
+            <p>
+              O embrião do Programa de Valorização do Mundo Cultural Guarani foi
+              o Inventário Nacional de Referências Culturais “Comunidade
+              Mbyá-Guarani em São Miguel Arcanjo/RS”, realizado através de
+              parceria entre o IPHAN e o Núcleo de Antropologia das Sociedades
+              Indígenas e Tradicionais (NIT) da Universidade Federal do Rio
+              Grande do Sul (UFRGS), entre os anos de 2004 e 2006.
+              Posteriormente o Programa foi ampliado através da realização do
+              Levantamento Preliminar do Inventário Nacional de Referências
+              Culturais “Guarani Mbya” realizado entre 2008 e 2011 executado
+              por meio de parceria entre o IPHAN e o Centro de Trabalho
+              Indigenista. Posteriormente, foram realizados outros projetos já
+              inseridos nas fases de identificação e salvaguarda da metodologia
+              do INRC, circunscritos a regiões específicas do território guarani.
+            </p>
+
+            <p>
+              Segue adiante, a lista dos projetos desenvolvidos até o momento no
+              âmbito do Programa de Valorização do Mundo Cultural Guarani,
+              através da qual é possível acessar as informações básicas sobre
+              cada projeto, além dos produtos deles resultantes:
+            </p>
+
+            <div ng-repeat="project in projects">
+              {% verbatim %}
+              <p><a ng-href="/#!/project/{{project.id}}" onclick="$('#aboutModal').modal('hide')"> {{project.name}} </a></p>
+              {% endverbatim %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
