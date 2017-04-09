@@ -271,7 +271,7 @@ class IndigenousVillageGeojsonSerializer(GeoFeatureModelSerializer,
     This serializer is used to generate the shapefile
     """
 
-    cti_id = serializers.ReadOnlyField(source='id')
+    # cti_id = serializers.ReadOnlyField(source='id')
 
     class Meta:
         model = IndigenousVillage
@@ -379,9 +379,9 @@ class IndigenousLandSerializer(FieldPermissionSerializerMixin, ProtectedAreasMix
             return ", ".join([state.name or state.acronym for state in states])
 
 
-class IndigenousLandGeojsonSerializer(IndigenousPlaceExportSerializer,
-                                      GeoFeatureModelSerializer,
-                                      IndigenousLandSerializer):
+class IndigenousLandExportSerializer(IndigenousPlaceExportSerializer,
+                                     IndigenousLandSerializer,
+                                     CachedSerializerMixin,):
 
     """
     This serializer is used to generate the shapefile
@@ -389,16 +389,17 @@ class IndigenousLandGeojsonSerializer(IndigenousPlaceExportSerializer,
 
     documents = serializers.SerializerMethodField()
     population = serializers.SerializerMethodField()
-    cti_id = fields.ReadOnlyField(source='id', permission_classes=(IsAuthenticated(), ))
     ethnic_groups = serializers.SerializerMethodField()
     prominent_subgroup = serializers.SerializerMethodField()
     layer = serializers.SerializerMethodField()
+    land_tenure = serializers.SerializerMethodField()
+    land_tenure_status = serializers.SerializerMethodField()
     # country = serializers.SerializerMethodField()
 
     class Meta:
         model = IndigenousLand
-        geo_field = 'geometry'
-        fields = ['cti_id', 'name', 'other_names', 'ethnic_groups', 'prominent_subgroup', 'villages', 'population',
+        # geo_field = 'geometry'
+        fields = ['id', 'name', 'other_names', 'ethnic_groups', 'prominent_subgroup', 'villages', 'population',
                   'guarani_presence', 'official_area', 'land_tenure',
                   'land_tenure_status', 'associated_land',
                   'guarani_exclusive_possession_area_portion', 'others_exclusive_possession_area_portion',
@@ -437,6 +438,34 @@ class IndigenousLandGeojsonSerializer(IndigenousPlaceExportSerializer,
             return _('Yes')
         else:
             return _('No')
+
+    @staticmethod
+    def get_land_tenure(obj):
+        if obj.land_tenure:
+            return obj.land_tenure.name
+
+    @staticmethod
+    def get_land_tenure_status(obj):
+        if obj.land_tenure_status:
+            return obj.land_tenure_status.name
+
+class IndigenousLandGeojsonSerializer(IndigenousLandExportSerializer,
+                                      GeoFeatureModelSerializer,
+                                      CachedSerializerMixin):
+
+    # Trick to avoid fiona error
+    cti_id = fields.ReadOnlyField(source='id', permission_classes=(IsAuthenticated(), ))
+
+    class Meta:
+        model = IndigenousLand
+        geo_field = 'geometry'
+        fields = ['cti_id', 'name', 'other_names', 'ethnic_groups', 'prominent_subgroup', 'villages', 'population',
+                  'guarani_presence', 'official_area', 'land_tenure',
+                  'land_tenure_status', 'associated_land',
+                  'guarani_exclusive_possession_area_portion', 'others_exclusive_possession_area_portion',
+                  'documents',
+                  'cities', 'states', 'demand', 'claim', 'public_comments', 'source',
+                  'private_comments', 'layer']
 
 
 class ArchaeologicalPlaceSerializer(serializers.ModelSerializer):

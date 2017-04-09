@@ -18,7 +18,8 @@ from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           LandTenureReportSerializer,
                           SimpleIndigenousGeojsonVillageSerializer,
                           SimpleArchaeologicalPlaceGeojsonSerializer,
-                          IndigenousVillageExportSerializer, ProjectSerializer,)
+                          IndigenousVillageExportSerializer,
+                          IndigenousLandExportSerializer, ProjectSerializer,)
 
 from io import BytesIO
 import zipfile
@@ -54,6 +55,11 @@ class IndigenousPlaceMixin(object):
 class IndigenousLandViewSet(IndigenousPlaceMixin, viewsets.ReadOnlyModelViewSet):
     queryset = IndigenousLand.objects.all()
     serializer_class = IndigenousLandSerializer
+
+
+class IndigenousLandExportView(IndigenousPlaceMixin, PandasView):
+    queryset = IndigenousLand.objects.all()
+    serializer_class = IndigenousLandExportSerializer
 
 
 class IndigenousVillageViewSet(IndigenousPlaceMixin, viewsets.ReadOnlyModelViewSet):
