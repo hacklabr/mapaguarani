@@ -13,27 +13,12 @@ $dependencies = <<SCRIPT
     # Needed to install Fiona via pip
     apt-get install -y libgdal-dev
 
-    # install pg_schema_triggers
-    git clone https://github.com/CartoDB/pg_schema_triggers.git
-    cd pg_schema_triggers/
-    make
-    make install
-    cd ..
-
-    git clone https://github.com/CartoDB/cartodb-postgresql.git
-    cd cartodb-postgresql
-    make all install
-    cd ..
-
 
     # Configure postgis
     sudo -u postgres createuser -d vagrant
     sudo -u vagrant createdb mapaguarani
 
     sudo -u postgres psql -d mapaguarani -c "CREATE EXTENSION postgis;"
-    sudo -u postgres psql -d mapaguarani -c "CREATE EXTENSION schema_triggers;"
-    sudo -u postgres psql -d mapaguarani -c "CREATE EXTENSION plpythonu;"
-    sudo -u postgres psql -d mapaguarani -c "CREATE EXTENSION cartodb;"
 
 SCRIPT
 
