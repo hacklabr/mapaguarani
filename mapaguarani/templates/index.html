@@ -127,7 +127,7 @@
 
             <p class="lead text-left">
               Arquivos Terras Indígenas
-              <a class="btn btn-lg btn-success" href="{% url 'export_xls_villages' %}.xls">baixar Planilha Excel</a>
+              <a class="btn btn-lg btn-success" href="{% url 'export_xls_lands' %}.xls">baixar Planilha Excel</a>
               {% if user.is_authenticated %}
               <a class="btn btn-lg btn-success" href="{% url 'lands_shapefiles' %}">baixar Shapefile</a>
               {% endif %}
