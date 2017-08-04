@@ -155,12 +155,33 @@
   controllers.controller('LandTenureReportCtrl', [
     '$scope',
     'GuaraniService',
-    function($scope, GuaraniService) {
+    'LandsReport',
+    function($scope, GuaraniService, LandsReport) {
       $scope.tenures = [];
-      var query = window.query = GuaraniService.tenures_report.query();
+      $scope.tenures_2nd_block = [];
+      GuaraniService.tenures_report.query({}, function(tenures){
+        angular.forEach(tenures, function(item){
+          // console.log('Entrou em ' + item.name);
+          if (item.name == 'Delimitada' || item.name == 'Declarada' ||
+              item.name == 'Homologada' || item.name == 'Regularizada' ) {
+            item.name = item.name + 's (incluindo revisão de limites)';
+            // console.log('Entrou em ' + item.name);
+            $scope.tenures.push(item);
+          } else if (item.name == 'Em processo de desapropriação' ||
+              item.name == 'Desapropriada' || item.name == 'Adquirida' ) {
+            // console.log('Entrou segundo bloco: ' + item.name);
+            $scope.tenures_2nd_block.push(item);
+          } else {
+            $scope.tenures.push(item);
+          }
 
-      query && query.$promise.then(function(tenures){
-        $scope.tenures = tenures;
+        });
+        // $scope.tenures = tenures;
+      });
+
+      LandsReport.get().then(function(response) {
+        console.log(response.data);
+        $scope.report = response.data;
       });
 
       $scope.tenures_sum = function(key) {

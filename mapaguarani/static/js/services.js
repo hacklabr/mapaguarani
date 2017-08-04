@@ -5,6 +5,14 @@
     'ngResource'
   ]);
 
+    services.factory('LandsReport', function($http) {
+        return {
+          get: function () {
+            return $http.get('/api/lands_report');
+          }
+        };
+    });
+
     services.factory('Project', function($resource){
         return $resource('/api/projects/:id/', {}, {
         });

@@ -8,7 +8,7 @@ from core.views import (IndigenousLandViewSet, IndigenousVillageViewSet,
                         IndigenousVillageGeojsonView,
                         ArchaeologicalPlaceGeojsonView, IndigenousVillageExportView,
                         IndigenousLandExportView,
-                        ProjectsViewSet,)
+                        ProjectsViewSet,ReportView)
 from moderation.helpers import auto_discover
 from rest_framework import routers
 from rest_framework_cache.registry import cache_registry
@@ -36,6 +36,8 @@ urlpatterns = [
 
     # Services
     url(r'^api/', include(router.urls)),
+
+    url(r'^api/lands_report', ReportView.as_view(), name='report_view'),
 
     url(r'^export/villages$', IndigenousVillageExportView.as_view(), name='export_xls_villages'),
 

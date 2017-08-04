@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from django.contrib.gis.db.models.fields import GeometryField
 from django.contrib.sites.shortcuts import get_current_site
 from django.db.models import Count
+from django.views.generic import View
+from django.http import JsonResponse
 import rest_framework_gis
 from rest_framework import viewsets, relations, serializers, generics
 from rest_framework_serializer_field_permissions import fields
@@ -249,3 +251,31 @@ class LandTenureReportViewSet(viewsets.ReadOnlyModelViewSet):
         total_lands_count=Count('indigenous_lands'),
     )
     serializer_class = LandTenureReportSerializer
+
+class ReportView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        data = {}
+
+        no_guarani_presence = IndigenousVillage.objects.filter(guarani_presence_annual_series=None)
+        no_guarani_presence_count = no_guarani_presence.count()
+        no_guarani_presence_inside_villages_count = 0
+        for village in no_guarani_presence:
+            if village.land.count() > 0:
+                no_guarani_presence_inside_villages_count += 1
+        data['no_guarani_presence_count'] = no_guarani_presence_count - no_guarani_presence_inside_villages_count
+
+        guarani_lands = IndigenousLand.objects.filter(ethnic_groups__name='Guarani')
+        exclusive_guarani_lands = guarani_lands
+        for land in guarani_lands:
+            if land.ethnic_groups.count() > 1:
+                exclusive_guarani_lands = exclusive_guarani_lands.exclude(id=land.id)
+        data['exclusive_guarani_lands_count'] = exclusive_guarani_lands.count()
+
+        non_exclsive_guarani_lands = guarani_lands.exclude(
+            id__in=[guarani_land.id for guarani_land in exclusive_guarani_lands]
+        )
+        data['non_exclusive_guarani_lands_count'] = non_exclsive_guarani_lands.count()
+
+        return JsonResponse(data)

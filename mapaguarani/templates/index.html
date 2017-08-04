@@ -65,7 +65,7 @@
       <div class="modal-body">
         <ul class="nav nav-tabs" id="aboutTabs">
           {% if user.is_authenticated %}
-          <li class="active"><a href="#tijuridic" data-toggle="tab">Situação Jurídica</a></li>
+          <li class="active"><a href="#tijuridic" data-toggle="tab">Quadro Resumo das Terras Indígenas Guarani no Sul e Sudeste do Brasil</a></li>
           {% endif %}
           <li {% if not user.is_authenticated %} class="active" {% endif %}><a href="#titable" data-toggle="tab">Tabela de Terras Indígenas</a></li>
         </ul>
@@ -74,6 +74,7 @@
           <div id="tijuridic"
                ng-controller="LandTenureReportCtrl"
                class="tab-pane fade active in">
+            <h3 class="text-center">Quadro Resumo das Terras Indígenas Guarani no Sul e Sudeste do Brasil</h3>
             <table class="table">
               <thead>
                 <tr>
@@ -92,16 +93,106 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="t in tenures">
+                <tr>
+                  <td></td>
+                  <td>TIs com Uso Exclusivo dos Guarani</td>
+                  <td ng-bind="report.exclusive_guarani_lands_count"></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>TIs de Outros povos com Presença Guarani</td>
+                  <td ng-bind="report.non_exclusive_guarani_lands_count"></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>Antigas aldeias, locais de uso ou áreas esbulhada</td>
+                  <td ng-bind="report.no_guarani_presence_count"></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>Tota Geral</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><span style="color: transparent;">&#x2b24;</span></td>
+                  <td>  </td>
+                  <td>  </td>
+                  <td>  </td>
+                  <td>  </td>
+                  <td>  </td>
+                  <td>  </td>
+                  <td>  </td>
+                  <td>  </td>
+                </tr>
+
+                <tr>
+                  <th></th>
+                  <th>Áreas de uso exclusivo dos Guarani</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+
+                <tr ng-repeat="tenure in tenures">
                   <td><span ng-style="{'color': t.map_color || 'transparent'}">&#x2b24;</span></td>
-                  <td ng-bind="t.name"></td>
-                  <td ng-bind="t.total_lands_count"></td>
-                  <td ng-bind="t.es_lands_count">3</td>
-                  <td ng-bind="t.pr_lands_count">4</td>
-                  <td ng-bind="t.rj_lands_count">5</td>
-                  <td ng-bind="t.rs_lands_count">6</td>
-                  <td ng-bind="t.sc_lands_count">7</td>
-                  <td ng-bind="t.sp_lands_count">8</td>
+                  <td ng-bind="tenure.name"></td>
+                  <td ng-bind="tenure.total_lands_count"></td>
+                  <td ng-bind="tenure.es_lands_count">3</td>
+                  <td ng-bind="tenure.pr_lands_count">4</td>
+                  <td ng-bind="tenure.rj_lands_count">5</td>
+                  <td ng-bind="tenure.rs_lands_count">6</td>
+                  <td ng-bind="tenure.sc_lands_count">7</td>
+                  <td ng-bind="tenure.sp_lands_count">8</td>
+                </tr>
+                <tr>
+                  <td><span style="color: transparent;">&#x2b24;</span></td>
+                  <td>  </td>
+                  <td>  </td>
+                  <td>  </td>
+                  <td>  </td>
+                  <td>  </td>
+                  <td>  </td>
+                  <td>  </td>
+                  <td>  </td>
+                </tr>
+                <tr ng-repeat="tenure in tenures_2nd_block">
+                  <td><span ng-style="{'color': t.map_color || 'transparent'}">&#x2b24;</span></td>
+                  <td ng-bind="tenure.name"></td>
+                  <td ng-bind="tenure.total_lands_count"></td>
+                  <td ng-bind="tenure.es_lands_count">3</td>
+                  <td ng-bind="tenure.pr_lands_count">4</td>
+                  <td ng-bind="tenure.rj_lands_count">5</td>
+                  <td ng-bind="tenure.rs_lands_count">6</td>
+                  <td ng-bind="tenure.sc_lands_count">7</td>
+                  <td ng-bind="tenure.sp_lands_count">8</td>
                 </tr>
               </tbody>
               <tfooter>
@@ -122,8 +213,8 @@
           {% endif %}
 
           <div id="titable" class="tab-pane fade {% if not user.is_authenticated %} active in {% endif %}">
-            <p class="lead text-center">Você pode baixar a planilha das terras indigenas, e os shapefiles das camadas de Aldeias e Terras Indígenas</p>
-            <p class="lead text-center">A geração destes arquivos pode demorar vários minutos, por favor aguarde o download começar após clicar abaixo no arquivo abaixo desejado.</p>
+            <p class="text-center">Você pode baixar a planilha das terras indigenas, e os shapefiles das camadas de Aldeias e Terras Indígenas</p>
+            <p class="text-center">A geração destes arquivos pode demorar vários minutos, por favor aguarde o download começar após clicar abaixo no arquivo abaixo desejado.</p>
 
             <p class="lead text-left">
               Arquivos Terras Indígenas
