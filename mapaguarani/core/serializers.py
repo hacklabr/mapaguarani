@@ -222,11 +222,11 @@ class IndigenousVillageExportSerializer(IndigenousPlaceExportSerializer,
         try:
             presence = obj.guarani_presence_annual_series.latest()
             if presence.presence:
-                return 'Sim (Fonte: {} - {})'.format(presence.source, presence.date.year)
+                return 'habitada atualmente'
             else:
-                'Não (Fonte: {} - {})'.format(presence.source, presence.date.year)
+                return 'antigas áreas de uso ou áreas esbulhadas'
         except GuaraniPresence.DoesNotExist:
-            return _('No information')
+            return 'antigas áreas de uso ou áreas esbulhadas'
 
     @staticmethod
     def get_population(obj):
