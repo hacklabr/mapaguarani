@@ -86,6 +86,7 @@ class ProtectedAreasMixinSerializer(serializers.ModelSerializer):
 
     protected_areas_integral = serializers.SerializerMethodField()
     protected_areas_conservation = serializers.SerializerMethodField()
+    country = serializers.SerializerMethodField()
 
     @staticmethod
     def get_protected_areas_integral(obj):
@@ -97,6 +98,11 @@ class ProtectedAreasMixinSerializer(serializers.ModelSerializer):
         if obj.protected_areas:
             return BaseProtectedAreaSerializers(obj.protected_areas.filter(type='US'), many=True).data
 
+    @staticmethod
+    def get_country(obj):
+        if obj.country:
+            return obj.country.name
+
 
 class IndigenousPlaceExportSerializer(object):
 
@@ -107,7 +113,6 @@ class IndigenousPlaceExportSerializer(object):
     ethnic_groups = serializers.SerializerMethodField()
     prominent_subgroup = serializers.SerializerMethodField()
     layer = serializers.SerializerMethodField()
-    country = serializers.SerializerMethodField()
 
     @staticmethod
     def get_ethnic_groups(obj):
@@ -121,11 +126,6 @@ class IndigenousPlaceExportSerializer(object):
     def get_layer(obj):
         if obj.layer:
             return obj.layer.name
-
-    @staticmethod
-    def get_country(obj):
-        # FIXME
-        return 'Brasil'
 
 
 class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
@@ -203,7 +203,6 @@ class IndigenousVillageExportSerializer(IndigenousPlaceExportSerializer,
     ethnic_groups = serializers.SerializerMethodField()
     prominent_subgroup = serializers.SerializerMethodField()
     layer = serializers.SerializerMethodField()
-    country = serializers.SerializerMethodField()
     position_precision = serializers.SerializerMethodField()
 
     class Meta:
@@ -213,7 +212,7 @@ class IndigenousVillageExportSerializer(IndigenousPlaceExportSerializer,
         fields = ['id', 'name', 'other_names', 'land', 'guarani_presence', 'population',
                   'ethnic_groups', 'prominent_subgroup',
                   'city', 'state', 'country',
-                  'position_source', 'position_precision', 'public_comments',
+                  'position_precision', 'public_comments',
                   'private_comments', 'layer']
 
     @staticmethod
@@ -280,7 +279,7 @@ class IndigenousVillageGeojsonSerializer(GeoFeatureModelSerializer,
         fields = ['name', 'other_names', 'land', 'guarani_presence', 'population',
                   'ethnic_groups', 'prominent_subgroup',
                   'city', 'state', 'country',
-                  'position_source', 'position_precision', 'public_comments',
+                  'position_precision', 'public_comments',
                   'private_comments', 'cti_id', 'layer']
 
 cache_registry.register(IndigenousVillageGeojsonSerializer)
@@ -404,7 +403,7 @@ class IndigenousLandExportSerializer(IndigenousPlaceExportSerializer,
                   'land_tenure_status', 'associated_land',
                   'guarani_exclusive_possession_area_portion', 'others_exclusive_possession_area_portion',
                   'documents',
-                  'cities', 'states', 'demand', 'claim', 'public_comments', 'source',
+                  'cities', 'states', 'country', 'demand', 'claim', 'public_comments', 'source',
                   'private_comments', 'layer']
 
     @staticmethod

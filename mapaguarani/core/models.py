@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from protected_areas.models import BaseProtectedArea
 from django.contrib.sites.models import Site
 
-from boundaries.models import City, State
+from boundaries.models import City, State, Country
 
 
 class Organization(models.Model):
@@ -315,8 +315,13 @@ class IndigenousVillage(IndigenousPlace):
 
     @property
     def country(self):
-        return None
-        # return 'Brasil'
+        try:
+            return Country.objects.get(geometry__covers=self.geometry)
+        except Country.DoesNotExist:
+            return
+        except Country.MultipleObjectsReturned:
+            # import ipdb;ipdb.set_trace()
+            return
 
 
 class GuaraniPresence(models.Model):
@@ -469,6 +474,16 @@ class IndigenousLand(IndigenousPlace):
     def get_states_intersected(self):
         return State.objects.filter(geometry__intersects=self.geometry)
 
+    @property
+    def country(self):
+        try:
+            return Country.objects.get(geometry__covers=self.geometry)
+        except Country.DoesNotExist:
+            return
+        except Country.MultipleObjectsReturned:
+            # countries = Country.objects.filter(geometry__covers=self.geometry)
+            # import ipdb;ipdb.set_trace()
+            return
 
 class LegalProceedings(models.Model):
     name = models.CharField(_('name'), max_length=255)
