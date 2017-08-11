@@ -221,11 +221,11 @@ class IndigenousVillageExportSerializer(IndigenousPlaceExportSerializer,
         try:
             presence = obj.guarani_presence_annual_series.latest()
             if presence.presence:
-                return 'habitada atualmente'
+                return _('Habitada atualmente')
             else:
-                return 'antigas áreas de uso ou áreas esbulhadas'
+                return _('Antigas aldeias, áreas de uso ou áreas esbulhadas')
         except GuaraniPresence.DoesNotExist:
-            return 'antigas áreas de uso ou áreas esbulhadas'
+            return _('Antigas aldeias, áreas de uso ou áreas esbulhadas')
 
     @staticmethod
     def get_population(obj):
@@ -270,8 +270,6 @@ class IndigenousVillageGeojsonSerializer(GeoFeatureModelSerializer,
     This serializer is used to generate the shapefile
     """
 
-    # cti_id = serializers.ReadOnlyField(source='id')
-
     class Meta:
         model = IndigenousVillage
         geo_field = 'geometry'
@@ -280,7 +278,7 @@ class IndigenousVillageGeojsonSerializer(GeoFeatureModelSerializer,
                   'ethnic_groups', 'prominent_subgroup',
                   'city', 'state', 'country',
                   'position_precision', 'public_comments',
-                  'private_comments', 'cti_id', 'layer']
+                  'private_comments', 'layer']
 
 cache_registry.register(IndigenousVillageGeojsonSerializer)
 
@@ -434,9 +432,9 @@ class IndigenousLandExportSerializer(IndigenousPlaceExportSerializer,
                 pass
 
         if land_presence:
-            return _('Yes')
+            return _('Habitada atualmente')
         else:
-            return _('No')
+            return _('Antigas aldeias, áreas de uso ou áreas esbulhadas')
 
     @staticmethod
     def get_land_tenure(obj):
