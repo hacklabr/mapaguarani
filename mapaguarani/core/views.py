@@ -9,6 +9,7 @@ from rest_framework import viewsets, relations, serializers, generics
 from rest_framework_serializer_field_permissions import fields
 from collections import OrderedDict
 from rest_pandas import PandasView
+from boundaries.models import State
 
 from .models import (IndigenousLand, IndigenousVillage, MapLayer,
                      ArchaeologicalPlace, LandTenure, LandTenureStatus,
@@ -257,25 +258,50 @@ class ReportView(View):
     def get(self, request, *args, **kwargs):
 
         data = {}
+        data['states'] = ['ES', 'MA', 'MS', 'PA', 'PR', 'RJ', 'RS', 'SC', 'SP', 'TO']
+        states = [State.objects.filter(acronym=acronym).first() for acronym in data['states']]
 
+        data['no_guarani_presence'] = {}
         no_guarani_presence = IndigenousVillage.objects.filter(guarani_presence_annual_series=None)
         no_guarani_presence_count = no_guarani_presence.count()
         no_guarani_presence_inside_villages_count = 0
         for village in no_guarani_presence:
             if village.land.count() > 0:
+                no_guarani_presence = no_guarani_presence.exclude(id=village.id)
                 no_guarani_presence_inside_villages_count += 1
         data['no_guarani_presence_count'] = no_guarani_presence_count - no_guarani_presence_inside_villages_count
+        data['no_guarani_presence_count'] = no_guarani_presence.count()
 
-        guarani_lands = IndigenousLand.objects.filter(ethnic_groups__name='Guarani')
+        data['exclusive_guarani_lands'] = {}
+        # Get all lands with Guarani (and possible others) ethnic groups and exclude
+        guarani_lands = IndigenousLand.objects.filter(ethnic_groups__name='Guarani').exclude(land_tenure_status__name='Terra Original')
         exclusive_guarani_lands = guarani_lands
         for land in guarani_lands:
             if land.ethnic_groups.count() > 1:
                 exclusive_guarani_lands = exclusive_guarani_lands.exclude(id=land.id)
         data['exclusive_guarani_lands_count'] = exclusive_guarani_lands.count()
 
+        data['non_exclusive_guarani_lands'] = {}
         non_exclsive_guarani_lands = guarani_lands.exclude(
             id__in=[guarani_land.id for guarani_land in exclusive_guarani_lands]
         )
         data['non_exclusive_guarani_lands_count'] = non_exclsive_guarani_lands.count()
+
+        for state in states:
+            data['exclusive_guarani_lands'][state.acronym] = exclusive_guarani_lands.filter(geometry__coveredby=state.geometry).count()
+            data['non_exclusive_guarani_lands'][state.acronym] = non_exclsive_guarani_lands.filter(geometry__coveredby=state.geometry).count()
+            data['no_guarani_presence'][state.acronym] = no_guarani_presence.filter(geometry__coveredby=state.geometry).count()
+
+        data['exclusive_guarani_lands']['tenures'] = []
+        for land_tenure in LandTenure.objects.all():
+            tenure_data = {}
+            tenure_data['name'] = land_tenure.name
+
+            tenure_exclusive_guarani_lands = exclusive_guarani_lands.filter(land_tenure=land_tenure)
+            tenure_data['total_lands_count'] = tenure_exclusive_guarani_lands.count()
+            for state in states:
+                tenure_data[state.acronym] = tenure_exclusive_guarani_lands.filter(geometry__coveredby=state.geometry).count()
+
+            data['exclusive_guarani_lands']['tenures'].append(tenure_data)
 
         return JsonResponse(data)

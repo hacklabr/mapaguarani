@@ -14,7 +14,15 @@
       </div>
       <div class="navbar-collapse navbar-right collapse">
         <ul class="nav navbar-nav">
-          <li><a href="{% url 'admin:login' %}" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Entrar</a></li>
+          <li>
+              {% if not user.is_authenticated %}
+              <a href="" data-toggle="modal" data-target="#login-modal" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Entrar</a>
+              {% elif user.is_staff %}
+              <a href="{% url 'admin:login' %}" target="_blank" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Administrar</a>
+              {% else %}
+              <a href="#" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;{{ request.user.username }}</a>
+              {% endif %}
+          </li>
           <li>
             <a href="" data-toggle="modal" data-target="#reportsModal" id="about-btn">
               <i class="fa fa-question-circle white"></i>&nbsp;&nbsp;Relatórios
@@ -55,6 +63,9 @@
 {% endblock content %}
 
 {% block modal %}
+
+{% include 'modal-login.html' %}
+
 <div class="modal fade" id="reportsModal" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -84,12 +95,7 @@
                   <th colspan="6">Total de terras por estado</th>
                 </tr>
                 <tr>
-                  <th>ES</th>
-                  <th>PR</th>
-                  <th>RJ</th>
-                  <th>RS</th>
-                  <th>SC</th>
-                  <th>SP</th>
+                  <th ng-repeat="state in report.states" ng-bind="state"></th>
                 </tr>
               </thead>
               <tbody>
@@ -97,38 +103,25 @@
                   <td></td>
                   <td>TIs com Uso Exclusivo dos Guarani</td>
                   <td ng-bind="report.exclusive_guarani_lands_count"></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td ng-repeat="state in report.states" ng-bind="report.exclusive_guarani_lands[state]"></td>
                 </tr>
                 <tr>
                   <td></td>
                   <td>TIs de Outros povos com Presença Guarani</td>
                   <td ng-bind="report.non_exclusive_guarani_lands_count"></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td ng-repeat="state in report.states" ng-bind="report.non_exclusive_guarani_lands[state]"></td>
                 </tr>
                 <tr>
                   <td></td>
                   <td>Antigas aldeias, locais de uso ou áreas esbulhada</td>
                   <td ng-bind="report.no_guarani_presence_count"></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td ng-repeat="state in report.states" ng-bind="report.no_guarani_presence[state]"></td>
                 </tr>
                 <tr>
                   <td></td>
                   <td>Tota Geral</td>
+                  <td></td>
+                  <td></td>
                   <td></td>
                   <td></td>
                   <td></td>
@@ -147,6 +140,8 @@
                   <td>  </td>
                   <td>  </td>
                   <td>  </td>
+                  <td></td>
+                  <td></td>
                 </tr>
 
                 <tr>
@@ -159,18 +154,15 @@
                   <th></th>
                   <th></th>
                   <th></th>
+                  <td></td>
+                  <td></td>
                 </tr>
 
                 <tr ng-repeat="tenure in tenures">
                   <td><span ng-style="{'color': t.map_color || 'transparent'}">&#x2b24;</span></td>
                   <td ng-bind="tenure.name"></td>
                   <td ng-bind="tenure.total_lands_count"></td>
-                  <td ng-bind="tenure.es_lands_count">3</td>
-                  <td ng-bind="tenure.pr_lands_count">4</td>
-                  <td ng-bind="tenure.rj_lands_count">5</td>
-                  <td ng-bind="tenure.rs_lands_count">6</td>
-                  <td ng-bind="tenure.sc_lands_count">7</td>
-                  <td ng-bind="tenure.sp_lands_count">8</td>
+                  <td ng-repeat="state in report.states" ng-bind="tenure[state]"></td>
                 </tr>
                 <tr>
                   <td><span style="color: transparent;">&#x2b24;</span></td>
@@ -187,25 +179,15 @@
                   <td><span ng-style="{'color': t.map_color || 'transparent'}">&#x2b24;</span></td>
                   <td ng-bind="tenure.name"></td>
                   <td ng-bind="tenure.total_lands_count"></td>
-                  <td ng-bind="tenure.es_lands_count">3</td>
-                  <td ng-bind="tenure.pr_lands_count">4</td>
-                  <td ng-bind="tenure.rj_lands_count">5</td>
-                  <td ng-bind="tenure.rs_lands_count">6</td>
-                  <td ng-bind="tenure.sc_lands_count">7</td>
-                  <td ng-bind="tenure.sp_lands_count">8</td>
+                  <td ng-repeat="state in report.states" ng-bind="tenure[state]"></td>
                 </tr>
               </tbody>
               <tfooter>
                 <tr>
                   <th></th>
                   <th>Total final</th>
-                  <th ng-bind="tenures_sum('total_lands_count')"></th>
-                  <th ng-bind="tenures_sum('es_lands_count')">2</th>
-                  <th ng-bind="tenures_sum('pr_lands_count')">3</th>
-                  <th ng-bind="tenures_sum('rj_lands_count')">4</th>
-                  <th ng-bind="tenures_sum('rs_lands_count')">5</th>
-                  <th ng-bind="tenures_sum('sc_lands_count')">6</th>
-                  <th ng-bind="tenures_sum('sp_lands_count')">7</th>
+                  <th ng-bind="report.exclusive_guarani_lands_count"></th>
+                  <th ng-repeat="state in report.states" ng-bind="report.exclusive_guarani_lands[state]"></th>
                 </tr>
               </tfooter>
             </table>
