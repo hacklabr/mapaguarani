@@ -14,9 +14,11 @@
       </div>
       <div class="navbar-collapse navbar-right collapse">
         <ul class="nav navbar-nav">
+
           <li>
               {% if not user.is_authenticated %}
-              <a href="" data-toggle="modal" data-target="#login-modal" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Entrar</a>
+              <!-- <a href="" data-toggle="modal" data-target="#login-modal" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Entrar</a> -->
+              <a href="{% url 'admin:login' %}" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Entrar</a>
               {% elif user.is_staff %}
               <a href="{% url 'admin:login' %}" target="_blank" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Administrar</a>
               {% else %}
@@ -64,7 +66,7 @@
 
 {% block modal %}
 
-{% include 'modal-login.html' %}
+{# {% include 'modal-login.html' %} #}
 
 <div class="modal fade" id="reportsModal" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg">
