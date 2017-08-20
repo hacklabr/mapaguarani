@@ -16,37 +16,47 @@ class Command(BaseCommand):
 
         csv_path = options['shapefile_path'][0]
 
-        archaeological_layer, _ = MapLayer.objects.get_or_create(name='Sítios Arqueológicos')
-        archaeological_layer.description = 'Camada de Sítios Arqueológicos'
-        archaeological_layer.save()
-
         with open(csv_path, newline='') as csvfile:
             spamreader = csv.DictReader(csvfile, delimiter='|', quotechar='"')
             for row in spamreader:
+                archaeological_layer, _ = MapLayer.objects.get_or_create(name=row.get('camada'))
+                archaeological_layer.save()
 
                 kwargs = {
                     'layer': archaeological_layer,
                     'name': row['nome_sitio'],
                     'cnsa': row['cnsa'],
-                    'code': row['cod_sitio'],
+                    # 'code': row['cod_sitio'],
                     'acronym': row['sigla'],
-                    'biblio_references': row['Fonte'],
+                    'biblio_references': row['fonte'],
+                    'institution': row['instituições'],
+
+                    'hydrography': row['hidrografia'],
+                    'phase': row['fase'],
+                    'dating': row['datacao'],
+                    'deviation': row['desvio'],
+                    'chrono_ref': row['ref_cronologica'],
+                    'ap_date': row['data_ap'],
+                    'calibrated_dating': row['datacao_calibrada'],
+                    'dating_method': row['metodo_datacao'],
+                    'lab_code': row['codigo_lab'],
                 }
 
                 archaeological_place = ArchaeologicalPlace(**kwargs)
 
-                # if row['aprox']:
-                #     archaeological_place.position_precision = 'by_city'
-                # else:
-                #     archaeological_place.position_precision = 'exact'
+                if row['precisao'] == 'prov':
+                    archaeological_place.position_precision = 'by_city'
+                elif row['precisao'] == 'biblio':
+                    archaeological_place.position_precision = 'exact'
+                elif row['precisao'] == 'aprox':
+                    archaeological_place.position_precision = 'approximate'
 
-                # import ipdb;ipdb.set_trace()
                 coords = row['coords'].split()
 
                 try:
                     latitude, longitude = utm.to_latlon(int(coords[1]), int(coords[2]), int(coords[0][0:2]), coords[0][-1])
                 except:
-                    import ipdb;ipdb.set_trace()
+                    import pdb;pdb.set_trace()
 
                 archaeological_place.geometry = Point(longitude, latitude)
                 archaeological_place.save()

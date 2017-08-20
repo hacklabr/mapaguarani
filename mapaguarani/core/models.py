@@ -508,7 +508,7 @@ class LegalProceedings(models.Model):
 class ArchaeologicalPlace(models.Model):
     POSITION_PRECISION_CHOICES = (
         ('exact', _('Exact')),
-        ('estimated', _('Estimated')),
+        ('approximate', _('Approximate')),
         ('by_city', _('By City')),
         ('no_position', _('No position')),
     )
@@ -522,7 +522,6 @@ class ArchaeologicalPlace(models.Model):
     code = models.CharField(_('Code'), max_length=255, blank=True, null=True)
     acronym = models.CharField(_('Acronym'), max_length=512, blank=True, null=True)
     cnsa = models.CharField(_('CNSA'), max_length=512, blank=True, null=True)
-    geometry = models.PointField()
     position_precision = models.CharField(
         _('Position Precision'),
         choices=POSITION_PRECISION_CHOICES,
@@ -536,8 +535,19 @@ class ArchaeologicalPlace(models.Model):
         max_length=256,
         default=STATUS[1][0]
     )
+    institution = models.CharField(_('institution'), max_length=512, blank=True, null=True)
+    hydrography = models.CharField(_('hydrography'), max_length=512, blank=True, null=True)
+    phase = models.CharField(_('phase'), max_length=255, blank=True, null=True)
+    dating = models.CharField(_('dating'), max_length=255, blank=True, null=True)
+    deviation = models.CharField(_('deviation'), max_length=255, blank=True, null=True)
+    chrono_ref = models.CharField(_('chronological reference'), max_length=255, blank=True, null=True)
+    ap_date = models.CharField(_('ap date'), max_length=255, blank=True, null=True)
+    calibrated_dating = models.CharField(_('calibrated dating'), max_length=255, blank=True, null=True)
+    dating_method = models.CharField(_('dating method'), max_length=255, blank=True, null=True)
+    lab_code = models.CharField(_('laboratory code'), max_length=255, blank=True, null=True)
 
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='archaeological_places')
+    geometry = models.PointField()
 
     objects = models.GeoManager()
 
