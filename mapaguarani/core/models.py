@@ -556,6 +556,10 @@ class ArchaeologicalPlace(models.Model):
         verbose_name_plural = _('Archaeological Places')
 
     @property
+    def protected_areas(self):
+        return BaseProtectedArea.objects.filter(geometry__covers=self.geometry)
+
+    @property
     def city(self):
         try:
             return City.objects.get(geometry__covers=self.geometry)
@@ -571,8 +575,18 @@ class ArchaeologicalPlace(models.Model):
 
     @property
     def country(self):
-        # TODO georeferential query
-        pass
+        try:
+            return Country.objects.get(geometry__covers=self.geometry)
+        except Country.DoesNotExist:
+            return
+        except Country.MultipleObjectsReturned:
+            # countries = Country.objects.filter(geometry__covers=self.geometry)
+            # import ipdb;ipdb.set_trace()
+            return
+
+    @property
+    def land(self):
+        return IndigenousLand.objects.filter(geometry__covers=self.geometry)
 
     def __str__(self):
         return self.name

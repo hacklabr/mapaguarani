@@ -10,18 +10,93 @@
       </tr>
       <tr ng-show="data.position_precision">
         <th>Precisão da posição</th>
-        <td ng-if="data.position_precision == 'exact'">Exata</td>
-        <td ng-if="data.position_precision == 'estimated'">Estimada</td>
-        <td ng-if="data.position_precision == 'by_city'">Por cidade</td>
-        <td ng-if="data.position_precision == 'no_position'">Sem posição</td>
-      </tr>
-      <tr ng-show="data.position_comments">
-        <th>Observações sobre a posiçao</th>
-        <td>{{ data.position_comments }}</td>
+        <td>{{ data.position_precision }}</td>
       </tr>
       <tr ng-show="data.biblio_references">
         <th>Referências</th>
         <td>{{ data.biblio_references }}</td>
+      </tr>
+      <tr ng-show="data.land">
+        <th>Terra indígena em que este sítio aqueológico está inserido</th>
+        <td>
+          <p>
+            <a ng-href="/#!/lands/{{data.land.id}}/"> {{ data.land.name }}</a>
+          </p>
+        </td>
+      </tr>
+
+      <tr ng-show="data.protected_areas_integral.length">
+        <th>Sobreposição com Unidade de Conservação de Proteção Integral</th>
+        <td>
+          <p ng-repeat="protected_area in data.protected_areas_integral">
+            {{ protected_area.name }}
+          </p>
+        </td>
+      </tr>
+      <tr ng-show="data.protected_areas_conservation.length">
+        <th>Sobreposição com Unidade de Conservação de Uso Sustentável</th>
+        <td>
+          <p ng-repeat="protected_area in data.protected_areas_conservation">
+            {{ protected_area.name }}
+          </p>
+        </td>
+      </tr>
+
+      <tr ng-show="data.institution">
+        <th>Instituição</th>
+        <td>{{ data.institution }}</td>
+      </tr>
+      <tr ng-show="data.hydrography">
+        <th>Hidrografia</th>
+        <td>{{ data.hydrography }}</td>
+      </tr>
+      <tr ng-show="data.phase">
+        <th>Fase</th>
+        <td>{{ data.phase }}</td>
+      </tr>
+      <tr ng-show="data.dating">
+        <th>Datação</th>
+        <td>{{ data.dating }}</td>
+      </tr>
+      <tr ng-show="data.deviation">
+        <th>Desvio</th>
+        <td>{{ data.deviation }}</td>
+      </tr>
+      <tr ng-show="data.chrono_ref">
+        <th>Referência Cronológica</th>
+        <td>{{ data.chrono_ref }}</td>
+      </tr>
+      <tr ng-show="data.ap_date">
+        <th>Data AP</th>
+        <td>{{ data.ap_date }}</td>
+      </tr>
+      <tr ng-show="data.calibrated_dating">
+        <th>Data Calibrada</th>
+        <td>{{ data.calibrated_dating }}</td>
+      </tr>
+      <tr ng-show="data.dating_method">
+        <th>Método de Datação</th>
+        <td>{{ data.dating_method }}</td>
+      </tr>
+      <tr ng-show="data.lab_code">
+        <th>Código do Laboratório</th>
+        <td>{{ data.lab_code }}</td>
+      </tr>
+      <tr ng-show="data.city">
+        <th>Município</th>
+        <td>{{data.city}}</td>
+      </tr>
+      <tr ng-show="data.state">
+        <th>Estado</th>
+        <td>{{data.state}}</td>
+      </tr>
+      <tr ng-show="data.country">
+        <th>País</th>
+        <td>{{data.country}}</td>
+      </tr>
+      <tr ng-show="data.position_comments">
+        <th>Observações sobre a posiçao</th>
+        <td>{{ data.position_comments }}</td>
       </tr>
       <tr ng-show="data.projects.length">
         <th>Projetos</th>

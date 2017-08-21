@@ -82,11 +82,39 @@ class IndigenousLandListSerializer(BaseListSerializerMixin):
                      'cities', 'states', 'guarani_presence']
 
 
+class BasePointMixinSerializer(serializers.ModelSerializer):
+
+    city = serializers.SerializerMethodField()
+    state = serializers.SerializerMethodField()
+    country = serializers.SerializerMethodField()
+    land = serializers.SerializerMethodField()
+    projects = SimpleProjectSerializer(many=True)
+
+    @staticmethod
+    def get_city(obj):
+        if obj.city:
+            return obj.city.name
+
+    @staticmethod
+    def get_state(obj):
+        if obj.state:
+            return obj.state.name or obj.state.acronym
+
+    @staticmethod
+    def get_country(obj):
+        if obj.country:
+            return obj.country.name
+
+    @staticmethod
+    def get_land(obj):
+        if obj.land:
+            land = obj.land[0]
+            return SimpleIndigenousLandSerializer(land).data
+
 class ProtectedAreasMixinSerializer(serializers.ModelSerializer):
 
     protected_areas_integral = serializers.SerializerMethodField()
     protected_areas_conservation = serializers.SerializerMethodField()
-    country = serializers.SerializerMethodField()
 
     @staticmethod
     def get_protected_areas_integral(obj):
@@ -97,11 +125,6 @@ class ProtectedAreasMixinSerializer(serializers.ModelSerializer):
     def get_protected_areas_conservation(obj):
         if obj.protected_areas:
             return BaseProtectedAreaSerializers(obj.protected_areas.filter(type='US'), many=True).data
-
-    @staticmethod
-    def get_country(obj):
-        if obj.country:
-            return obj.country.name
 
 
 class IndigenousPlaceExportSerializer(object):
@@ -129,14 +152,12 @@ class IndigenousPlaceExportSerializer(object):
 
 
 class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
-                                  ProtectedAreasMixinSerializer):
+                                  ProtectedAreasMixinSerializer,
+                                  BasePointMixinSerializer):
 
     position_precision = serializers.SerializerMethodField()
     population = serializers.SerializerMethodField()
     guarani_presence = serializers.SerializerMethodField()
-    city = serializers.SerializerMethodField()
-    state = serializers.SerializerMethodField()
-    land = serializers.SerializerMethodField()
     projects = SimpleProjectSerializer(many=True)
 
     # Private fields
@@ -173,22 +194,6 @@ class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
     @staticmethod
     def get_villages(obj):
         return SimpleIndigenousVillageSerializer(obj.villages, many=True).data
-
-    @staticmethod
-    def get_city(obj):
-        if obj.city:
-            return obj.city.name
-
-    @staticmethod
-    def get_state(obj):
-        if obj.state:
-            return obj.state.name or obj.state.acronym
-
-    @staticmethod
-    def get_land(obj):
-        if obj.land:
-            land = obj.land[0]
-            return SimpleIndigenousLandSerializer(land).data
 
 cache_registry.register(IndigenousVillageSerializer)
 
@@ -249,16 +254,6 @@ class IndigenousVillageExportSerializer(IndigenousPlaceExportSerializer,
         if obj.land:
             land = obj.land[0]
             return land.name
-
-    # @staticmethod
-    # def get_city(obj):
-    #     if obj.city:
-    #         return obj.city.name
-
-    # @staticmethod
-    # def get_state(obj):
-    #     if obj.state:
-    #         return obj.state.name or obj.state.acronym
 
 cache_registry.register(IndigenousVillageExportSerializer)
 
@@ -465,10 +460,9 @@ class IndigenousLandGeojsonSerializer(IndigenousLandExportSerializer,
                   'private_comments', 'layer']
 
 
-class ArchaeologicalPlaceSerializer(serializers.ModelSerializer):
+class ArchaeologicalPlaceSerializer(ProtectedAreasMixinSerializer, BasePointMixinSerializer):
 
     position_precision = serializers.SerializerMethodField()
-    projects = SimpleProjectSerializer(many=True)
 
     @staticmethod
     def get_position_precision(obj):
