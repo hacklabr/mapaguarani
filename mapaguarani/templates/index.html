@@ -78,16 +78,16 @@
       <div class="modal-body">
         <ul class="nav nav-tabs" id="aboutTabs">
           {% if user.is_authenticated %}
-          <li class="active"><a href="#tijuridic" data-toggle="tab">Quadro Resumo das Terras Indígenas Guarani no Sul e Sudeste do Brasil</a></li>
+          <li class="active"><a href="#tijuridic" data-toggle="tab">Quadro Resumo</a></li>
           {% endif %}
-          <li {% if not user.is_authenticated %} class="active" {% endif %}><a href="#titable" data-toggle="tab">Tabela de Terras Indígenas</a></li>
+          <li {% if not user.is_authenticated %} class="active" {% endif %}><a href="#titable" data-toggle="tab">Downloads</a></li>
         </ul>
         <div class="tab-content" id="aboutTabsContent">
           {% if user.is_authenticated %}
           <div id="tijuridic"
                ng-controller="LandTenureReportCtrl"
                class="tab-pane fade active in">
-            <h3 class="text-center">Quadro Resumo das Terras Indígenas Guarani no Sul e Sudeste do Brasil</h3>
+            <h3 class="text-center">Quadro Resumo da Presença dos Povos Guarani no Brasil</h3>
             <table class="table">
               <thead>
                 <tr>
