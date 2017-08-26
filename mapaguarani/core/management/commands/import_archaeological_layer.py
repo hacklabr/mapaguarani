@@ -26,7 +26,6 @@ class Command(BaseCommand):
                     'layer': archaeological_layer,
                     'name': row['nome_sitio'],
                     'cnsa': row['cnsa'],
-                    # 'code': row['cod_sitio'],
                     'acronym': row['sigla'],
                     'biblio_references': row['fonte'],
                     'institution': row['instituições'],
@@ -57,6 +56,8 @@ class Command(BaseCommand):
                     latitude, longitude = utm.to_latlon(int(coords[1]), int(coords[2]), int(coords[0][0:2]), coords[0][-1])
                 except:
                     import pdb;pdb.set_trace()
+
+                archaeological_place.status = 'public'
 
                 archaeological_place.geometry = Point(longitude, latitude)
                 archaeological_place.save()

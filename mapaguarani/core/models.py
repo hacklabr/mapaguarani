@@ -519,7 +519,6 @@ class ArchaeologicalPlace(models.Model):
     )
 
     name = models.CharField(_('name'), max_length=255)
-    code = models.CharField(_('Code'), max_length=255, blank=True, null=True)
     acronym = models.CharField(_('Acronym'), max_length=512, blank=True, null=True)
     cnsa = models.CharField(_('CNSA'), max_length=512, blank=True, null=True)
     position_precision = models.CharField(
