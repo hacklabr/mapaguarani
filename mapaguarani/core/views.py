@@ -9,7 +9,7 @@ from rest_framework import viewsets, relations, serializers, generics
 from rest_framework_serializer_field_permissions import fields
 from collections import OrderedDict
 from rest_pandas import PandasView
-from boundaries.models import State
+from boundaries.models import State, Country
 
 from .models import (IndigenousLand, IndigenousVillage, MapLayer,
                      ArchaeologicalPlace, LandTenure, LandTenureStatus,
@@ -261,6 +261,7 @@ class ReportView(View):
         data['states'] = ['RS', 'SC', 'PR', 'SP', 'MS', 'RJ', 'ES', 'TO', 'PA', 'MA']
 
         states = [State.objects.filter(acronym=acronym).first() for acronym in data['states']]
+        brasil = Country.objects.get(name='Brasil')
 
         tenure_official = ['Declarada', 'Homologada', 'Regularizada',
                            'Delimitada']
@@ -269,8 +270,9 @@ class ReportView(View):
         data['no_guarani_presence'] = {}
         data['no_guarani_presence_inside_land'] = {}
         data['no_guarani_presence_outside_land'] = {}
-        guarani_presence = IndigenousVillage.objects.filter(ethnic_groups__name='Guarani').exclude(guarani_presence_annual_series=None)
-        no_guarani_presence = IndigenousVillage.objects.filter(guarani_presence_annual_series=None)
+        guarani_presence = IndigenousVillage.objects.filter(geometry__coveredby=brasil.geometry).filter(ethnic_groups__name='Guarani')
+        no_guarani_presence = guarani_presence.filter(guarani_presence_annual_series=None)
+        guarani_presence = guarani_presence.exclude(guarani_presence_annual_series=None)
         no_guarani_presence_inside_land = no_guarani_presence
         no_guarani_presence_outside_land = no_guarani_presence
         no_guarani_presence_inside_land_count = 0
