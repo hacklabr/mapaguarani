@@ -163,14 +163,15 @@
         $scope.report = response.data;
         angular.forEach($scope.report.exclusive_guarani_lands.tenures, function(item){
           if (item.name == 'Delimitada' || item.name == 'Declarada' ||
-              item.name == 'Homologada' || item.name == 'Regularizada' ) {
+              item.name == 'Homologada' || item.name == 'Regularizada' ||
+              item.name == 'Em estudo') {
             item.name = item.name + 's (incluindo revisão de limites)';
             $scope.tenures.push(item);
           } else if (item.name == 'Em processo de desapropriação' ||
               item.name == 'Desapropriada' || item.name == 'Adquirida' ) {
             $scope.tenures_2nd_block.push(item);
           } else {
-            $scope.tenures.push(item);
+            $scope.tenures.unshift(item);
           }
         });
       });

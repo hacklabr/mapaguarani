@@ -258,7 +258,8 @@ class ReportView(View):
     def get(self, request, *args, **kwargs):
 
         data = {}
-        data['states'] = ['ES', 'MA', 'MS', 'PA', 'PR', 'RJ', 'RS', 'SC', 'SP', 'TO']
+        data['states'] = ['RS', 'SC', 'PR', 'SP', 'MS', 'RJ', 'ES', 'TO', 'PA', 'MA']
+
         states = [State.objects.filter(acronym=acronym).first() for acronym in data['states']]
 
         data['no_guarani_presence'] = {}
@@ -272,6 +273,7 @@ class ReportView(View):
         data['no_guarani_presence_count'] = no_guarani_presence_count - no_guarani_presence_inside_villages_count
         data['no_guarani_presence_count'] = no_guarani_presence.count()
 
+        data['guarani_lands'] = {}
         data['exclusive_guarani_lands'] = {}
         # Get all lands with Guarani (and possible others) ethnic groups and exclude
         guarani_lands = IndigenousLand.objects.filter(ethnic_groups__name='Guarani').exclude(land_tenure_status__name='Terra Original')
@@ -279,6 +281,7 @@ class ReportView(View):
         for land in guarani_lands:
             if land.ethnic_groups.count() > 1:
                 exclusive_guarani_lands = exclusive_guarani_lands.exclude(id=land.id)
+        data['guarani_lands_count'] = guarani_lands.count()
         data['exclusive_guarani_lands_count'] = exclusive_guarani_lands.count()
 
         data['non_exclusive_guarani_lands'] = {}
@@ -288,6 +291,7 @@ class ReportView(View):
         data['non_exclusive_guarani_lands_count'] = non_exclsive_guarani_lands.count()
 
         for state in states:
+            data['guarani_lands'][state.acronym] = guarani_lands.filter(geometry__coveredby=state.geometry).count()
             data['exclusive_guarani_lands'][state.acronym] = exclusive_guarani_lands.filter(geometry__coveredby=state.geometry).count()
             data['non_exclusive_guarani_lands'][state.acronym] = non_exclsive_guarani_lands.filter(geometry__coveredby=state.geometry).count()
             data['no_guarani_presence'][state.acronym] = no_guarani_presence.filter(geometry__coveredby=state.geometry).count()
@@ -303,5 +307,20 @@ class ReportView(View):
                 tenure_data[state.acronym] = tenure_exclusive_guarani_lands.filter(geometry__coveredby=state.geometry).count()
 
             data['exclusive_guarani_lands']['tenures'].append(tenure_data)
+
+        tenure_order = ['Sem Providências', 'Em estudo', 'Declarada',
+                        'Homologada', 'Regularizada', 'Delimitada',
+                        'Em processo de desapropriação', 'Desapropriada',
+                        'Adquirida', ]
+
+        def index_of(name):
+            try:
+                return tenure_order.index(name)
+            except:
+                return 10
+
+        data['exclusive_guarani_lands']['tenures'].sort(
+            key=lambda item: index_of(item['name'])
+        )
 
         return JsonResponse(data)
