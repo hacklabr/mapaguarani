@@ -262,16 +262,30 @@ class ReportView(View):
 
         states = [State.objects.filter(acronym=acronym).first() for acronym in data['states']]
 
+        tenure_official = ['Declarada', 'Homologada', 'Regularizada',
+                           'Delimitada']
+
+        data['guarani_presence'] = {}
         data['no_guarani_presence'] = {}
+        data['no_guarani_presence_inside_land'] = {}
+        data['no_guarani_presence_outside_land'] = {}
+        guarani_presence = IndigenousVillage.objects.filter(ethnic_groups__name='Guarani').exclude(guarani_presence_annual_series=None)
         no_guarani_presence = IndigenousVillage.objects.filter(guarani_presence_annual_series=None)
-        no_guarani_presence_count = no_guarani_presence.count()
-        no_guarani_presence_inside_villages_count = 0
+        no_guarani_presence_inside_land = no_guarani_presence
+        no_guarani_presence_outside_land = no_guarani_presence
+        no_guarani_presence_inside_land_count = 0
+        no_guarani_presence_outside_land_count = 0
         for village in no_guarani_presence:
-            if village.land.count() > 0:
-                no_guarani_presence = no_guarani_presence.exclude(id=village.id)
-                no_guarani_presence_inside_villages_count += 1
-        data['no_guarani_presence_count'] = no_guarani_presence_count - no_guarani_presence_inside_villages_count
+            if village.land.filter(land_tenure__name__in=tenure_official).count() > 0:
+                no_guarani_presence_outside_land = no_guarani_presence_outside_land.exclude(id=village.id)
+                no_guarani_presence_inside_land_count += 1
+            else:
+                no_guarani_presence_outside_land_count += 1
+                no_guarani_presence_inside_land = no_guarani_presence_inside_land.exclude(id=village.id)
+        data['guarani_presence_count'] = guarani_presence.count()
         data['no_guarani_presence_count'] = no_guarani_presence.count()
+        data['no_guarani_presence_inside_land_count'] = no_guarani_presence_inside_land_count
+        data['no_guarani_presence_outside_land_count'] = no_guarani_presence_outside_land_count
 
         data['guarani_lands'] = {}
         data['exclusive_guarani_lands'] = {}
@@ -291,10 +305,15 @@ class ReportView(View):
         data['non_exclusive_guarani_lands_count'] = non_exclsive_guarani_lands.count()
 
         for state in states:
+            data['no_guarani_presence'][state.acronym] = no_guarani_presence.filter(geometry__coveredby=state.geometry).count()
+            data['guarani_presence'][state.acronym] = guarani_presence.filter(geometry__coveredby=state.geometry).count()
+            data['no_guarani_presence_inside_land'][state.acronym] = no_guarani_presence_inside_land.filter(geometry__coveredby=state.geometry).count()
+            data['no_guarani_presence_outside_land'][state.acronym] = no_guarani_presence_outside_land.filter(geometry__coveredby=state.geometry).count()
+
             data['guarani_lands'][state.acronym] = guarani_lands.filter(geometry__coveredby=state.geometry).count()
             data['exclusive_guarani_lands'][state.acronym] = exclusive_guarani_lands.filter(geometry__coveredby=state.geometry).count()
             data['non_exclusive_guarani_lands'][state.acronym] = non_exclsive_guarani_lands.filter(geometry__coveredby=state.geometry).count()
-            data['no_guarani_presence'][state.acronym] = no_guarani_presence.filter(geometry__coveredby=state.geometry).count()
+
 
         data['exclusive_guarani_lands']['tenures'] = []
         for land_tenure in LandTenure.objects.all():

@@ -97,45 +97,29 @@
 
                 <tr>
                   <td></td>
-                  <td>Antigas aldeias, locais de uso ou áreas esbulhada</td>
+                  <td>Aldeias Atualmente Ocupadas</td>
+                  <td ng-bind="report.guarani_presence_count"></td>
+                  <td ng-repeat="state in report.states" ng-bind="report.guarani_presence[state]"></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>Antigas aldeias, locais de uso ou áreas esbulhada (Dentro de TIs Reconhecidas*)</td>
+                  <td ng-bind="report.no_guarani_presence_inside_land_count"></td>
+                  <td ng-repeat="state in report.states" ng-bind="report.no_guarani_presence_inside_land[state]"></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>Antigas aldeias, locais de uso ou áreas esbulhada (Fora de TIs Reconhecidas*)</td>
+                  <td ng-bind="report.no_guarani_presence_outside_land_count"></td>
+                  <td ng-repeat="state in report.states" ng-bind="report.no_guarani_presence_outside_land[state]"></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>Antigas aldeias, locais de uso ou áreas esbulhada (Total)</td>
                   <td ng-bind="report.no_guarani_presence_count"></td>
                   <td ng-repeat="state in report.states" ng-bind="report.no_guarani_presence[state]"></td>
                 </tr>
-                <tr>
-                  <td></td>
-                  <td>Tota Geral</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td><span style="color: transparent;">&#x2b24;</span></td>
-                  <td colspan="12"></td>
-                </tr>
 
-                <tr>
-                  <th></th>
-                  <th>Áreas de uso exclusivo dos Guarani</th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
               </tbody>
             </table>
           </div>
