@@ -167,7 +167,7 @@
               item.name == 'Em estudo') {
             item.name = item.name + 's (incluindo revisão de limites)';
             $scope.tenures.push(item);
-          } else if (item.name == 'Em processo de desapropriação' ||
+          } else if (item.name == 'Em processo de desapropriação ou aquisição' ||
               item.name == 'Desapropriada' || item.name == 'Adquirida' ) {
             $scope.tenures_2nd_block.push(item);
           } else {

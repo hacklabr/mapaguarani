@@ -331,7 +331,7 @@ class ReportView(View):
 
         tenure_order = ['Sem Providências', 'Em estudo', 'Declarada',
                         'Homologada', 'Regularizada', 'Delimitada',
-                        'Em processo de desapropriação', 'Desapropriada',
+                        'Em processo de desapropriação ou aquisição', 'Desapropriada',
                         'Adquirida', ]
 
         def index_of(name):
