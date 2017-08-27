@@ -33,7 +33,7 @@ router.register(r'projects', ProjectsViewSet)
 urlpatterns = [
 
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='home'),
-
+    url(r'^embed/$', TemplateView.as_view(template_name='embed.html'), name='embed'),
     # Services
     url(r'^api/', include(router.urls)),
 

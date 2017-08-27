@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load staticfiles i18n %}
+
+{% block content %}
+<div class="map-container" ng-controller="MainCtrl">
+  <div id="container">
+    <div id="sidebar" ng-class="menuIsClosed ? 'closed' : 'open'">
+      <div ui-view></div>
+    </div>
+    <div class="button-menu menu-close" ng-click="menuIsClosed = true">
+      <span class="bubble">
+        <i class="fa fa-caret-left"></i>
+      </span>
+    </div>
+    <div class="button-menu menu-open" ng-click="menuIsClosed = false">
+      <span class="text">Menu</span>
+      <span class="bubble">
+        <i class="fa fa-caret-right"></i>
+      </span>
+    </div>
+    <guarani-map id="map"></guarani-map>
+  </div>
+  <div id="mapaguarani-loading" loading>
+    <h1>Mapa Guarani Digital</h1>
+    <h2>Carregando dados....</h2>
+  </div>
+</div>
+{% endblock content %}
