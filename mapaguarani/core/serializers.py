@@ -332,6 +332,7 @@ class IndigenousLandSerializer(FieldPermissionSerializerMixin, ProtectedAreasMix
     claim = fields.ReadOnlyField(permission_classes=(IsAuthenticated(), ))
     demand = fields.ReadOnlyField(permission_classes=(IsAuthenticated(), ))
     projects = SimpleProjectSerializer(many=True)
+    country = serializers.SerializerMethodField()
 
     class Meta:
         model = IndigenousLand
@@ -374,6 +375,11 @@ class IndigenousLandSerializer(FieldPermissionSerializerMixin, ProtectedAreasMix
         if states:
             return ", ".join([state.name or state.acronym for state in states])
 
+    @staticmethod
+    def get_country(obj):
+        if obj.country:
+            return obj.country.name
+
 
 class IndigenousLandExportSerializer(IndigenousPlaceExportSerializer,
                                      IndigenousLandSerializer,
@@ -390,7 +396,6 @@ class IndigenousLandExportSerializer(IndigenousPlaceExportSerializer,
     layer = serializers.SerializerMethodField()
     land_tenure = serializers.SerializerMethodField()
     land_tenure_status = serializers.SerializerMethodField()
-    # country = serializers.SerializerMethodField()
 
     class Meta:
         model = IndigenousLand
@@ -444,6 +449,7 @@ class IndigenousLandExportSerializer(IndigenousPlaceExportSerializer,
     def get_land_tenure_status(obj):
         if obj.land_tenure_status:
             return obj.land_tenure_status.name
+
 
 class IndigenousLandGeojsonSerializer(IndigenousLandExportSerializer,
                                       GeoFeatureModelSerializer,
