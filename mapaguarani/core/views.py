@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.contrib.gis.db.models.fields import GeometryField
 from django.contrib.sites.shortcuts import get_current_site
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.views.generic import View
 from django.http import JsonResponse
 import rest_framework_gis
@@ -271,8 +271,16 @@ class ReportView(View):
         data['no_guarani_presence_inside_land'] = {}
         data['no_guarani_presence_outside_land'] = {}
         guarani_presence = IndigenousVillage.objects.filter(geometry__coveredby=brasil.geometry).filter(ethnic_groups__name='Guarani')
-        no_guarani_presence = guarani_presence.filter(guarani_presence_annual_series=None)
-        guarani_presence = guarani_presence.exclude(guarani_presence_annual_series=None)
+        no_guarani_presence = guarani_presence.filter(
+            Q(guarani_presence_annual_series=None) | Q(guarani_presence_annual_series__presence=False)
+        )
+        # no_guarani_presence = guarani_presence.filter(guarani_presence_annual_series=None)
+
+        guarani_presence = guarani_presence.exclude(
+            Q(guarani_presence_annual_series=None) | Q(guarani_presence_annual_series__presence=False)
+        )
+        # guarani_presence = guarani_presence.exclude(guarani_presence_annual_series=None)
+
         no_guarani_presence_inside_land = no_guarani_presence
         no_guarani_presence_outside_land = no_guarani_presence
         no_guarani_presence_inside_land_count = 0
@@ -312,9 +320,9 @@ class ReportView(View):
             data['no_guarani_presence_inside_land'][state.acronym] = no_guarani_presence_inside_land.filter(geometry__coveredby=state.geometry).count()
             data['no_guarani_presence_outside_land'][state.acronym] = no_guarani_presence_outside_land.filter(geometry__coveredby=state.geometry).count()
 
-            data['guarani_lands'][state.acronym] = guarani_lands.filter(geometry__coveredby=state.geometry).count()
-            data['exclusive_guarani_lands'][state.acronym] = exclusive_guarani_lands.filter(geometry__coveredby=state.geometry).count()
-            data['non_exclusive_guarani_lands'][state.acronym] = non_exclsive_guarani_lands.filter(geometry__coveredby=state.geometry).count()
+            data['guarani_lands'][state.acronym] = guarani_lands.filter(geometry__intersects=state.geometry).count()
+            data['exclusive_guarani_lands'][state.acronym] = exclusive_guarani_lands.filter(geometry__intersects=state.geometry).count()
+            data['non_exclusive_guarani_lands'][state.acronym] = non_exclsive_guarani_lands.filter(geometry__intersects=state.geometry).count()
 
 
         data['exclusive_guarani_lands']['tenures'] = []
@@ -322,7 +330,14 @@ class ReportView(View):
             tenure_data = {}
             tenure_data['name'] = land_tenure.name
 
-            tenure_exclusive_guarani_lands = exclusive_guarani_lands.filter(land_tenure=land_tenure)
+            if land_tenure.name == 'Em estudo':
+                tenure_exclusive_guarani_lands = exclusive_guarani_lands.filter(
+                    Q(land_tenure=land_tenure) | Q(land_tenure_status__name='Terra Original em Estudo de Revisão')
+                )
+            else:
+                tenure_exclusive_guarani_lands = exclusive_guarani_lands.filter(
+                    land_tenure=land_tenure).exclude(land_tenure_status__name='Terra Original em Estudo de Revisão')
+
             tenure_data['total_lands_count'] = tenure_exclusive_guarani_lands.count()
             for state in states:
                 tenure_data[state.acronym] = tenure_exclusive_guarani_lands.filter(geometry__coveredby=state.geometry).count()
