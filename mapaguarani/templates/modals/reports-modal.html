@@ -8,13 +8,10 @@
       </div>
       <div class="modal-body">
         <ul class="nav nav-tabs" id="aboutTabs">
-          {% if user.is_authenticated %}
           <li class="active"><a href="#tijuridic" data-toggle="tab">Quadro Resumo</a></li>
-          {% endif %}
-          <li {% if not user.is_authenticated %} class="active" {% endif %}><a href="#titable" data-toggle="tab">Downloads</a></li>
+          <li><a href="#titable" data-toggle="tab">Downloads</a></li>
         </ul>
         <div class="tab-content" id="aboutTabsContent">
-          {% if user.is_authenticated %}
           <div id="tijuridic"
                ng-controller="LandTenureReportCtrl"
                class="tab-pane fade active in">
@@ -123,9 +120,8 @@
             </table>
             <p><small>* Estão sendo chamadas TIs Reconhecidas todas aquelas já delimitadas pela Funai, as Declaradas, as Homologadas e as Regularizadas</small></p>
           </div>
-          {% endif %}
 
-          <div id="titable" class="tab-pane fade {% if not user.is_authenticated %} active in {% endif %}">
+          <div id="titable" class="tab-pane fade">
             <p class="text-center">Você pode baixar a planilha das terras indigenas, e os shapefiles das camadas de Aldeias e Terras Indígenas</p>
             <p class="text-center">A geração destes arquivos pode demorar vários minutos, por favor aguarde o download começar após clicar abaixo no arquivo abaixo desejado.</p>
 
