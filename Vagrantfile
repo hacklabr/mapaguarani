@@ -119,4 +119,10 @@ Vagrant.configure('2') do |config|
             inline: $runserver,
             privileged: false,
             run: "always"
+    # config.vm.synced_folder "../mapaguarani-tiler/", "/home/vagrant/mapaguarani-tiler/", create: true
+    config.vm.synced_folder "../camadas-cti/", "/home/vagrant/camadas-cti/", create: true
+    config.vm.synced_folder "../geodjango-boundaries/", "/home/vagrant/geodjango-boundaries/", create: true
+    # config.vm.synced_folder "../django-spillway/", "/home/vagrant/django-spillway/", create: true
+    # config.vm.synced_folder "../greenwich/", "/home/vagrant/greenwich/", create: true
+
 end
