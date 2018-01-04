@@ -4,7 +4,7 @@ from django.views.generic.base import TemplateView
 from core.views import (IndigenousLandViewSet, IndigenousVillageViewSet,
                         ArchaeologicalPlaceViewSet, LandTenureViewSet, LandTenureStatusViewSet,
                         IndigenousLandsShapefileView, IndigenousVillagesShapefileView,
-                        ArchaeologicalPlacesShapefileView, LandTenureReportViewSet,
+                        ArchaeologicalPlacesShapefileView, ArchaeologicalPlaceExportView, LandTenureReportViewSet,
                         IndigenousVillageGeojsonView,
                         ArchaeologicalPlaceGeojsonView, IndigenousVillageExportView,
                         IndigenousLandExportView,
@@ -42,6 +42,8 @@ urlpatterns = [
     url(r'^export/villages$', IndigenousVillageExportView.as_view(), name='export_xls_villages'),
 
     url(r'^export/lands$', IndigenousLandExportView.as_view(), name='export_xls_lands'),
+
+    url(r'^export/archaeological$', ArchaeologicalPlaceExportView.as_view(), name='export_xls_archaeological'),
 
     url(r'^shapefiles/villages/$', IndigenousVillagesShapefileView.as_view(), name='villages_shapefiles'),
 

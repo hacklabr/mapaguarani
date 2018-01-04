@@ -140,7 +140,15 @@
               <a class="btn btn-lg btn-success" href="{% url 'villages_shapefiles' %}">baixar Shapefile</a>
               {% endif %}
             </p>
-          </div>
+
+            <p class="lead text-left">
+                Sítios Arqueológicos
+                <a class="btn btn-lg btn-success" href="{% url 'export_xls_archaeological' %}.xls">baixar Planilha Excel</a>
+                {% if user.is_authenticated %}
+                    <a class="btn btn-lg btn-success" href="{% url 'archaeological_shapefiles' %}">baixar Shapefile</a>
+                {% endif %}
+            </p>
+        </div>
 
         </div>
       </div>

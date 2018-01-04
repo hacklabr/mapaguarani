@@ -15,8 +15,9 @@ from .models import (IndigenousLand, IndigenousVillage, MapLayer,
                      ArchaeologicalPlace, LandTenure, LandTenureStatus,
                      Project,)
 from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
-                          ArchaeologicalPlaceSerializer, LandTenureSerializer,
-                          LandTenureStatusSerializer, IndigenousLandGeojsonSerializer,
+                          ArchaeologicalPlaceSerializer, ArchaeologicalPlaceExportSerializer,
+                          LandTenureSerializer, LandTenureStatusSerializer,
+                          IndigenousLandGeojsonSerializer,
                           IndigenousVillageGeojsonSerializer, ArchaeologicalPlaceGeojsonSerializer,
                           LandTenureReportSerializer,
                           SimpleIndigenousGeojsonVillageSerializer,
@@ -46,11 +47,22 @@ class IndigenousPlaceMixin(object):
         layers = MapLayer.objects.filter(sites=current_site)
         queryset = queryset.filter(layer__in=layers)
 
-        # Only show restrited features to authenticated users
+        # Only show restricted features to authenticated users
         if not self.request.user.is_authenticated():
             queryset = queryset.filter(status='public')
             public_layers = MapLayer.objects.filter(status='public')
             queryset = queryset.filter(layer__in=public_layers)
+
+        return queryset
+
+
+class ArchaeologicalPlaceMixin(object):
+
+    def get_queryset(self):
+        queryset = super(ArchaeologicalPlaceMixin, self).get_queryset()
+
+        if not self.request.user.is_authenticated():
+            queryset = queryset.filter(status='public')
 
         return queryset
 
@@ -63,6 +75,11 @@ class IndigenousLandViewSet(IndigenousPlaceMixin, viewsets.ReadOnlyModelViewSet)
 class IndigenousLandExportView(IndigenousPlaceMixin, PandasView):
     queryset = IndigenousLand.objects.all()
     serializer_class = IndigenousLandExportSerializer
+
+
+class ArchaeologicalPlaceExportView(ArchaeologicalPlaceMixin, PandasView):
+    queryset = ArchaeologicalPlace.objects.all()
+    serializer_class = ArchaeologicalPlaceExportSerializer
 
 
 class IndigenousVillageViewSet(IndigenousPlaceMixin, viewsets.ReadOnlyModelViewSet):
@@ -238,7 +255,7 @@ class IndigenousVillagesShapefileView(IndigenousPlaceMixin, ShapefileView):
     file_name = 'aldeias_indigenas'
 
 
-class ArchaeologicalPlacesShapefileView(IndigenousPlaceMixin, ShapefileView):
+class ArchaeologicalPlacesShapefileView(ArchaeologicalPlaceMixin, ShapefileView):
     serializer_class = ArchaeologicalPlaceGeojsonSerializer
     queryset = ArchaeologicalPlace.objects.all()
     # self.readme = readme

@@ -133,7 +133,14 @@ class ProtectedAreasMixinSerializer(serializers.ModelSerializer):
             return BaseProtectedAreaSerializers(obj.protected_areas.filter(type='US'), many=True).data
 
 
-class IndigenousPlaceExportSerializer(object):
+class PlaceExportSerializer(object):
+    @staticmethod
+    def get_layer(obj):
+        if obj.layer:
+            return obj.layer.name
+
+
+class IndigenousPlaceExportSerializer(PlaceExportSerializer):
 
     """
     This serializer is used to generate the shapefile
@@ -150,11 +157,6 @@ class IndigenousPlaceExportSerializer(object):
     @staticmethod
     def get_prominent_subgroup(obj):
         return ", ".join([prominent_sub.name for prominent_sub in obj.prominent_subgroup.all()])
-
-    @staticmethod
-    def get_layer(obj):
-        if obj.layer:
-            return obj.layer.name
 
 
 class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
@@ -487,12 +489,77 @@ class ArchaeologicalPlaceSerializer(ProtectedAreasMixinSerializer, BasePointMixi
         fields = '__all__'
 
 
-class ArchaeologicalPlaceGeojsonSerializer(IndigenousPlaceExportSerializer):
+class ArchaeologicalPlaceExportSerializer(serializers.ModelSerializer):
+    def get_latitude(self, obj):
+        if obj.geometry:
+            return obj.geometry.get_y()
+        else:
+            return None
+
+    def get_longitude(self, obj):
+        if obj.geometry:
+            return obj.geometry.get_x()
+        else:
+            return None
+
+    latitude = serializers.SerializerMethodField()
+
+    longitude = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ArchaeologicalPlace
+        fields = ('id',
+                  'name',
+                  'acronym',
+                  'cnsa',
+                  'position_precision',
+                  'position_comments',
+                  'biblio_references',
+                  'institution',
+                  'hydrography',
+                  'phase',
+                  'dating',
+                  'deviation',
+                  'chrono_ref',
+                  'ap_date',
+                  'calibrated_dating',
+                  'dating_method',
+                  'lab_code',
+                  'latitude',
+                  'longitude')
+
+
+class ArchaeologicalPlaceGeojsonSerializer(PlaceExportSerializer,
+                                           GeoFeatureModelSerializer,
+                                           CachedSerializerMixin):
+
+    city_name = serializers.SerializerMethodField()
+    country_name = serializers.SerializerMethodField()
+
+    def get_city_name(self, obj):
+        if obj.city:
+            return obj.city.name
+        else:
+            return None
+
+    def get_country_name(self, obj):
+        if obj.country:
+            return obj.country.name
+        else:
+            return None
 
     class Meta:
         model = ArchaeologicalPlace
         geo_field = 'geometry'
-        exclude = ['id', 'ethnic_groups', 'prominent_subgroup', ]
+        fields = [#'id',
+                  'ap_date',
+                  'biblio_references',
+                  'calibrated_dating',
+                  'city_name',
+                  'country_name',
+                  'dating',
+                  'dating_method',
+                  'name']
 
 
 class SimpleArchaeologicalPlaceGeojsonSerializer(GeoFeatureModelSerializer):
