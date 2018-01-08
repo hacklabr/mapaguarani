@@ -3,6 +3,7 @@ from django.contrib.gis.db.models import Max, Sum
 from django.utils.translation import ugettext_lazy as _
 from protected_areas.models import BaseProtectedArea
 from django.contrib.sites.models import Site
+from django.core.exceptions import ValidationError
 
 from boundaries.models import City, State, Country
 
@@ -394,7 +395,7 @@ class LandTenure(models.Model):
 class LandTenureStatus(models.Model):
     name = models.CharField(_('Name'), max_length=255)
     map_color = models.CharField(_('Color in Map'), max_length=64, blank=True, null=True)
-    dashed_border = models.BooleanField(_('Dasshed border'), default=False)
+    dashed_border = models.BooleanField(_('Dashed border'), default=False)
 
     class Meta:
         verbose_name = _('Land Tenure Status')
@@ -444,6 +445,14 @@ class IndigenousLand(IndigenousPlace):
     class Meta:
         verbose_name = _('Indigenous Land')
         verbose_name_plural = _('Indigenous Lands')
+
+    def clean(self):
+        print('ENTROU NO MÉTODO CLEAN!!!')
+        if self.associated_land:
+            if not self.land_tenure_status:
+                raise ValidationError('associated_land without land_tenure_status')
+            if self.land_tenure_status.name != 'Terra Original' or self.land_tenure_status.name != "Terra Revisada":
+                raise ValidationError('land_tenure_status is not "Terra Original" nor "Terra Revisada"')
 
     @property
     def villages(self):
