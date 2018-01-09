@@ -21,6 +21,15 @@
     {% endblock %}
     {% block javascript %}
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB89T4uE1P-WRJCPTLwdlOA7bbLHmvIkC4" async defer></script>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111503189-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'UA-111503189-1');
+        </script>
         {% compress js %}
             <script src="{% static 'jquery/dist/jquery.js' %}"></script>
             <script src="{% static 'bootstrap/dist/js/bootstrap.js' %}"></script>
