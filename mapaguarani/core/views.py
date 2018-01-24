@@ -1,5 +1,7 @@
 from django.http import HttpResponse
+from django.views.generic.base import TemplateView
 from django.utils.decorators import method_decorator
+from django.views.decorators.clickjacking import xframe_options_exempt
 from django.contrib.gis.db.models.fields import GeometryField
 from django.contrib.sites.shortcuts import get_current_site
 from django.db.models import Count, Q
@@ -32,6 +34,12 @@ from fiona.crs import from_epsg
 import fiona
 import tempfile
 
+
+class EmbeddableTemplateView(TemplateView):
+
+    @method_decorator(xframe_options_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
 class ProjectsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Project.objects.all()

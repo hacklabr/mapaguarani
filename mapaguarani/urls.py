@@ -8,7 +8,7 @@ from core.views import (IndigenousLandViewSet, IndigenousVillageViewSet,
                         IndigenousVillageGeojsonView,
                         ArchaeologicalPlaceGeojsonView, IndigenousVillageExportView,
                         IndigenousLandExportView,
-                        ProjectsViewSet,ReportView)
+                        ProjectsViewSet,ReportView, EmbeddableTemplateView)
 from moderation.helpers import auto_discover
 from rest_framework import routers
 from rest_framework_cache.registry import cache_registry
@@ -33,7 +33,7 @@ router.register(r'projects', ProjectsViewSet)
 urlpatterns = [
 
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='home'),
-    url(r'^embed/$', TemplateView.as_view(template_name='embed.html'), name='embed'),
+    url(r'^embed/$', EmbeddableTemplateView.as_view(template_name='embed.html'), name='embed'),
     # Services
     url(r'^api/', include(router.urls)),
 
