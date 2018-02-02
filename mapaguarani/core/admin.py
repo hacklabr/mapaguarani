@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.gis import admin as geoadmin
 from django.utils.translation import ugettext_lazy as _
 from .models import (
-    IndigenousVillage, IndigenousLand, LegalProceedings, DocumentType,
+    IndigenousVillage, IndigenousLand, LegalProcedings, DocumentType,
     Document, EthnicGroup, ProminentEthnicSubGroup, GuaraniPresence, Population,
     ArchaeologicalPlace, ArchaeologicalImage, LandTenure, LandTenureStatus,
     MapLayer, Organization, ActionField, Project, ProjectFile, ProjectLink
@@ -101,8 +101,8 @@ class ArchaeologicalPlaceAdmin(ModerationAdmin):
     get_name.short_description = _('Name')
 
 
-@admin.register(LegalProceedings)
-class LegalProceedingsAdmin(admin.ModelAdmin):
+@admin.register(LegalProcedings)
+class LegalProcedingsAdmin(admin.ModelAdmin):
     pass
 
 

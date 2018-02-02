@@ -494,21 +494,21 @@ class IndigenousLand(IndigenousPlace):
             # import ipdb;ipdb.set_trace()
             return
 
-class LegalProceedings(models.Model):
+class LegalProcedings(models.Model):
     name = models.CharField(_('name'), max_length=255)
     description = models.TextField(_('Description'))
-    indigenous_land = models.ForeignKey(
+    indigenous_land = models.ManyToManyField(
         IndigenousLand,
         verbose_name=_('Guarani indigenous lands layer'),
     )
-    indigenous_village = models.ForeignKey(
+    indigenous_village = models.ManyToManyField(
         IndigenousVillage,
         verbose_name=_('Guarani indigenous villages layer')
     )
 
     class Meta:
-        verbose_name = _('Legal Proceeding')
-        verbose_name_plural = _('Legal Proceedings')
+        verbose_name = _('Legal Proceding')
+        verbose_name_plural = _('Legal Procedings')
 
     def __str__(self):
         return self.name
@@ -609,3 +609,5 @@ class ArchaeologicalImage(models.Model):
         ArchaeologicalPlace,
         verbose_name=_('Archaeological Place'),
         related_name='images')
+
+
