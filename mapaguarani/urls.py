@@ -7,7 +7,7 @@ from core.views import (IndigenousLandViewSet, IndigenousVillageViewSet,
                         ArchaeologicalPlacesShapefileView, ArchaeologicalPlaceExportView, LandTenureReportViewSet,
                         IndigenousVillageGeojsonView,
                         ArchaeologicalPlaceGeojsonView, IndigenousVillageExportView,
-                        IndigenousLandExportView,
+                        IndigenousLandExportView, ArchaeologicalPlaceGeojsonWithBboxView,
                         ProjectsViewSet,ReportView, EmbeddableTemplateView)
 from moderation.helpers import auto_discover
 from rest_framework import routers
@@ -50,6 +50,9 @@ urlpatterns = [
     url(r'^shapefiles/lands/$', IndigenousLandsShapefileView.as_view(), name='lands_shapefiles'),
 
     url(r'^shapefiles/archaeological/$', ArchaeologicalPlacesShapefileView.as_view(), name='archaeological_shapefiles'),
+
+    # url(r'^tile/(?P<zoom>.+?)/(?P<x>.+?)/(?P<y>.+?)/$', IndigenousVillageGeojsonWithBboxView.as_view({'get': 'list'}), name='villages_geojson_bbox'),
+    url(r'^tile/$', ArchaeologicalPlaceGeojsonWithBboxView.as_view({'get': 'list'}), name='villages_geojson_bbox'),
 
     url(r'^admin/', include(admin.site.urls)),
 

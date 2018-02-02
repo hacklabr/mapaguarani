@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.views.generic.base import TemplateView
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.contrib.gis.db.models.fields import GeometryField
 from django.contrib.sites.shortcuts import get_current_site
@@ -8,7 +9,10 @@ from django.db.models import Count, Q
 from django.views.generic import View
 from django.http import JsonResponse
 import rest_framework_gis
+from rest_framework_gis.filters import TMSTileFilter
+from django_filters import rest_framework as filters
 from rest_framework import viewsets, relations, serializers, generics
+from rest_framework.response import Response
 from rest_framework_serializer_field_permissions import fields
 from collections import OrderedDict
 from rest_pandas import PandasView
@@ -33,6 +37,10 @@ import zipfile
 from fiona.crs import from_epsg
 import fiona
 import tempfile
+import mapbox_vector_tile
+import pygeotile
+import mercantile
+from django.contrib.gis.geos import Polygon
 
 
 class EmbeddableTemplateView(TemplateView):
@@ -49,7 +57,7 @@ class ProjectsViewSet(viewsets.ReadOnlyModelViewSet):
 class FilterLayersBySiteAndUserAuthenticatedMixin(object):
 
     def get_queryset(self):
-        queryset = super(FilterLayersBySiteAndUserAuthenticatedMixin, self).get_queryset()
+        queryset = super().get_queryset()
 
         # Filter layers according to current site
         current_site = get_current_site(self.request)
@@ -99,6 +107,90 @@ class IndigenousVillageViewSet(FilterLayersBySiteAndUserAuthenticatedMixin, view
 class IndigenousVillageGeojsonView(FilterLayersBySiteAndUserAuthenticatedMixin, viewsets.ReadOnlyModelViewSet):
     queryset = IndigenousVillage.objects.all()
     serializer_class = SimpleIndigenousGeojsonVillageSerializer
+
+
+
+
+class ArchaeologicalPlaceGeojsonWithBboxView(viewsets.ReadOnlyModelViewSet):
+    queryset = ArchaeologicalPlace.objects.all()
+    serializer_class = SimpleArchaeologicalPlaceGeojsonSerializer
+    # filter_backends = (TMSTileFilter, ) #filters.DjangoFilterBackend, )
+    # bbox_filter_include_overlapping = True
+    # bbox_filter_field = 'geometry'
+    # filter_fields = [ 'name', 'guarani_presence', 'tile']
+    tile_param = 'tile'
+
+    def add_access_control_headers(self, response):
+        response["Access-Control-Allow-Origin"] = "*"
+        response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+        response["Access-Control-Max-Age"] = "1000"
+        response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+
+    def options(self, request, *args, **kwargs):
+        response = HttpResponse()
+        self.add_access_control_headers(response)
+        return response
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def list(self, request, *args, **kwargs):
+        SRID_LNGLAT = 4326
+        SRID_SPHERICAL_MERCATOR = 3857
+
+        tile_string = request.query_params.get(self.tile_param, None)
+        if not tile_string:
+            return None
+
+        try:
+            z, x, y = (int(n) for n in tile_string.split('/'))
+        except ValueError:
+            raise ParseError('Invalid tile string supplied for parameter {0}'.format(self.tile_param))
+
+        tile_bounds = Polygon.from_bbox(mercantile.bounds(x, y, z))
+        tile_bounds.srid = SRID_LNGLAT
+
+        queryset = self.filter_queryset(self.get_queryset())
+
+        # SPATIAL MAGIC!!
+        queryset = queryset.filter(geometry__bboverlaps=tile_bounds)
+
+        page = self.paginate_queryset(queryset)
+        # if page is not None:
+        #     serializer = self.get_serializer(page, many=True)
+        #     return self.get_paginated_response(serializer.data)
+        #
+        # serializer = self.get_serializer(queryset, many=True)
+        def coords_helper(geom):
+            geom.srid = SRID_LNGLAT
+            geom.transform(SRID_SPHERICAL_MERCATOR)
+            return geom.wkt
+
+        dict_to_encode = {
+            'name': 'poi',
+            'features': [{
+                'geometry': coords_helper(x.geometry),
+                'properties': {
+                    'id': x.id,
+                    'name': x.name
+                }
+            } for x in queryset]
+        }
+
+        tile_bounds.transform(SRID_SPHERICAL_MERCATOR)
+
+        tile_pbf = mapbox_vector_tile.encode(dict_to_encode, quantize_bounds=(
+            min(tile_bounds[0], key=lambda x: x[0])[0],
+            min(tile_bounds[0], key=lambda x: x[1])[1],
+            max(tile_bounds[0], key=lambda x: x[0])[0],
+            max(tile_bounds[0], key=lambda x: x[1])[1],
+        ))
+
+
+        response = HttpResponse(tile_pbf, content_type='application/x-protobuf')
+        self.add_access_control_headers(response)
+        return response
 
 
 class IndigenousVillageExportView(FilterLayersBySiteAndUserAuthenticatedMixin, PandasView):

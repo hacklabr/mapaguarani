@@ -17,7 +17,6 @@ class PopulationSerializer(serializers.ModelSerializer):
             model = Population
             fields = '__all__'
 
-
 class GuaraniPresenceSerializer(serializers.ModelSerializer):
 
         class Meta:
@@ -304,6 +303,8 @@ class SimpleIndigenousGeojsonVillageSerializer(GeoFeatureModelSerializer,
         geo_field = 'geometry'
         fields = ['id', 'name', 'guarani_presence', 'geometry']
 
+
+
     @staticmethod
     def get_guarani_presence(obj):
         try:
@@ -569,6 +570,9 @@ class SimpleArchaeologicalPlaceGeojsonSerializer(GeoFeatureModelSerializer):
         geo_field = 'geometry'
         fields = ['id', 'name', 'geometry']
 
+    # def to_representation(self, instance):
+    #     representation = super().to_representation(instance)
+    #     raise Exception('PARATUDO')
 
 class LandTenureSerializer(serializers.ModelSerializer):
 
