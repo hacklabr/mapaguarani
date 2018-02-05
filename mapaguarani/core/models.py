@@ -229,8 +229,7 @@ class IndigenousPlace(models.Model):
     ethnic_groups = models.ManyToManyField(
         EthnicGroup,
         verbose_name=_('Ethnic group'),
-        related_name='%(class)s_ethnic_groups_layers',
-        blank=True
+        related_name='%(class)s_ethnic_groups_layers'
     )
     prominent_subgroup = models.ManyToManyField(
         ProminentEthnicSubGroup,
@@ -272,7 +271,7 @@ class IndigenousVillage(IndigenousPlace):
     )
     position_source = models.CharField(_('Position Source'), max_length=512)
     geometry = models.PointField()
-    layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='villages', blank=True, null=True)
+    layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='villages')
 
     class Meta:
         verbose_name = _('Indigenous Village')
@@ -416,9 +415,9 @@ class IndigenousLand(IndigenousPlace):
     guarani_exclusive_possession_area_portion = models.FloatField(
         _('Guarani full and exclusive portion area possession'), blank=True, null=True)
     others_exclusive_possession_area_portion = models.FloatField(
-        _('Others people full and exclusive portion area possession'), blank=True, null=True)
+        _("Other peoples' full and exclusive portion area possession"), blank=True, null=True)
     # private field
-    claim = models.TextField(_('Clain'), blank=True, null=True)
+    claim = models.TextField(_('Claim'), blank=True, null=True)
     # private field
     demand = models.TextField(_('Demand'), blank=True, null=True)
 
@@ -427,14 +426,14 @@ class IndigenousLand(IndigenousPlace):
     land_tenure = models.ForeignKey(
         LandTenure,
         verbose_name=_('Land Tenure'),
-        related_name='indigenous_lands',
-        blank=True, null=True)
+        related_name='indigenous_lands') #,
+        # blank=True, null=True)
     # Status de revisão fundiária
     land_tenure_status = models.ForeignKey(
         LandTenureStatus,
         verbose_name=_('Land Tenure Status'),
-        related_name='indigenous_lands',
-        blank=True, null=True)
+        related_name='indigenous_lands') #,
+        # blank=True, null=True)
     associated_land = models.ForeignKey(
         'self',
         verbose_name=_('Associated Land'),
@@ -447,7 +446,6 @@ class IndigenousLand(IndigenousPlace):
         verbose_name_plural = _('Indigenous Lands')
 
     def clean(self):
-        print('ENTROU NO MÉTODO CLEAN!!!')
         if self.associated_land:
             if not self.land_tenure_status:
                 raise ValidationError('associated_land without land_tenure_status')

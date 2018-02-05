@@ -210,6 +210,20 @@ class IndigenousVillageExportSerializer(IndigenousPlaceExportSerializer,
     """
     This serializer is used to generate the shapefile and xls
     """
+    def get_latitude(self, obj):
+        if obj.geometry:
+            return obj.geometry.get_y()
+        else:
+            return None
+
+    def get_longitude(self, obj):
+        if obj.geometry:
+            return obj.geometry.get_x()
+        else:
+            return None
+
+    latitude = serializers.SerializerMethodField()
+    longitude = serializers.SerializerMethodField()
 
     ethnic_groups = serializers.SerializerMethodField()
     prominent_subgroup = serializers.SerializerMethodField()
@@ -224,7 +238,7 @@ class IndigenousVillageExportSerializer(IndigenousPlaceExportSerializer,
                   'ethnic_groups', 'prominent_subgroup',
                   'city', 'state', 'country',
                   'position_precision', 'public_comments',
-                  'private_comments', 'layer']
+                  'private_comments', 'layer', 'latitude', 'longitude']
 
     @staticmethod
     def get_guarani_presence(obj):
