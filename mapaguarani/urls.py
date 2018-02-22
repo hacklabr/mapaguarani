@@ -4,16 +4,19 @@ from django.views.generic.base import TemplateView
 from core.views import (IndigenousLandViewSet, IndigenousVillageViewSet,
                         ArchaeologicalPlaceViewSet, LandTenureViewSet, LandTenureStatusViewSet,
                         IndigenousLandsShapefileView, IndigenousVillagesShapefileView,
+                        ArchaeologicalPlaceKMLView,
                         ArchaeologicalPlacesShapefileView, ArchaeologicalPlaceExportView, LandTenureReportViewSet,
                         IndigenousVillageGeojsonView,
-                        ArchaeologicalPlaceGeojsonView, IndigenousVillageExportView,
-                        IndigenousLandExportView,
+                        ArchaeologicalPlaceGeojsonView, IndigenousVillageExportView, IndigenousVillageKMLView,
+                        IndigenousLandExportView, IndigenousLandKMLView,
                         ProjectsViewSet,ReportView, EmbeddableTemplateView)
 from moderation.helpers import auto_discover
 from rest_framework import routers
 from rest_framework_cache.registry import cache_registry
 from rest_framework.urlpatterns import format_suffix_patterns
 
+# TESTE DO TIAGO
+#FIM DO TESTE DO TIAGO
 
 auto_discover()
 admin.autodiscover()
@@ -25,6 +28,9 @@ router.register(r'land_tenures', LandTenureViewSet)
 router.register(r'land_tenures_status', LandTenureStatusViewSet)
 router.register(r'villages', IndigenousVillageViewSet)
 router.register(r'villages_geojson', IndigenousVillageGeojsonView)
+router.register(r'lands_kml', IndigenousLandKMLView, base_name='lands-kml')
+router.register(r'villages_kml', IndigenousVillageKMLView, base_name='villages-kml')
+router.register(r'arch_kml', ArchaeologicalPlaceKMLView, base_name='arch-kml')
 router.register(r'arch_geojson', ArchaeologicalPlaceGeojsonView)
 router.register(r'archaeological', ArchaeologicalPlaceViewSet)
 router.register(r'landtenurereport', LandTenureReportViewSet)

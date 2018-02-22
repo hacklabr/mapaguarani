@@ -39,6 +39,20 @@ class SimpleIndigenousLandSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
+class SimpleIndigenousLandKMLSerializer(CachedSerializerMixin, serializers.ModelSerializer):
+
+    geometry = serializers.SerializerMethodField()
+
+    class Meta:
+        model = IndigenousLand
+        fields = ['name', 'geometry']
+
+    def get_geometry(self, obj):
+        return obj.geometry.kml
+
+cache_registry.register(SimpleIndigenousLandKMLSerializer)
+
+
 class ProjectSerializer(serializers.ModelSerializer):
 
     indigenous_lands = SimpleIndigenousLandSerializer(many=True)
@@ -330,6 +344,35 @@ class SimpleIndigenousGeojsonVillageSerializer(GeoFeatureModelSerializer,
 cache_registry.register(SimpleIndigenousGeojsonVillageSerializer)
 
 
+class SimpleIndigenousVillageKMLSerializer(CachedSerializerMixin, serializers.ModelSerializer):
+
+    # guarani_presence = serializers.SerializerMethodField()
+    geometry = serializers.SerializerMethodField()
+
+    class Meta:
+        model = IndigenousVillage
+        # geo_field = 'geometry'
+        fields = ['name', 'guarani_presence', 'geometry']
+
+    @staticmethod
+    def get_guarani_presence(obj):
+        try:
+            presence = obj.guarani_presence_annual_series.latest()
+        except GuaraniPresence.DoesNotExist:
+            presence = GuaraniPresence(presence=False)
+
+        return GuaraniPresenceSerializer(presence).data
+
+    def get_geometry(self, obj):
+        return obj.geometry.kml
+
+    def to_representation(self, instance):
+        repr = super().to_representation(instance)
+        return repr
+
+cache_registry.register(SimpleIndigenousVillageKMLSerializer)
+
+
 class IndigenousLandSerializer(FieldPermissionSerializerMixin, ProtectedAreasMixinSerializer):
 
     associated_land = serializers.PrimaryKeyRelatedField(read_only=True)
@@ -582,6 +625,20 @@ class SimpleArchaeologicalPlaceGeojsonSerializer(GeoFeatureModelSerializer):
         model = ArchaeologicalPlace
         geo_field = 'geometry'
         fields = ['id', 'name', 'geometry']
+
+
+class SimpleArchaeologicalPlaceKMLSerializer(CachedSerializerMixin, serializers.ModelSerializer):
+
+    geometry = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ArchaeologicalPlace
+        fields = ['name', 'geometry']
+
+    def get_geometry(self, obj):
+        return obj.geometry.kml
+
+cache_registry.register(SimpleArchaeologicalPlaceKMLSerializer)
 
 
 class LandTenureSerializer(serializers.ModelSerializer):

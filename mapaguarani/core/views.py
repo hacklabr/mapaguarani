@@ -19,14 +19,18 @@ from .models import (IndigenousLand, IndigenousVillage, MapLayer,
                      Project,)
 from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           ArchaeologicalPlaceSerializer, ArchaeologicalPlaceExportSerializer,
+                          SimpleArchaeologicalPlaceKMLSerializer,
                           LandTenureSerializer, LandTenureStatusSerializer,
-                          IndigenousLandGeojsonSerializer,
+                          IndigenousLandGeojsonSerializer, SimpleIndigenousLandKMLSerializer,
                           IndigenousVillageGeojsonSerializer, ArchaeologicalPlaceGeojsonSerializer,
                           LandTenureReportSerializer,
                           SimpleIndigenousGeojsonVillageSerializer,
+                          SimpleIndigenousVillageKMLSerializer,
                           SimpleArchaeologicalPlaceGeojsonSerializer,
                           IndigenousVillageExportSerializer,
-                          IndigenousLandExportSerializer, ProjectSerializer,)
+                          IndigenousLandExportSerializer, ProjectSerializer, )
+
+from .renderers import KMLRenderer
 
 from io import BytesIO
 import zipfile
@@ -44,6 +48,15 @@ class EmbeddableTemplateView(TemplateView):
 class ProjectsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+
+
+class KMLViewMixin(object):
+    renderer_classes = (KMLRenderer,)
+
+    def finalize_response(self, request, response, *args, **kwargs):
+        self.headers['Content-Disposition'] = 'attachment; filename={}'.format(self.filename)
+        response = super().finalize_response(request, response, *args, **kwargs)
+        return response
 
 
 class FilterLayersBySiteAndUserAuthenticatedMixin(object):
@@ -86,6 +99,12 @@ class IndigenousLandExportView(FilterLayersBySiteAndUserAuthenticatedMixin, Pand
     serializer_class = IndigenousLandExportSerializer
 
 
+class IndigenousLandKMLView(FilterLayersBySiteAndUserAuthenticatedMixin, KMLViewMixin, viewsets.ReadOnlyModelViewSet):
+    queryset = IndigenousLand.objects.all()
+    serializer_class = SimpleIndigenousLandKMLSerializer
+    filename = 'indigenous_land.kml'
+
+
 class ArchaeologicalPlaceExportView(FilterLayersBySiteAndUserAuthenticatedMixin, ArchaeologicalPlaceMixin, PandasView):
     queryset = ArchaeologicalPlace.objects.all()
     serializer_class = ArchaeologicalPlaceExportSerializer
@@ -101,6 +120,11 @@ class IndigenousVillageGeojsonView(FilterLayersBySiteAndUserAuthenticatedMixin, 
     serializer_class = SimpleIndigenousGeojsonVillageSerializer
 
 
+class IndigenousVillageKMLView(KMLViewMixin, IndigenousVillageGeojsonView):
+    serializer_class = SimpleIndigenousVillageKMLSerializer
+    filename = 'indigenous_village.kml'
+
+
 class IndigenousVillageExportView(FilterLayersBySiteAndUserAuthenticatedMixin, PandasView):
     queryset = IndigenousVillage.objects.all()
     serializer_class = IndigenousVillageExportSerializer
@@ -109,6 +133,11 @@ class IndigenousVillageExportView(FilterLayersBySiteAndUserAuthenticatedMixin, P
 class ArchaeologicalPlaceGeojsonView(FilterLayersBySiteAndUserAuthenticatedMixin, viewsets.ReadOnlyModelViewSet):
     queryset = ArchaeologicalPlace.objects.all()
     serializer_class = SimpleArchaeologicalPlaceGeojsonSerializer
+
+
+class ArchaeologicalPlaceKMLView(KMLViewMixin, ArchaeologicalPlaceGeojsonView):
+    serializer_class = SimpleArchaeologicalPlaceKMLSerializer
+    filename = 'archaeological_places.kml'
 
 
 class ArchaeologicalPlaceViewSet(FilterLayersBySiteAndUserAuthenticatedMixin, viewsets.ReadOnlyModelViewSet):

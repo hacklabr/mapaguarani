@@ -1,0 +1,13 @@
+{% extends "gis/kml/base.kml" %}
+{% block placemarks %}{% for feature in features %}
+  <Placemark>
+    <name>{% firstof feature.name feature.id %}</name>
+    <description>{{ feature.description }}</description>
+    <ExtendedData>
+    {% for key, val in feature.items %}
+      <Data name="{{ key | safe }}">
+        <value>{{ val | safe}}</value>
+      </Data>{% endfor %}
+    </ExtendedData>
+    {{ feature.geometry | safe }}
+  </Placemark>{% endfor %}{% endblock %}
