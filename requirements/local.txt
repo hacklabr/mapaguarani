@@ -3,7 +3,7 @@
 # coverage==3.7.1
 # Sphinx
 Werkzeug==0.14.1
-django-extensions==1.9.8
+django-extensions==2.0.0
 ipython==6.2.1
 
 # django-debug-toolbar that works with Django 1.5+
