@@ -24,42 +24,42 @@
     '$resource',
     function($q, $window, $resource) {
       return {
-        villages: $resource('api/villages/:id', {}, {
+        villages: $resource('/api/villages/:id', {}, {
           query: {
             method: 'GET',
             isArray: true,
             cache: true
           }
         }),
-        lands: $resource('api/lands/:id', {}, {
+        lands: $resource('/api/lands/:id', {}, {
           query: {
             method: 'GET',
             isArray: true,
             cache: true
           }
         }),
-        sites: $resource('api/archaeological/:id', {}, {
+        sites: $resource('/api/archaeological/:id', {}, {
           query: {
             method: 'GET',
             isArray: true,
             cache: true
           }
         }),
-        tenures: $resource('api/land_tenures', {}, {
+        tenures: $resource('/api/land_tenures', {}, {
           query: {
             method: 'GET',
             isArray: true,
             cache: true
           }
         }),
-        tenures_report: $resource('api/landtenurereport', {}, {
+        tenures_report: $resource('/api/landtenurereport', {}, {
           query: {
             method: 'GET',
             isArray: true,
             cache: true
           }
         }),
-        tenures_status: $resource('api/land_tenures_status', {}, {
+        tenures_status: $resource('/api/land_tenures_status', {}, {
           query: {
             method: 'GET',
             isArray: true,
