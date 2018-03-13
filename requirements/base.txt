@@ -33,6 +33,9 @@ django-libsass==0.6
 
 django-moderation==0.4.0
 
+# Django Rules (rules for permissions)
+rules==1.3
+
 # Bidirectional UTM-WGS84 coordinates converter for python, used only in archaeological layer import
 utm==0.4
 

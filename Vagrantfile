@@ -100,7 +100,7 @@ Vagrant.configure('2') do |config|
     # config.vm.box_url = "http://files.vagrantup.com/" + config.vm.box + ".box"
 
     config.vm.provider "virtualbox" do |v|
-        v.memory = 2048
+        v.memory = 1300
         v.cpus = 2
     end
 
@@ -108,6 +108,7 @@ Vagrant.configure('2') do |config|
     # Forward the dev server port
     config.vm.network :forwarded_port, host: 8000, guest: 8000
     config.vm.network :forwarded_port, host: 4000, guest: 4000
+    config.vm.network :forwarded_port, host: 5432, guest: 5432
 
     # config.vm.provision "shell", inline: $setup
     config.vm.provision "shell", inline: $dependencies
