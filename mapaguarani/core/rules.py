@@ -31,5 +31,11 @@ def user_in_creation_groups(user, obj):
         return False
 
 
-rules.add_perm('core.change_archaeologicalplace', user_in_edition_groups )#& rules.always_deny)
-rules.add_perm('core.add_archaeologicalplace', user_in_creation_groups | user_in_creation_layer_groups )
+rules.add_perm('core.change_archaeologicalplace', user_in_edition_groups)
+rules.add_perm('core.add_archaeologicalplace', user_in_creation_groups | user_in_creation_layer_groups)
+
+rules.add_perm('core.change_indigenousland', user_in_edition_groups)
+rules.add_perm('core.add_indigenousland', user_in_creation_groups | user_in_creation_layer_groups)
+
+rules.add_perm('core.change_indigenousvillage', user_in_edition_groups)
+rules.add_perm('core.add_indigenousvillage', user_in_creation_groups | user_in_creation_layer_groups)

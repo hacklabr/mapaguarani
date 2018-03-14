@@ -12,8 +12,22 @@ from moderation.admin import ModerationAdmin
 from mapwidgets.widgets import GooglePointFieldWidget
 from django.contrib.gis.db import models
 from rules.contrib.admin import ObjectPermissionsModelAdminMixin
-import rules
-from django.core.exceptions import ValidationError
+from django.contrib.auth import get_permission_codename
+
+
+class LayerPermissionsMixin(object):
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(ArchaeologicalPlaceAdmin, self).get_form(request, obj, **kwargs)
+        user = request.user
+        form.base_fields['layer'].queryset = form.base_fields['layer'].queryset.filter(creation_groups__in=user.groups.all())
+        return form
+
+    def has_add_permission(self, request):
+        opts = self.opts
+        codename = get_permission_codename('add', opts)
+        return request.user.has_perm("%s.%s" % (opts.app_label, codename))
+
 
 class PopulationInLine(admin.TabularInline):
     model = Population
@@ -81,23 +95,8 @@ class ArchaeologicalImageInLine(admin.TabularInline):
     model = ArchaeologicalImage
 
 
-class ArchaeologicalForm(forms.ModelForm):
-    class Meta:
-        model = ArchaeologicalPlace
-        fields = '__all__'
-
-    def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop('request', None)
-        super(ArchaeologicalForm, self).__init__(*args, **kwargs)
-
-    def clean(self):
-        if not rules.has_perm('core.add_archaeologicalplace', self.request.user, self.cleaned_data['layer']):
-            raise ValidationError('Você não tem permissão para essa camada')
-        return self.cleaned_data
-
 @admin.register(ArchaeologicalPlace)
 class ArchaeologicalPlaceAdmin(ObjectPermissionsModelAdminMixin, ModerationAdmin):
-    form = ArchaeologicalForm
     list_display = ('get_name', 'acronym', 'cnsa', 'biblio_references',
                     'position_precision', 'position_comments', 'geometry', 'status',)
     list_editable = ('status',)
@@ -110,16 +109,6 @@ class ArchaeologicalPlaceAdmin(ObjectPermissionsModelAdminMixin, ModerationAdmin
     formfield_overrides = {
         models.PointField: {"widget": GooglePointFieldWidget}
     }
-
-    def get_form(self, request, obj=None, **kwargs):
-        AdminForm = super(ArchaeologicalPlaceAdmin, self).get_form(request, obj, **kwargs)
-        class ArchaeologicalPlaceFormWithRequest(AdminForm):
-            def __new__(cls, *args, **kwargs):
-                self.request = request
-                return AdminForm(*args, **kwargs)
-
-        return ArchaeologicalPlaceFormWithRequest
-
 
     def get_name(self, obj):
         if obj.name:
