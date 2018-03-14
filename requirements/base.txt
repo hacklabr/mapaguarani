@@ -1,14 +1,17 @@
-Django<1.9
+django==1.11
 
 # Configuration
-django-environ==0.4.1
+django-environ==0.4.4
 
 # For user registration, either via email or social
 # Well-built with regular release cycles!
-django-allauth==0.28
+django-allauth==0.35
 
 # PostgreSQL adapter for the Python
-psycopg2==2.6
+psycopg2==2.7
+
+# translations
+django-rosetta==0.8
 
 # Images
 Pillow==2.8.1
@@ -25,13 +28,13 @@ python-memcached
 rest-pandas==0.5.0
 xlwt==1.1.2
 
-django-rosetta==0.7
 
 django-compressor==2.1
 libsass==0.9.3
 django-libsass==0.6
 
-django-moderation==0.4.0
+# django-moderation==0.5.0
+-e git+https://github.com/hacklabr/django-moderation#egg=django-moderation
 
 # Django Rules (rules for permissions)
 rules==1.3
