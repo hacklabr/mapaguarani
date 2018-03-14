@@ -18,7 +18,7 @@ from django.contrib.auth import get_permission_codename
 class LayerPermissionsMixin(object):
 
     def get_form(self, request, obj=None, **kwargs):
-        form = super(ArchaeologicalPlaceAdmin, self).get_form(request, obj, **kwargs)
+        form = super(LayerPermissionsMixin, self).get_form(request, obj, **kwargs)
         user = request.user
         form.base_fields['layer'].queryset = form.base_fields['layer'].queryset.filter(creation_groups__in=user.groups.all())
         return form
@@ -37,7 +37,7 @@ class GuaraniPresenceInLine(admin.TabularInline):
     model = GuaraniPresence
 
 
-class IndigenousPlaceAdmin(ModerationAdmin):
+class IndigenousPlaceAdmin(LayerPermissionsMixin, ObjectPermissionsModelAdminMixin, ModerationAdmin):
     list_per_page = 500
     list_filter = ('layer', )
     list_editable = ('status',)
@@ -96,7 +96,7 @@ class ArchaeologicalImageInLine(admin.TabularInline):
 
 
 @admin.register(ArchaeologicalPlace)
-class ArchaeologicalPlaceAdmin(ObjectPermissionsModelAdminMixin, ModerationAdmin):
+class ArchaeologicalPlaceAdmin(LayerPermissionsMixin, ObjectPermissionsModelAdminMixin, ModerationAdmin):
     list_display = ('get_name', 'acronym', 'cnsa', 'biblio_references',
                     'position_precision', 'position_comments', 'geometry', 'status',)
     list_editable = ('status',)
