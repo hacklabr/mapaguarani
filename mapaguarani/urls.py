@@ -10,15 +10,11 @@ from core.views import (IndigenousLandViewSet, IndigenousVillageViewSet,
                         ArchaeologicalPlaceGeojsonView, IndigenousVillageExportView, IndigenousVillageKMLView,
                         IndigenousLandExportView, IndigenousLandKMLView,
                         ProjectsViewSet,ReportView, EmbeddableTemplateView)
-from moderation.helpers import auto_discover
 from rest_framework import routers
 from rest_framework_cache.registry import cache_registry
 from rest_framework.urlpatterns import format_suffix_patterns
 
-# TESTE DO TIAGO
-#FIM DO TESTE DO TIAGO
 
-auto_discover()
 admin.autodiscover()
 cache_registry.autodiscover()
 
