@@ -35,8 +35,7 @@ class MapLayer(models.Model):
         max_length=256,
         default=STATUS[1][0]
     )
-    creation_groups = models.ManyToManyField(UserGroup, related_name='+')
-    edition_groups = models.ManyToManyField(UserGroup, related_name='+')
+    permission_groups = models.ManyToManyField(UserGroup, related_name='permission_groups')
 
     class Meta:
         verbose_name = _('Map Layer')

@@ -17,10 +17,15 @@ from django.contrib.auth import get_permission_codename
 
 class LayerPermissionsMixin(object):
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        user = request.user
+        return qs.filter(layer__permission_groups__in=user.groups.all())
+
     def get_form(self, request, obj=None, **kwargs):
         form = super(LayerPermissionsMixin, self).get_form(request, obj, **kwargs)
         user = request.user
-        form.base_fields['layer'].queryset = form.base_fields['layer'].queryset.filter(creation_groups__in=user.groups.all())
+        form.base_fields['layer'].queryset = form.base_fields['layer'].queryset.filter(permission_groups__in=user.groups.all())
         return form
 
     def has_add_permission(self, request):

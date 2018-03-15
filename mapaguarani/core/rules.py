@@ -1,29 +1,9 @@
 import rules
 
 @rules.predicate
-def user_in_edition_groups(user, obj):
+def user_in_permission_groups(user, obj):
     try:
-        if user in [u for g in obj.layer.edition_groups.all() for u in g.user_set.all()]:
-            return True
-        else:
-            return False
-    except (NameError, AttributeError):
-        return False
-
-@rules.predicate
-def user_in_creation_layer_groups(user, layer):
-    try:
-        if user in [u for g in layer.creation_groups.all() for u in g.user_set.all()]:
-            return True
-        else:
-            return False
-    except (NameError, AttributeError):
-        return False
-
-@rules.predicate
-def user_in_creation_groups(user, obj):
-    try:
-        if user in [u for g in obj.layer.creation_groups.all() for u in g.user_set.all()]:
+        if user in [u for g in obj.layer.permission_groups.all() for u in g.user_set.all()]:
             return True
         else:
             return False
@@ -31,11 +11,11 @@ def user_in_creation_groups(user, obj):
         return False
 
 
-rules.add_perm('core.change_archaeologicalplace', user_in_edition_groups)
-rules.add_perm('core.add_archaeologicalplace', user_in_creation_groups | user_in_creation_layer_groups)
+rules.add_perm('core.change_archaeologicalplace', user_in_permission_groups)
+rules.add_perm('core.add_archaeologicalplace', user_in_permission_groups)
 
-rules.add_perm('core.change_indigenousland', user_in_edition_groups)
-rules.add_perm('core.add_indigenousland', user_in_creation_groups | user_in_creation_layer_groups)
+rules.add_perm('core.change_indigenousland', user_in_permission_groups)
+rules.add_perm('core.add_indigenousland', user_in_permission_groups)
 
-rules.add_perm('core.change_indigenousvillage', user_in_edition_groups)
-rules.add_perm('core.add_indigenousvillage', user_in_creation_groups | user_in_creation_layer_groups)
+rules.add_perm('core.change_indigenousvillage', user_in_permission_groups)
+rules.add_perm('core.add_indigenousvillage', user_in_permission_groups)
