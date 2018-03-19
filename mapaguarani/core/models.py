@@ -120,7 +120,7 @@ class Project(models.Model):
     name = models.CharField(_('name'), max_length=255)
     description = models.TextField(_('description'), blank=True, null=True)
     start_date = models.DateField(_('start date'), blank=True, null=True)
-    end_date = models.DateField(_('and date'), blank=True, null=True)
+    end_date = models.DateField(_('end date'), blank=True, null=True)
     files = models.ManyToManyField(
         'ProjectFile',
         verbose_name=_('Files'),
@@ -325,7 +325,11 @@ class IndigenousVillage(IndigenousPlace):
 
 
 class GuaraniPresence(models.Model):
-    presence = models.BooleanField(_('Guarani presence'))
+    '''
+    We have been asked to rename all Guarani Presence fields to Indigenous Presence.
+    So, changed on the presentation - the backend stays the same
+    '''
+    presence = models.BooleanField(_('Indigenous Presence'))
     date = models.DateField(_('Date'))
     source = models.CharField(_('Source'), max_length=512)
     village = models.ForeignKey(
@@ -333,7 +337,7 @@ class GuaraniPresence(models.Model):
 
     class Meta:
         get_latest_by = 'date'
-        verbose_name = _('Guarani Presence')
+        verbose_name = _('Indigenous Presence')
 
     def __str__(self):
         return '{}: {}'.format(self.village.name, self.presence)
