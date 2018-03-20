@@ -58,6 +58,18 @@ class IndigenousVillageAdmin(IndigenousPlaceAdmin):
     get_guarani_presence.short_description = _('Guarani presence')
     get_guarani_presence.boolean = True
 
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        form.base_fields['name'].help_text = """Coloque aqui o nome pelo qual a própria comunidade reconhece a aldeia, sempre com primeira letra maíscula e as demais minúsculas """
+        form.base_fields['other_names'].help_text = """Coloque aqui todos os outros nomes pelos quais a aldeia é conhecida, separados por vírgula """
+        form.base_fields['ethnic_groups'].help_text = """Selecione o(s) povo(s) indígenas que habitam o local. """
+        form.base_fields['prominent_subgroup'].help_text = """Preencha apenas se a aldeia tiver presença do povo guarani, qual(is) subgrupo(s) deste povo habita(m) o local."""
+        form.base_fields['public_comments'].help_text = """Acrescente aqui informações textuais adicionais relevantes para o público amplo. Qualquer pessoa mesmo sem login poderá visualizá-las."""
+        form.base_fields['private_comments'].help_text = """Acrescente aqui informações textuais adicionais relevantes para os administradores do site, como descrições de como foi localizada a aldeia, ou eventuais necessidades futuras de revisão de dados, e etc… Essas observações só serão visualizadas pelos administradores, colaboradores e editores logados. """
+        form.base_fields['status'].help_text = """Você pode deixar essa aldeia restrita, para visualização apenas de pessoas logadas, ou pública, para visualização de qualquer visitante. """
+
+        return form
+
 
 @admin.register(IndigenousLand)
 class IndigenousLandAdmin(geoadmin.GeoModelAdmin,
@@ -72,6 +84,26 @@ class IndigenousLandAdmin(geoadmin.GeoModelAdmin,
 
     search_fields = ['name', 'other_names', 'claim', 'demand', 'source', 'land_tenure__name',
                      'land_tenure_status__name', 'public_comments', 'private_comments']
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        form.base_fields['name'].help_text =  """Coloque aqui o nome oficial pelo qual o Estado reconhece esta Terra Indígena"""
+        form.base_fields['other_names'].help_text = """Coloque aqui todos os outros nomes pelos quais a Terra Indígena
+                                                       é conhecida, separados por vírgula"""
+        form.base_fields['ethnic_groups'].help_text = 'Selecione o(s) povo(s) indígenas que habitam o local.\n'
+        form.base_fields['prominent_subgroup'].help_text = """Preencha apenas se a terra indígena tiver presença do 
+                                                              povo guarani, qual(is) subgrupo(s) deste povo habita(m) o local."""
+        form.base_fields['public_comments'].help_text = """Acrescente aqui informações textuais adicionais relevantes 
+                                                           para o público amplo. Qualquer pessoa mesmo sem login 
+                                                           poderá visualizá-las."""
+        form.base_fields['private_comments'].help_text = """Acrescente aqui informações textuais adicionais relevantes 
+                                                            para os administradores do site, como descrições de como foi 
+                                                            desenhado o polígono da terra indígena, ou eventuais necessidades 
+                                                            futuras de revisão de dados, e etc… Essas observações só serão 
+                                                            visualizadas pelos administradores, colaboradores e editores logados."""
+        form.base_fields['status'].help_text = """Você pode deixar essa terra indígena restrita, para visualização apenas 
+                                                  de pessoas logadas, ou pública, para visualização de qualquer visitante."""
+        return form
 
 
 class ArchaeologicalImageInLine(admin.TabularInline):
