@@ -29,6 +29,13 @@ class MapLayer(models.Model):
         ('restricted', _('Restricted')),
     )
 
+    TYPE = (
+        ('village', _('Indigenous Village')),
+        ('land', _('Indigenous Land')),
+        ('archaeological', _('Archaeological Place')),
+        ('generic', _('Generic'))
+    )
+
     name = models.CharField(_('name'), max_length=255)
     description = models.TextField(_('Description'), blank=True, null=True)
     sites = models.ManyToManyField(Site)
@@ -37,6 +44,12 @@ class MapLayer(models.Model):
         choices=STATUS,
         max_length=256,
         default=STATUS[1][0]
+    )
+    type = models.CharField(
+        _('Type'),
+        choices=TYPE,
+        max_length=256,
+        default=TYPE[3][0]
     )
 
     class Meta:
