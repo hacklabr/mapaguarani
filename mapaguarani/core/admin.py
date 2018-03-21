@@ -89,6 +89,7 @@ class IndigenousVillageAdmin(IndigenousPlaceAdmin):
         form.base_fields['public_comments'].help_text = """Acrescente aqui informações textuais adicionais relevantes para o público amplo. Qualquer pessoa mesmo sem login poderá visualizá-las."""
         form.base_fields['private_comments'].help_text = """Acrescente aqui informações textuais adicionais relevantes para os administradores do site, como descrições de como foi localizada a aldeia, ou eventuais necessidades futuras de revisão de dados, e etc… Essas observações só serão visualizadas pelos administradores, colaboradores e editores logados. """
         form.base_fields['status'].help_text = """Você pode deixar essa aldeia restrita, para visualização apenas de pessoas logadas, ou pública, para visualização de qualquer visitante. """
+        form.base_fields['layer'].queryset = form.base_fields['layer'].queryset.filter(type__in=('generic','village'))
 
         return form
 
@@ -125,6 +126,7 @@ class IndigenousLandAdmin(geoadmin.GeoModelAdmin,
                                                             visualizadas pelos administradores, colaboradores e editores logados."""
         form.base_fields['status'].help_text = """Você pode deixar essa terra indígena restrita, para visualização apenas 
                                                   de pessoas logadas, ou pública, para visualização de qualquer visitante."""
+        form.base_fields['layer'].queryset = form.base_fields['layer'].queryset.filter(type__in=('generic','land'))
         return form
 
 
@@ -154,6 +156,10 @@ class ArchaeologicalPlaceAdmin(LayerPermissionsMixin, ObjectPermissionsModelAdmi
             return _('(No name)')
     get_name.short_description = _('Name')
 
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(ArchaeologicalPlaceAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['layer'].queryset = form.base_fields['layer'].queryset.filter(type__in=('generic','archaeological'))
+        return form
 
 @admin.register(LegalProcedings)
 class LegalProcedingsAdmin(admin.ModelAdmin):
