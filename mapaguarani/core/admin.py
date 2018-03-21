@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib import admin
 from django.contrib.gis import admin as geoadmin
 from django.utils.translation import ugettext_lazy as _
@@ -10,6 +11,27 @@ from .models import (
 from moderation.admin import ModerationAdmin
 from mapwidgets.widgets import GooglePointFieldWidget
 from django.contrib.gis.db import models
+from rules.contrib.admin import ObjectPermissionsModelAdminMixin
+from django.contrib.auth import get_permission_codename
+
+
+class LayerPermissionsMixin(object):
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        user = request.user
+        return qs.filter(layer__permission_groups__in=user.groups.all())
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(LayerPermissionsMixin, self).get_form(request, obj, **kwargs)
+        user = request.user
+        form.base_fields['layer'].queryset = form.base_fields['layer'].queryset.filter(permission_groups__in=user.groups.all())
+        return form
+
+    def has_add_permission(self, request):
+        opts = self.opts
+        codename = get_permission_codename('add', opts)
+        return request.user.has_perm("%s.%s" % (opts.app_label, codename))
 
 
 class PopulationInLine(admin.TabularInline):
@@ -20,7 +42,7 @@ class GuaraniPresenceInLine(admin.TabularInline):
     model = GuaraniPresence
 
 
-class IndigenousPlaceAdmin(ModerationAdmin):
+class IndigenousPlaceAdmin(LayerPermissionsMixin, ObjectPermissionsModelAdminMixin, ModerationAdmin):
     list_per_page = 500
     list_filter = ('layer', )
     list_editable = ('status',)
@@ -111,7 +133,7 @@ class ArchaeologicalImageInLine(admin.TabularInline):
 
 
 @admin.register(ArchaeologicalPlace)
-class ArchaeologicalPlaceAdmin(ModerationAdmin):
+class ArchaeologicalPlaceAdmin(LayerPermissionsMixin, ObjectPermissionsModelAdminMixin, ModerationAdmin):
     list_display = ('get_name', 'acronym', 'cnsa', 'biblio_references',
                     'position_precision', 'position_comments', 'geometry', 'status',)
     list_editable = ('status',)

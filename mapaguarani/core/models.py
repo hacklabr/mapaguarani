@@ -4,9 +4,10 @@ from django.utils.translation import ugettext_lazy as _
 from protected_areas.models import BaseProtectedArea
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
-
+from django.contrib.auth.models import Group as UserGroup
 from boundaries.models import City, State, Country
 
+# import rules
 
 class Organization(models.Model):
     name = models.CharField(_('name'), max_length=255)
@@ -51,6 +52,7 @@ class MapLayer(models.Model):
         max_length=256,
         default=TYPE[3][0]
     )
+    permission_groups = models.ManyToManyField(UserGroup, related_name='permission_groups')
 
     class Meta:
         verbose_name = _('Map Layer')
@@ -652,6 +654,15 @@ class ArchaeologicalPlace(models.Model):
     class Meta:
         verbose_name = _('Archaeological Place')
         verbose_name_plural = _('Archaeological Places')
+
+    # def has_change_permission(self, request, obj=None):
+    #     eita = super().has_change_permission(request, obj)
+    #     raise Exception('PARATUDO')
+
+    # def clean(self):
+    #     if not rules.has_perm('core.add_archaeologicalplace', self.request.user, self.obj):
+    #         raise ValidationError('User does not have permission to add model')
+    #     pass
 
     @property
     def protected_areas(self):
