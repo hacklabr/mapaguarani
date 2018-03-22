@@ -1,0 +1,63 @@
+version: '3.5'
+
+volumes:
+  db_data: {}
+
+networks:
+  mapaguarani:
+    name: mapaguarani
+
+services:
+  redis:
+    image: redis:3.2
+    hostname: redis
+    networks:
+      - mapaguarani
+
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
+    environment:
+      - POSTGRES_DB=django
+      - POSTGRES_USER=django
+      - POSTGRES_PASSWORD=django
+      - USE_DOCKER=yes
+    ports:
+      - "8000:8000"
+    command: /runserver.sh
+    networks:
+      - mapaguarani
+
+  postgres:
+    image: mdillon/postgis:9.6
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=django
+      - POSTGRES_USER=django
+      - POSTGRES_PASSWORD=django
+    networks:
+      - mapaguarani
+  # windshaft:
+  #   build:
+  #     context: .
+  #     dockerfile: ./compose/local/windshaft/Dockerfile
+  #   depends_on:
+  #     - django
+  #     - postgres
+  #   # volumes:
+  #   #   - .:/app
+  #   environment:
+  #     - POSTGRES_DB=django
+  #     - POSTGRES_USER=django
+  #     - POSTGRES_PASSWORD=django
+  #   ports:
+  #     - "4000:4000"
+  #   command: /runserver.sh
+  #   networks:
+  #     - mapaguarani

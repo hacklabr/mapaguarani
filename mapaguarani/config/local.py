@@ -12,6 +12,7 @@ from .common import *  # noqa
 # ------------------------------------------------------------------------------
 DEBUG = env.bool('DJANGO_DEBUG', default=True)
 TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
+ALLOWED_HOSTS = ["*"]
 
 # Deactivate compress so sass deps are watched
 COMPRESS_ENABLED = False
@@ -24,19 +25,8 @@ SECRET_KEY = env("DJANGO_SECRET_KEY", default='CHANGEME!!!')
 
 # Mail settings
 # ------------------------------------------------------------------------------
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
 EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND',
                     default='django.core.mail.backends.console.EmailBackend')
-
-# CACHING
-# ------------------------------------------------------------------------------
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': ''
-    }
-}
 
 # django-extensions
 # ------------------------------------------------------------------------------
