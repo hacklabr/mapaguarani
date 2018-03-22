@@ -57,20 +57,57 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
     ]),
 ]
 
-# DATABASE CONFIGURATION
-# ------------------------------------------------------------------------------
-# Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-# DATABASES['default'] = env.db("DATABASE_URL")
+# Sentry Configuration
+if env('DJANGO_SENTRY_DSN', default=False):
+    SENTRY_DSN = env('DJANGO_SENTRY_DSN')
+    SENTRY_CLIENT = env('DJANGO_SENTRY_CLIENT', default='raven.contrib.django.raven_compat.DjangoClient')
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': True,
+        'root': {
+            'level': 'WARNING',
+            'handlers': ['sentry', ],
+        },
+        'formatters': {
+            'verbose': {
+                'format': '%(levelname)s %(asctime)s %(module)s '
+                        '%(process)d %(thread)d %(message)s'
+            },
+        },
+        'handlers': {
+            'sentry': {
+                'level': 'ERROR',
+                'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+            },
+            'console': {
+                'level': 'DEBUG',
+                'class': 'logging.StreamHandler',
+                'formatter': 'verbose'
+            }
+        },
+        'loggers': {
+            'django.db.backends': {
+                'level': 'ERROR',
+                'handlers': ['console', ],
+                'propagate': False,
+            },
+            'raven': {
+                'level': 'DEBUG',
+                'handlers': ['console', ],
+                'propagate': False,
+            },
+            'sentry.errors': {
+                'level': 'DEBUG',
+                'handlers': ['console', ],
+                'propagate': False,
+            },
+            'django.security.DisallowedHost': {
+                'level': 'ERROR',
+                'handlers': ['console', 'sentry', ],
+                'propagate': False,
+            },
+        },
+    }
 
-# CACHING
+# Your production stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
-# try:
-    # Only do this here because thanks to django-pylibmc-sasl and pylibmc
-    # memcacheify is painful to install on windows.
-    # See: https://github.com/rdegges/django-heroku-memcacheify
-#     from memcacheify import memcacheify
-#     CACHES = memcacheify()
-# except ImportError:
-#     CACHES = {
-#         'default': env.cache_url("DJANGO_CACHE_URL", default="memcache://127.0.0.1:11211"),
-#     }

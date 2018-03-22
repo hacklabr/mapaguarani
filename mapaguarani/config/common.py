@@ -22,6 +22,18 @@ APPS_DIR = ROOT_DIR.path('mapaguarani')
 
 env = environ.Env()
 
+# .env file, should load only in development environment
+READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
+
+if READ_DOT_ENV_FILE:
+    # Operating System Environment variables have precedence over variables defined in the .env file,
+    # that is to say variables from the .env files will only be used if not defined
+    # as environment variables.
+    env_file = str(ROOT_DIR.path('.env'))
+    print('Loading : {}'.format(env_file))
+    env.read_env(env_file)
+    print('The .env file has been loaded. See base.py for more information')
+
 # APP CONFIGURATION
 DJANGO_APPS = (
     # Default Django apps:
@@ -93,10 +105,6 @@ MIDDLEWARE_CLASSES = (
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = env.bool("DJANGO_DEBUG", False)
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
-TEMPLATE_DEBUG = DEBUG
-# END DEBUG
-
 # SECRET CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Note: This key only used for development and testing.
@@ -126,27 +134,39 @@ MANAGERS = ADMINS
 # END MANAGER CONFIGURATION
 
 # DATABASE CONFIGURATION
+# ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
+# Raises ImproperlyConfigured exception if database variables aren't in os.environ
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'mapaguarani',
-        'USER': '',
-    }
+        'HOST': env('POSTGRES_HOST', default='postgres'),
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+    },
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
-# DATABASES = values.DatabaseURLValue('postgres://localhost/django-template')
 # END DATABASE CONFIGURATION
 
 # CACHING
-# Do this here because thanks to django-pylibmc-sasl and pylibmc
-# memcacheify (used on heroku) is painful to install on windows.
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
+# ------------------------------------------------------------------------------
+# Cache settings can be tricky. So, this can be easily deactivated for debugging
+if env.bool('USE_CACHE', default=True):
+    REDIS_LOCATION = '{0}/{1}'.format(env('REDIS_URL', default='redis://127.0.0.1:6379'), 0)
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': REDIS_LOCATION,
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+                'IGNORE_EXCEPTIONS': True,  # mimics memcache behavior.
+                                            # http://niwinz.github.io/django-redis/latest/#_memcached_exceptions_behavior
+            }
+        }
     }
-}
+    SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
 # END CACHING
 
 # GENERAL CONFIGURATION
