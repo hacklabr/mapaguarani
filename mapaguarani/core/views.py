@@ -115,8 +115,22 @@ class IndigenousVillageViewSet(FilterLayersBySiteAndUserAuthenticatedMixin, view
     serializer_class = IndigenousVillageSerializer
 
 
-class IndigenousVillageGeojsonView(FilterLayersBySiteAndUserAuthenticatedMixin, viewsets.ReadOnlyModelViewSet):
-    queryset = IndigenousVillage.objects.all()
+class FilterVillageMixin(object):
+    def get_queryset(self):
+        queryset = IndigenousVillage.objects.all()
+        guarani_presence = self.request.query_params.get('guarani_presence', None)
+        if guarani_presence is not None:
+            if guarani_presence in ('False', 'false'):
+                guarani_presence = False
+            elif guarani_presence in ('True', 'true'):
+                guarani_presence = True
+            queryset = [x for x in queryset if x.guarani_presence==guarani_presence]
+
+        return queryset
+
+
+class IndigenousVillageGeojsonView(FilterVillageMixin, FilterLayersBySiteAndUserAuthenticatedMixin, viewsets.ReadOnlyModelViewSet):
+    queryset = IndigenousVillage.objects.none()
     serializer_class = SimpleIndigenousGeojsonVillageSerializer
 
 
@@ -125,8 +139,8 @@ class IndigenousVillageKMLView(KMLViewMixin, IndigenousVillageGeojsonView):
     filename = 'indigenous_village.kml'
 
 
-class IndigenousVillageExportView(FilterLayersBySiteAndUserAuthenticatedMixin, PandasView):
-    queryset = IndigenousVillage.objects.all()
+class IndigenousVillageExportView(FilterVillageMixin, FilterLayersBySiteAndUserAuthenticatedMixin, PandasView):
+    queryset = IndigenousVillage.objects.none()
     serializer_class = IndigenousVillageExportSerializer
 
 
@@ -284,7 +298,7 @@ class IndigenousLandsShapefileView(FilterLayersBySiteAndUserAuthenticatedMixin, 
     file_name = 'terras_indigenas'
 
 
-class IndigenousVillagesShapefileView(FilterLayersBySiteAndUserAuthenticatedMixin, ShapefileView):
+class IndigenousVillagesShapefileView(FilterVillageMixin, FilterLayersBySiteAndUserAuthenticatedMixin, ShapefileView):
     serializer_class = IndigenousVillageGeojsonSerializer
     queryset = IndigenousVillage.objects.all()
     # self.readme = readme
