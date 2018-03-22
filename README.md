@@ -1,58 +1,84 @@
 # Mapa Guarany Yvyrupá
 
-[![Join the chat at https://gitter.im/hacklabr/mapaguarani](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/hacklabr/mapaguarani?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# Projeto Django Base
 
-## Instalando Banco de Dados Posstgis
+Projeto Django baseado no padrão [cookiecutter-django](http://cookiecutter-django.readthedocs.io/en/latest) e com diversas adaptações para uso na infraestrutura Docker-Rancher do hacklab/.
 
-```
-sudo apt-get install postgresql postgresql-contrib postgis postgresql-9.3-postgis-2.1 postgresql-9.3-postgis-2.1-scripts libpq-dev
+## Ambiente de desenvolvimento
 
-sudo su - postgres
+Para clonar este repositório, execute:
 
-createuser mapaguarani
-createdb -O mapaguarani template_postgis -E UTF-8
-createlang plpgsql template_postgis
-psql -d template_postgis -f /usr/share/postgresql/9.3/contrib/postgis-2.1/postgis.sql
-psql -d template_postgis -f /usr/share/postgresql/9.3/contrib/postgis-2.1/spatial_ref_sys.sql
+`git clone git@gitlab.com:hacklab/base-django-project.git`
 
-createdb -T template_postgis mapaguarani
-```
-```
-psql
-```
-Query para dar permissão para o banco mapaguarani ao usuário mapaguarani
+Levante o ambiente de desenvolvimento com `docker-compose up` e acesse [localhost:8000](http://localhost:8000).
+
+## Importanto Bando de dados de testes (ou da produção)
+
+Neste exemplo, apagamos e recriamos o banco para garantir que estamos importando sobre uma base limpa.
+Este exemplo cobre a importação feita a partir de um binário (psqlc), adapte o os comandos para usar com outros formatos.
 
 ```
-GRANT ALL PRIVILEGES ON DATABASE mapaguarani to mapaguarani;
+# Sobe somente container do postgres, importantes senão o django vai bloquer alterações no banco
+docker-compose up postgres
+# copia backup para dentro do container (isso pode ser melhorado)
+docker cp mapaguarani.psqlc mapaguarani_postgres_1:/mapaguarani.psqlc
+docker-compose exec -u postgres postgres dropdb django
+docker-compose exec -u postgres postgres createdb django
+docker-compose exec -u postgres postgres psql -d django -c "CREATE EXTENSION postgis;"
+docker-compose exec -u postgres postgres pg_restore -O -x -n public -d django mapaguarani.psqlc
 ```
 
-## Dependências
+## Testes
+
+Existem duas maneiras de se executar os testes automatizados localmente:
+
+- Você já executou o comando `docker-compose up` e o servidor está funcionando.
 
 ```
-sudo apt-get install build-essential git
-
-git clone https://github.com/hacklabr/mapaguarani.git
-
-sudo apt-get install python-virtualenv python3-dev
-
-virtualenv -p /usr/bin/python3 mapaguarani-env
-source mapaguarani-env/bin/activate
-cd mapaguarani
-pip install -r requirements/production.txt
+docker-compose -f local.yml exec django pytest
 ```
 
-## Dependências GIS
+- Você deseja apenas executar os testes sem necessariamente levantar o servidor. Antes é necessário construir a imagem do backend e disponibilizar o banco de dados para então executar o pytest via `docker run`
 
 ```
-sudo apt-get install binutils libproj-dev gdal-bin
+docker build -f compose/test/django/Dockerfile -t django_test .
+docker run -d --env-file=./compose/test/test_env --name=postgres_test postgres:9.6
+docker run --env-file=./compose/test/test_env --link=postgres_test:postgres \
+  django_test /test.sh
 ```
 
-## Deploy
+## Variáveis de ambiente
+### Banco de dados
+- POSTGRES_HOST - opcional; padrão 'postgres'
+- POSTGRES_DB - obrigatório
+- POSTGRES_USER - obrigatório
+- POSTGRES_PASSWORD - obrigatório
 
-```
-apt-get install nginx
-apt-get install gunicorn
-```
+### Email
+- MAILGUN_SENDER_DOMAIN - obrigatório em produção
+- DJANGO_DEFAULT_FROM_EMAIL - obrigatório em produção
+- DJANGO_MAILGUN_API_KEY - obrigatório em produção
+
+### Django
+- DJANGO_ALLOWED_HOSTS - obrigatório em produção
+- DJANGO_ADMIN_URL - opcional
+- DJANGO_SETTINGS_MODULE - opcional; use `config.settings.production` em produção
+- DJANGO_ACCOUNT_ALLOW_REGISTRATION - opcional; padrão True
+- DJANGO_SECRET_KEY - obrigatório em produção
+- USE_CACHE - opcional; padrão True
+- USE_DOCKER - opcional; desnecessário em produção; em ambientes locais, escreva 'yes' se estiver usando Docker
+
+### Redis
+- REDIS_URL - obrigatório em produção; exemplo: `redis://127.0.0.1:6379`
+
+### Sentry
+- DJANGO_SENTRY_DSN - opcional; só válido em produção
+
+## Integrações de deploy
+**Commits no branch `master`** fazem releases da versão em **desenvolvimento**.
+
+**Tags** fazem releases em [**produção**](http://guarani.map.as/).
+
 
 # Camadas Extras de Mapa
 
