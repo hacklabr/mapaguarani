@@ -27,6 +27,8 @@ services:
       - POSTGRES_USER=django
       - POSTGRES_PASSWORD=django
       - USE_DOCKER=yes
+    env_file:
+      - .env
     ports:
       - "8000:8000"
     command: /runserver.sh
