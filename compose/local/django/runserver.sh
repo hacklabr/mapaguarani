@@ -5,7 +5,9 @@ set -o pipefail
 set -o nounset
 set -o xtrace
 
+npm install
+bower --allow-root install
 
 python manage.py migrate
-python manage.py collectstatic
+python manage.py collectstatic --noinput
 python manage.py runserver_plus 0.0.0.0:8000
