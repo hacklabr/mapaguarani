@@ -69,6 +69,7 @@ THIRD_PARTY_APPS = (
     'rest_framework_cache',
     'moderation',
     'mapwidgets',
+    'rules'
 )
 
 # Apps specific for this project go here.
@@ -293,6 +294,7 @@ WSGI_APPLICATION = 'wsgi.application'
 
 # AUTHENTICATION CONFIGURATION
 AUTHENTICATION_BACKENDS = (
+    'rules.permissions.ObjectPermissionBackend',
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
