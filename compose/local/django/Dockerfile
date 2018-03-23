@@ -2,11 +2,24 @@ FROM python:3.6-stretch
 LABEL mantainer "hacklab/ <contato@hacklab.com.br>"
 ENV PYTHONUNBUFFERED 1
 
-
 # Geodjango requirements: https://docs.djangoproject.com/en/1.11/ref/contrib/gis/install/geolibs/
 RUN apt-get update -y && apt-get install -y \
     binutils libproj-dev gdal-bin \
     libgdal-dev
+
+## Install node ##
+WORKDIR /tmp
+RUN curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh \
+    && bash nodesource_setup.sh
+RUN apt-get install -y \
+                nodejs \
+                build-essential \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /tmp/*
+## Finished installing Node ##
+
+# Install Bower
+RUN npm install -g bower
 
 # Needed to build GDAL
 ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
