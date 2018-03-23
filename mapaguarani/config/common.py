@@ -52,6 +52,8 @@ DJANGO_APPS = (
 
     # Geodjango
     'django.contrib.gis',
+
+    'django.forms',
 )
 THIRD_PARTY_APPS = (
     # 'crispy_forms',  # Form layouts
@@ -228,6 +230,11 @@ TEMPLATES = [
         }
     },
 ]
+
+# FORM RENDERER CONFIGURATION
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/2.0/ref/settings/#std:setting-FORM_RENDERER
+FORM_RENDERER='django.forms.renderers.TemplatesSetting'
 
 # STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------
