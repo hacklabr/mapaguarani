@@ -1,0 +1,15 @@
+{% load i18n %}
+{% blocktrans with site_name=site.name site_domain=site.domain admin_moderate_url=moderated_object.get_admin_moderate_url %}
+Olá!
+
+Foi feita uma nova contribuição no site {{ site_name }}.
+
+Uma nova(o) {{ content_type }} precisa ser moderada.
+
+Você pode aprovar ou rejeitar a alteração neste link: {{ site_domain }}{{ admin_moderate_url }}
+
+Obrigado,
+
+Equipe {{ site_name }}
+{{ site_domain }}
+{% endblocktrans %}

@@ -1,0 +1,1 @@
+[Mapa Guarani Online] Sua contribuição na(o) {{ content_type }} foi {% ifequal moderated_object.status 0 %}rejeitada{% endifequal %}{% ifequal moderated_object.status 1 %}aceita{% endifequal %}
