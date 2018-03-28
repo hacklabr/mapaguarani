@@ -4,7 +4,7 @@ from django.views.generic.base import TemplateView
 from core.views import (IndigenousLandViewSet, IndigenousVillageViewSet,
                         ArchaeologicalPlaceViewSet, LandTenureViewSet, LandTenureStatusViewSet,
                         IndigenousLandsShapefileView, IndigenousVillagesShapefileView,
-                        ArchaeologicalPlaceKMLView,
+                        ArchaeologicalPlaceKMLView, EthnicGroupViewSet,
                         ArchaeologicalPlacesShapefileView, ArchaeologicalPlaceExportView, LandTenureReportViewSet,
                         IndigenousVillageGeojsonView,
                         ArchaeologicalPlaceGeojsonView, IndigenousVillageExportView, IndigenousVillageKMLView,
@@ -23,6 +23,7 @@ admin.autodiscover()
 cache_registry.autodiscover()
 
 router = routers.SimpleRouter()
+router.register(r'ethnic_groups', EthnicGroupViewSet)
 router.register(r'lands', IndigenousLandViewSet)
 router.register(r'land_tenures', LandTenureViewSet)
 router.register(r'land_tenures_status', LandTenureStatusViewSet)
