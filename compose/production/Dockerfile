@@ -1,11 +1,31 @@
-FROM python:3.6 as django
-LABEL mantainer "Hacklab <contato@hacklab.com.br>"
+FROM python:3.6-stretch as django
+LABEL mantainer "hacklab/ <contato@hacklab.com.br>"
 ENV PYTHONUNBUFFERED 1
 
 # Ensure that the the internal user and
 # group used by django have a known uid and gid
 RUN groupadd -r -g 999 django \
     && useradd -r -u 999 -g django django
+
+# Geodjango requirements: https://docs.djangoproject.com/en/1.11/ref/contrib/gis/install/geolibs/
+RUN apt-get update -y && apt-get install -y \
+    binutils libproj-dev gdal-bin \
+    libgdal-dev
+
+# Needed to build GDAL
+ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
+ENV C_INCLUDE_PATH=/usr/include/gdal
+
+## Install node ##
+WORKDIR /tmp
+RUN curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh \
+    && bash nodesource_setup.sh
+RUN apt-get install -y \
+                nodejs \
+                build-essential \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /tmp/*
+## Finished installing Node ##
 
 # Requirements have to be pulled and installed here, otherwise caching won't work
 COPY ./requirements /requirements
