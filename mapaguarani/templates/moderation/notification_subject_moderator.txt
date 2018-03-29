@@ -1,0 +1,1 @@
+{% load i18n %}{% blocktrans %}[Mapa Guarani Online] Nova {{ content_type }} está aguardando aprovação{% endblocktrans %}

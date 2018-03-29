@@ -22,18 +22,6 @@ APPS_DIR = ROOT_DIR.path('mapaguarani')
 
 env = environ.Env()
 
-# .env file, should load only in development environment
-READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
-
-if READ_DOT_ENV_FILE:
-    # Operating System Environment variables have precedence over variables defined in the .env file,
-    # that is to say variables from the .env files will only be used if not defined
-    # as environment variables.
-    env_file = str(ROOT_DIR.path('.env'))
-    print('Loading : {}'.format(env_file))
-    env.read_env(env_file)
-    print('The .env file has been loaded. See base.py for more information')
-
 # APP CONFIGURATION
 DJANGO_APPS = (
     # Default Django apps:
@@ -300,9 +288,11 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # Some really nice defaults
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
+ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
+
 # END AUTHENTICATION CONFIGURATION
 
 # Custom user app defaults
@@ -315,6 +305,8 @@ LOGIN_URL = 'account_login'
 MAP_WIDGETS = {
     "GOOGLE_MAP_API_KEY": "AIzaSyB89T4uE1P-WRJCPTLwdlOA7bbLHmvIkC4",
 }
+
+MODERATION_MODERATORS = env.list('DJANGO_MODERATION_MODERATORS', default=())
 
 # SLUGLIFIER
 # AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'

@@ -1,0 +1,18 @@
+{% load i18n %}
+{% trans "Olá" %} {{ user.first_name }}
+
+{% trans "Sua contribuição na" %} {{ content_type }} {% trans "foi" %} {% ifequal moderated_object.status 0 %}{% trans "rejected" %}{% endifequal %}{% ifequal moderated_object.status 1 %}{% trans "accepted" %}{% endifequal %}.
+
+{% if moderated_object.reason %}
+{% trans "Motivo" %}: {{ moderated_object.reason }}
+{% endif %}
+
+{% if moderated_object.get_absolute_url %}
+{% trans "Você pode visualizar sua contribuição aqui" %}: {{ site.domain }}{{ moderated_object.get_absolute_url }}
+{% endif %}
+
+{% blocktrans with site_name=site.name %}
+Obrigado por ajudar a construir o {{site_name}}.
+
+Equipe {{site_name}}
+{% endblocktrans %}
