@@ -1,0 +1,40 @@
+---
+image: docker:18.01.0-ce-git
+services:
+  - docker:18.01.0-ce-dind
+stages:
+  - build
+
+variables:
+  DJANGO_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/django:$CI_BUILD_REF_NAME
+  NGINX_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/nginx:$CI_BUILD_REF_NAME
+
+##########
+## Homolog
+##########
+build to homolog:
+  stage: build
+  script:
+    - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+    - docker build -f compose/production/Dockerfile --target django -t $DJANGO_RELEASE_IMAGE .
+    - docker push $DJANGO_RELEASE_IMAGE
+    - docker build -f compose/production/Dockerfile --target nginx -t $NGINX_RELEASE_IMAGE .
+    - docker push $NGINX_RELEASE_IMAGE
+  only:
+    - /django-upgrade/
+  environment: homolog
+  tags:
+    - docker
+
+#deploy to homolog:
+#  stage: deploy
+#  image: cdrx/rancher-gitlab-deploy
+#  script:
+#    - upgrade --environment CTI --stack mapaguarani-dev --service backend --no-finish-upgrade --sidekicks
+#    - upgrade --environment CTI --stack mapaguarani-dev --service flower --no-finish-upgrade
+#    - upgrade --environment CTI --stack mapaguarani-dev --service worker --no-finish-upgrade
+#  only:
+#    - /django-upgrade/
+#  environment: homolog
+#  tags:
+#    - docker
