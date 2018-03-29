@@ -38,6 +38,19 @@
 <textarea id="{{ id }}" class="vWKTField required" cols="150" rows="10" name="{{ name }}">{{ wkt }}</textarea>
 
 <input type="file" id="kml_file" name="kml_file">
+
+
+
+<script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+{#<script type="text/javascript">#}
+{#    var $ = django.jQuery;#}
+{#</script>#}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.1/css/select2.css" rel="stylesheet" />
+{#<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.4/select2.min.css" rel="stylesheet" />#}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.1/js/select2.min.js"></script>
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.4/select2.min.js"></script>#}
+
 <script type="text/javascript">
   {% block init_function %}{{ module }}.init();{% endblock %}
 
@@ -94,5 +107,74 @@
   }
 
   document.getElementById('kml_file').addEventListener('change', handleFileSelect, false);
+
+
+
+  $(document).ready(function() {
+
+      function formatState(state) {
+
+        var $state = $(
+              '<span ' + 'data-latitude="' + state.latitude + '" data-longitude="' + state.longitude + '">' + state.text + '</span>'
+        );
+        return $state;
+      };
+
+    $('.select-village-dropdown').select2({
+        placeholder: 'Carregando aldeias...',
+        templateResult: formatState,
+        width: '250px',
+        ajax: {
+            url: '/api/simple_villages_with_position/',
+            data: function (params) {
+                var query = {
+                    search: params.term,
+                }
+                return query;
+            },
+            processResults: function (data) {
+                console.log(data);
+                var items = data.map(function (o) { return {
+                        "id": o.id,
+                        "text": o.name,
+                        "latitude": o.latitude,
+                        "longitude": o.longitude
+                    }
+                });
+                return {
+                    results: items
+                };
+            }
+        }
+    });
+
+    $('.select-village-dropdown').on('select2:select', function(e) {
+        // Do something
+        console.log('YEEEAAAH');
+        var data = e.params.data;
+
+        var latitude = e.params.data.latitude;
+        var longitude = e.params.data.longitude;
+        var options = {steps: 64, units: 'kilometers'};
+        var radius = 1;
+        var format = new OpenLayers.Format.GeoJSON();
+
+        var circle = turf.circle([longitude, latitude], radius, options);
+        feature = format.parseFeature(circle);
+        geodjango_geometry.map.layers[1].addFeatures([feature]);
+        zoomToPolygon([feature]);
+    });
+});
 </script>
+
+<div id="select-village-dropdown-container">
+    <p>Faça a partir de uma aldeia:</p>
+    <select class="select-village-dropdown" name="aldeia">
+    </select>
+</div>
+
 </span>
+
+
+
+

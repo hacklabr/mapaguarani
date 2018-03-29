@@ -7,6 +7,7 @@ from core.views import (IndigenousLandViewSet, IndigenousVillageViewSet,
                         ArchaeologicalPlaceKMLView,
                         ArchaeologicalPlacesShapefileView, ArchaeologicalPlaceExportView, LandTenureReportViewSet,
                         IndigenousVillageGeojsonView,
+                        SimpleIndigenousVillageViewSetWithPosition,
                         ArchaeologicalPlaceGeojsonView, IndigenousVillageExportView, IndigenousVillageKMLView,
                         IndigenousLandExportView, IndigenousLandKMLView,
                         ProjectsViewSet,ReportView, EmbeddableTemplateView)
@@ -23,6 +24,7 @@ router.register(r'lands', IndigenousLandViewSet)
 router.register(r'land_tenures', LandTenureViewSet)
 router.register(r'land_tenures_status', LandTenureStatusViewSet)
 router.register(r'villages', IndigenousVillageViewSet)
+router.register(r'simple_villages_with_position', SimpleIndigenousVillageViewSetWithPosition)
 router.register(r'villages_geojson', IndigenousVillageGeojsonView)
 router.register(r'lands_kml', IndigenousLandKMLView, base_name='lands-kml')
 router.register(r'villages_kml', IndigenousVillageKMLView, base_name='villages-kml')

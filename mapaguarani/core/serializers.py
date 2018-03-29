@@ -322,6 +322,31 @@ class SimpleIndigenousVillageSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 
+class SimpleIndigenousVillageSerializerWithPosition(CachedSerializerMixin,
+                                                    serializers.ModelSerializer):
+
+    def get_latitude(self, obj):
+        if obj.geometry:
+            return obj.geometry.get_y()
+        else:
+            return None
+
+    def get_longitude(self, obj):
+        if obj.geometry:
+            return obj.geometry.get_x()
+        else:
+            return None
+
+    latitude = serializers.SerializerMethodField()
+    longitude = serializers.SerializerMethodField()
+
+    class Meta:
+        model = IndigenousVillage
+        fields = ['id', 'name', 'latitude', 'longitude']
+
+cache_registry.register(SimpleIndigenousVillageSerializerWithPosition)
+
+
 class SimpleIndigenousGeojsonVillageSerializer(GeoFeatureModelSerializer,
                                                CachedSerializerMixin):
 

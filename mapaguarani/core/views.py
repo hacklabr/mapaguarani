@@ -26,12 +26,14 @@ from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           LandTenureReportSerializer,
                           SimpleIndigenousGeojsonVillageSerializer,
                           SimpleIndigenousVillageKMLSerializer,
+                          SimpleIndigenousVillageSerializerWithPosition,
                           SimpleArchaeologicalPlaceGeojsonSerializer,
                           IndigenousVillageExportSerializer,
                           IndigenousLandExportSerializer, ProjectSerializer, )
 
 from .renderers import KMLRenderer
 
+from rest_framework import filters
 from io import BytesIO
 import zipfile
 from fiona.crs import from_epsg
@@ -113,6 +115,14 @@ class ArchaeologicalPlaceExportView(FilterLayersBySiteAndUserAuthenticatedMixin,
 class IndigenousVillageViewSet(FilterLayersBySiteAndUserAuthenticatedMixin, viewsets.ReadOnlyModelViewSet):
     queryset = IndigenousVillage.objects.all()
     serializer_class = IndigenousVillageSerializer
+
+
+class SimpleIndigenousVillageViewSetWithPosition(FilterLayersBySiteAndUserAuthenticatedMixin,
+                                                 viewsets.ReadOnlyModelViewSet):
+    queryset = IndigenousVillage.objects.all()
+    serializer_class = SimpleIndigenousVillageSerializerWithPosition
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ['name',]
 
 
 class FilterVillageMixin(object):
