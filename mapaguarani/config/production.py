@@ -28,8 +28,8 @@ SITE_ID = env("SITE_ID", default=1)
 
 INSTALLED_APPS += ("gunicorn", )
 
-MEDIA_ROOT = env('MEDIA_ROOT')
-STATIC_ROOT = env('STATIC_ROOT')
+MEDIA_ROOT = env('MEDIA_ROOT', default='/app/staticfiles/media')
+STATIC_ROOT = env('STATIC_ROOT', default='/app/staticfiles/static')
 # STATICFILES_DIRS = env('STATICFILES_DIRS')
 
 COMPRESS_OFFLINE = True
