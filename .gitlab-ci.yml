@@ -4,6 +4,7 @@ services:
   - docker:18.01.0-ce-dind
 stages:
   - build
+  - deploy
 
 variables:
   DJANGO_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/django:$CI_BUILD_REF_NAME
