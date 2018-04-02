@@ -15,6 +15,7 @@ from rest_framework import routers
 from rest_framework_cache.registry import cache_registry
 from rest_framework.urlpatterns import format_suffix_patterns
 
+from django.conf import settings
 
 admin.autodiscover()
 cache_registry.autodiscover()
@@ -70,3 +71,9 @@ urlpatterns = [
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
