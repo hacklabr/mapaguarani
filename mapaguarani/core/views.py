@@ -14,12 +14,12 @@ from collections import OrderedDict
 from rest_pandas import PandasView
 from boundaries.models import State, Country
 
-from .models import (IndigenousLand, IndigenousVillage, MapLayer,
+from .models import (IndigenousLand, IndigenousVillage, EthnicGroup, MapLayer,
                      ArchaeologicalPlace, LandTenure, LandTenureStatus,
                      Project,)
 from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           ArchaeologicalPlaceSerializer, ArchaeologicalPlaceExportSerializer,
-                          SimpleArchaeologicalPlaceKMLSerializer,
+                          SimpleArchaeologicalPlaceKMLSerializer, EthnicGroupSerializer,
                           LandTenureSerializer, LandTenureStatusSerializer,
                           IndigenousLandGeojsonSerializer, SimpleIndigenousLandKMLSerializer,
                           IndigenousVillageGeojsonSerializer, ArchaeologicalPlaceGeojsonSerializer,
@@ -168,6 +168,10 @@ class ArchaeologicalPlaceViewSet(FilterLayersBySiteAndUserAuthenticatedMixin, vi
     queryset = ArchaeologicalPlace.objects.all()
     serializer_class = ArchaeologicalPlaceSerializer
 
+
+class EthnicGroupViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = EthnicGroup.objects.all()
+    serializer_class = EthnicGroupSerializer
 
 class LandTenureViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = LandTenure.objects.all()
