@@ -4,7 +4,7 @@ from rest_framework_serializer_field_permissions import fields
 from rest_framework_serializer_field_permissions.serializers import FieldPermissionSerializerMixin
 from rest_framework_serializer_field_permissions.permissions import IsAuthenticated
 from .models import (IndigenousLand, IndigenousVillage, ArchaeologicalPlace, LandTenure, LandTenureStatus,
-                     GuaraniPresence, Population, Project, )
+                     GuaraniPresence, Population, Project, EthnicGroup)
 from protected_areas.serializers import BaseProtectedAreaSerializers
 from django.utils.translation import ugettext as _
 from rest_framework_cache.serializers import CachedSerializerMixin
@@ -17,6 +17,11 @@ class PopulationSerializer(serializers.ModelSerializer):
             model = Population
             fields = '__all__'
 
+
+class EthnicGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EthnicGroup
+        fields = '__all__'
 
 class GuaraniPresenceSerializer(serializers.ModelSerializer):
 
@@ -320,6 +325,31 @@ class SimpleIndigenousVillageSerializer(serializers.ModelSerializer):
     class Meta:
         model = IndigenousVillage
         fields = ['id', 'name']
+
+
+class SimpleIndigenousVillageSerializerWithPosition(CachedSerializerMixin,
+                                                    serializers.ModelSerializer):
+
+    def get_latitude(self, obj):
+        if obj.geometry:
+            return obj.geometry.get_y()
+        else:
+            return None
+
+    def get_longitude(self, obj):
+        if obj.geometry:
+            return obj.geometry.get_x()
+        else:
+            return None
+
+    latitude = serializers.SerializerMethodField()
+    longitude = serializers.SerializerMethodField()
+
+    class Meta:
+        model = IndigenousVillage
+        fields = ['id', 'name', 'latitude', 'longitude']
+
+cache_registry.register(SimpleIndigenousVillageSerializerWithPosition)
 
 
 class SimpleIndigenousGeojsonVillageSerializer(GeoFeatureModelSerializer,

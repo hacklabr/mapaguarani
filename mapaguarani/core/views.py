@@ -16,24 +16,26 @@ from rest_pandas import PandasView
 from boundaries.models import State, Country
 from spillway import views as spillway_views
 
-from .models import (IndigenousLand, IndigenousVillage, MapLayer,
+from .models import (IndigenousLand, IndigenousVillage, EthnicGroup, MapLayer,
                      ArchaeologicalPlace, LandTenure, LandTenureStatus,
                      Project,)
 from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           ArchaeologicalPlaceSerializer, ArchaeologicalPlaceExportSerializer,
-                          SimpleArchaeologicalPlaceKMLSerializer,
+                          SimpleArchaeologicalPlaceKMLSerializer, EthnicGroupSerializer,
                           LandTenureSerializer, LandTenureStatusSerializer,
                           IndigenousLandGeojsonSerializer, SimpleIndigenousLandKMLSerializer,
                           IndigenousVillageGeojsonSerializer, ArchaeologicalPlaceGeojsonSerializer,
                           LandTenureReportSerializer,
                           SimpleIndigenousGeojsonVillageSerializer,
                           SimpleIndigenousVillageKMLSerializer,
+                          SimpleIndigenousVillageSerializerWithPosition,
                           SimpleArchaeologicalPlaceGeojsonSerializer,
                           IndigenousVillageExportSerializer,
                           IndigenousLandExportSerializer, ProjectSerializer, )
 
 from .renderers import KMLRenderer, ProtobufRenderer
 
+from rest_framework import filters
 from io import BytesIO
 import zipfile
 from fiona.crs import from_epsg
@@ -117,6 +119,14 @@ class IndigenousVillageViewSet(FilterLayersBySiteAndUserAuthenticatedMixin, view
     serializer_class = IndigenousVillageSerializer
 
 
+class SimpleIndigenousVillageViewSetWithPosition(FilterLayersBySiteAndUserAuthenticatedMixin,
+                                                 viewsets.ReadOnlyModelViewSet):
+    queryset = IndigenousVillage.objects.all()
+    serializer_class = SimpleIndigenousVillageSerializerWithPosition
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ['name',]
+
+
 class FilterVillageMixin(object):
     def get_queryset(self):
         queryset = IndigenousVillage.objects.all()
@@ -160,6 +170,10 @@ class ArchaeologicalPlaceViewSet(FilterLayersBySiteAndUserAuthenticatedMixin, vi
     queryset = ArchaeologicalPlace.objects.all()
     serializer_class = ArchaeologicalPlaceSerializer
 
+
+class EthnicGroupViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = EthnicGroup.objects.all()
+    serializer_class = EthnicGroupSerializer
 
 class LandTenureViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = LandTenure.objects.all()

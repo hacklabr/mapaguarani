@@ -4,24 +4,29 @@ from django.views.generic.base import TemplateView
 from core.views import (IndigenousLandViewSet, IndigenousVillageViewSet,
                         ArchaeologicalPlaceViewSet, LandTenureViewSet, LandTenureStatusViewSet,
                         IndigenousLandsShapefileView, IndigenousVillagesShapefileView,
-                        ArchaeologicalPlaceKMLView,
+                        ArchaeologicalPlaceKMLView, EthnicGroupViewSet,
                         ArchaeologicalPlacesShapefileView, ArchaeologicalPlaceExportView, LandTenureReportViewSet,
                         IndigenousVillageGeojsonView,
+                        SimpleIndigenousVillageViewSetWithPosition,
                         ArchaeologicalPlaceGeojsonView, IndigenousVillageExportView, IndigenousVillageKMLView,
                         IndigenousLandExportView, IndigenousLandKMLView,
                         ProjectsViewSet,ReportView, EmbeddableTemplateView, ProtobufTileView)
 from rest_framework import routers
 from rest_framework_cache.registry import cache_registry
+
 from spillway import urls
+from django.conf import settings
 
 admin.autodiscover()
 cache_registry.autodiscover()
 
 router = routers.SimpleRouter()
+router.register(r'ethnic_groups', EthnicGroupViewSet)
 router.register(r'lands', IndigenousLandViewSet)
 router.register(r'land_tenures', LandTenureViewSet)
 router.register(r'land_tenures_status', LandTenureStatusViewSet)
 router.register(r'villages', IndigenousVillageViewSet)
+router.register(r'simple_villages_with_position', SimpleIndigenousVillageViewSetWithPosition)
 router.register(r'villages_geojson', IndigenousVillageGeojsonView)
 router.register(r'lands_kml', IndigenousLandKMLView, base_name='lands-kml')
 router.register(r'villages_kml', IndigenousVillageKMLView, base_name='villages-kml')
@@ -70,3 +75,8 @@ urlpatterns = [
 
 ]
 
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
