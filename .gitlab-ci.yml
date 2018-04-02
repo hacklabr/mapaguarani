@@ -22,7 +22,7 @@ build to homolog:
     - docker build -f compose/production/Dockerfile --target nginx -t $NGINX_RELEASE_IMAGE .
     - docker push $NGINX_RELEASE_IMAGE
   only:
-    - /django-upgrade/
+    - /master/
   environment: homolog
   tags:
     - docker
@@ -33,7 +33,7 @@ deploy to homolog:
  script:
    - upgrade --environment CTI --stack mapaguarani-dev --service backend --no-finish-upgrade --sidekicks
  only:
-   - /django-upgrade/
+   - /master/
  environment: homolog
  tags:
    - docker
