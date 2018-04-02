@@ -32,6 +32,7 @@ deploy to homolog:
  image: cdrx/rancher-gitlab-deploy
  script:
    - upgrade --environment CTI --stack mapaguarani-dev --service backend --no-finish-upgrade --sidekicks
+   - upgrade --environment CTI --stack mapatrabalhoindigenista-dev --service backend --no-finish-upgrade --sidekicks
  only:
    - /master/
  environment: homolog
