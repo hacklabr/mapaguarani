@@ -57,7 +57,8 @@ THIRD_PARTY_APPS = (
     'rest_framework_cache',
     'moderation',
     'mapwidgets',
-    'rules'
+    'rules',
+    'spillway',
 )
 
 # Apps specific for this project go here.

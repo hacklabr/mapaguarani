@@ -7,12 +7,14 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.db.models import Count, Q
 from django.views.generic import View
 from django.http import JsonResponse
+# FIXME
 import rest_framework_gis
 from rest_framework import viewsets, relations, serializers, generics
 from rest_framework_serializer_field_permissions import fields
 from collections import OrderedDict
 from rest_pandas import PandasView
 from boundaries.models import State, Country
+from spillway import views as spillway_views
 
 from .models import (IndigenousLand, IndigenousVillage, MapLayer,
                      ArchaeologicalPlace, LandTenure, LandTenureStatus,
@@ -30,7 +32,7 @@ from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           IndigenousVillageExportSerializer,
                           IndigenousLandExportSerializer, ProjectSerializer, )
 
-from .renderers import KMLRenderer
+from .renderers import KMLRenderer, ProtobufRenderer
 
 from io import BytesIO
 import zipfile
@@ -429,3 +431,9 @@ class ReportView(View):
         )
 
         return JsonResponse(data)
+
+
+class ProtobufTileView(spillway_views.TileView):
+    renderer_classes = (ProtobufRenderer)
+
+    

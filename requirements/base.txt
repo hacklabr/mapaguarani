@@ -47,8 +47,14 @@ rules==1.3
 # Bidirectional UTM-WGS84 coordinates converter for python, used only in archaeological layer import
 utm==0.4
 
+# django spillway for protobuf tile layer
+# django-spillway==0.7.0
+# git+https://github.com/hacklabr/django-spillway.git
+
 # GDAL: Required by Fiona and spillway
 GDAL==2.1
+
+mapbox-vector-tile==1.2.0
 
 # shapefile export
 Fiona==1.7.11

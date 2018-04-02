@@ -9,11 +9,10 @@ from core.views import (IndigenousLandViewSet, IndigenousVillageViewSet,
                         IndigenousVillageGeojsonView,
                         ArchaeologicalPlaceGeojsonView, IndigenousVillageExportView, IndigenousVillageKMLView,
                         IndigenousLandExportView, IndigenousLandKMLView,
-                        ProjectsViewSet,ReportView, EmbeddableTemplateView)
+                        ProjectsViewSet,ReportView, EmbeddableTemplateView, ProtobufTileView)
 from rest_framework import routers
 from rest_framework_cache.registry import cache_registry
-from rest_framework.urlpatterns import format_suffix_patterns
-
+from spillway import urls
 
 admin.autodiscover()
 cache_registry.autodiscover()
@@ -65,6 +64,9 @@ urlpatterns = [
         TemplateView.as_view(template_name='djangular.js', content_type='text/javascript'),
         name='djangular'),
 
+    url(urls.tilepath(r'^tiles/lands/'),
+        ProtobufTileView.as_view(),
+        name='lands-tiles'),
+
 ]
 
-urlpatterns = format_suffix_patterns(urlpatterns)
