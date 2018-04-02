@@ -23,6 +23,7 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh \
 RUN apt-get install -y \
                 nodejs \
                 build-essential \
+                gettext \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/*
 ## Finished installing Node ##
