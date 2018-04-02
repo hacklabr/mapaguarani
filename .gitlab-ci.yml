@@ -26,15 +26,13 @@ build to homolog:
   tags:
     - docker
 
-#deploy to homolog:
-#  stage: deploy
-#  image: cdrx/rancher-gitlab-deploy
-#  script:
-#    - upgrade --environment CTI --stack mapaguarani-dev --service backend --no-finish-upgrade --sidekicks
-#    - upgrade --environment CTI --stack mapaguarani-dev --service flower --no-finish-upgrade
-#    - upgrade --environment CTI --stack mapaguarani-dev --service worker --no-finish-upgrade
-#  only:
-#    - /django-upgrade/
-#  environment: homolog
-#  tags:
-#    - docker
+deploy to homolog:
+ stage: deploy
+ image: cdrx/rancher-gitlab-deploy
+ script:
+   - upgrade --environment CTI --stack mapaguarani-dev --service backend --no-finish-upgrade --sidekicks
+ only:
+   - /django-upgrade/
+ environment: homolog
+ tags:
+   - docker
