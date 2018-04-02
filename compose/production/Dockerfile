@@ -56,7 +56,9 @@ RUN mkdir /app/staticfiles
 
 # env.example must be used during build to provide a valid environment
 RUN export $(cat /app/env.example | grep -v ^# | xargs) && \
-    python /app/manage.py collectstatic --noinput
+    python /app/manage.py collectstatic --noinput && \
+    python /app/manage.py compress && \
+    python /app/manage.py compilemessages
 
 RUN chown -R django /app
 
