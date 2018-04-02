@@ -74,7 +74,12 @@ urlpatterns = [
 urlpatterns = format_suffix_patterns(urlpatterns)
 
 if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns = [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
+    try:
+        # Only activate debug_toolbar if it is available as a installed app
+        # Otherwise, pass this error silently
+        import debug_toolbar
+        urlpatterns = [
+            url(r'^__debug__/', include(debug_toolbar.urls)),
+        ] + urlpatterns
+    except ImportError:
+        pass
