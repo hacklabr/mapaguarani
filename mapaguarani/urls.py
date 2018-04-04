@@ -10,7 +10,7 @@ from core.views import (IndigenousLandViewSet, IndigenousVillageViewSet,
                         SimpleIndigenousVillageViewSetWithPosition,
                         ArchaeologicalPlaceGeojsonView, IndigenousVillageExportView, IndigenousVillageKMLView,
                         IndigenousLandExportView, IndigenousLandKMLView,
-                        ProjectsViewSet,ReportView, EmbeddableTemplateView)
+                        ProjectsViewSet,ReportView, EmbeddableTemplateView, ProminentEthnicSubGroupViewSet)
 from rest_framework import routers
 from rest_framework_cache.registry import cache_registry
 from rest_framework.urlpatterns import format_suffix_patterns
@@ -22,6 +22,7 @@ cache_registry.autodiscover()
 
 router = routers.SimpleRouter()
 router.register(r'ethnic_groups', EthnicGroupViewSet)
+router.register(r'prominent_ethnic_subgroups', ProminentEthnicSubGroupViewSet)
 router.register(r'lands', IndigenousLandViewSet)
 router.register(r'land_tenures', LandTenureViewSet)
 router.register(r'land_tenures_status', LandTenureStatusViewSet)

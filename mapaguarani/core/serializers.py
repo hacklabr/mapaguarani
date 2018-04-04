@@ -4,7 +4,7 @@ from rest_framework_serializer_field_permissions import fields
 from rest_framework_serializer_field_permissions.serializers import FieldPermissionSerializerMixin
 from rest_framework_serializer_field_permissions.permissions import IsAuthenticated
 from .models import (IndigenousLand, IndigenousVillage, ArchaeologicalPlace, LandTenure, LandTenureStatus,
-                     GuaraniPresence, Population, Project, EthnicGroup)
+                     GuaraniPresence, Population, Project, EthnicGroup, ProminentEthnicSubGroup)
 from protected_areas.serializers import BaseProtectedAreaSerializers
 from django.utils.translation import ugettext as _
 from rest_framework_cache.serializers import CachedSerializerMixin
@@ -21,6 +21,12 @@ class PopulationSerializer(serializers.ModelSerializer):
 class EthnicGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = EthnicGroup
+        fields = '__all__'
+
+
+class ProminentEthnicSubGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProminentEthnicSubGroup
         fields = '__all__'
 
 class GuaraniPresenceSerializer(serializers.ModelSerializer):

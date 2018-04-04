@@ -16,7 +16,7 @@ from boundaries.models import State, Country
 
 from .models import (IndigenousLand, IndigenousVillage, EthnicGroup, MapLayer,
                      ArchaeologicalPlace, LandTenure, LandTenureStatus,
-                     Project,)
+                     Project, ProminentEthnicSubGroup)
 from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           ArchaeologicalPlaceSerializer, ArchaeologicalPlaceExportSerializer,
                           SimpleArchaeologicalPlaceKMLSerializer, EthnicGroupSerializer,
@@ -29,7 +29,8 @@ from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           SimpleIndigenousVillageSerializerWithPosition,
                           SimpleArchaeologicalPlaceGeojsonSerializer,
                           IndigenousVillageExportSerializer,
-                          IndigenousLandExportSerializer, ProjectSerializer, )
+                          IndigenousLandExportSerializer, ProjectSerializer,
+                          ProminentEthnicSubGroupSerializer)
 
 from .renderers import KMLRenderer
 
@@ -330,11 +331,17 @@ class ArchaeologicalPlacesShapefileView(FilterLayersBySiteAndUserAuthenticatedMi
     file_name = 'sitios_arqueologicos'
 
 
+class ProminentEthnicSubGroupViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = ProminentEthnicSubGroupSerializer
+    queryset = ProminentEthnicSubGroup.objects.all()
+
+
 class LandTenureReportViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = LandTenure.objects.annotate(
         total_lands_count=Count('indigenous_lands'),
     )
     serializer_class = LandTenureReportSerializer
+
 
 class ReportView(View):
 
