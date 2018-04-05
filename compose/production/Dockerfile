@@ -74,4 +74,4 @@ CMD ["/gunicorn.sh"]
 FROM nginx:1.13 as nginx
 
 COPY ./compose/production/nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=django /app/mapaguarani/static/ /usr/share/nginx/html/static/
+COPY --from=django /app/staticfiles/static/ /usr/share/nginx/html/static/
