@@ -88,14 +88,17 @@
   controllers.controller('SingleCtrl', [
     '$state',
     '$scope',
+    '$stateParams',
     'Data',
     'guaraniMapService',
     'GuaraniService',
     'user',
-    function($state, $scope, data, Map, Guarani, user) {
+    function($state, $scope, $stateParams, data, Map, Guarani, user) {
 
       // State dependencies resolved, emit event to hide loading message
       $scope.$emit('mapaguarani.loaded');
+
+      window.stateParametros = $stateParams;
 
       // Store content type on scope
       $scope.type = $state.current.data.contentType;
@@ -142,7 +145,7 @@
         'GuaraniService',
         'user',
         function($state, $scope, Project, guaraniMapService, GuaraniService, user) {
-
+            console.log('Entrou no controller do mapaguarani-loaded')
             // State dependencies resolved, emit event to hide loading message
             $scope.$emit('mapaguarani.loaded');
 

@@ -28,7 +28,7 @@
 
       $stateProvider
       .state('home', {
-        url: '/?content&filter&page',
+        url: '/?content&filter&page&{z:int}&{x:int}&{y:int}',
         reloadOnSearch: false,
         controller: 'HomeCtrl',
         templateUrl: '/static/views/home.html',
