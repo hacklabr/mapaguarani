@@ -33,16 +33,16 @@
   /*
    * Store map layers
    */
-  var gm_roadmap = new L.gridLayer.googleMutant({type: 'roadmap'});
-  var gm_terrain = new L.gridLayer.googleMutant({type: 'terrain'});
-  var gm_hybrid = new L.gridLayer.googleMutant({type: 'hybrid'});
-  var gm_satellite = new L.gridLayer.googleMutant({type: 'satellite'});
+  var gm_roadmap = new L.gridLayer.googleMutant({type: 'roadmap', pane: 'base_tiles'});
+  var gm_terrain = new L.gridLayer.googleMutant({type: 'terrain', pane: 'base_tiles'});
+  var gm_hybrid = new L.gridLayer.googleMutant({type: 'hybrid', pane: 'base_tiles'});
+  var gm_satellite = new L.gridLayer.googleMutant({type: 'satellite', pane: 'base_tiles'});
 
   var access_token = 'pk.eyJ1IjoiYnJ1bm9zbWFydGluIiwiYSI6IjM1MTAyYTJjMWQ3NmVmYTg0YzQ0ZWFjZTg0MDZiYzQ3In0.ThelegmeGkO5Vwd6KTu6xA';
   var mapbox_url = 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={access_token}';
-  var mapbox_satellite = L.tileLayer(mapbox_url, {mapid: 'mapbox.satellite', access_token: access_token});
-  var mapbox_streets   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets', access_token: access_token});
-  var mapbox_hybrid   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets-satellite', access_token: access_token});
+  var mapbox_satellite = L.tileLayer(mapbox_url, {mapid: 'mapbox.satellite', access_token: access_token, pane: 'base_tiles'});
+  var mapbox_streets   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets', access_token: access_token, pane: 'base_tiles'});
+  var mapbox_hybrid   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets-satellite', access_token: access_token, pane: 'base_tiles'});
 
   // Official layers
   var default_host = window.location.hostname;
@@ -380,6 +380,15 @@
           // Store map leaflet object on map service
           Map.setMap(map);
 
+          map.createPane('base_tiles');
+          map.getPane('base_tiles').style.zIndex = 50;
+
+          map.createPane('markers');
+          map.getPane('markers').style.zIndex = 650;
+
+          map.createPane('lands');
+          map.getPane('lands').style.zIndex = 400;
+
           // Add base layers
           map.addLayer(gm_hybrid);
           var baselayers = {
@@ -431,16 +440,46 @@
           /*
            * Init Lands layer
            */
-          var default_host = $window.location.hostname;
-          var landsLayer = L.tileLayer('http://' + default_host + ':4000/indigenousland/{z}/{x}/{y}.png', {
-           zIndex: 10
-          });
-          var landsGridLayer = new L.UtfGrid('http://' + default_host + ':4000/indigenousland/{z}/{x}/{y}.grid.json?interactivity=id,name', {
-           useJsonP: false
-          });
-          landsGridLayer.on('click', function(ev) {
-            if(ev.data)
-              $state.go('land', {id: ev.data.id, focus: false});
+          var vectorTileStyling = {
+            lands: function(properties, zoom) {
+              var styles = {
+                  weight: 2,
+                  fillColor: properties.land_tenure_map_color,
+                  color: '#c9d119',
+                  fillOpacity: 0.7,
+                  opacity: 0.7,
+                  fill: true,
+              };
+              if (zoom >= 8)
+              styles.weight = 3;
+              if (zoom >= 10)
+              styles.weight = 5;
+              if (zoom >= 12)
+              styles.fill = false;
+              if (properties.land_tenure_status_dashed_border) {
+                if (zoom >= 10)
+                  styles.dashArray = '6, 9';
+                else
+                  styles.dashArray = '2, 2';
+              }
+              return styles
+            }
+          }
+          var mapboxVectorTileOptions = {
+            endererFactory: L.canvas.tile,
+            vectorTileLayerStyles: vectorTileStyling,
+            interactive: true,
+            getFeatureId: function(feat) {
+              return feat.properties.cti_id;
+            },
+            pane: 'lands',
+          };
+          var landstilesUrl = '/tiles/lands/{z}/{x}/{y}.pbf';
+          var landsLayer = L.vectorGrid.protobuf(landstilesUrl, mapboxVectorTileOptions);
+
+          landsLayer.on('click', function(ev) {
+            if (ev.layer && ev.layer.properties)
+              $state.go('land', {id: ev.layer.properties.cti_id, focus: false});
           });
 
           var landsLegend = L.control({'position': 'bottomright'});
@@ -476,13 +515,12 @@
           // Store interactive layer configuration object
           scope.interactiveLayers.lands = {
             tile: landsLayer,
-            grid: landsGridLayer,
             legend: landsLegend,
             active: true
           };
           landsLayer.name = 'lands';
           map.addLayer(landsLayer);
-          map.addLayer(landsGridLayer);
+          landsLayer.addTo(map);
 
           /*
            * Init archaeological sites layer
@@ -503,9 +541,11 @@
                         weight: 2,
                         opacity: 0.8,
                         fillOpacity: 0.8,
+                        pane: 'markers',
                     });
                     return marker
-                }
+                },
+                pane: 'markers',
             });
             var sitesLayer = L.markerClusterGroup({
                 maxClusterRadius: 20,
@@ -572,9 +612,11 @@
                             weight: 2,
                             opacity: 0.8 * (1 - factor),
                             fillOpacity: 0.8 * factor,
+                            pane: 'markers',
                         });
                         return marker
-                    }
+                    },
+                    pane: 'markers',
                 });
                 // var villagesLayer = L.vectorGrid.slicer(villages_geojson);
                 // map.addLayer(villagesLayer);
@@ -600,6 +642,7 @@
                                           className: 'village-marker-cluster-' + class_sufix,
                                           iconSize: L.point(radius, radius)});
                     },
+                    pane: 'markers',
                 });
                 villagesLayer.addLayer(villagesLayerMarkers);
 
@@ -653,13 +696,9 @@
                 if(scope.interactiveLayers[layer].active) {
                   scope.interactiveLayers[layer].active = false;
                   map.removeLayer(scope.interactiveLayers[layer].tile);
-                  if (layer === 'lands')
-                    map.removeLayer(scope.interactiveLayers[layer].grid);
                 } else {
                   scope.interactiveLayers[layer].active = true;
                   map.addLayer(scope.interactiveLayers[layer].tile);
-                  if (layer === 'lands')
-                    map.addLayer(scope.interactiveLayers[layer].grid);
                 }
               }
           });

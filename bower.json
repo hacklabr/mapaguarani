@@ -22,20 +22,10 @@
     "angular": "1.5.x",
     "angular-resource": "1.5.x",
     "angular-sanitize": "1.5.x",
-    "leaflet": "1.0.x",
-    "leaflet.markercluster": "1.0.x",
-    "Leaflet.GridLayer": "https://gitlab.com/IvanSanchez/Leaflet.GridLayer.GoogleMutant.git",
     "angular-ui-router": "0.3.x",
     "font-awesome": "^4.6.3",
-    "leaflet.vectorgrid": "https://github.com/Leaflet/Leaflet.VectorGrid.git",
-    "leaflet-tilelayer-geojson": "*",
-    "Leaflet.MakiMarkers": "*",
     "bootstrap": "~3.3.4",
     "bootstrap-sass": "~3.3.5",
     "underscore": "~1.8.3",
-    "Leaflet.utfgrid": "https://github.com/danzel/Leaflet.utfgrid.git"
   },
-  "resolutions": {
-    "leaflet": ">= 1.0.0"
-  }
 }
