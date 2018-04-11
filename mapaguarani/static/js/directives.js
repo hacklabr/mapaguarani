@@ -365,28 +365,8 @@
           zoom: '='
         },
         link: function(scope, element, attrs) {
-
-          window.parametraTudo = $stateParams;
-          console.log('quero ver o stateParams');
-          console.log($state.Params);
-          console.log($state.params);
-          console.log($stateParams);
-          window.estadual = $stateParams;
-
-          console.log('$stateParams.x é ' + $stateParams.x);
-          console.log('$stateParams.y é ' + $stateParams.y);
-
-          if (!!$stateParams.x && !!$stateParams.y) {
-              console.dir('entrou no if');
-            center = [$stateParams.x, $stateParams.y];
-          } else {
-              console.log('entrou no else');
-            var center = scope.center || [-16.107747, -51.103348];
-          }
-
-          console.log('center é ' + center);
+          var center = scope.center || [-16.107747, -51.103348];
           var zoom = scope.zoom || 5;
-          console.log('zoom é ' + zoom)
 
           angular.element(element).append('<div id="' + attrs.id + '"></div>"').attr('id', '');
 
@@ -401,9 +381,6 @@
           // Store map leaflet object on map service
           Map.setMap(map);
 
-          window.mapao = Map;
-          window.janelao = $window;
-          window.estado = $state;
           // window.routeParams = $routeParams;
 
           // Add base layers
