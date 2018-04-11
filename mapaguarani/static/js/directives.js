@@ -352,10 +352,12 @@
     'GuaraniService',
     'guaraniMapService',
     '$rootScope',
-    '$state',
-    '$window',
     '$http',
-    function(Guarani, Map, $rootScope, $state, $window, $http) {
+    '$state',
+    '$stateParams',
+    '$window',
+    // '$routeParams',
+    function(Guarani, Map, $rootScope, $http, $state, $stateParams, $window) {
       return {
         restrict: 'E',
         scope: {
@@ -363,7 +365,6 @@
           zoom: '='
         },
         link: function(scope, element, attrs) {
-
           var center = scope.center || [-16.107747, -51.103348];
           var zoom = scope.zoom || 5;
 

@@ -49,9 +49,19 @@
 
       // Watch and store map from MapService
       var map;
+
       $scope.$watch(function() {
         return Map.getMap();
       }, function(m) {
+          if($stateParams.x && $stateParams.y && $stateParams.z) {
+            var x = parseFloat($stateParams.x);
+            var y = parseFloat($stateParams.y);
+            var z = parseFloat($stateParams.z);
+            m.setView([x, y], z);
+          }
+          m.on('moveend', function(e) {
+              $state.go('home', {x: m.getCenter()['lat'], y: m.getCenter()['lng'], z: m.getZoom()}, {notify: false});
+          });
         map = m;
       });
 
@@ -88,11 +98,12 @@
   controllers.controller('SingleCtrl', [
     '$state',
     '$scope',
+    '$stateParams',
     'Data',
     'guaraniMapService',
     'GuaraniService',
     'user',
-    function($state, $scope, data, Map, Guarani, user) {
+    function($state, $scope, $stateParams, data, Map, Guarani, user) {
 
       // State dependencies resolved, emit event to hide loading message
       $scope.$emit('mapaguarani.loaded');
@@ -142,7 +153,6 @@
         'GuaraniService',
         'user',
         function($state, $scope, Project, guaraniMapService, GuaraniService, user) {
-
             // State dependencies resolved, emit event to hide loading message
             $scope.$emit('mapaguarani.loaded');
 
