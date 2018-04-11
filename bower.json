@@ -27,5 +27,5 @@
     "bootstrap": "~3.3.4",
     "bootstrap-sass": "~3.3.5",
     "underscore": "~1.8.3"
-  },
+  }
 }
