@@ -3,6 +3,8 @@ from django.template import loader
 from rest_framework.renderers import BaseRenderer, JSONRenderer
 from spillway import collections
 
+import mapbox_vector_tile
+
 
 class TemplateRenderer(BaseRenderer):
     template_name = None
@@ -33,14 +35,16 @@ class ProtobufRenderer(JSONRenderer):
     This renderer purposefully avoids reserialization of Protobuf from GeoJSON from the
     spatial backend which greatly improves performance.
     """
-    media_type = 'application/vnd.geo+json'
-    format = 'geojson'
+    media_type = 'vnd.mapbox-vector-tile'
+    format = 'pbf'
 
     def render(self, data, accepted_media_type=None, renderer_context=None):
         """Returns *data* encoded as GeoJSON."""
-        data = collections.as_feature(data)
-        try:
-            return data.geojson
-        except AttributeError:
-            return super(GeoJSONRenderer, self).render(
-                data, accepted_media_type, renderer_context)
+
+        if isinstance(data, list):
+            data = collections.as_feature(data)
+
+        data['name'] = 'lands'
+        for index, features in enumerate(data['features']):
+            data['features'][index]['name'] = 'lands'
+        return mapbox_vector_tile.encode(data)

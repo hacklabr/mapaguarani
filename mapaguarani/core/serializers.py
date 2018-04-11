@@ -559,6 +559,34 @@ class IndigenousLandGeojsonSerializer(IndigenousLandExportSerializer,
                   'private_comments', 'layer']
 
 
+class IndigenousLandProtobufSerializer(IndigenousLandSerializer,
+                                      GeoFeatureModelSerializer,
+                                      CachedSerializerMixin):
+
+    # Trick to avoid fiona error
+    cti_id = fields.ReadOnlyField(source='id')
+    land_tenure_map_color = serializers.SerializerMethodField()
+    land_tenure_status_dashed_border = serializers.SerializerMethodField()
+
+    class Meta:
+        model = IndigenousLand
+        geo_field = 'geometry'
+        fields = ['cti_id', 'name', 'land_tenure_status_dashed_border' ,'land_tenure_map_color',]
+        depth = 1
+
+    @staticmethod
+    def get_land_tenure_map_color(obj):
+        if obj.land_tenure:
+            return obj.land_tenure.map_color
+
+    @staticmethod
+    def get_land_tenure_status_dashed_border(obj):
+        if obj.land_tenure_status:
+            return obj.land_tenure_status.dashed_border
+
+cache_registry.register(IndigenousLandProtobufSerializer)
+
+
 class ArchaeologicalPlaceSerializer(ProtectedAreasMixinSerializer, BasePointMixinSerializer):
 
     position_precision = serializers.SerializerMethodField()

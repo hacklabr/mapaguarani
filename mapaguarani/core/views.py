@@ -14,7 +14,13 @@ from rest_framework_serializer_field_permissions import fields
 from collections import OrderedDict
 from rest_pandas import PandasView
 from boundaries.models import State, Country
+
 from spillway import views as spillway_views
+from spillway.generics import BaseGeoView
+from spillway.serializers import GeoModelSerializer
+from spillway.filters import TileFilter
+from spillway.mixins import ResponseExceptionMixin
+from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 from .models import (IndigenousLand, IndigenousVillage, EthnicGroup, MapLayer,
                      ArchaeologicalPlace, LandTenure, LandTenureStatus,
@@ -31,7 +37,8 @@ from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           SimpleIndigenousVillageSerializerWithPosition,
                           SimpleArchaeologicalPlaceGeojsonSerializer,
                           IndigenousVillageExportSerializer,
-                          IndigenousLandExportSerializer, ProjectSerializer, )
+                          IndigenousLandExportSerializer, ProjectSerializer,
+                          IndigenousLandProtobufSerializer,)
 
 from .renderers import KMLRenderer, ProtobufRenderer
 
@@ -447,7 +454,20 @@ class ReportView(View):
         return JsonResponse(data)
 
 
-class ProtobufTileView(spillway_views.TileView):
-    renderer_classes = (ProtobufRenderer)
+class ProtobufTileView(ResponseExceptionMixin, BaseGeoView,
+                       generics.ListAPIView):
+    pagination_class = None
+    filter_backends = (TileFilter,)
+    renderer_classes = (ProtobufRenderer,)
+    model_serializer_class = GeoModelSerializer
 
-    
+    def get(self, request, *args, **kwargs):
+        # import ipdb;ipdb.set_trace()
+        # if isinstance(request.accepted_renderer,
+        #               ProtobufRenderer):
+        return super(ProtobufTileView, self).get(request, *args, **kwargs)
+
+
+class LandsProtobufTileView(FilterLayersBySiteAndUserAuthenticatedMixin, ProtobufTileView):
+    queryset = IndigenousLand.objects.all()
+    serializer_class = IndigenousLandProtobufSerializer

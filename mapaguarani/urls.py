@@ -10,7 +10,9 @@ from core.views import (IndigenousLandViewSet, IndigenousVillageViewSet,
                         SimpleIndigenousVillageViewSetWithPosition,
                         ArchaeologicalPlaceGeojsonView, IndigenousVillageExportView, IndigenousVillageKMLView,
                         IndigenousLandExportView, IndigenousLandKMLView,
-                        ProjectsViewSet,ReportView, EmbeddableTemplateView, ProtobufTileView)
+                        ProjectsViewSet,ReportView, EmbeddableTemplateView, ProtobufTileView,
+                        LandsProtobufTileView,)
+from core.models import CtiProtectedArea, CtiCity, CtiState, CtiCountry
 from rest_framework import routers
 from rest_framework_cache.registry import cache_registry
 
@@ -70,9 +72,24 @@ urlpatterns = [
         name='djangular'),
 
     url(urls.tilepath(r'^tiles/lands/'),
-        ProtobufTileView.as_view(),
-        name='lands-tiles'),
+        LandsProtobufTileView.as_view(),
+        name='lands-tile'),
 
+    url(urls.tilepath(r'^tiles/protected_areas/'),
+        ProtobufTileView.as_view(queryset=CtiProtectedArea.objects.all()),
+        name='protected-areas-tile'),
+
+    url(urls.tilepath(r'^tiles/cities/'),
+        ProtobufTileView.as_view(queryset=CtiCity.objects.all()),
+        name='cities-tile'),
+
+    url(urls.tilepath(r'^tiles/states/'),
+        ProtobufTileView.as_view(queryset=CtiState.objects.all()),
+        name='states-tile'),
+
+    url(urls.tilepath(r'^tiles/countries/'),
+        ProtobufTileView.as_view(queryset=CtiCountry.objects.all()),
+        name='countries-tile'),
 ]
 
 if settings.DEBUG:

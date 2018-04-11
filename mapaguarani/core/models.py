@@ -6,6 +6,7 @@ from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import Group as UserGroup
 from boundaries.models import City, State, Country
+from spillway.query import GeoQuerySet
 
 # import rules
 
@@ -535,6 +536,7 @@ class IndigenousLand(IndigenousPlace):
                                            Atenção à descrição das camadas para associar corretamente a terra indígena à camada correta.
                                            Adicionar ou Modificar Documento de Terra Indígena""")  # TODO: fix typo
 
+    objects = GeoQuerySet.as_manager()
     class Meta:
         verbose_name = _('Indigenous Land')
         verbose_name_plural = _('Indigenous Lands')
@@ -716,3 +718,25 @@ class ArchaeologicalImage(models.Model):
         verbose_name_plural = _('Archaeological Images')
 
 
+class CtiProtectedArea(BaseProtectedArea):
+    objects = GeoQuerySet.as_manager()
+    class Meta:
+        proxy = True
+
+
+class CtiCity(City):
+    objects = GeoQuerySet.as_manager()
+    class Meta:
+        proxy = True
+
+
+class CtiState(State):
+    objects = GeoQuerySet.as_manager()
+    class Meta:
+        proxy = True
+
+
+class CtiCountry(Country):
+    objects = GeoQuerySet.as_manager()
+    class Meta:
+        proxy = True
