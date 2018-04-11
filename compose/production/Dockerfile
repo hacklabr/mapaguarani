@@ -23,6 +23,7 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh \
 RUN apt-get install -y \
                 nodejs \
                 build-essential \
+                gettext \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/*
 ## Finished installing Node ##
@@ -56,7 +57,9 @@ RUN mkdir /app/staticfiles
 
 # env.example must be used during build to provide a valid environment
 RUN export $(cat /app/env.example | grep -v ^# | xargs) && \
-    python /app/manage.py collectstatic --noinput
+    python /app/manage.py collectstatic --noinput && \
+    python /app/manage.py compress && \
+    python /app/manage.py compilemessages
 
 RUN chown -R django /app
 

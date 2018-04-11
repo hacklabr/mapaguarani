@@ -24,7 +24,7 @@ from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 from .models import (IndigenousLand, IndigenousVillage, EthnicGroup, MapLayer,
                      ArchaeologicalPlace, LandTenure, LandTenureStatus,
-                     Project,)
+                     Project, ProminentEthnicSubGroup)
 from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           ArchaeologicalPlaceSerializer, ArchaeologicalPlaceExportSerializer,
                           SimpleArchaeologicalPlaceKMLSerializer, EthnicGroupSerializer,
@@ -38,7 +38,7 @@ from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           SimpleArchaeologicalPlaceGeojsonSerializer,
                           IndigenousVillageExportSerializer,
                           IndigenousLandExportSerializer, ProjectSerializer,
-                          IndigenousLandProtobufSerializer,)
+                          IndigenousLandProtobufSerializer, ProminentEthnicSubGroupSerializer)
 
 from .renderers import KMLRenderer, ProtobufRenderer
 
@@ -339,11 +339,17 @@ class ArchaeologicalPlacesShapefileView(FilterLayersBySiteAndUserAuthenticatedMi
     file_name = 'sitios_arqueologicos'
 
 
+class ProminentEthnicSubGroupViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = ProminentEthnicSubGroupSerializer
+    queryset = ProminentEthnicSubGroup.objects.all()
+
+
 class LandTenureReportViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = LandTenure.objects.annotate(
         total_lands_count=Count('indigenous_lands'),
     )
     serializer_class = LandTenureReportSerializer
+
 
 class ReportView(View):
 

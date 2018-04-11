@@ -84,17 +84,3 @@ docker run --env-file=./compose/test/test_env --link=postgres_test:postgres \
 
 As camadas extras de dados de Paraguai, Bolivia e Argentina vieram do Who's On First Gazeteer.
 
-### Argentina:
-No link abaixo, escolher os itens "country" e "county"
-
-https://whosonfirst.mapzen.com/spelunker/download/85632505/?exclude=nullisland
-
-
-### Bolivia
-No link abaixo, escolher os itens "country", "region" e "county"
-https://whosonfirst.mapzen.com/spelunker/download/85632623/?exclude=nullisland
-
-
-Paraguai:
-No link abaixo, escolher os itens "country", "region" e "county"
-https://whosonfirst.mapzen.com/spelunker/download/85632355/?exclude=nullisland

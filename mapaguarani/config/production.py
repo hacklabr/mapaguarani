@@ -26,13 +26,15 @@ SITE_ID = env("SITE_ID", default=1)
 
 # END SITE CONFIGURATION
 
-INSTALLED_APPS += ("gunicorn", )
+INSTALLED_APPS += ('gunicorn', )
+INSTALLED_APPS += ('raven.contrib.django.raven_compat', )
 
 MEDIA_ROOT = env('MEDIA_ROOT', default='/app/staticfiles/media')
 STATIC_ROOT = env('STATIC_ROOT', default='/app/staticfiles/static')
 # STATICFILES_DIRS = env('STATICFILES_DIRS')
 
 COMPRESS_OFFLINE = True
+COMPRESS_ROOT = env('COMPRESS_ROOT', default=STATIC_ROOT)
 COMPRESS_OUTPUT_DIR = ''
 
 # EMAIL

@@ -11,7 +11,7 @@ from core.views import (IndigenousLandViewSet, IndigenousVillageViewSet,
                         ArchaeologicalPlaceGeojsonView, IndigenousVillageExportView, IndigenousVillageKMLView,
                         IndigenousLandExportView, IndigenousLandKMLView,
                         ProjectsViewSet,ReportView, EmbeddableTemplateView, ProtobufTileView,
-                        LandsProtobufTileView,)
+                        LandsProtobufTileView, ProminentEthnicSubGroupViewSet, )
 from core.models import CtiProtectedArea, CtiCity, CtiState, CtiCountry
 from rest_framework import routers
 from rest_framework_cache.registry import cache_registry
@@ -24,6 +24,7 @@ cache_registry.autodiscover()
 
 router = routers.SimpleRouter()
 router.register(r'ethnic_groups', EthnicGroupViewSet)
+router.register(r'prominent_ethnic_subgroups', ProminentEthnicSubGroupViewSet)
 router.register(r'lands', IndigenousLandViewSet)
 router.register(r'land_tenures', LandTenureViewSet)
 router.register(r'land_tenures_status', LandTenureStatusViewSet)
@@ -93,7 +94,12 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns = [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
+    try:
+        # Only activate debug_toolbar if it is available as a installed app
+        # Otherwise, pass this error silently
+        import debug_toolbar
+        urlpatterns = [
+            url(r'^__debug__/', include(debug_toolbar.urls)),
+        ] + urlpatterns
+    except ImportError:
+        pass
