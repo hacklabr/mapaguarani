@@ -173,6 +173,11 @@ class ProjectAdmin(admin.ModelAdmin):
                          'layers', 'files', 'links', )
 
 
+@admin.register(MapLayer)
+class MapLayerAdmin(admin.ModelAdmin):
+    filter_horizontal = ('permission_groups', 'sites')
+
+
 admin.site.register(DocumentType)
 admin.site.register(Document)
 admin.site.register(EthnicGroup)
@@ -181,7 +186,6 @@ admin.site.register(LandTenure)
 admin.site.register(LandTenureStatus)
 admin.site.register(GuaraniPresence)
 admin.site.register(Population)
-admin.site.register(MapLayer)
 admin.site.register(Organization)
 admin.site.register(ActionField)
 admin.site.register(ProjectLink)
