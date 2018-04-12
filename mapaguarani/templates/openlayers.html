@@ -155,7 +155,7 @@
         var latitude = e.params.data.latitude;
         var longitude = e.params.data.longitude;
         var options = {steps: 64, units: 'kilometers'};
-        var radius = 1;
+        var radius = 0.25;
         var format = new OpenLayers.Format.GeoJSON();
 
         var circle = turf.circle([longitude, latitude], radius, options);
