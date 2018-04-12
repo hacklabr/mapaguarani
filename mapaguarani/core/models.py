@@ -53,7 +53,7 @@ class MapLayer(models.Model):
         max_length=256,
         default=TYPE[3][0]
     )
-    permission_groups = models.ManyToManyField(UserGroup, related_name='permission_groups')
+    permission_groups = models.ManyToManyField(UserGroup, related_name='permission_groups', verbose_name=_('Permission Groups'))
 
     class Meta:
         verbose_name = _('Map Layer')

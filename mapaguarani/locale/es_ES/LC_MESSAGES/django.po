@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-12 12:38-0300\n"
+"POT-Creation-Date: 2018-04-12 12:42-0300\n"
 "PO-Revision-Date: 2018-04-11 22:15-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -129,6 +129,12 @@ msgstr "Estado"
 #: mapaguarani/core/models.py:137
 msgid "Type"
 msgstr "Tipo"
+
+#: mapaguarani/core/models.py:56
+#, fuzzy
+#| msgid "Permission Groups-"
+msgid "Permission Groups"
+msgstr "Grupos de Permisión"
 
 #: mapaguarani/core/models.py:59
 msgid "Map Layer"
