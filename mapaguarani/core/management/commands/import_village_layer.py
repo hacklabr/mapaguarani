@@ -42,40 +42,37 @@ class Command(BaseCommand):
 
         for feat in source_layer:
 
-            villages_layer, _ = MapLayer.objects.get_or_create(name=feat.get('CAMADA'))
+            villages_layer, _ = MapLayer.objects.get_or_create(name=feat.get('layer'))
             villages_layer.save()
-
-            # FIXME surround all feat.get with try catch
             kwargs = {
                 'layer': villages_layer,
             }
-
             try:
-                kwargs['name'] = feat.get('ALDEIA_GUA')
+                kwargs['name'] = feat.get('name')
             except:
                 kwargs['name'] = ''
                 # print('Nome da aldeia ausente')
 
             try:
-                kwargs['other_names'] = feat.get('OUTRAS_DEN')
+                kwargs['other_names'] = feat.get('other_name')
             except:
                 kwargs['other_names'] = ''
                 # print('Outras denominações da aldeia ausente')
 
             try:
-                kwargs['position_source'] = feat.get('FONTE_LOCA')
+                kwargs['position_source'] = feat.get('position_source')
             except:
                 kwargs['position_source'] = ''
                 # print('Fonte da localização da aldeia ausente')
 
             try:
-                kwargs['private_comments'] = feat.get('OBSERVACOE')
+                kwargs['private_comments'] = feat.get('private_co')
             except:
                 kwargs['private_comments'] = ''
                 # print('Observações restritas da aldeia ausente')
 
             try:
-                kwargs['public_comments'] = feat.get('OBSERVACO2')
+                kwargs['public_comments'] = feat.get('public_com')
             except:
                 kwargs['public_comments'] = ''
                 # print('Observações da aldeia ausente')
@@ -83,12 +80,12 @@ class Command(BaseCommand):
             indigenous_village = IndigenousVillage(**kwargs)
 
             try:
-                position_precision = feat.get('PRECISAO_D')
+                position_precision = feat.get('position_p')
             except:
                 position_precision = None
                 # print('Nome da aldeia ausente')
 
-            if position_precision == 'Exata' or position_precision == 'Exato':
+            if position_precision == 'Exata' or position_precision == 'Exato' or position_precision == 'Exact':
                 indigenous_village.position_precision = 'exact'
             elif position_precision == 'Aproximada':
                 indigenous_village.position_precision = 'approximate'
@@ -108,7 +105,7 @@ class Command(BaseCommand):
                 self.stdout.write('Falha ao salvar aldeia indígena\n')
 
             try:
-                ethnic_groups_raw = feat.get('GRUPO_ETNI')
+                ethnic_groups_raw = feat.get('ethnic_gro')
                 ethnic_groups = _get_ethnic_group(ethnic_groups_raw)
                 for group in ethnic_groups:
                     indigenous_village.ethnic_groups.add(group)
@@ -116,7 +113,7 @@ class Command(BaseCommand):
                 pass
 
             try:
-                ethnic_subgroups_raw = feat.get('SUB_GRUPO_')
+                ethnic_subgroups_raw = feat.get('prominent_')
                 ethnic_subgroups = _get_ethnic_subgroup(ethnic_subgroups_raw)
                 for ethnic_subgroup in ethnic_subgroups:
                     indigenous_village.prominent_subgroup.add(ethnic_subgroup)
@@ -124,13 +121,13 @@ class Command(BaseCommand):
                 pass
 
             try:
-                guarani_presence = feat.get('PRESENCA_G')
+                guarani_presence = feat.get('guarani_pr')
             except:
                 guarani_presence = ''
-            if guarani_presence == 'Sim':
+            if guarani_presence == 'Sim' or guarani_presence == 'Habitada atualmente':
                 # FIXME ver questão da fonte.
                 guarani_presence = GuaraniPresence(
-                    presence=True, date=datetime.date(2015, 1, 1), source='CTI', village=indigenous_village)
+                    presence=True, date=datetime.date(2016, 1, 1), source='Mapa Guarani Continental 2016', village=indigenous_village)
                 guarani_presence.save()
             elif guarani_presence == 'Não':
                 pass
@@ -138,7 +135,7 @@ class Command(BaseCommand):
                 self.stdout.write('Falha ao ler Presença Guarani. Valor: ' + guarani_presence)
 
             try:
-                population = feat.get('POPULACAO_')
+                population = feat.get('population')
             except:
                 population = None
             if population:
@@ -146,13 +143,13 @@ class Command(BaseCommand):
                     population = int(population.split()[0])
                     population = Population(
                         population=population,
-                        date=datetime.date(2013, 1, 1),
-                        source=feat.get('FONTE_POPU'),
+                        date=datetime.date(2016, 1, 1),
+                        source='Mapa Guarani Continental 2016',
                         village=indigenous_village
                     )
                     population.save()
                 except:
-                    self.stdout.write('Falha ao ler população. População: ' + population)
+                    self.stdout.write('Falha ao ler população. População: ' + str(population))
 
             indigenous_village.save()
 
