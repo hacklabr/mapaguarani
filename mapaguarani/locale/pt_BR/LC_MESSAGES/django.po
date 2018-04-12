@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-11 20:13-0300\n"
+"POT-Creation-Date: 2018-04-12 12:38-0300\n"
 "PO-Revision-Date: 2018-04-11 20:24-0300\n"
 "Last-Translator: b'  <bruno@hacklab.com.br>'\n"
 "Language-Team: \n"
@@ -425,11 +425,15 @@ msgid "Guarani indigenous villages layer"
 msgstr "Camada de aldeias indígenas Guarani"
 
 #: mapaguarani/core/models.py:604
-msgid "Legal Proceding"
+#, fuzzy
+#| msgid "Legal Proceding"
+msgid "Legal Proceeding"
 msgstr "Ação Judicial"
 
 #: mapaguarani/core/models.py:605
-msgid "Legal Procedings"
+#, fuzzy
+#| msgid "Legal Procedings"
+msgid "Legal Proceedings"
 msgstr "Ações Judiciais"
 
 #: mapaguarani/core/models.py:615
@@ -580,6 +584,85 @@ msgstr ""
 
 #: mapaguarani/templates/index.html:35
 msgid "Sobre"
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:7
+msgid "Relatórios sobre as Terras Indígenas"
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:11
+msgid "Quadro Resumo"
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:12
+msgid "Downloads"
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:18
+msgid "Quadro Resumo da Presença dos Povos Guarani no Brasil"
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:23
+msgid "Terras Indígenas com presença dos povos Guarani"
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:27
+#, fuzzy
+#| msgid "Description"
+msgid "Descrição"
+msgstr "Descrição"
+
+#: mapaguarani/templates/modals/reports-modal.html:28
+msgid "Total"
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:36
+msgid "TIs com Uso Exclusivo dos Guarani"
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:63
+msgid "TIs de Outros povos com Presença Guarani"
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:125
+msgid ""
+"Você pode baixar a planilha das terras indigenas, e os shapefiles das "
+"camadas de Aldeias e Terras Indígenas"
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:126
+msgid ""
+"A geração destes arquivos pode demorar vários minutos, por favor aguarde o "
+"download começar após clicar abaixo no arquivo abaixo desejado."
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:129
+msgid "Arquivos Terras Indígenas"
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:130
+#: mapaguarani/templates/modals/reports-modal.html:139
+#: mapaguarani/templates/modals/reports-modal.html:148
+#: mapaguarani/templates/modals/reports-modal.html:157
+msgid "baixar Planilha Excel"
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:131
+#: mapaguarani/templates/modals/reports-modal.html:140
+#: mapaguarani/templates/modals/reports-modal.html:149
+#: mapaguarani/templates/modals/reports-modal.html:158
+msgid "baixar KML"
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:133
+#: mapaguarani/templates/modals/reports-modal.html:142
+#: mapaguarani/templates/modals/reports-modal.html:151
+#: mapaguarani/templates/modals/reports-modal.html:160
+msgid "baixar Shapefile"
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:168
+msgid "Fechar"
 msgstr ""
 
 #: mapaguarani/templates/moderation/notification_message_moderator.txt:2

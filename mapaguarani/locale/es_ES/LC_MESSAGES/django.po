@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-11 21:05-0300\n"
+"POT-Creation-Date: 2018-04-12 12:38-0300\n"
 "PO-Revision-Date: 2018-04-11 22:15-0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "X-Generator: Poedit 2.0.4\n"
 
 #: mapaguarani/config/common.py:176
@@ -423,11 +423,15 @@ msgid "Guarani indigenous villages layer"
 msgstr "Capas de tierras indígenas Guarani"
 
 #: mapaguarani/core/models.py:604
-msgid "Legal Proceding"
+#, fuzzy
+#| msgid "Legal Proceding"
+msgid "Legal Proceeding"
 msgstr "Trámite Legal"
 
 #: mapaguarani/core/models.py:605
-msgid "Legal Procedings"
+#, fuzzy
+#| msgid "Legal Procedings"
+msgid "Legal Proceedings"
 msgstr "Trámites Legales"
 
 #: mapaguarani/core/models.py:615
@@ -633,12 +637,29 @@ msgid "Arquivos Terras Indígenas"
 msgstr "Archivos Tierras Indígenas"
 
 #: mapaguarani/templates/modals/reports-modal.html:130
+#: mapaguarani/templates/modals/reports-modal.html:139
+#: mapaguarani/templates/modals/reports-modal.html:148
+#: mapaguarani/templates/modals/reports-modal.html:157
 msgid "baixar Planilha Excel"
 msgstr "descargar Excel"
 
 #: mapaguarani/templates/modals/reports-modal.html:131
+#: mapaguarani/templates/modals/reports-modal.html:140
+#: mapaguarani/templates/modals/reports-modal.html:149
+#: mapaguarani/templates/modals/reports-modal.html:158
 msgid "baixar KML"
 msgstr "descargar KML"
+
+#: mapaguarani/templates/modals/reports-modal.html:133
+#: mapaguarani/templates/modals/reports-modal.html:142
+#: mapaguarani/templates/modals/reports-modal.html:151
+#: mapaguarani/templates/modals/reports-modal.html:160
+msgid "baixar Shapefile"
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:168
+msgid "Fechar"
+msgstr ""
 
 #: mapaguarani/templates/moderation/notification_message_moderator.txt:2
 #, python-format

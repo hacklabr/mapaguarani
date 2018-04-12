@@ -588,7 +588,7 @@ class IndigenousLand(IndigenousPlace):
             # import ipdb;ipdb.set_trace()
             return
 
-class LegalProcedings(models.Model):
+class LegalProceedings(models.Model):
     name = models.CharField(_('name'), max_length=255)
     description = models.TextField(_('Description'))
     indigenous_land = models.ManyToManyField(
@@ -601,8 +601,8 @@ class LegalProcedings(models.Model):
     )
 
     class Meta:
-        verbose_name = _('Legal Proceding')
-        verbose_name_plural = _('Legal Procedings')
+        verbose_name = _('Legal Proceeding')
+        verbose_name_plural = _('Legal Proceedings')
 
     def __str__(self):
         return self.name
