@@ -4,28 +4,28 @@
     <div class="modal-content">
       <div class="modal-header">
         <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Relatórios sobre as Terras Indígenas</h4>
+        <h4 class="modal-title">{% trans "Relatórios sobre as Terras Indígenas" %}</h4>
       </div>
       <div class="modal-body">
         <ul class="nav nav-tabs" id="aboutTabs">
-          <li class="active"><a href="#tijuridic" data-toggle="tab">Quadro Resumo</a></li>
-          <li><a href="#titable" data-toggle="tab">Downloads</a></li>
+          <li class="active"><a href="#tijuridic" data-toggle="tab">{% trans "Quadro Resumo" %}</a></li>
+          <li><a href="#titable" data-toggle="tab">{% trans "Downloads" %}</a></li>
         </ul>
         <div class="tab-content" id="aboutTabsContent">
           <div id="tijuridic"
                ng-controller="LandTenureReportCtrl"
                class="tab-pane fade active in">
-            <h3 class="text-center">Quadro Resumo da Presença dos Povos Guarani no Brasil</h3>
+            <h3 class="text-center">{% trans "Quadro Resumo da Presença dos Povos Guarani no Brasil" %}</h3>
             <br>
             <table class="table">
               <thead>
                 <tr>
-                  <th colspan="13" class="text-center"><strong>Terras Indígenas com presença dos povos Guarani</strong></th>
+                  <th colspan="13" class="text-center"><strong>{% trans "Terras Indígenas com presença dos povos Guarani" %}</strong></th>
                 </tr>
                 <tr>
                   <th></th>
-                  <th>Descrição</th>
-                  <th>Total</th>
+                  <th>{% trans "Descrição" %}</th>
+                  <th>{% trans "Total" %}</th>
                   <th ng-repeat="state in report.states" ng-bind="state"></th>
                 </tr>
               </thead>
@@ -33,7 +33,7 @@
               <tbody>
                 <tr>
                   <td></td>
-                  <td><strong>TIs com Uso Exclusivo dos Guarani</strong></td>
+                  <td><strong>{% trans "TIs com Uso Exclusivo dos Guarani" %}</strong></td>
                   <td ng-bind="report.exclusive_guarani_lands_count"></td>
                   <td ng-repeat="state in report.states" ng-bind="report.exclusive_guarani_lands[state]"></td>
                 </tr>
@@ -60,7 +60,7 @@
                 </tr>
                 <tr>
                   <td></td>
-                  <td><strong>TIs de Outros povos com Presença Guarani</strong></td>
+                  <td><strong>{% trans "TIs de Outros povos com Presença Guarani" %}</strong></td>
                   <td ng-bind="report.non_exclusive_guarani_lands_count"></td>
                   <td ng-repeat="state in report.states" ng-bind="report.non_exclusive_guarani_lands[state]"></td>
                 </tr>
@@ -122,42 +122,42 @@
           </div>
 
           <div id="titable" class="tab-pane fade">
-            <p class="text-center">Você pode baixar a planilha das terras indigenas, e os shapefiles das camadas de Aldeias e Terras Indígenas</p>
-            <p class="text-center">A geração destes arquivos pode demorar vários minutos, por favor aguarde o download começar após clicar abaixo no arquivo abaixo desejado.</p>
+            <p class="text-center">{% trans "Você pode baixar a planilha das terras indigenas, e os shapefiles das camadas de Aldeias e Terras Indígenas" %}</p>
+            <p class="text-center">{% trans "A geração destes arquivos pode demorar vários minutos, por favor aguarde o download começar após clicar abaixo no arquivo abaixo desejado." %}</p>
 
             <p class="lead text-left">
-              Arquivos Terras Indígenas
-              <a class="btn  btn-success" href="{% url 'export_xls_lands' %}.xls">baixar Planilha Excel</a>
-              <a class="btn  btn-success" href="{% url 'lands-kml-list' %}">baixar KML</a>
+              {% trans "Arquivos Terras Indígenas" %}
+              <a class="btn  btn-success" href="{% url 'export_xls_lands' %}.xls">{% trans "baixar Planilha Excel" %}</a>
+              <a class="btn  btn-success" href="{% url 'lands-kml-list' %}">{% trans "baixar KML" %}</a>
               {% if user.is_authenticated %}
-              <a class="btn  btn-success" href="{% url 'lands_shapefiles' %}">baixar Shapefile</a>
+              <a class="btn  btn-success" href="{% url 'lands_shapefiles' %}">{% trans "baixar Shapefile" %}</a>
               {% endif %}
             </p>
 
             <p class="lead text-left">
               Arquivos Aldeias Indígenas Habitadas
-              <a class="btn  btn-success" href="{% url 'export_xls_villages' %}.xls?guarani_presence=True ">baixar Planilha Excel</a>
-              <a class="btn  btn-success" href="{% url 'villages-kml-list' %}?guarani_presence=True ">baixar KML</a>
+              <a class="btn  btn-success" href="{% url 'export_xls_villages' %}.xls?guarani_presence=True ">{% trans "baixar Planilha Excel" %}</a>
+              <a class="btn  btn-success" href="{% url 'villages-kml-list' %}?guarani_presence=True ">{% trans "baixar KML" %}</a>
               {% if user.is_authenticated %}
-                  <a class="btn  btn-success" href="{% url 'villages_shapefiles' %}?guarani_presence=True ">baixar Shapefile</a>
+                  <a class="btn  btn-success" href="{% url 'villages_shapefiles' %}?guarani_presence=True ">{% trans "baixar Shapefile" %}</a>
               {% endif %}
             </p>
 
             <p class="lead text-left">
               Arquivos Aldeias Indígenas Desabitadas
-              <a class="btn  btn-success" href="{% url 'export_xls_villages' %}.xls?guarani_presence=False ">baixar Planilha Excel</a>
-              <a class="btn  btn-success" href="{% url 'villages-kml-list' %}?guarani_presence=False ">baixar KML</a>
+              <a class="btn  btn-success" href="{% url 'export_xls_villages' %}.xls?guarani_presence=False ">{% trans "baixar Planilha Excel" %}</a>
+              <a class="btn  btn-success" href="{% url 'villages-kml-list' %}?guarani_presence=False ">{% trans "baixar KML" %}</a>
               {% if user.is_authenticated %}
-                  <a class="btn  btn-success" href="{% url 'villages_shapefiles' %}?guarani_presence=False ">baixar Shapefile</a>
+                  <a class="btn  btn-success" href="{% url 'villages_shapefiles' %}?guarani_presence=False ">{% trans "baixar Shapefile" %}</a>
               {% endif %}
             </p>
 
             <p class="lead text-left">
                 Sítios Arqueológicos
-                <a class="btn  btn-success" href="{% url 'export_xls_archaeological' %}.xls">baixar Planilha Excel</a>
-                <a class="btn  btn-success" href="{% url 'arch-kml-list' %}">baixar KML</a>
+                <a class="btn  btn-success" href="{% url 'export_xls_archaeological' %}.xls">{% trans "baixar Planilha Excel" %}</a>
+                <a class="btn  btn-success" href="{% url 'arch-kml-list' %}">{% trans "baixar KML" %}</a>
                 {% if user.is_authenticated %}
-                    <a class="btn  btn-success" href="{% url 'archaeological_shapefiles' %}">baixar Shapefile</a>
+                    <a class="btn  btn-success" href="{% url 'archaeological_shapefiles' %}">{% trans "baixar Shapefile" %}</a>
                 {% endif %}
             </p>
         </div>
@@ -165,7 +165,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Fechar" %}</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

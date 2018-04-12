@@ -7,47 +7,45 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-11 20:13-0300\n"
-"PO-Revision-Date: 2018-04-11 20:24-0300\n"
-"Last-Translator: b'  <bruno@hacklab.com.br>'\n"
-"Language-Team: \n"
-"Language: pt_BR\n"
+"POT-Creation-Date: 2018-04-11 21:05-0300\n"
+"PO-Revision-Date: 2018-04-11 22:15-0300\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Translated-Using: django-rosetta 0.7.0\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "X-Generator: Poedit 2.0.4\n"
 
 #: mapaguarani/config/common.py:176
 msgid "Brazilian Portuguese"
-msgstr "Português Brasileiro"
+msgstr "Portugués de Brasil"
 
 #: mapaguarani/config/common.py:177
 msgid "English"
-msgstr "Inglês"
+msgstr "Inglés"
 
 #: mapaguarani/core/admin.py:52 mapaguarani/core/models.py:240
 msgid "Ethnic Group"
-msgstr "Povo"
+msgstr "Grupo Étnico"
 
 #: mapaguarani/core/admin.py:56 mapaguarani/core/models.py:251
 msgid "Prominent Ethnic SubGroup"
-msgstr "Subgrupo Guarani proeminente"
+msgstr "SubGrupo Étnico Prominente"
 
 #: mapaguarani/core/admin.py:80
 msgid "Guarani presence"
-msgstr "Presença Indígena"
+msgstr "Presencia Guarani"
 
 #: mapaguarani/core/admin.py:156
 msgid "(No name)"
-msgstr "(Sem nome)"
+msgstr ""
 
 #: mapaguarani/core/admin.py:157 mapaguarani/core/models.py:105
 #: mapaguarani/core/models.py:132 mapaguarani/core/models.py:415
 #: mapaguarani/core/models.py:451
 msgid "Name"
-msgstr "Nome"
+msgstr "Nombre"
 
 #: mapaguarani/core/models.py:14 mapaguarani/core/models.py:41
 #: mapaguarani/core/models.py:67 mapaguarani/core/models.py:152
@@ -59,38 +57,38 @@ msgstr "Nome"
 #: requirements/src/geodjango-protected-areas/protected_areas/models.py:6
 #: src/geodjango-protected-areas/protected_areas/models.py:6
 msgid "name"
-msgstr "nome"
+msgstr "nombre"
 
 #: mapaguarani/core/models.py:15 mapaguarani/core/models.py:68
 #: mapaguarani/core/models.py:153 mapaguarani/core/models.py:226
 msgid "description"
-msgstr "descrição"
+msgstr "descripción"
 
 #: mapaguarani/core/models.py:16
 msgid "address"
-msgstr "Endereço"
+msgstr "dirección"
 
 #: mapaguarani/core/models.py:17
 msgid "phone number"
-msgstr "Número de telefone"
+msgstr "número de teléfono"
 
 #: mapaguarani/core/models.py:18
 msgid "email"
-msgstr "email"
+msgstr "correo electrónico"
 
 #: mapaguarani/core/models.py:24 mapaguarani/core/models.py:78
 #: mapaguarani/core/models.py:188
 msgid "Organization"
-msgstr "Organização"
+msgstr "Organización"
 
 #: mapaguarani/core/models.py:25
 msgid "Organizations"
-msgstr "Organizações"
+msgstr "Organizaciones"
 
 #: mapaguarani/core/models.py:30 mapaguarani/core/models.py:261
 #: mapaguarani/core/models.py:620
 msgid "Public"
-msgstr "Publico"
+msgstr "Público"
 
 #: mapaguarani/core/models.py:31 mapaguarani/core/models.py:262
 #: mapaguarani/core/models.py:621
@@ -100,17 +98,17 @@ msgstr "Restrito"
 #: mapaguarani/core/models.py:35 mapaguarani/core/models.py:170
 #: mapaguarani/core/models.py:329
 msgid "Indigenous Village"
-msgstr "Aldeia Indígena"
+msgstr "Aldea Indígena"
 
 #: mapaguarani/core/models.py:36 mapaguarani/core/models.py:176
 #: mapaguarani/core/models.py:541
 msgid "Indigenous Land"
-msgstr "Terra Indígena"
+msgstr "Tierra Indígena"
 
 #: mapaguarani/core/models.py:37 mapaguarani/core/models.py:182
 #: mapaguarani/core/models.py:657 mapaguarani/core/models.py:713
 msgid "Archaeological Place"
-msgstr "Sítio Arqueológico"
+msgstr "Yacimiento Arqueológico"
 
 #: mapaguarani/core/models.py:38
 msgid "Generic"
@@ -120,12 +118,12 @@ msgstr "Genérico"
 #: mapaguarani/core/models.py:133 mapaguarani/core/models.py:593
 #: mapaguarani/core/models.py:708
 msgid "Description"
-msgstr "Descrição"
+msgstr "Descripción"
 
 #: mapaguarani/core/models.py:45 mapaguarani/core/models.py:281
 #: mapaguarani/core/models.py:635
 msgid "Status"
-msgstr "Status"
+msgstr "Estado"
 
 #: mapaguarani/core/models.py:51 mapaguarani/core/models.py:109
 #: mapaguarani/core/models.py:137
@@ -134,27 +132,27 @@ msgstr "Tipo"
 
 #: mapaguarani/core/models.py:59
 msgid "Map Layer"
-msgstr "Camada do Mapa"
+msgstr "Capa de Mapa"
 
 #: mapaguarani/core/models.py:60
 msgid "Map Layers"
-msgstr "Camadas do Mapa"
+msgstr "Capas de Mapa"
 
 #: mapaguarani/core/models.py:71 mapaguarani/core/models.py:194
 msgid "Layers"
-msgstr "Camadas"
+msgstr "Capas"
 
 #: mapaguarani/core/models.py:84
 msgid "Project"
-msgstr "Projeto"
+msgstr "Proyecto"
 
 #: mapaguarani/core/models.py:93
 msgid "Action Field"
-msgstr "Campo de Ação"
+msgstr "Campo de Acción"
 
 #: mapaguarani/core/models.py:94
 msgid "Action Fields"
-msgstr "Campos de Ação"
+msgstr "Campos de Acción"
 
 #: mapaguarani/core/models.py:99
 msgid "Photo"
@@ -162,7 +160,7 @@ msgstr "Foto"
 
 #: mapaguarani/core/models.py:100
 msgid "Video"
-msgstr "Vídeo"
+msgstr "Video"
 
 #: mapaguarani/core/models.py:101
 msgid "Audio"
@@ -170,27 +168,27 @@ msgstr "Áudio"
 
 #: mapaguarani/core/models.py:102
 msgid "PDF"
-msgstr "PDF"
+msgstr ""
 
 #: mapaguarani/core/models.py:103 mapaguarani/core/models.py:130
 msgid "Others"
-msgstr "Outros"
+msgstr "Otros"
 
 #: mapaguarani/core/models.py:107
 msgid "Credits (for photos)"
-msgstr "Créditos (para fotos)"
+msgstr "Atribución (para fotos)"
 
 #: mapaguarani/core/models.py:114
 msgid "File"
-msgstr "Arquivo"
+msgstr "Archivo"
 
 #: mapaguarani/core/models.py:120
 msgid "Project File"
-msgstr "Arquivo de Projeto"
+msgstr "Archivo de Proyecto"
 
 #: mapaguarani/core/models.py:121
 msgid "Project Files"
-msgstr "Arquivos de Projeto"
+msgstr "Archivos de Proyecto"
 
 #: mapaguarani/core/models.py:126
 msgid "youtube"
@@ -214,27 +212,27 @@ msgstr ""
 
 #: mapaguarani/core/models.py:135
 msgid "Embed code"
-msgstr "Código de Embed"
+msgstr "Código de embed"
 
 #: mapaguarani/core/models.py:147
 msgid "Project Link"
-msgstr "Link do Projeto"
+msgstr "Link de Proyecto"
 
 #: mapaguarani/core/models.py:148
 msgid "Project Links"
-msgstr "Links do Projeto"
+msgstr "Links de Proyecto"
 
 #: mapaguarani/core/models.py:154
 msgid "start date"
-msgstr "Data de início"
+msgstr "fecha de comienzo"
 
 #: mapaguarani/core/models.py:155
 msgid "end date"
-msgstr "Data de fim"
+msgstr "fecha de fin"
 
 #: mapaguarani/core/models.py:158
 msgid "Files"
-msgstr "Arquivos"
+msgstr "Archivos"
 
 #: mapaguarani/core/models.py:164
 msgid "Links (Youtube, instagram, etc)"
@@ -242,11 +240,11 @@ msgstr ""
 
 #: mapaguarani/core/models.py:211
 msgid "Indigenous Place Document Type"
-msgstr "Tipo de Documentação de Terra Indígena"
+msgstr "Tipo de Documento de Sitio Indígena"
 
 #: mapaguarani/core/models.py:212
 msgid "Indigenous Place Document Types"
-msgstr "Tipos de Documentação de Terra Indígena"
+msgstr "Tipos de Documentos de Sitio Indígena"
 
 #: mapaguarani/core/models.py:222
 msgid "type"
@@ -254,52 +252,52 @@ msgstr "tipo"
 
 #: mapaguarani/core/models.py:223
 msgid "attached file"
-msgstr "arquivo anexo"
+msgstr "archivo anexado"
 
 #: mapaguarani/core/models.py:225 mapaguarani/core/models.py:385
 #: mapaguarani/core/models.py:400
 msgid "Date"
-msgstr "Data"
+msgstr "Fecha"
 
 #: mapaguarani/core/models.py:229
 msgid "Indigenous Place Document"
-msgstr "Documento de Terra Indígena"
+msgstr "Documento de Sitio Indigena"
 
 #: mapaguarani/core/models.py:230
 msgid "Indigenous Place Documents"
-msgstr "Documentos de Terras indígenas"
+msgstr "Documentos de Sitio Indígena"
 
 #: mapaguarani/core/models.py:241
 msgid "Ethnic Groups"
-msgstr "Povos"
+msgstr "Grupos Étnicos"
 
 #: mapaguarani/core/models.py:252
 msgid "Prominent Ethnic SubGroups"
-msgstr "Subgrupos guaranis proeminente"
+msgstr "SubGrupos Étnicos Prominentes"
 
 #: mapaguarani/core/models.py:266
 msgid "Others names"
-msgstr "Outros nomes"
+msgstr ""
 
 #: mapaguarani/core/models.py:269
 msgid "Ethnic group"
-msgstr "Povo"
+msgstr "Grupo Étnico"
 
 #: mapaguarani/core/models.py:274
 msgid "prominent ethnic sub-group"
-msgstr "subgrupo étnico proeminente"
+msgstr ""
 
 #: mapaguarani/core/models.py:278
 msgid "Comments"
-msgstr "Observações"
+msgstr "Comentarios"
 
 #: mapaguarani/core/models.py:279
 msgid "Private comments"
-msgstr "Observações restritas"
+msgstr "Comentarios privados"
 
 #: mapaguarani/core/models.py:304 mapaguarani/core/models.py:613
 msgid "Exact"
-msgstr "Exato"
+msgstr "Exacto"
 
 #: mapaguarani/core/models.py:305 mapaguarani/core/models.py:614
 msgid "Approximate"
@@ -308,93 +306,93 @@ msgstr "Aproximado"
 #: mapaguarani/core/models.py:306 mapaguarani/core/serializers.py:290
 #: mapaguarani/core/serializers.py:514
 msgid "No information"
-msgstr "Sem informação"
+msgstr "Sin Información"
 
 #: mapaguarani/core/models.py:310 mapaguarani/core/models.py:628
 msgid "Position Precision"
-msgstr "Precisão da posição"
+msgstr "Precision de Información"
 
 #: mapaguarani/core/models.py:316
 msgid "Position Source"
-msgstr "Fonte da posição"
+msgstr "Fuente de Posición"
 
 #: mapaguarani/core/models.py:319 mapaguarani/core/models.py:652
 msgid "Geometry"
-msgstr "Localização Geográfica"
+msgstr "Geometría"
 
 #: mapaguarani/core/models.py:323 mapaguarani/core/models.py:533
 #: mapaguarani/core/models.py:651
 msgid "Layer"
-msgstr "Camada"
+msgstr "Capa"
 
 #: mapaguarani/core/models.py:330
 msgid "Indigenous Villages"
-msgstr "Aldeias indígenas"
+msgstr "Aldeas Indígenas"
 
 #: mapaguarani/core/models.py:384 mapaguarani/core/models.py:392
 msgid "Indigenous Presence"
-msgstr "Presença Indígena"
+msgstr "Presencia Indígena"
 
 #: mapaguarani/core/models.py:386 mapaguarani/core/models.py:401
 #: mapaguarani/core/models.py:500 mapaguarani/core/models.py:632
 msgid "Source"
-msgstr "Fonte"
+msgstr "Fuente"
 
 #: mapaguarani/core/models.py:388 mapaguarani/core/models.py:403
 msgid "Village"
-msgstr "Aldeia"
+msgstr "Aldea"
 
 #: mapaguarani/core/models.py:399 mapaguarani/core/models.py:407
 msgid "Population"
-msgstr "População"
+msgstr "Población"
 
 #: mapaguarani/core/models.py:408
 msgid "Populations History"
-msgstr "Histórico de populações"
+msgstr "Histórico de Poblaciones"
 
 #: mapaguarani/core/models.py:416 mapaguarani/core/models.py:452
 msgid "Color in Map"
-msgstr "Cor no Mapa"
+msgstr "Colores en Mapa"
 
 #: mapaguarani/core/models.py:419 mapaguarani/core/models.py:506
 msgid "Land Tenure"
-msgstr "Situação Fundiária"
+msgstr "Tenencia de Tierra"
 
 #: mapaguarani/core/models.py:420
 msgid "Land Tenures"
-msgstr "Situação Fundiária"
+msgstr "Tenencias de Tierras"
 
 #: mapaguarani/core/models.py:453
 msgid "Dashed border"
-msgstr "Borda pontilhada"
+msgstr "Linea de Frontera"
 
 #: mapaguarani/core/models.py:456 mapaguarani/core/models.py:513
 msgid "Land Tenure Status"
-msgstr "Status da Situação Fundiária"
+msgstr "Estado de Tenencia de Tierra"
 
 #: mapaguarani/core/models.py:457
 msgid "Land Tenures Status"
-msgstr "Status das Situações Fundiárias"
+msgstr "Estados de Tenencias de Tierras"
 
 #: mapaguarani/core/models.py:467
 msgid "documentation"
-msgstr "documentação"
+msgstr "documentación"
 
 #: mapaguarani/core/models.py:473
 msgid "Official area"
-msgstr "Área oficial"
+msgstr "Área Oficial"
 
 #: mapaguarani/core/models.py:478
 msgid "Guarani full and exclusive portion area possession"
-msgstr "Área em posse única e exclusiva dos guaranis"
+msgstr ""
 
 #: mapaguarani/core/models.py:484
 msgid "Other peoples' full and exclusive portion area possession"
-msgstr "Área em posse plena e exclusiva de outros povos"
+msgstr ""
 
 #: mapaguarani/core/models.py:490
 msgid "Claim"
-msgstr "Reivindicação"
+msgstr "Concesión"
 
 #: mapaguarani/core/models.py:495
 msgid "Demand"
@@ -402,15 +400,15 @@ msgstr "Demanda"
 
 #: mapaguarani/core/models.py:523
 msgid "Associated Land"
-msgstr "Terra Indígena Associada"
+msgstr "Tierra Asociada"
 
 #: mapaguarani/core/models.py:529
 msgid "Indigenous Land Spatial Data"
-msgstr "Dados Espaciais da Terra Indígena"
+msgstr "Datos Espaciales de Tierra Indígena"
 
 #: mapaguarani/core/models.py:542
 msgid "Indigenous Lands"
-msgstr "Terras indígenas"
+msgstr "Tierras Indígenas"
 
 #: mapaguarani/core/models.py:549
 msgid "land_tenure_status is not \"Terra Original\" nor \"Terra Revisada\""
@@ -418,47 +416,47 @@ msgstr ""
 
 #: mapaguarani/core/models.py:596
 msgid "Guarani indigenous lands layer"
-msgstr "Camada de terras indígenas Guarani"
+msgstr "Capa de tierras indígenas Guarani"
 
 #: mapaguarani/core/models.py:600
 msgid "Guarani indigenous villages layer"
-msgstr "Camada de aldeias indígenas Guarani"
+msgstr "Capas de tierras indígenas Guarani"
 
 #: mapaguarani/core/models.py:604
 msgid "Legal Proceding"
-msgstr "Ação Judicial"
+msgstr "Trámite Legal"
 
 #: mapaguarani/core/models.py:605
 msgid "Legal Procedings"
-msgstr "Ações Judiciais"
+msgstr "Trámites Legales"
 
 #: mapaguarani/core/models.py:615
 msgid "By City"
-msgstr "Por Cidade"
+msgstr "Por Ciudad"
 
 #: mapaguarani/core/models.py:616
 msgid "No position"
-msgstr "Sem posição"
+msgstr "Sin Posición"
 
 #: mapaguarani/core/models.py:625
 msgid "Acronym"
-msgstr "Sigla"
+msgstr "Acrónimo"
 
 #: mapaguarani/core/models.py:626
 msgid "CNSA"
-msgstr "CNSA"
+msgstr ""
 
 #: mapaguarani/core/models.py:631
 msgid "Position Comments"
-msgstr "Observações sobre a posição"
+msgstr "Comentarios de Posición"
 
 #: mapaguarani/core/models.py:640
 msgid "institution"
-msgstr "instituição"
+msgstr "institución"
 
 #: mapaguarani/core/models.py:641
 msgid "hydrography"
-msgstr "hidrografia"
+msgstr "hidrografía"
 
 #: mapaguarani/core/models.py:642
 msgid "phase"
@@ -466,15 +464,15 @@ msgstr "fase"
 
 #: mapaguarani/core/models.py:643
 msgid "dating"
-msgstr "datação"
+msgstr "datación"
 
 #: mapaguarani/core/models.py:644
 msgid "deviation"
-msgstr "desvio"
+msgstr "desviación"
 
 #: mapaguarani/core/models.py:645
 msgid "chronological reference"
-msgstr "referência cronológica"
+msgstr "referencia cronológica"
 
 #: mapaguarani/core/models.py:646
 msgid "ap date"
@@ -482,11 +480,11 @@ msgstr ""
 
 #: mapaguarani/core/models.py:647
 msgid "calibrated dating"
-msgstr "datação calibrada"
+msgstr "datación calibrada"
 
 #: mapaguarani/core/models.py:648
 msgid "dating method"
-msgstr "método de datação"
+msgstr "método de datación"
 
 #: mapaguarani/core/models.py:649
 msgid "laboratory code"
@@ -494,65 +492,65 @@ msgstr "código de laboratório"
 
 #: mapaguarani/core/models.py:658
 msgid "Archaeological Places"
-msgstr "Sítios Arqueológicos"
+msgstr "Yacimientos Arqueológicos"
 
 #: mapaguarani/core/models.py:709
 msgid "Credits"
-msgstr "Créditos"
+msgstr "Atribución"
 
 #: mapaguarani/core/models.py:710
 msgid "Image"
-msgstr "Imagem"
+msgstr "Imagen"
 
 #: mapaguarani/core/models.py:717
 msgid "Archaeological Image"
-msgstr "Imagem Arqueológica"
+msgstr "Imagen Arqueológica"
 
 #: mapaguarani/core/models.py:718
 msgid "Archaeological Images"
-msgstr "Imagens Arqueológicas"
+msgstr "Imágenes Arqueológicas"
 
 #: mapaguarani/core/serializers.py:274 mapaguarani/core/serializers.py:534
 msgid "Habitada atualmente"
-msgstr ""
+msgstr "Habitada actualmente"
 
 #: mapaguarani/core/serializers.py:276 mapaguarani/core/serializers.py:278
 #: mapaguarani/core/serializers.py:536
 msgid "Antigas aldeias, áreas de uso ou áreas esbulhadas"
-msgstr ""
+msgstr "Aldeas antiguas, áreas de uso u áreas espoliadas"
 
 #: mapaguarani/core/serializers.py:284
 #, python-brace-format
 msgid "{population} (Source: {source} - {year})"
-msgstr "{population} (Fonte: {source} - {year})"
+msgstr ""
 
 #: mapaguarani/templates/404.html:3 mapaguarani/templates/404.html:6
 msgid "Page Not found"
-msgstr "Página Não Encontrada"
+msgstr "Página no encontrada"
 
 #: mapaguarani/templates/404.html:8
 msgid "This is not the page you were looking for."
-msgstr "Esta não é a página que você estava procurando"
+msgstr "Esta no es la página que estabas procurando"
 
 #: mapaguarani/templates/500.html:3
 msgid "Server Error"
-msgstr "Erro do Servidor"
+msgstr "Error de Servidor"
 
 #: mapaguarani/templates/500.html:6
 msgid "Ooops!!! 500"
-msgstr "Ooops!!! 500"
+msgstr ""
 
 #: mapaguarani/templates/500.html:8
 msgid "Looks like something went wrong!"
-msgstr "Parece que algo deu errado!"
+msgstr "Parece que algo ocurrió de errado"
 
 #: mapaguarani/templates/500.html:10
 msgid ""
 "We track these errors automatically, but if the problem persists feel free "
 "to contact us. In the meantime, try refreshing."
 msgstr ""
-"Nós rastreamos esses erros automaticamente, mas se o o problema persistir, "
-"você pode contactar-nos. Enquanto isso, tente atualizar a página."
+"Rastreamos esos errores automáticamente. Todavía, si el problema persista, "
+"entre en contacto. Mientras tanto, tiente cargar la página de nuevo."
 
 #: mapaguarani/templates/base.html:7 mapaguarani/templates/embed.html:24
 msgid "Mapa Guarani Digital"
@@ -560,11 +558,11 @@ msgstr ""
 
 #: mapaguarani/templates/embed.html:16 mapaguarani/templates/index.html:53
 msgid "Menu"
-msgstr "Menu"
+msgstr ""
 
 #: mapaguarani/templates/embed.html:25 mapaguarani/templates/index.html:62
 msgid "Carregando dados...."
-msgstr ""
+msgstr "Cargando datos..."
 
 #: mapaguarani/templates/index.html:21
 msgid "Entrar"
@@ -576,11 +574,71 @@ msgstr ""
 
 #: mapaguarani/templates/index.html:30
 msgid "Relatórios"
-msgstr ""
+msgstr "Informes"
 
 #: mapaguarani/templates/index.html:35
 msgid "Sobre"
+msgstr "Acerca"
+
+#: mapaguarani/templates/modals/reports-modal.html:7
+msgid "Relatórios sobre as Terras Indígenas"
+msgstr "Informes acerca de las Tierras Indígenas"
+
+#: mapaguarani/templates/modals/reports-modal.html:11
+msgid "Quadro Resumo"
+msgstr "Cuadro Resumen"
+
+#: mapaguarani/templates/modals/reports-modal.html:12
+msgid "Downloads"
+msgstr "Descargas"
+
+#: mapaguarani/templates/modals/reports-modal.html:18
+msgid "Quadro Resumo da Presença dos Povos Guarani no Brasil"
+msgstr "Cuadro Resumen de Presencia de Pueblos Guarani en Brasil"
+
+#: mapaguarani/templates/modals/reports-modal.html:23
+msgid "Terras Indígenas com presença dos povos Guarani"
+msgstr "Tierras Indígenas con presencia de Pueblos Guarani"
+
+#: mapaguarani/templates/modals/reports-modal.html:27
+msgid "Descrição"
+msgstr "Descripción"
+
+#: mapaguarani/templates/modals/reports-modal.html:28
+msgid "Total"
 msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:36
+msgid "TIs com Uso Exclusivo dos Guarani"
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:63
+msgid "TIs de Outros povos com Presença Guarani"
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:125
+msgid ""
+"Você pode baixar a planilha das terras indigenas, e os shapefiles das "
+"camadas de Aldeias e Terras Indígenas"
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:126
+msgid ""
+"A geração destes arquivos pode demorar vários minutos, por favor aguarde o "
+"download começar após clicar abaixo no arquivo abaixo desejado."
+msgstr ""
+
+#: mapaguarani/templates/modals/reports-modal.html:129
+msgid "Arquivos Terras Indígenas"
+msgstr "Archivos Tierras Indígenas"
+
+#: mapaguarani/templates/modals/reports-modal.html:130
+msgid "baixar Planilha Excel"
+msgstr "descargar Excel"
+
+#: mapaguarani/templates/modals/reports-modal.html:131
+msgid "baixar KML"
+msgstr "descargar KML"
 
 #: mapaguarani/templates/moderation/notification_message_moderator.txt:2
 #, python-format
@@ -603,7 +661,7 @@ msgstr ""
 
 #: mapaguarani/templates/moderation/notification_message_user.txt:2
 msgid "Olá"
-msgstr ""
+msgstr "Hola"
 
 #: mapaguarani/templates/moderation/notification_message_user.txt:4
 msgid "Sua contribuição na"
@@ -615,15 +673,15 @@ msgstr ""
 
 #: mapaguarani/templates/moderation/notification_message_user.txt:4
 msgid "rejected"
-msgstr "rejeitada"
+msgstr "rechazado"
 
 #: mapaguarani/templates/moderation/notification_message_user.txt:4
 msgid "accepted"
-msgstr "aceita"
+msgstr "aceptado"
 
 #: mapaguarani/templates/moderation/notification_message_user.txt:7
 msgid "Motivo"
-msgstr ""
+msgstr "Motivo"
 
 #: mapaguarani/templates/moderation/notification_message_user.txt:11
 msgid "Você pode visualizar sua contribuição aqui"
@@ -645,15 +703,15 @@ msgstr ""
 
 #: mapaguarani/templates/openlayers.html:35
 msgid "Delete all Features"
-msgstr "Apagar todos os dados do mapa"
+msgstr ""
 
 #: mapaguarani/templates/openlayers.html:37
 msgid "WKT debugging window:"
-msgstr "Janela de debug de WKT:"
+msgstr ""
 
 #: mapaguarani/templates/openlayers.html:124
 msgid "Carregando aldeias..."
-msgstr ""
+msgstr "Cargando aldeas..."
 
 #: mapaguarani/templates/openlayers.html:170
 msgid "Faça a partir de uma aldeia:"
@@ -661,7 +719,7 @@ msgstr ""
 
 #: mapaguarani/templates/users/user_detail.html:23
 msgid "Minha Informação"
-msgstr ""
+msgstr "Mi información"
 
 #: mapaguarani/templates/users/user_detail.html:24
 msgid "E-Mail"
@@ -673,238 +731,4 @@ msgstr ""
 
 #: mapaguarani/templates/users/user_form.html:17
 msgid "Update"
-msgstr "Atualizar"
-
-#~ msgid "Account"
-#~ msgstr "Conta"
-
-#~ msgid "E-mail Addresses"
-#~ msgstr "Endereços de e-mail"
-
-#~ msgid "The following e-mail addresses are associated with your account:"
-#~ msgstr "Os seguintes endereços de e-mail estão associados com sua conta:"
-
-#~ msgid "Verified"
-#~ msgstr "Verificado"
-
-#~ msgid "Unverified"
-#~ msgstr "Não verificadas"
-
-#~ msgid "Primary"
-#~ msgstr "Primário"
-
-#~ msgid "Make Primary"
-#~ msgstr "Tornar Primário"
-
-#~ msgid "Re-send Verification"
-#~ msgstr "Reenviar Verificação"
-
-#~ msgid "Remove"
-#~ msgstr "Remover"
-
-#~ msgid "Warning:"
-#~ msgstr "Aviso:"
-
-#~ msgid ""
-#~ "You currently do not have any e-mail address set up. You should really "
-#~ "add an e-mail address so you can receive notifications, reset your "
-#~ "password, etc."
-#~ msgstr ""
-#~ "Você não tem nenhum endereço de e-mail configurado. Você deve adicionar "
-#~ "um endereço de e-mail para receber notificações, recuperar sua senha, etc."
-
-#~ msgid "Add E-mail Address"
-#~ msgstr "Adicionar E-mail"
-
-#~ msgid "Add E-mail"
-#~ msgstr "Adicionar E-mail"
-
-#~ msgid "Do you really want to remove the selected e-mail address?"
-#~ msgstr "Você realmente quer remover o e-mail selecionado?"
-
-#~ msgid "Confirm E-mail Address"
-#~ msgstr "Confirme o endereços de e-mail"
-
-#~ msgid ""
-#~ "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-"
-#~ "mail address for user %(user_display)s."
-#~ msgstr ""
-#~ "Por favor confirme que <a href=\"mailto:%(email)s\">%(email)s</a> é um "
-#~ "endereço de e-mail para o usuário %(user_display)s."
-
-#~ msgid "Confirm"
-#~ msgstr "Confirmar"
-
-#~ msgid ""
-#~ "This e-mail confirmation link expired or is invalid. Please <a href="
-#~ "\"%(email_url)s\">issue a new e-mail confirmation request</a>."
-#~ msgstr ""
-#~ "Este link de confirmação de e-mail está expirado ou inválido. Por favor "
-#~ "<a href=\"%(email_url)s\">solicite uma nova confirmação de e-mail</a>."
-
-#~ msgid ""
-#~ "You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an "
-#~ "e-mail address for user %(user_display)s."
-#~ msgstr ""
-#~ "Você confirmou que <a href=\"mailto:%(email)s\">%(email)s</a> é um email "
-#~ "do usuário %(user_display)s."
-
-#~ msgid "Sign In"
-#~ msgstr "Entrar"
-
-#~ msgid ""
-#~ "Please sign in with one\n"
-#~ "      of your existing third party accounts. Or, <a href=\"%(signup_url)s"
-#~ "\">sign up</a> \n"
-#~ "      for a %(site_name)s account and sign in below:"
-#~ msgstr ""
-#~ "Por favor entre com uma conta existente de outros serviços. Ou, <a href="
-#~ "\"%(signup_url)s\">cadastre-se</a>\n"
-#~ "para uma conta no %(site_name)s e faça login abaixo:"
-
-#~ msgid "or"
-#~ msgstr "ou"
-
-#~ msgid "Forgot Password?"
-#~ msgstr "Esqueceu sua senha?"
-
-#~ msgid "Sign Out"
-#~ msgstr "Sair"
-
-#~ msgid "Are you sure you want to sign out?"
-#~ msgstr "Tem certeza que deseja sair?"
-
-#~ msgid "Change Password"
-#~ msgstr "Mudar Senha"
-
-#~ msgid "Delete Password"
-#~ msgstr "Apagar Senha"
-
-#~ msgid ""
-#~ "You may delete your password since you are currently logged in using "
-#~ "OpenID."
-#~ msgstr ""
-#~ "Você deve apagar seua senha uma vez que está autenticado usando OpenID."
-
-#~ msgid "delete my password"
-#~ msgstr "apagar minha senha"
-
-#~ msgid "Password Deleted"
-#~ msgstr "Senha Apagada"
-
-#~ msgid "Your password has been deleted."
-#~ msgstr "Sua senha foi apagada."
-
-#~ msgid "Password Reset"
-#~ msgstr "Recuperar Senha"
-
-#~ msgid ""
-#~ "Forgotten your password? Enter your e-mail address below, and we'll send "
-#~ "you an e-mail allowing you to reset it."
-#~ msgstr ""
-#~ "Esqueceu sua senha? Insira seu e-mail abaixo e nós iremos te enviar um "
-#~ "email para redefinir sua senha."
-
-#~ msgid "Reset My Password"
-#~ msgstr "Redefinir Minha Senha"
-
-#~ msgid "Please contact us if you have any trouble resetting your password."
-#~ msgstr ""
-#~ "Por favor entre em contato se você tiver problemas para obter uma nova "
-#~ "senha."
-
-#~ msgid ""
-#~ "We have sent you an e-mail. Please contact us if you do not receive it "
-#~ "within a few minutes."
-#~ msgstr ""
-#~ "Nós te enviamos um email. Por favor entre em contato se você não recebe-"
-#~ "lo em alguns minutos. Ñão se esqueça de verificar entre seus spams."
-
-#~ msgid "Bad Token"
-#~ msgstr "Token inválido"
-
-#~ msgid ""
-#~ "The password reset link was invalid, possibly because it has already been "
-#~ "used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
-#~ "reset</a>."
-#~ msgstr ""
-#~ "O link de definição de senha é inválido, possivelmente porque ele já foi "
-#~ "usado. Por favor faça uma nova <a href=\"%(passwd_reset_url)s"
-#~ "\">solicitação de alteração de senha</a>."
-
-#~ msgid "change password"
-#~ msgstr "mudar senha"
-
-#~ msgid "Your password is now changed."
-#~ msgstr "Sua senha foi alterada."
-
-#~ msgid "Set Password"
-#~ msgstr "Definir Senha"
-
-#~ msgid "Signup"
-#~ msgstr "Cadastrar"
-
-#~ msgid "Sign Up"
-#~ msgstr "Cadastrar"
-
-#~ msgid ""
-#~ "Already have an account? Then please <a href=\"%(login_url)s\">sign in</"
-#~ "a>."
-#~ msgstr ""
-#~ "Já tem uma conta? Por favor <a href=\"%(login_url)s\">faça login</a>."
-
-#~ msgid "Sign Up Closed"
-#~ msgstr "Cadastro Fechado"
-
-#~ msgid "We are sorry, but the sign up is currently closed."
-#~ msgstr "Sentimos muito, mas não permitimos criação de contas neste momento"
-
-#~ msgid "Verify Your E-mail Address"
-#~ msgstr "Verifique seu e-mail"
-
-#~ msgid ""
-#~ "We have sent an e-mail to <a href=\"mailto:%(email)s\">%(email)s</a> for "
-#~ "verification. Follow the link provided to finalize the signup process. "
-#~ "Please contact us if you do not receive it within a few minutes."
-#~ msgstr ""
-#~ "Enviamos um e-mail para <a href=\"mailto:%(email)s”>%(email)s</a> para "
-#~ "verificação. Siga o link fornecido para finalizar o processo de "
-#~ "inscrição. Entre em contato conosco se você não recebê-lo em poucos "
-#~ "minutos."
-
-#~ msgid ""
-#~ "This part of the site requires us to verify that\n"
-#~ "        you are who you claim to be. For this purpose, we require that "
-#~ "you\n"
-#~ "        verify ownership of your e-mail address. "
-#~ msgstr ""
-#~ "Esta parte do site exige que verifique se que você é quem diz ser. Para "
-#~ "essa finalidade, exigimos que você verificar a propriedade do seu "
-#~ "endereço de e-mail. "
-
-#~ msgid "Guarani Presence"
-#~ msgstr "Presença guarani"
-
-#~ msgid "Estimated"
-#~ msgstr "Estimado"
-
-#~ msgid "Code"
-#~ msgstr "Código"
-
-#~ msgid "Yes"
-#~ msgstr "Sim"
-
-#~ msgid "No"
-#~ msgstr "Não"
-
-#~ msgid "No Revision"
-#~ msgstr "Sem Revisão"
-
-#~ msgid "Not Delimited"
-#~ msgstr "Não Delimitado"
-
-#~ msgid "Revised Land"
-#~ msgstr "Terra Revisada"
-
-#~ msgid "Original Land"
-#~ msgstr "Terra Original"
+msgstr "Actualizar"

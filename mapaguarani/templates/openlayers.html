@@ -121,7 +121,7 @@
       };
 
     $('.select-village-dropdown').select2({
-        placeholder: 'Carregando aldeias...',
+        placeholder: '{% trans "Carregando aldeias..." %}',
         templateResult: formatState,
         width: '250px',
         ajax: {
@@ -150,7 +150,6 @@
 
     $('.select-village-dropdown').on('select2:select', function(e) {
         // Do something
-        console.log('YEEEAAAH');
         var data = e.params.data;
 
         var latitude = e.params.data.latitude;
@@ -168,7 +167,7 @@
 </script>
 
 <div id="select-village-dropdown-container">
-    <p>Faça a partir de uma aldeia:</p>
+    <p>{% trans "Faça a partir de uma aldeia:" %}</p>
     <select class="select-village-dropdown" name="aldeia">
     </select>
 </div>
