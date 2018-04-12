@@ -18,21 +18,21 @@
           <li>
               {% if not user.is_authenticated %}
               <!-- <a href="" data-toggle="modal" data-target="#login-modal" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Entrar</a> -->
-              <a href="{% url 'admin:login' %}" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;{% trans "Entrar" %}</a>
+              <a href="{% url 'admin:login' %}" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;{% trans "Login" %}</a>
               {% elif user.is_staff %}
-              <a href="{% url 'admin:login' %}" target="_blank" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;{% trans "Administrar" %}</a>
+              <a href="{% url 'admin:login' %}" target="_blank" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;{% trans "Admin" %}</a>
               {% else %}
               <a href="#" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;{{ request.user.username }}</a>
               {% endif %}
           </li>
           <li>
             <a href="" data-toggle="modal" data-target="#reportsModal" id="about-btn">
-              <i class="fa fa-question-circle white"></i>&nbsp;&nbsp;{% trans "Relatórios" %}
+              <i class="fa fa-question-circle white"></i>&nbsp;&nbsp;{% trans "Reports" %}
             </a>
           </li>
           <li>
             <a href="" data-toggle="modal" data-target="#aboutModal" id="about-btn">
-              <i class="fa fa-question-circle white"></i>&nbsp;&nbsp;{% trans "Sobre" %}
+              <i class="fa fa-question-circle white"></i>&nbsp;&nbsp;{% trans "About" %}
             </a>
           </li>
         </ul>
@@ -59,7 +59,7 @@
   </div>
   <div id="mapaguarani-loading" loading>
     <h1>{{ site.name }}</h1>
-    <h2>{% trans "Carregando dados...." %}</h2>
+    <h2>{% trans "Loading data...." %}</h2>
   </div>
 </div>
 {% endblock content %}

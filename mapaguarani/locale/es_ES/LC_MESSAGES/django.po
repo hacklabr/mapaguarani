@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-12 12:42-0300\n"
-"PO-Revision-Date: 2018-04-11 22:15-0300\n"
+"POT-Creation-Date: 2018-04-12 15:46-0300\n"
+"PO-Revision-Date: 2018-04-12 15:46-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -131,8 +131,6 @@ msgid "Type"
 msgstr "Tipo"
 
 #: mapaguarani/core/models.py:56
-#, fuzzy
-#| msgid "Permission Groups-"
 msgid "Permission Groups"
 msgstr "Grupos de Permisión"
 
@@ -283,15 +281,15 @@ msgstr "SubGrupos Étnicos Prominentes"
 
 #: mapaguarani/core/models.py:266
 msgid "Others names"
-msgstr ""
+msgstr "Otros nombres"
 
 #: mapaguarani/core/models.py:269
 msgid "Ethnic group"
-msgstr "Grupo Étnico"
+msgstr "Pueblo"
 
 #: mapaguarani/core/models.py:274
 msgid "prominent ethnic sub-group"
-msgstr ""
+msgstr "SubGrupo Étnico Prominente"
 
 #: mapaguarani/core/models.py:278
 msgid "Comments"
@@ -429,14 +427,10 @@ msgid "Guarani indigenous villages layer"
 msgstr "Capas de tierras indígenas Guarani"
 
 #: mapaguarani/core/models.py:604
-#, fuzzy
-#| msgid "Legal Proceding"
 msgid "Legal Proceeding"
 msgstr "Trámite Legal"
 
 #: mapaguarani/core/models.py:605
-#, fuzzy
-#| msgid "Legal Procedings"
 msgid "Legal Proceedings"
 msgstr "Trámites Legales"
 
@@ -521,13 +515,13 @@ msgid "Archaeological Images"
 msgstr "Imágenes Arqueológicas"
 
 #: mapaguarani/core/serializers.py:274 mapaguarani/core/serializers.py:534
-msgid "Habitada atualmente"
+msgid "Currently Inhabited"
 msgstr "Habitada actualmente"
 
 #: mapaguarani/core/serializers.py:276 mapaguarani/core/serializers.py:278
 #: mapaguarani/core/serializers.py:536
-msgid "Antigas aldeias, áreas de uso ou áreas esbulhadas"
-msgstr "Aldeas antiguas, áreas de uso u áreas espoliadas"
+msgid "Old Villages, lands in use or dispossessed lands"
+msgstr "Aldeas antiguas, tierras en uso"
 
 #: mapaguarani/core/serializers.py:284
 #, python-brace-format
@@ -563,31 +557,31 @@ msgstr ""
 "entre en contacto. Mientras tanto, tiente cargar la página de nuevo."
 
 #: mapaguarani/templates/base.html:7 mapaguarani/templates/embed.html:24
-msgid "Mapa Guarani Digital"
-msgstr ""
+msgid "Guarani Digital Map"
+msgstr "Mapa Guarani Digital"
 
 #: mapaguarani/templates/embed.html:16 mapaguarani/templates/index.html:53
 msgid "Menu"
 msgstr ""
 
 #: mapaguarani/templates/embed.html:25 mapaguarani/templates/index.html:62
-msgid "Carregando dados...."
-msgstr "Cargando datos..."
+msgid "Loading data...."
+msgstr "Cargando Datos"
 
 #: mapaguarani/templates/index.html:21
-msgid "Entrar"
-msgstr ""
+msgid "Login"
+msgstr "Acceder"
 
 #: mapaguarani/templates/index.html:23
-msgid "Administrar"
-msgstr ""
+msgid "Admin"
+msgstr "Administrar"
 
 #: mapaguarani/templates/index.html:30
-msgid "Relatórios"
+msgid "Reports"
 msgstr "Informes"
 
 #: mapaguarani/templates/index.html:35
-msgid "Sobre"
+msgid "About"
 msgstr "Acerca"
 
 #: mapaguarani/templates/modals/reports-modal.html:7
@@ -661,11 +655,11 @@ msgstr "descargar KML"
 #: mapaguarani/templates/modals/reports-modal.html:151
 #: mapaguarani/templates/modals/reports-modal.html:160
 msgid "baixar Shapefile"
-msgstr ""
+msgstr "descargar  Shapefile"
 
 #: mapaguarani/templates/modals/reports-modal.html:168
 msgid "Fechar"
-msgstr ""
+msgstr "Cerrar"
 
 #: mapaguarani/templates/moderation/notification_message_moderator.txt:2
 #, python-format
@@ -737,11 +731,11 @@ msgid "WKT debugging window:"
 msgstr ""
 
 #: mapaguarani/templates/openlayers.html:124
-msgid "Carregando aldeias..."
-msgstr "Cargando aldeas..."
+msgid "Loading villages..."
+msgstr ""
 
 #: mapaguarani/templates/openlayers.html:170
-msgid "Faça a partir de uma aldeia:"
+msgid "Create the polygon from a village:"
 msgstr ""
 
 #: mapaguarani/templates/users/user_detail.html:23
@@ -759,3 +753,21 @@ msgstr ""
 #: mapaguarani/templates/users/user_form.html:17
 msgid "Update"
 msgstr "Actualizar"
+
+#~ msgid "Habitada atualmente"
+#~ msgstr "Habitada actualmente"
+
+#~ msgid "Antigas aldeias, áreas de uso ou áreas esbulhadas"
+#~ msgstr "Aldeas antiguas, áreas de uso u áreas espoliadas"
+
+#~ msgid "Relatórios"
+#~ msgstr "Informes"
+
+#~ msgid "Sobre"
+#~ msgstr "Acerca"
+
+#~ msgid "Carregando dados...."
+#~ msgstr "Cargando datos..."
+
+#~ msgid "Carregando aldeias..."
+#~ msgstr "Cargando aldeas..."

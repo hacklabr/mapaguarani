@@ -121,7 +121,7 @@
       };
 
     $('.select-village-dropdown').select2({
-        placeholder: '{% trans "Carregando aldeias..." %}',
+        placeholder: '{% trans "Loading villages..." %}',
         templateResult: formatState,
         width: '250px',
         ajax: {
@@ -167,7 +167,7 @@
 </script>
 
 <div id="select-village-dropdown-container">
-    <p>{% trans "Faça a partir de uma aldeia:" %}</p>
+    <p>{% trans "Create the polygon from a village:" %}</p>
     <select class="select-village-dropdown" name="aldeia">
     </select>
 </div>

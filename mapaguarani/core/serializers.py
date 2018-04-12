@@ -271,11 +271,11 @@ class IndigenousVillageExportSerializer(IndigenousPlaceExportSerializer,
         try:
             presence = obj.guarani_presence_annual_series.latest()
             if presence.presence:
-                return _('Habitada atualmente')
+                return _('Currently Inhabited')
             else:
-                return _('Antigas aldeias, áreas de uso ou áreas esbulhadas')
+                return _('Old Villages, lands in use or dispossessed lands')
         except GuaraniPresence.DoesNotExist:
-            return _('Antigas aldeias, áreas de uso ou áreas esbulhadas')
+            return _('Old Villages, lands in use or dispossessed lands')
 
     @staticmethod
     def get_population(obj):
@@ -531,9 +531,9 @@ class IndigenousLandExportSerializer(IndigenousPlaceExportSerializer,
                 pass
 
         if land_presence:
-            return _('Habitada atualmente')
+            return _('Currently Inhabited')
         else:
-            return _('Antigas aldeias, áreas de uso ou áreas esbulhadas')
+            return _('Old Villages, lands in use or dispossessed lands')
 
     @staticmethod
     def get_land_tenure(obj):

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-12 12:42-0300\n"
-"PO-Revision-Date: 2018-04-11 20:24-0300\n"
+"POT-Creation-Date: 2018-04-12 15:46-0300\n"
+"PO-Revision-Date: 2018-04-12 15:14-0300\n"
 "Last-Translator: b'  <bruno@hacklab.com.br>'\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -418,7 +418,7 @@ msgstr "Terras indígenas"
 
 #: mapaguarani/core/models.py:549
 msgid "land_tenure_status is not \"Terra Original\" nor \"Terra Revisada\""
-msgstr ""
+msgstr "land_tenure_status não é \"Terra Original\" nem \"Terra Revisada\""
 
 #: mapaguarani/core/models.py:596
 msgid "Guarani indigenous lands layer"
@@ -429,14 +429,10 @@ msgid "Guarani indigenous villages layer"
 msgstr "Camada de aldeias indígenas Guarani"
 
 #: mapaguarani/core/models.py:604
-#, fuzzy
-#| msgid "Legal Proceding"
 msgid "Legal Proceeding"
 msgstr "Ação Judicial"
 
 #: mapaguarani/core/models.py:605
-#, fuzzy
-#| msgid "Legal Procedings"
 msgid "Legal Proceedings"
 msgstr "Ações Judiciais"
 
@@ -521,13 +517,13 @@ msgid "Archaeological Images"
 msgstr "Imagens Arqueológicas"
 
 #: mapaguarani/core/serializers.py:274 mapaguarani/core/serializers.py:534
-msgid "Habitada atualmente"
-msgstr ""
+msgid "Currently Inhabited"
+msgstr "Habitada Atualmente"
 
 #: mapaguarani/core/serializers.py:276 mapaguarani/core/serializers.py:278
 #: mapaguarani/core/serializers.py:536
-msgid "Antigas aldeias, áreas de uso ou áreas esbulhadas"
-msgstr ""
+msgid "Old Villages, lands in use or dispossessed lands"
+msgstr "Aldeias Antigas, terras em uso ou esbulhadas"
 
 #: mapaguarani/core/serializers.py:284
 #, python-brace-format
@@ -563,52 +559,52 @@ msgstr ""
 "você pode contactar-nos. Enquanto isso, tente atualizar a página."
 
 #: mapaguarani/templates/base.html:7 mapaguarani/templates/embed.html:24
-msgid "Mapa Guarani Digital"
-msgstr ""
+msgid "Guarani Digital Map"
+msgstr "Mapa Guarani Digital"
 
 #: mapaguarani/templates/embed.html:16 mapaguarani/templates/index.html:53
 msgid "Menu"
 msgstr "Menu"
 
 #: mapaguarani/templates/embed.html:25 mapaguarani/templates/index.html:62
-msgid "Carregando dados...."
-msgstr ""
+msgid "Loading data...."
+msgstr "Carregando dados..."
 
 #: mapaguarani/templates/index.html:21
-msgid "Entrar"
-msgstr ""
+msgid "Login"
+msgstr "Entrar"
 
 #: mapaguarani/templates/index.html:23
-msgid "Administrar"
-msgstr ""
+msgid "Admin"
+msgstr "Administrar"
 
 #: mapaguarani/templates/index.html:30
-msgid "Relatórios"
-msgstr ""
+msgid "Reports"
+msgstr "Relatórios"
 
 #: mapaguarani/templates/index.html:35
-msgid "Sobre"
-msgstr ""
+msgid "About"
+msgstr "Sobre"
 
 #: mapaguarani/templates/modals/reports-modal.html:7
 msgid "Relatórios sobre as Terras Indígenas"
-msgstr ""
+msgstr "Relatórios sobre as Terras Indígenas"
 
 #: mapaguarani/templates/modals/reports-modal.html:11
 msgid "Quadro Resumo"
-msgstr ""
+msgstr "Quadro Resumo"
 
 #: mapaguarani/templates/modals/reports-modal.html:12
 msgid "Downloads"
-msgstr ""
+msgstr "Downloads"
 
 #: mapaguarani/templates/modals/reports-modal.html:18
 msgid "Quadro Resumo da Presença dos Povos Guarani no Brasil"
-msgstr ""
+msgstr "Quadro Resumo da Presença dos Povos Guarani no Brasil"
 
 #: mapaguarani/templates/modals/reports-modal.html:23
 msgid "Terras Indígenas com presença dos povos Guarani"
-msgstr ""
+msgstr "Terras Indígenas com presença dos povos Guarani"
 
 #: mapaguarani/templates/modals/reports-modal.html:27
 #, fuzzy
@@ -618,15 +614,15 @@ msgstr "Descrição"
 
 #: mapaguarani/templates/modals/reports-modal.html:28
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #: mapaguarani/templates/modals/reports-modal.html:36
 msgid "TIs com Uso Exclusivo dos Guarani"
-msgstr ""
+msgstr "TIs com Uso Exclusivo dos Guarani"
 
 #: mapaguarani/templates/modals/reports-modal.html:63
 msgid "TIs de Outros povos com Presença Guarani"
-msgstr ""
+msgstr "TIs de Outros povos com Presença Guarani"
 
 #: mapaguarani/templates/modals/reports-modal.html:125
 msgid ""
@@ -642,32 +638,32 @@ msgstr ""
 
 #: mapaguarani/templates/modals/reports-modal.html:129
 msgid "Arquivos Terras Indígenas"
-msgstr ""
+msgstr "Arquivos Terras Indígenas"
 
 #: mapaguarani/templates/modals/reports-modal.html:130
 #: mapaguarani/templates/modals/reports-modal.html:139
 #: mapaguarani/templates/modals/reports-modal.html:148
 #: mapaguarani/templates/modals/reports-modal.html:157
 msgid "baixar Planilha Excel"
-msgstr ""
+msgstr "baixar Planilha Excel"
 
 #: mapaguarani/templates/modals/reports-modal.html:131
 #: mapaguarani/templates/modals/reports-modal.html:140
 #: mapaguarani/templates/modals/reports-modal.html:149
 #: mapaguarani/templates/modals/reports-modal.html:158
 msgid "baixar KML"
-msgstr ""
+msgstr "baixar KML"
 
 #: mapaguarani/templates/modals/reports-modal.html:133
 #: mapaguarani/templates/modals/reports-modal.html:142
 #: mapaguarani/templates/modals/reports-modal.html:151
 #: mapaguarani/templates/modals/reports-modal.html:160
 msgid "baixar Shapefile"
-msgstr ""
+msgstr "baixar Shapefile"
 
 #: mapaguarani/templates/modals/reports-modal.html:168
 msgid "Fechar"
-msgstr ""
+msgstr "Fechar"
 
 #: mapaguarani/templates/moderation/notification_message_moderator.txt:2
 #, python-format
@@ -690,15 +686,15 @@ msgstr ""
 
 #: mapaguarani/templates/moderation/notification_message_user.txt:2
 msgid "Olá"
-msgstr ""
+msgstr "Olá"
 
 #: mapaguarani/templates/moderation/notification_message_user.txt:4
 msgid "Sua contribuição na"
-msgstr ""
+msgstr "Sua contribuição na"
 
 #: mapaguarani/templates/moderation/notification_message_user.txt:4
 msgid "foi"
-msgstr ""
+msgstr "foi"
 
 #: mapaguarani/templates/moderation/notification_message_user.txt:4
 msgid "rejected"
@@ -710,11 +706,11 @@ msgstr "aceita"
 
 #: mapaguarani/templates/moderation/notification_message_user.txt:7
 msgid "Motivo"
-msgstr ""
+msgstr "Motivo"
 
 #: mapaguarani/templates/moderation/notification_message_user.txt:11
 msgid "Você pode visualizar sua contribuição aqui"
-msgstr ""
+msgstr "Você pode visualizar sua contribuição aqui"
 
 #: mapaguarani/templates/moderation/notification_message_user.txt:14
 #, python-format
@@ -728,7 +724,7 @@ msgstr ""
 #: mapaguarani/templates/moderation/notification_subject_moderator.txt:1
 #, python-format
 msgid "[Mapa Guarani Online] Nova %(content_type)s está aguardando aprovação"
-msgstr ""
+msgstr "[Mapa Guarani Online] Nova %(content_type)s está aguardando aprovação"
 
 #: mapaguarani/templates/openlayers.html:35
 msgid "Delete all Features"
@@ -739,28 +735,46 @@ msgid "WKT debugging window:"
 msgstr "Janela de debug de WKT:"
 
 #: mapaguarani/templates/openlayers.html:124
-msgid "Carregando aldeias..."
-msgstr ""
+msgid "Loading villages..."
+msgstr "Carregando dados..."
 
 #: mapaguarani/templates/openlayers.html:170
-msgid "Faça a partir de uma aldeia:"
-msgstr ""
+msgid "Create the polygon from a village:"
+msgstr "Criar o polígono a partir de uma aldeia:"
 
 #: mapaguarani/templates/users/user_detail.html:23
 msgid "Minha Informação"
-msgstr ""
+msgstr "Minha Informação"
 
 #: mapaguarani/templates/users/user_detail.html:24
 msgid "E-Mail"
-msgstr ""
+msgstr "E-Mail"
 
 #: mapaguarani/templates/users/user_detail.html:25
 msgid "Avatar"
-msgstr ""
+msgstr "Avatar"
 
 #: mapaguarani/templates/users/user_form.html:17
 msgid "Update"
 msgstr "Atualizar"
+
+#~ msgid "Entrar"
+#~ msgstr "Entrar"
+
+#~ msgid "Relatórios"
+#~ msgstr "Relatórios"
+
+#~ msgid "Sobre"
+#~ msgstr "Sobre"
+
+#~ msgid "Carregando dados...."
+#~ msgstr "Carregando dados...."
+
+#~ msgid "Carregando aldeias..."
+#~ msgstr "Carregando aldeias..."
+
+#~ msgid "Faça a partir de uma aldeia:"
+#~ msgstr "Faça a partir de uma aldeia:"
 
 #~ msgid "Account"
 #~ msgstr "Conta"
