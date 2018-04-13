@@ -49,11 +49,11 @@ RUN chown django /entrypoint.sh
 # Install js dependencies
 COPY bower.json .
 RUN bower --allow-root install
-RUN mkdir /app && mv bower_components /app/
+RUN mkdir -p /app && mv bower_components /app/
 
 COPY . /app
 
-RUN mkdir /app/staticfiles
+RUN mkdir -p /app/staticfiles
 
 # env.example must be used during build to provide a valid environment
 RUN export $(cat /app/env.example | grep -v ^# | xargs) && \
