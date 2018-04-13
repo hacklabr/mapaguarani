@@ -39,15 +39,20 @@ COMPRESS_OUTPUT_DIR = ''
 
 # EMAIL
 # ------------------------------------------------------------------------------
-# DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL',
-#                          default='')
-EMAIL_HOST = env("DJANGO_EMAIL_HOST", default='smtp.sendgrid.com')
-# EMAIL_HOST_PASSWORD = env("SENDGRID_PASSWORD")
-# EMAIL_HOST_USER = env('SENDGRID_USERNAME')
-# EMAIL_PORT = env.int("EMAIL_PORT", default=587)
-# EMAIL_SUBJECT_PREFIX = env("EMAIL_SUBJECT_PREFIX", default='[{{cookiecutter.project_name}}] ')
-# EMAIL_USE_TLS = True
-# SERVER_EMAIL = EMAIL_HOST_USER
+## EMAIL
+# ------------------------------------------------------------------------------
+DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL',
+                         default='<noreply@guarani.map.as>')
+EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='')
+SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
+
+# Anymail with Mailgun
+INSTALLED_APPS += ['anymail', ]
+ANYMAIL = {
+    'MAILGUN_API_KEY': env('DJANGO_MAILGUN_API_KEY'),
+    'MAILGUN_SENDER_DOMAIN': env('MAILGUN_SENDER_DOMAIN')
+}
+EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
 
 # TEMPLATE CONFIGURATION
 # ------------------------------------------------------------------------------
