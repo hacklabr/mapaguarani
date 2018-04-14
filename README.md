@@ -80,7 +80,8 @@ docker run --env-file=./compose/test/test_env --link=postgres_test:postgres \
 **Tags** fazem releases em [**produção**](http://guarani.map.as/).
 
 
-# Camadas Extras de Mapa
+# Dados Extras de Mapa
 
-As camadas extras de dados de Paraguai, Bolivia e Argentina vieram do Who's On First Gazeteer.
+Os dados de países e estados de Paraguai, Bolivia e Argentina vieram do Who's On First Gazeteer.
 
+Os dados de limites municipais da Argentina vêm do portal de dados abertos (https://datos-ignarg.opendata.arcgis.com/datasets/3f2410c818c747b3840e6934b45c3daa_13)
