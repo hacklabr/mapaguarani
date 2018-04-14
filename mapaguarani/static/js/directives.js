@@ -45,13 +45,44 @@
   var mapbox_hybrid   = L.tileLayer(mapbox_url, {mapid: 'mapbox.streets-satellite', access_token: access_token, pane: 'base_tiles'});
 
   // Official layers
-  var default_host = window.location.hostname;
-  var protected_areas_tile = L.tileLayer('http://' + default_host + ':4000/protected_areas_baseprotectedarea/{z}/{x}/{y}.png', {});
-  var boundaries_cities_tile = L.tileLayer('http://' + default_host + ':4000/boundaries_city/{z}/{x}/{y}.png', {
-    zIndex: 40
-  });
-  var boundaries_states_tile = L.tileLayer('http://' + default_host + ':4000/boundaries_state/{z}/{x}/{y}.png', {});
-  var boundaries_countries_tile = L.tileLayer('http://' + default_host + ':4000/boundaries_country/{z}/{x}/{y}.png', {});
+  var ProtectedAreaTileOptions = {
+    pane: 'base_tiles',
+    vectorTileLayerStyles: {
+      lands: function(properties, zoom) {
+        var styles = {
+            weight: 2,
+            fillColor: '#74c476',
+            color: '#74c476',
+            fillOpacity: 0.4,
+            opacity: 0.7,
+            fill: true,
+        };
+        return styles
+      },
+    },
+  };
+  var protected_areas_tile = L.vectorGrid.protobuf('tiles/protected_areas/{z}/{x}/{y}.pbf', ProtectedAreaTileOptions);
+
+  var boundariesTilesOptions = {
+    pane: 'base_tiles',
+    vectorTileLayerStyles: {
+      lands: function(properties, zoom) {
+        var styles = {
+            weight: 2,
+            fillColor: '#b2e2e2;',
+            color: '#b2e2e2;',
+            // fillOpacity: 0.4,
+            // opacity: 0.7,
+            // fill: true,
+        };
+        return styles
+      },
+    },
+  };
+
+  var boundaries_cities_tile = L.vectorGrid.protobuf('tiles/cities/{z}/{x}/{y}.pbf', boundariesTilesOptions);
+  var boundaries_states_tile = L.vectorGrid.protobuf('tiles/states/{z}/{x}/{y}.pbf', boundariesTilesOptions);
+  var boundaries_countries_tile = L.vectorGrid.protobuf('tiles/countries/{z}/{x}/{y}.pbf', boundariesTilesOptions);
 
   /*
    * Loading message

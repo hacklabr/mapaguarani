@@ -136,7 +136,7 @@ class SimpleIndigenousVillageViewSetWithPosition(FilterLayersBySiteAndUserAuthen
 
 class FilterVillageMixin(object):
     def get_queryset(self):
-        queryset = IndigenousVillage.objects.all()
+        queryset = super().get_queryset()
         guarani_presence = self.request.query_params.get('guarani_presence', None)
         if guarani_presence is not None:
             if guarani_presence in ('False', 'false'):
@@ -149,7 +149,7 @@ class FilterVillageMixin(object):
 
 
 class IndigenousVillageGeojsonView(FilterVillageMixin, FilterLayersBySiteAndUserAuthenticatedMixin, viewsets.ReadOnlyModelViewSet):
-    queryset = IndigenousVillage.objects.none()
+    queryset = IndigenousVillage.objects.all()
     serializer_class = SimpleIndigenousGeojsonVillageSerializer
 
 
@@ -159,7 +159,7 @@ class IndigenousVillageKMLView(KMLViewMixin, IndigenousVillageGeojsonView):
 
 
 class IndigenousVillageExportView(FilterVillageMixin, FilterLayersBySiteAndUserAuthenticatedMixin, PandasView):
-    queryset = IndigenousVillage.objects.none()
+    queryset = IndigenousVillage.objects.all()
     serializer_class = IndigenousVillageExportSerializer
 
 
