@@ -15,8 +15,8 @@ class BaseModerator(GenericModerator):
     # subject_template_user
     # message_template_user
     # Use these lines to run fix_moderation_after_imports
-    notify_moderator = False
-    notify_user = False
+    # notify_moderator = False
+    # notify_user = False
 
     def send(self, content_object, subject_template, message_template,
              recipient_list, extra_context=None):
