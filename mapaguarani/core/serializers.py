@@ -101,10 +101,11 @@ class ListIndigenousVillageSerializer(BaseListSerializerMixin):
 
 class IndigenousLandListSerializer(BaseListSerializerMixin):
 
-    exclude_field = ['villages', 'population',
-                     # 'calculated_area',
-                     'protected_areas_integral', 'protected_areas_conservation',
-                     'cities', 'states', 'guarani_presence']
+    exclude_field = ['villages', 'population', 'layer', 'projects',
+                     'guarani_exclusive_possession_area_portion',
+                     'others_exclusive_possession_area_portion',
+                     'protected_areas_integral', 'protected_areas_conservation', 'documents',
+                     'cities', 'states', 'country', 'guarani_presence']
 
 
 class ListArchaeologicalSiteSerializer(BaseListSerializerMixin):
@@ -186,7 +187,8 @@ class IndigenousPlaceExportSerializer(PlaceExportSerializer):
 
 class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
                                   ProtectedAreasMixinSerializer,
-                                  BasePointMixinSerializer):
+                                  BasePointMixinSerializer,
+                                  CachedSerializerMixin):
 
     position_precision = serializers.SerializerMethodField()
     population = serializers.SerializerMethodField()
@@ -227,6 +229,8 @@ class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
     @staticmethod
     def get_villages(obj):
         return SimpleIndigenousVillageSerializer(obj.villages, many=True).data
+
+cache_registry.register(IndigenousVillageSerializer)
 
 
 class IndigenousVillageExportSerializer(IndigenousPlaceExportSerializer,
