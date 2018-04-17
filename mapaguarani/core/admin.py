@@ -43,7 +43,7 @@ class GuaraniPresenceInLine(admin.TabularInline):
 
 
 class IndigenousPlaceAdmin(LayerPermissionsMixin, ObjectPermissionsModelAdminMixin, ModerationAdmin):
-    list_per_page = 500
+    list_per_page = 200
     list_filter = ('layer', )
     list_editable = ('status',)
 
@@ -66,7 +66,7 @@ class IndigenousVillageAdmin(IndigenousPlaceAdmin):
                     'public_comments', 'private_comments', )
     search_fields = ['name', 'other_names', ]
     filter_horizontal = ['ethnic_groups', 'prominent_subgroup', ]
-    list_per_page = 500
+    list_per_page = 200
     inlines = [
         PopulationInLine,
         GuaraniPresenceInLine,
