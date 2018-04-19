@@ -37,11 +37,11 @@
         },
       })
       .state('village', {
-        url: '/villages/:id/',
+        url: '/villages/:id/?{z}&{x}&{y}',
         controller: 'SingleCtrl',
         templateUrl: '/static/views/single-village.html',
         data: {
-          contentType: 'sites',
+          contentType: 'villages',
         },
         params: {
           focus: true
@@ -57,11 +57,11 @@
         }
       })
       .state('land', {
-        url: '/lands/:id/',
+        url: '/lands/:id/?{z}&{x}&{y}',
         controller: 'SingleCtrl',
         templateUrl: '/static/views/single-land.html',
         data: {
-          contentType: 'sites',
+          contentType: 'lands',
         },
         params: {
           focus: true
@@ -77,7 +77,7 @@
         }
       })
       .state('site', {
-        url: '/sites/:id/',
+        url: '/sites/:id/?{z}&{x}&{y}',
         controller: 'SingleCtrl',
         templateUrl: '/static/views/single-archaeological.html',
         data: {
@@ -97,7 +97,7 @@
         }
       })
       .state('projetc', {
-        url: '/project/:id/',
+        url: '/project/:id/?{z}&{x}&{y}',
         controller: 'SingleProjectCtrl',
         templateUrl: '/static/views/single-project.html',
         data: {

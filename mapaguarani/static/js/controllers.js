@@ -60,7 +60,9 @@
             m.setView([x, y], z);
           }
           m.on('moveend', function(e) {
-              $state.go('home', {x: m.getCenter()['lat'], y: m.getCenter()['lng'], z: m.getZoom()}, {notify: false});
+              if ($state.current.name === 'home') {
+                $state.go('home', {x: m.getCenter()['lat'], y: m.getCenter()['lng'], z: m.getZoom()}, {notify: false});
+              }
           });
         map = m;
       });
@@ -123,7 +125,12 @@
         $scope.$watch(function() {
           return Map.getMap();
         }, function(map) {
-          if($scope.data.geometry) {
+          if($stateParams.x && $stateParams.y && $stateParams.z) {
+            var x = parseFloat($stateParams.x);
+            var y = parseFloat($stateParams.y);
+            var z = parseFloat($stateParams.z);
+            map.setView([x, y], z);
+          } else if($scope.data.geometry) {
             var focusLayer = L.featureGroup();
             for(var key in $scope.map) {
               if($scope.map[key] && $scope.map[key].length) {
@@ -140,6 +147,12 @@
               [bbox[0][1], bbox[0][0]]
             ]));
           }
+          map.on('moveend', function(e) {
+              if ($state.current.name !== 'home') {
+                var params = {id: $stateParams.id, x: map.getCenter()['lat'], y: map.getCenter()['lng'], z: map.getZoom(), notify: false};
+                $state.go($state.current.name, params, {});
+              }
+          });
         });
       }
     }
