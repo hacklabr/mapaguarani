@@ -13,8 +13,8 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css">
         <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css">
         <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css">
+        <link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css">
         {% compress css %}
-            <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
             <!-- This file store project specific CSS -->
             <link rel="stylesheet" href="{% static 'sass/main.scss' %}" media="screen, projection" rel="stylesheet" type="text/x-scss">
         {% endcompress %}
@@ -30,20 +30,19 @@
 
           gtag('config', 'UA-111503189-1');
         </script>
-        {% compress js %}
-            <script src="{% static 'jquery/dist/jquery.js' %}"></script>
-            <script src="{% static 'bootstrap/dist/js/bootstrap.js' %}"></script>
-            <script src="{% static 'underscore/underscore.js' %}"></script>
+        <script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
+        <script src="https://unpkg.com/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+        <script src="https://unpkg.com/underscore@1.9.0/underscore-min.js"></script>
 
-            <script src="{% static 'angular/angular.js' %}"></script>
-            <script src="{% static 'angular-resource/angular-resource.js' %}"></script>
-            <script src="{% static 'angular-sanitize/angular-sanitize.js' %}"></script>
-        {% endcompress %}
-        <script type="text/javascript"  src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
-        <script type="text/javascript" src='https://unpkg.com/leaflet.gridlayer.googlemutant@0.6.4/Leaflet.GoogleMutant.js'></script>
-        <script type="text/javascript" src='https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js'></script>
-        <script type="text/javascript"  src="https://unpkg.com/leaflet.vectorgrid@1.2.0"></script>
-        <script src="//unpkg.com/@uirouter/angularjs@1.0.15/release/angular-ui-router.min.js"></script>
+        <script src="https://unpkg.com/angular@1.6.10/angular.min.js"></script>
+        <script src="https://unpkg.com/angular-resource@1.6.10/angular-resource.min.js"></script>
+        <script src="https://unpkg.com/angular-sanitize@1.6.10/angular-sanitize.min.js"></script>
+        <script src="https://unpkg.com/@uirouter/angularjs@1.0.15/release/angular-ui-router.min.js"></script>
+
+        <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+        <script src='https://unpkg.com/leaflet.gridlayer.googlemutant@0.6.4/Leaflet.GoogleMutant.js'></script>
+        <script src='https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js'></script>
+        <script src="https://unpkg.com/leaflet.vectorgrid@1.2.0"></script>
 
 
     {% block angular %}
