@@ -468,6 +468,7 @@ class ReportView(View):
 
 class ProtobufTileView(ResponseExceptionMixin, BaseGeoView,
                        generics.ListAPIView):
+    layer = ''
     pagination_class = None
     filter_backends = (TileFilter,)
     renderer_classes = (ProtobufRenderer,)
@@ -481,5 +482,6 @@ class ProtobufTileView(ResponseExceptionMixin, BaseGeoView,
 
 
 class LandsProtobufTileView(FilterLayersBySiteAndUserAuthenticatedMixin, ProtobufTileView):
+    layer = 'lands'
     queryset = IndigenousLand.objects.all()
     serializer_class = IndigenousLandProtobufSerializer

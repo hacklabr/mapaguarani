@@ -44,7 +44,7 @@ class ProtobufRenderer(JSONRenderer):
         if isinstance(data, list):
             data = collections.as_feature(data)
 
-        data['name'] = 'lands'
+        data['name'] = renderer_context['view'].layer
         for index, features in enumerate(data['features']):
-            data['features'][index]['name'] = 'lands'
+            data['features'][index]['name'] = renderer_context['view'].layer
         return mapbox_vector_tile.encode(data)

@@ -78,7 +78,7 @@ urlpatterns = [
         name='lands-tile'),
 
     url(urls.tilepath(r'^tiles/protected_areas/'),
-        ProtobufTileView.as_view(queryset=CtiProtectedArea.objects.all()),
+        ProtobufTileView.as_view(queryset=CtiProtectedArea.objects.all(), layer='lands'),
         name='protected-areas-tile'),
 
     url(urls.tilepath(r'^tiles/cities/'),
@@ -86,11 +86,11 @@ urlpatterns = [
         name='cities-tile'),
 
     url(urls.tilepath(r'^tiles/states/'),
-        ProtobufTileView.as_view(queryset=CtiState.objects.all()),
+        ProtobufTileView.as_view(queryset=CtiState.objects.all(), layer='states'),
         name='states-tile'),
 
     url(urls.tilepath(r'^tiles/countries/'),
-        ProtobufTileView.as_view(queryset=CtiCountry.objects.all()),
+        ProtobufTileView.as_view(queryset=CtiCountry.objects.all(), layer='countries'),
         name='countries-tile'),
 ]
 
