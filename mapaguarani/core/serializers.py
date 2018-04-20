@@ -187,8 +187,7 @@ class IndigenousPlaceExportSerializer(PlaceExportSerializer):
 
 class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
                                   ProtectedAreasMixinSerializer,
-                                  BasePointMixinSerializer,
-                                  CachedSerializerMixin):
+                                  BasePointMixinSerializer):
 
     position_precision = serializers.SerializerMethodField()
     population = serializers.SerializerMethodField()
@@ -230,7 +229,17 @@ class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
     def get_villages(obj):
         return SimpleIndigenousVillageSerializer(obj.villages, many=True).data
 
-cache_registry.register(IndigenousVillageSerializer)
+
+class IndigenousVillageCachedSerializer(IndigenousVillageSerializer,
+                                        CachedSerializerMixin):
+
+    class Meta:
+        model = IndigenousVillage
+        list_serializer_class = ListIndigenousVillageSerializer
+        depth = 1
+        fields = '__all__'
+
+cache_registry.register(IndigenousVillageCachedSerializer)
 
 
 class IndigenousVillageExportSerializer(IndigenousPlaceExportSerializer,

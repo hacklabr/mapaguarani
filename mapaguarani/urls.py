@@ -29,6 +29,7 @@ router.register(r'lands', IndigenousLandViewSet)
 router.register(r'land_tenures', LandTenureViewSet)
 router.register(r'land_tenures_status', LandTenureStatusViewSet)
 router.register(r'villages', IndigenousVillageViewSet)
+router.register(r'cached_villages', IndigenousVillageViewSet)
 router.register(r'simple_villages_with_position', SimpleIndigenousVillageViewSetWithPosition)
 router.register(r'villages_geojson', IndigenousVillageGeojsonView)
 router.register(r'lands_kml', IndigenousLandKMLView, base_name='lands-kml')
@@ -81,7 +82,7 @@ urlpatterns = [
         name='protected-areas-tile'),
 
     url(urls.tilepath(r'^tiles/cities/'),
-        ProtobufTileView.as_view(queryset=CtiCity.objects.all()),
+        ProtobufTileView.as_view(queryset=CtiCity.objects.all(), layer='cities'),
         name='cities-tile'),
 
     url(urls.tilepath(r'^tiles/states/'),

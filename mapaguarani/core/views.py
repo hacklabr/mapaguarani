@@ -38,7 +38,8 @@ from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           SimpleArchaeologicalPlaceGeojsonSerializer,
                           IndigenousVillageExportSerializer,
                           IndigenousLandExportSerializer, ProjectSerializer,
-                          IndigenousLandProtobufSerializer, ProminentEthnicSubGroupSerializer)
+                          IndigenousLandProtobufSerializer, ProminentEthnicSubGroupSerializer,
+                          IndigenousVillageCachedSerializer)
 
 from .renderers import KMLRenderer, ProtobufRenderer
 
@@ -124,6 +125,11 @@ class ArchaeologicalPlaceExportView(FilterLayersBySiteAndUserAuthenticatedMixin,
 class IndigenousVillageViewSet(FilterLayersBySiteAndUserAuthenticatedMixin, viewsets.ReadOnlyModelViewSet):
     queryset = IndigenousVillage.objects.all()
     serializer_class = IndigenousVillageSerializer
+
+
+class IndigenousVillageCachedViewSet(FilterLayersBySiteAndUserAuthenticatedMixin, viewsets.ReadOnlyModelViewSet):
+    queryset = IndigenousVillage.objects.all()
+    serializer_class = IndigenousVillageCachedSerializer
 
 
 class SimpleIndigenousVillageViewSetWithPosition(FilterLayersBySiteAndUserAuthenticatedMixin,
