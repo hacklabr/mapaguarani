@@ -17,7 +17,8 @@
     'GuaraniService',
     'guaraniMapService',
     'user',
-    function ($scope, $state, $stateParams, Guarani, Map, user) {
+    'Villages',
+    function ($scope, $state, $stateParams, Guarani, Map, user, Villages) {
 
       // State dependencies resolved, emit event to hide loading message
       $scope.$emit('mapaguarani.loaded');
@@ -33,9 +34,13 @@
       }
 
       // Store state resolved data on scope
-      Guarani.villages.query({}, function(villages){
-          $scope.villages = generate_urls(villages, 'village');
-      })
+      if ($stateParams.content == 'villages') {
+        Villages.query({}, function(villages){
+            $scope.villages = generate_urls(villages, 'village');
+        })
+      } else {
+        $scope.villages = undefined;
+      }
 
       Guarani.lands.query({}, function(lands){
           $scope.lands = generate_urls(lands, 'land');

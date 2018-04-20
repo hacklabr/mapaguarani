@@ -107,11 +107,13 @@
    */
   directives.directive('guaraniList', [
     '$rootScope',
+    '$state',
     '$stateParams',
     'GuaraniService',
     'guaraniMapService',
     'user',
-    function($rootScope, $stateParams, Guarani, Map, user) {
+    'Villages',
+    function($rootScope, $state, $stateParams, Guarani, Map, user, Villages) {
       return {
         restrict: 'E',
         scope: {
@@ -126,14 +128,27 @@
           // Set current user
           scope.user = user;
 
+          function generate_urls(features, type) {
+              angular.forEach(features, function(item){
+                  item.url = $state.href(type, {id: item.id}, {inherit: false});
+              });
+              return features;
+          }
+
           /*
            * Content type
            */
           scope.content = $stateParams.content || '';
           scope.setContent = function(content) {
+            if (content == 'villages' && scope[content] == undefined) {
+              Villages.query({}, function(villages){
+                scope.villages = generate_urls(villages, 'village');
+              })
+            }
             scope.content = content;
             scope.curPage = 0;
           };
+
           scope.toggleContent = function(content) {
             if(scope.content == content) {
               scope.content = '';

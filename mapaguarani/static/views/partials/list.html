@@ -62,6 +62,10 @@
             </form>
           </nav>
           <ul class="village list">
+            <li ng-if="!villages"
+                class="village item">
+                <h3>Carregando Aldeias...</h3>
+            </li>
             <li guarani-item
                 item="village"
                 class="village item"

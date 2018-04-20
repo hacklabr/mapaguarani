@@ -18,6 +18,16 @@
         });
     });
 
+    services.factory('Villages', function($resource){
+        return $resource('/api/villages/:id/', {}, {
+          query: {
+            method: 'GET',
+            url: '/api/cached_villages/',
+            isArray: true
+          }
+        });
+    });
+
   services.factory('GuaraniService', [
     '$q',
     '$window',

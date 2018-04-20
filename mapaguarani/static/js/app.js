@@ -32,9 +32,6 @@
         reloadOnSearch: false,
         controller: 'HomeCtrl',
         templateUrl: '/static/views/home.html',
-        params: {
-          'clustered': undefined
-        },
       })
       .state('village', {
         url: '/villages/:id/?{z}&{x}&{y}',
