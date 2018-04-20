@@ -34,13 +34,13 @@
       }
 
       // Store state resolved data on scope
-      if ($stateParams.content == 'villages') {
-        Villages.query({}, function(villages){
-            $scope.villages = generate_urls(villages, 'village');
-        })
-      } else {
-        $scope.villages = undefined;
-      }
+      // if ($stateParams.content == 'villages') {
+      Villages.query({}, function(villages){
+          $scope.villages = generate_urls(villages, 'village');
+      })
+      // } else {
+      //   $scope.villages = undefined;
+      // }
 
       Guarani.lands.query({}, function(lands){
           $scope.lands = generate_urls(lands, 'land');

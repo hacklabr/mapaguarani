@@ -128,23 +128,23 @@
           // Set current user
           scope.user = user;
 
-          function generate_urls(features, type) {
-              angular.forEach(features, function(item){
-                  item.url = $state.href(type, {id: item.id}, {inherit: false});
-              });
-              return features;
-          }
+          // function generate_urls(features, type) {
+          //     angular.forEach(features, function(item){
+          //         item.url = $state.href(type, {id: item.id}, {inherit: false});
+          //     });
+          //     return features;
+          // }
 
           /*
            * Content type
            */
           scope.content = $stateParams.content || '';
           scope.setContent = function(content) {
-            if (content == 'villages' && scope[content] == undefined) {
-              Villages.query({}, function(villages){
-                scope.villages = generate_urls(villages, 'village');
-              })
-            }
+            // if (content == 'villages' && scope[content] == undefined) {
+            //   Villages.query({}, function(villages){
+            //     scope.villages = generate_urls(villages, 'village');
+            //   })
+            // }
             scope.content = content;
             scope.curPage = 0;
           };
