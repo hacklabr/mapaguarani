@@ -24,7 +24,7 @@ from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 from .models import (IndigenousLand, IndigenousVillage, EthnicGroup, MapLayer,
                      ArchaeologicalPlace, LandTenure, LandTenureStatus,
-                     Project, ProminentEthnicSubGroup)
+                     Project, ProminentEthnicSubGroup, ActionField)
 from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           ArchaeologicalPlaceSerializer, ArchaeologicalPlaceExportSerializer,
                           SimpleArchaeologicalPlaceKMLSerializer, EthnicGroupSerializer,
@@ -57,9 +57,19 @@ class EmbeddableTemplateView(TemplateView):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
+
 class ProjectsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        guarani = self.request.query_params.get('guarani')
+        if guarani:
+            action_field = ActionField.objects.get(id=4)
+            return action_field.projects
+        return queryset
 
 
 class KMLViewMixin(object):

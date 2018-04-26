@@ -210,7 +210,7 @@
     '$scope',
     'Project',
     function($scope, Project) {
-      $scope.projects = Project.query({}, function(projects) {
+      $scope.projects = Project.query({guarani: 1}, function(projects) {
         $scope.projects = projects;
       });
     }
