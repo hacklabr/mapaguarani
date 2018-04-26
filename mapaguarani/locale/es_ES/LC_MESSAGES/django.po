@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-12 15:46-0300\n"
+"POT-Creation-Date: 2018-04-26 17:40-0300\n"
 "PO-Revision-Date: 2018-04-12 15:46-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -17,11 +17,76 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.0.4\n"
 
-#: mapaguarani/config/common.py:176
+#: ext-apps/django-spillway/spillway/forms/fields.py:21
+msgid "Enter a comma separated list of numbers."
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/forms/fields.py:22
+#, python-format
+msgid "Ensure each value is less than or equal to %(limit_value)s."
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/forms/fields.py:23
+#, python-format
+msgid "Ensure each value is greater than or equal to %(limit_value)s."
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/forms/fields.py:58
+#, python-format
+msgid "%(value)s is not a supported function."
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/models.py:29
+#, fuzzy
+#| msgid "attached file"
+msgid "raster file"
+msgstr "archivo anexado"
+
+#: ext-apps/django-spillway/spillway/models.py:30
+msgid "width in pixels"
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/models.py:31
+msgid "height in pixels"
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/models.py:32
+msgid "raster bounding polygon"
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/models.py:34
+msgid "spatial reference system"
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/models.py:35
+msgid "minimum value"
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/models.py:36
+msgid "maximum value"
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/models.py:37
+msgid "nodata value"
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/models.py:39
+msgid "West to East pixel resolution"
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/models.py:40
+msgid "North to South pixel resolution"
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/validators.py:9
+msgid "Max area exceeded."
+msgstr ""
+
+#: mapaguarani/config/common.py:179
 msgid "Brazilian Portuguese"
 msgstr "Portugués de Brasil"
 
-#: mapaguarani/config/common.py:177
+#: mapaguarani/config/common.py:180
 msgid "English"
 msgstr "Inglés"
 
@@ -53,9 +118,6 @@ msgstr "Nombre"
 #: mapaguarani/core/models.py:237 mapaguarani/core/models.py:248
 #: mapaguarani/core/models.py:265 mapaguarani/core/models.py:592
 #: mapaguarani/core/models.py:624 mapaguarani/core/models.py:707
-#: mapaguarani/src/geodjango-protected-areas/protected_areas/models.py:6
-#: requirements/src/geodjango-protected-areas/protected_areas/models.py:6
-#: src/geodjango-protected-areas/protected_areas/models.py:6
 msgid "name"
 msgstr "nombre"
 
@@ -307,8 +369,8 @@ msgstr "Exacto"
 msgid "Approximate"
 msgstr "Aproximado"
 
-#: mapaguarani/core/models.py:306 mapaguarani/core/serializers.py:290
-#: mapaguarani/core/serializers.py:514
+#: mapaguarani/core/models.py:306 mapaguarani/core/serializers.py:303
+#: mapaguarani/core/serializers.py:527
 msgid "No information"
 msgstr "Sin Información"
 
@@ -514,18 +576,36 @@ msgstr "Imagen Arqueológica"
 msgid "Archaeological Images"
 msgstr "Imágenes Arqueológicas"
 
-#: mapaguarani/core/serializers.py:274 mapaguarani/core/serializers.py:534
+#: mapaguarani/core/serializers.py:287 mapaguarani/core/serializers.py:547
 msgid "Currently Inhabited"
 msgstr "Habitada actualmente"
 
-#: mapaguarani/core/serializers.py:276 mapaguarani/core/serializers.py:278
-#: mapaguarani/core/serializers.py:536
+#: mapaguarani/core/serializers.py:289 mapaguarani/core/serializers.py:291
+#: mapaguarani/core/serializers.py:549
 msgid "Old Villages, lands in use or dispossessed lands"
 msgstr "Aldeas antiguas, tierras en uso"
 
-#: mapaguarani/core/serializers.py:284
+#: mapaguarani/core/serializers.py:297
 #, python-brace-format
 msgid "{population} (Source: {source} - {year})"
+msgstr ""
+
+#: mapaguarani/pages/admin.py:25
+msgid "Advanced options"
+msgstr ""
+
+#: mapaguarani/pages/models.py:7
+#, fuzzy
+#| msgid "No position"
+msgid "Position"
+msgstr "Sin Posición"
+
+#: mapaguarani/pages/models.py:10
+msgid "Page"
+msgstr ""
+
+#: mapaguarani/pages/models.py:11
+msgid "Pages"
 msgstr ""
 
 #: mapaguarani/templates/404.html:3 mapaguarani/templates/404.html:6
@@ -583,6 +663,10 @@ msgstr "Informes"
 #: mapaguarani/templates/index.html:35
 msgid "About"
 msgstr "Acerca"
+
+#: mapaguarani/templates/modal-login.html:18
+msgid "Sign In"
+msgstr ""
 
 #: mapaguarani/templates/modals/reports-modal.html:7
 msgid "Relatórios sobre as Terras Indígenas"

@@ -5,3 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class Page(FlatPage):
     position = models.IntegerField(_('Position'), default=0, null=True, blank=True)
+
+    class Meta:
+        verbose_name = _('Page')
+        verbose_name_plural = _('Pages')

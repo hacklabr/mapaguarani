@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-12 15:46-0300\n"
-"PO-Revision-Date: 2018-04-12 15:14-0300\n"
+"POT-Creation-Date: 2018-04-26 17:40-0300\n"
+"PO-Revision-Date: 2018-04-26 17:18-0306\n"
 "Last-Translator: b'  <bruno@hacklab.com.br>'\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -16,14 +16,77 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Translated-Using: django-rosetta 0.7.0\n"
 "X-Generator: Poedit 2.0.4\n"
+"X-Translated-Using: django-rosetta 0.8.0\n"
 
-#: mapaguarani/config/common.py:176
+#: ext-apps/django-spillway/spillway/forms/fields.py:21
+msgid "Enter a comma separated list of numbers."
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/forms/fields.py:22
+#, python-format
+msgid "Ensure each value is less than or equal to %(limit_value)s."
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/forms/fields.py:23
+#, python-format
+msgid "Ensure each value is greater than or equal to %(limit_value)s."
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/forms/fields.py:58
+#, python-format
+msgid "%(value)s is not a supported function."
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/models.py:29
+msgid "raster file"
+msgstr "arquivo anexo"
+
+#: ext-apps/django-spillway/spillway/models.py:30
+msgid "width in pixels"
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/models.py:31
+msgid "height in pixels"
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/models.py:32
+msgid "raster bounding polygon"
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/models.py:34
+msgid "spatial reference system"
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/models.py:35
+msgid "minimum value"
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/models.py:36
+msgid "maximum value"
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/models.py:37
+msgid "nodata value"
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/models.py:39
+msgid "West to East pixel resolution"
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/models.py:40
+msgid "North to South pixel resolution"
+msgstr ""
+
+#: ext-apps/django-spillway/spillway/validators.py:9
+msgid "Max area exceeded."
+msgstr ""
+
+#: mapaguarani/config/common.py:179
 msgid "Brazilian Portuguese"
 msgstr "Português Brasileiro"
 
-#: mapaguarani/config/common.py:177
+#: mapaguarani/config/common.py:180
 msgid "English"
 msgstr "Inglês"
 
@@ -55,9 +118,6 @@ msgstr "Nome"
 #: mapaguarani/core/models.py:237 mapaguarani/core/models.py:248
 #: mapaguarani/core/models.py:265 mapaguarani/core/models.py:592
 #: mapaguarani/core/models.py:624 mapaguarani/core/models.py:707
-#: mapaguarani/src/geodjango-protected-areas/protected_areas/models.py:6
-#: requirements/src/geodjango-protected-areas/protected_areas/models.py:6
-#: src/geodjango-protected-areas/protected_areas/models.py:6
 msgid "name"
 msgstr "nome"
 
@@ -198,23 +258,23 @@ msgstr "Arquivos de Projeto"
 
 #: mapaguarani/core/models.py:126
 msgid "youtube"
-msgstr ""
+msgstr "youtube"
 
 #: mapaguarani/core/models.py:127
 msgid "vimeo"
-msgstr ""
+msgstr "vimeo"
 
 #: mapaguarani/core/models.py:128
 msgid "flickr"
-msgstr ""
+msgstr "flickr"
 
 #: mapaguarani/core/models.py:129
 msgid "instagram"
-msgstr ""
+msgstr "instagram"
 
 #: mapaguarani/core/models.py:134
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
 #: mapaguarani/core/models.py:135
 msgid "Embed code"
@@ -242,7 +302,7 @@ msgstr "Arquivos"
 
 #: mapaguarani/core/models.py:164
 msgid "Links (Youtube, instagram, etc)"
-msgstr ""
+msgstr "Links (Youtube, instagram, etc)"
 
 #: mapaguarani/core/models.py:211
 msgid "Indigenous Place Document Type"
@@ -309,8 +369,8 @@ msgstr "Exato"
 msgid "Approximate"
 msgstr "Aproximado"
 
-#: mapaguarani/core/models.py:306 mapaguarani/core/serializers.py:290
-#: mapaguarani/core/serializers.py:514
+#: mapaguarani/core/models.py:306 mapaguarani/core/serializers.py:303
+#: mapaguarani/core/serializers.py:527
 msgid "No information"
 msgstr "Sem informação"
 
@@ -516,19 +576,35 @@ msgstr "Imagem Arqueológica"
 msgid "Archaeological Images"
 msgstr "Imagens Arqueológicas"
 
-#: mapaguarani/core/serializers.py:274 mapaguarani/core/serializers.py:534
+#: mapaguarani/core/serializers.py:287 mapaguarani/core/serializers.py:547
 msgid "Currently Inhabited"
 msgstr "Habitada Atualmente"
 
-#: mapaguarani/core/serializers.py:276 mapaguarani/core/serializers.py:278
-#: mapaguarani/core/serializers.py:536
+#: mapaguarani/core/serializers.py:289 mapaguarani/core/serializers.py:291
+#: mapaguarani/core/serializers.py:549
 msgid "Old Villages, lands in use or dispossessed lands"
 msgstr "Aldeias Antigas, terras em uso ou esbulhadas"
 
-#: mapaguarani/core/serializers.py:284
+#: mapaguarani/core/serializers.py:297
 #, python-brace-format
 msgid "{population} (Source: {source} - {year})"
 msgstr "{population} (Fonte: {source} - {year})"
+
+#: mapaguarani/pages/admin.py:25
+msgid "Advanced options"
+msgstr "Opções avançadas"
+
+#: mapaguarani/pages/models.py:7
+msgid "Position"
+msgstr "Posição"
+
+#: mapaguarani/pages/models.py:10
+msgid "Page"
+msgstr "Página"
+
+#: mapaguarani/pages/models.py:11
+msgid "Pages"
+msgstr "Páginas"
 
 #: mapaguarani/templates/404.html:3 mapaguarani/templates/404.html:6
 msgid "Page Not found"
@@ -585,6 +661,10 @@ msgstr "Relatórios"
 #: mapaguarani/templates/index.html:35
 msgid "About"
 msgstr "Sobre"
+
+#: mapaguarani/templates/modal-login.html:18
+msgid "Sign In"
+msgstr "Entrar"
 
 #: mapaguarani/templates/modals/reports-modal.html:7
 msgid "Relatórios sobre as Terras Indígenas"
@@ -849,9 +929,6 @@ msgstr "Atualizar"
 #~ msgstr ""
 #~ "Você confirmou que <a href=\"mailto:%(email)s\">%(email)s</a> é um email "
 #~ "do usuário %(user_display)s."
-
-#~ msgid "Sign In"
-#~ msgstr "Entrar"
 
 #~ msgid ""
 #~ "Please sign in with one\n"
