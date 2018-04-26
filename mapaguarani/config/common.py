@@ -31,6 +31,7 @@ DJANGO_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.flatpages',
 
     # Useful template tags:
     # 'django.contrib.humanize',
@@ -59,6 +60,7 @@ THIRD_PARTY_APPS = (
     'mapwidgets',
     'rules',
     'spillway',
+    'ckeditor',
 )
 
 # Apps specific for this project go here.
@@ -67,6 +69,7 @@ LOCAL_APPS = (
     'boundaries',
     'users',
     'core',
+    'pages.apps.PagesConfig',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

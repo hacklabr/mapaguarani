@@ -28,6 +28,11 @@
         });
     });
 
+    services.factory('Pages', function($resource){
+        return $resource('/api/pages/:id', {}, {
+        });
+    });
+
   services.factory('GuaraniService', [
     '$q',
     '$window',

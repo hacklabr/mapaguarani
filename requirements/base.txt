@@ -68,6 +68,9 @@ django-map-widgets==0.1.7
 django-redis==4.8.0
 redis>=2.10.5
 
+# Flatpages admin WYSIWYG
+django-ckeditor==5.3.1
+
 # Protected areas
 git+https://github.com/hacklabr/geodjango-protected-areas#egg=geodjango-protected-areas
 

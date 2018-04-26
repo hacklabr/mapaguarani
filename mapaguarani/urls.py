@@ -49,6 +49,8 @@ urlpatterns = [
 
     url(r'^api/lands_report', ReportView.as_view(), name='report_view'),
 
+    url(r'^api/pages', include('pages.urls', namespace='pages')),
+
     url(r'^export/villages$', IndigenousVillageExportView.as_view(), name='export_xls_villages'),
 
     url(r'^export/lands$', IndigenousLandExportView.as_view(), name='export_xls_lands'),

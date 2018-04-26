@@ -216,4 +216,22 @@
     }
   ]);
 
+  controllers.controller('AboutPagesCtrl', [
+    '$scope',
+    'Pages',
+    function($scope, Pages) {
+
+      function compare_by_position(a,b) {
+        if (a.position < b.position)
+           return -1;
+        if (a.position > b.position)
+           return 1;
+        return 0;
+      }
+      $scope.pages = Pages.query({url_prefix:'/sobre/'}, function(pages) {
+        $scope.pages = pages.sort(compare_by_position);
+      });
+    }
+  ]);
+
 })(angular, L, _);
