@@ -3,8 +3,6 @@
 
   // Declare app level module which depends on views, and components
   var app = angular.module('mapaguarani', [
-    //'ngRoute',
-    //'leaflet-directive',
     'ngSanitize',
     'ui.router',
     'mapaguarani.filters',
