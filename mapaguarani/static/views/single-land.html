@@ -110,11 +110,14 @@
         <th>Observações (Restritas)</th>
         <td>{{data.private_comments}}</td>
       </tr>
-      <tr ng-show="data.projects.length">
+      <tr ng-show="data.projects.length || data.layer_projects.length">
         <th>Projetos</th>
         <td>
             <div ng-repeat="project in data.projects">
               <p><a ng-href="/#!/project/{{project.id}}"> {{project.name}} </a></p>
+            </div>
+            <div ng-repeat="layer_project in data.layer_projects">
+              <p><a ng-href="/#!/project/{{layer_project.id}}"> {{layer_project.name}} </a></p>
             </div>
         </td>
       </tr>

@@ -375,6 +375,9 @@ class IndigenousVillage(IndigenousPlace):
             # import ipdb;ipdb.set_trace()
             return
 
+    @property
+    def layer_projects(self):
+        return self.layer.projects
 
 class GuaraniPresence(models.Model):
     '''
@@ -588,6 +591,11 @@ class IndigenousLand(IndigenousPlace):
             # import ipdb;ipdb.set_trace()
             return
 
+    @property
+    def layer_projects(self):
+        return self.layer.projects
+
+
 class LegalProceedings(models.Model):
     name = models.CharField(_('name'), max_length=255)
     description = models.TextField(_('Description'))
@@ -701,6 +709,10 @@ class ArchaeologicalPlace(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def layer_projects(self):
+        return self.layer.projects
 
 
 class ArchaeologicalImage(models.Model):

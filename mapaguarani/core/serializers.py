@@ -96,12 +96,12 @@ class BaseListSerializerMixin(serializers.ListSerializer):
 class ListIndigenousVillageSerializer(BaseListSerializerMixin):
 
     exclude_field = ['land', 'population', 'protected_areas_integral', 'protected_areas_conservation',
-                     'city', 'state', 'country', 'projects' ]
+                     'city', 'state', 'country', 'projects', 'layer_projects', ]
 
 
 class IndigenousLandListSerializer(BaseListSerializerMixin):
 
-    exclude_field = ['villages', 'population', 'layer', 'projects',
+    exclude_field = ['villages', 'population', 'layer', 'projects', 'layer_projects',
                      'guarani_exclusive_possession_area_portion',
                      'others_exclusive_possession_area_portion',
                      'protected_areas_integral', 'protected_areas_conservation', 'documents',
@@ -111,7 +111,7 @@ class IndigenousLandListSerializer(BaseListSerializerMixin):
 class ListArchaeologicalSiteSerializer(BaseListSerializerMixin):
 
     exclude_field = ['land', 'protected_areas_integral', 'protected_areas_conservation',
-                     'city', 'state', 'country', 'projects' ]
+                     'city', 'state', 'country', 'projects', 'layer_projects', ]
 
 
 class BasePointMixinSerializer(serializers.ModelSerializer):
@@ -143,10 +143,11 @@ class BasePointMixinSerializer(serializers.ModelSerializer):
             land = obj.land[0]
             return SimpleIndigenousLandSerializer(land).data
 
-class ProtectedAreasMixinSerializer(serializers.ModelSerializer):
+class GeoBaseMixinSerializer(serializers.ModelSerializer):
 
     protected_areas_integral = serializers.SerializerMethodField()
     protected_areas_conservation = serializers.SerializerMethodField()
+    layer_projects = serializers.SerializerMethodField()
 
     @staticmethod
     def get_protected_areas_integral(obj):
@@ -157,6 +158,11 @@ class ProtectedAreasMixinSerializer(serializers.ModelSerializer):
     def get_protected_areas_conservation(obj):
         if obj.protected_areas:
             return BaseProtectedAreaSerializers(obj.protected_areas.filter(type='US'), many=True).data
+
+    @staticmethod
+    def get_layer_projects(obj):
+        if obj.layer_projects:
+            return SimpleProjectSerializer(obj.layer_projects, many=True).data
 
 
 class PlaceExportSerializer(object):
@@ -186,7 +192,7 @@ class IndigenousPlaceExportSerializer(PlaceExportSerializer):
 
 
 class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
-                                  ProtectedAreasMixinSerializer,
+                                  GeoBaseMixinSerializer,
                                   BasePointMixinSerializer):
 
     position_precision = serializers.SerializerMethodField()
@@ -422,7 +428,7 @@ class SimpleIndigenousVillageKMLSerializer(CachedSerializerMixin, serializers.Mo
 cache_registry.register(SimpleIndigenousVillageKMLSerializer)
 
 
-class IndigenousLandSerializer(FieldPermissionSerializerMixin, ProtectedAreasMixinSerializer):
+class IndigenousLandSerializer(FieldPermissionSerializerMixin, GeoBaseMixinSerializer):
 
     associated_land = serializers.PrimaryKeyRelatedField(read_only=True)
 
@@ -606,7 +612,7 @@ class IndigenousLandProtobufSerializer(IndigenousLandSerializer,
 cache_registry.register(IndigenousLandProtobufSerializer)
 
 
-class ArchaeologicalPlaceSerializer(ProtectedAreasMixinSerializer, BasePointMixinSerializer):
+class ArchaeologicalPlaceSerializer(GeoBaseMixinSerializer, BasePointMixinSerializer):
 
     position_precision = serializers.SerializerMethodField()
 
