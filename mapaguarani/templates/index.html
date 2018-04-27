@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load staticfiles i18n %}
 
+{% block title %}{{ site.name }}{% endblock title %}
+
 {% block content %}
 <div class="map-container" ng-controller="MainCtrl">
   <div class="navbar navbar-fixed-top" role="navigation">
