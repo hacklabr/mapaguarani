@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-26 17:40-0300\n"
+"POT-Creation-Date: 2018-04-27 19:51-0300\n"
 "PO-Revision-Date: 2018-04-12 15:46-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -107,8 +107,8 @@ msgid "(No name)"
 msgstr ""
 
 #: mapaguarani/core/admin.py:157 mapaguarani/core/models.py:105
-#: mapaguarani/core/models.py:132 mapaguarani/core/models.py:415
-#: mapaguarani/core/models.py:451
+#: mapaguarani/core/models.py:132 mapaguarani/core/models.py:420
+#: mapaguarani/core/models.py:456
 msgid "Name"
 msgstr "Nombre"
 
@@ -116,8 +116,8 @@ msgstr "Nombre"
 #: mapaguarani/core/models.py:67 mapaguarani/core/models.py:152
 #: mapaguarani/core/models.py:208 mapaguarani/core/models.py:219
 #: mapaguarani/core/models.py:237 mapaguarani/core/models.py:248
-#: mapaguarani/core/models.py:265 mapaguarani/core/models.py:592
-#: mapaguarani/core/models.py:624 mapaguarani/core/models.py:707
+#: mapaguarani/core/models.py:265 mapaguarani/core/models.py:602
+#: mapaguarani/core/models.py:634 mapaguarani/core/models.py:721
 msgid "name"
 msgstr "nombre"
 
@@ -148,12 +148,12 @@ msgid "Organizations"
 msgstr "Organizaciones"
 
 #: mapaguarani/core/models.py:30 mapaguarani/core/models.py:261
-#: mapaguarani/core/models.py:620
+#: mapaguarani/core/models.py:630
 msgid "Public"
 msgstr "Público"
 
 #: mapaguarani/core/models.py:31 mapaguarani/core/models.py:262
-#: mapaguarani/core/models.py:621
+#: mapaguarani/core/models.py:631
 msgid "Restricted"
 msgstr "Restrito"
 
@@ -163,12 +163,12 @@ msgid "Indigenous Village"
 msgstr "Aldea Indígena"
 
 #: mapaguarani/core/models.py:36 mapaguarani/core/models.py:176
-#: mapaguarani/core/models.py:541
+#: mapaguarani/core/models.py:546
 msgid "Indigenous Land"
 msgstr "Tierra Indígena"
 
 #: mapaguarani/core/models.py:37 mapaguarani/core/models.py:182
-#: mapaguarani/core/models.py:657 mapaguarani/core/models.py:713
+#: mapaguarani/core/models.py:667 mapaguarani/core/models.py:727
 msgid "Archaeological Place"
 msgstr "Yacimiento Arqueológico"
 
@@ -177,13 +177,13 @@ msgid "Generic"
 msgstr "Genérico"
 
 #: mapaguarani/core/models.py:42 mapaguarani/core/models.py:106
-#: mapaguarani/core/models.py:133 mapaguarani/core/models.py:593
-#: mapaguarani/core/models.py:708
+#: mapaguarani/core/models.py:133 mapaguarani/core/models.py:603
+#: mapaguarani/core/models.py:722
 msgid "Description"
 msgstr "Descripción"
 
 #: mapaguarani/core/models.py:45 mapaguarani/core/models.py:281
-#: mapaguarani/core/models.py:635
+#: mapaguarani/core/models.py:645
 msgid "Status"
 msgstr "Estado"
 
@@ -320,8 +320,8 @@ msgstr "tipo"
 msgid "attached file"
 msgstr "archivo anexado"
 
-#: mapaguarani/core/models.py:225 mapaguarani/core/models.py:385
-#: mapaguarani/core/models.py:400
+#: mapaguarani/core/models.py:225 mapaguarani/core/models.py:390
+#: mapaguarani/core/models.py:405
 msgid "Date"
 msgstr "Fecha"
 
@@ -350,7 +350,9 @@ msgid "Ethnic group"
 msgstr "Pueblo"
 
 #: mapaguarani/core/models.py:274
-msgid "prominent ethnic sub-group"
+#, fuzzy
+#| msgid "prominent ethnic sub-group"
+msgid "Guarani ethnic sub-group"
 msgstr "SubGrupo Étnico Prominente"
 
 #: mapaguarani/core/models.py:278
@@ -361,20 +363,20 @@ msgstr "Comentarios"
 msgid "Private comments"
 msgstr "Comentarios privados"
 
-#: mapaguarani/core/models.py:304 mapaguarani/core/models.py:613
+#: mapaguarani/core/models.py:304 mapaguarani/core/models.py:623
 msgid "Exact"
 msgstr "Exacto"
 
-#: mapaguarani/core/models.py:305 mapaguarani/core/models.py:614
+#: mapaguarani/core/models.py:305 mapaguarani/core/models.py:624
 msgid "Approximate"
 msgstr "Aproximado"
 
-#: mapaguarani/core/models.py:306 mapaguarani/core/serializers.py:303
-#: mapaguarani/core/serializers.py:527
+#: mapaguarani/core/models.py:306 mapaguarani/core/serializers.py:309
+#: mapaguarani/core/serializers.py:533
 msgid "No information"
 msgstr "Sin Información"
 
-#: mapaguarani/core/models.py:310 mapaguarani/core/models.py:628
+#: mapaguarani/core/models.py:310 mapaguarani/core/models.py:638
 msgid "Position Precision"
 msgstr "Precision de Información"
 
@@ -382,12 +384,12 @@ msgstr "Precision de Información"
 msgid "Position Source"
 msgstr "Fuente de Posición"
 
-#: mapaguarani/core/models.py:319 mapaguarani/core/models.py:652
+#: mapaguarani/core/models.py:319 mapaguarani/core/models.py:662
 msgid "Geometry"
 msgstr "Geometría"
 
-#: mapaguarani/core/models.py:323 mapaguarani/core/models.py:533
-#: mapaguarani/core/models.py:651
+#: mapaguarani/core/models.py:323 mapaguarani/core/models.py:538
+#: mapaguarani/core/models.py:661
 msgid "Layer"
 msgstr "Capa"
 
@@ -395,197 +397,197 @@ msgstr "Capa"
 msgid "Indigenous Villages"
 msgstr "Aldeas Indígenas"
 
-#: mapaguarani/core/models.py:384 mapaguarani/core/models.py:392
+#: mapaguarani/core/models.py:389 mapaguarani/core/models.py:397
 msgid "Indigenous Presence"
 msgstr "Presencia Indígena"
 
-#: mapaguarani/core/models.py:386 mapaguarani/core/models.py:401
-#: mapaguarani/core/models.py:500 mapaguarani/core/models.py:632
+#: mapaguarani/core/models.py:391 mapaguarani/core/models.py:406
+#: mapaguarani/core/models.py:505 mapaguarani/core/models.py:642
 msgid "Source"
 msgstr "Fuente"
 
-#: mapaguarani/core/models.py:388 mapaguarani/core/models.py:403
+#: mapaguarani/core/models.py:393 mapaguarani/core/models.py:408
 msgid "Village"
 msgstr "Aldea"
 
-#: mapaguarani/core/models.py:399 mapaguarani/core/models.py:407
+#: mapaguarani/core/models.py:404 mapaguarani/core/models.py:412
 msgid "Population"
 msgstr "Población"
 
-#: mapaguarani/core/models.py:408
+#: mapaguarani/core/models.py:413
 msgid "Populations History"
 msgstr "Histórico de Poblaciones"
 
-#: mapaguarani/core/models.py:416 mapaguarani/core/models.py:452
+#: mapaguarani/core/models.py:421 mapaguarani/core/models.py:457
 msgid "Color in Map"
 msgstr "Colores en Mapa"
 
-#: mapaguarani/core/models.py:419 mapaguarani/core/models.py:506
+#: mapaguarani/core/models.py:424 mapaguarani/core/models.py:511
 msgid "Land Tenure"
 msgstr "Tenencia de Tierra"
 
-#: mapaguarani/core/models.py:420
+#: mapaguarani/core/models.py:425
 msgid "Land Tenures"
 msgstr "Tenencias de Tierras"
 
-#: mapaguarani/core/models.py:453
+#: mapaguarani/core/models.py:458
 msgid "Dashed border"
 msgstr "Linea de Frontera"
 
-#: mapaguarani/core/models.py:456 mapaguarani/core/models.py:513
+#: mapaguarani/core/models.py:461 mapaguarani/core/models.py:518
 msgid "Land Tenure Status"
 msgstr "Estado de Tenencia de Tierra"
 
-#: mapaguarani/core/models.py:457
+#: mapaguarani/core/models.py:462
 msgid "Land Tenures Status"
 msgstr "Estados de Tenencias de Tierras"
 
-#: mapaguarani/core/models.py:467
+#: mapaguarani/core/models.py:472
 msgid "documentation"
 msgstr "documentación"
 
-#: mapaguarani/core/models.py:473
+#: mapaguarani/core/models.py:478
 msgid "Official area"
 msgstr "Área Oficial"
 
-#: mapaguarani/core/models.py:478
+#: mapaguarani/core/models.py:483
 msgid "Guarani full and exclusive portion area possession"
 msgstr ""
 
-#: mapaguarani/core/models.py:484
+#: mapaguarani/core/models.py:489
 msgid "Other peoples' full and exclusive portion area possession"
 msgstr ""
 
-#: mapaguarani/core/models.py:490
+#: mapaguarani/core/models.py:495
 msgid "Claim"
 msgstr "Concesión"
 
-#: mapaguarani/core/models.py:495
+#: mapaguarani/core/models.py:500
 msgid "Demand"
 msgstr "Demanda"
 
-#: mapaguarani/core/models.py:523
+#: mapaguarani/core/models.py:528
 msgid "Associated Land"
 msgstr "Tierra Asociada"
 
-#: mapaguarani/core/models.py:529
+#: mapaguarani/core/models.py:534
 msgid "Indigenous Land Spatial Data"
 msgstr "Datos Espaciales de Tierra Indígena"
 
-#: mapaguarani/core/models.py:542
+#: mapaguarani/core/models.py:547
 msgid "Indigenous Lands"
 msgstr "Tierras Indígenas"
 
-#: mapaguarani/core/models.py:549
+#: mapaguarani/core/models.py:554
 msgid "land_tenure_status is not \"Terra Original\" nor \"Terra Revisada\""
 msgstr ""
 
-#: mapaguarani/core/models.py:596
+#: mapaguarani/core/models.py:606
 msgid "Guarani indigenous lands layer"
 msgstr "Capa de tierras indígenas Guarani"
 
-#: mapaguarani/core/models.py:600
+#: mapaguarani/core/models.py:610
 msgid "Guarani indigenous villages layer"
 msgstr "Capas de tierras indígenas Guarani"
 
-#: mapaguarani/core/models.py:604
+#: mapaguarani/core/models.py:614
 msgid "Legal Proceeding"
 msgstr "Trámite Legal"
 
-#: mapaguarani/core/models.py:605
+#: mapaguarani/core/models.py:615
 msgid "Legal Proceedings"
 msgstr "Trámites Legales"
 
-#: mapaguarani/core/models.py:615
+#: mapaguarani/core/models.py:625
 msgid "By City"
 msgstr "Por Ciudad"
 
-#: mapaguarani/core/models.py:616
+#: mapaguarani/core/models.py:626
 msgid "No position"
 msgstr "Sin Posición"
 
-#: mapaguarani/core/models.py:625
+#: mapaguarani/core/models.py:635
 msgid "Acronym"
 msgstr "Acrónimo"
 
-#: mapaguarani/core/models.py:626
+#: mapaguarani/core/models.py:636
 msgid "CNSA"
 msgstr ""
 
-#: mapaguarani/core/models.py:631
+#: mapaguarani/core/models.py:641
 msgid "Position Comments"
 msgstr "Comentarios de Posición"
 
-#: mapaguarani/core/models.py:640
+#: mapaguarani/core/models.py:650
 msgid "institution"
 msgstr "institución"
 
-#: mapaguarani/core/models.py:641
+#: mapaguarani/core/models.py:651
 msgid "hydrography"
 msgstr "hidrografía"
 
-#: mapaguarani/core/models.py:642
+#: mapaguarani/core/models.py:652
 msgid "phase"
 msgstr "fase"
 
-#: mapaguarani/core/models.py:643
+#: mapaguarani/core/models.py:653
 msgid "dating"
 msgstr "datación"
 
-#: mapaguarani/core/models.py:644
+#: mapaguarani/core/models.py:654
 msgid "deviation"
 msgstr "desviación"
 
-#: mapaguarani/core/models.py:645
+#: mapaguarani/core/models.py:655
 msgid "chronological reference"
 msgstr "referencia cronológica"
 
-#: mapaguarani/core/models.py:646
+#: mapaguarani/core/models.py:656
 msgid "ap date"
 msgstr ""
 
-#: mapaguarani/core/models.py:647
+#: mapaguarani/core/models.py:657
 msgid "calibrated dating"
 msgstr "datación calibrada"
 
-#: mapaguarani/core/models.py:648
+#: mapaguarani/core/models.py:658
 msgid "dating method"
 msgstr "método de datación"
 
-#: mapaguarani/core/models.py:649
+#: mapaguarani/core/models.py:659
 msgid "laboratory code"
 msgstr "código de laboratório"
 
-#: mapaguarani/core/models.py:658
+#: mapaguarani/core/models.py:668
 msgid "Archaeological Places"
 msgstr "Yacimientos Arqueológicos"
 
-#: mapaguarani/core/models.py:709
+#: mapaguarani/core/models.py:723
 msgid "Credits"
 msgstr "Atribución"
 
-#: mapaguarani/core/models.py:710
+#: mapaguarani/core/models.py:724
 msgid "Image"
 msgstr "Imagen"
 
-#: mapaguarani/core/models.py:717
+#: mapaguarani/core/models.py:731
 msgid "Archaeological Image"
 msgstr "Imagen Arqueológica"
 
-#: mapaguarani/core/models.py:718
+#: mapaguarani/core/models.py:732
 msgid "Archaeological Images"
 msgstr "Imágenes Arqueológicas"
 
-#: mapaguarani/core/serializers.py:287 mapaguarani/core/serializers.py:547
+#: mapaguarani/core/serializers.py:293 mapaguarani/core/serializers.py:553
 msgid "Currently Inhabited"
 msgstr "Habitada actualmente"
 
-#: mapaguarani/core/serializers.py:289 mapaguarani/core/serializers.py:291
-#: mapaguarani/core/serializers.py:549
+#: mapaguarani/core/serializers.py:295 mapaguarani/core/serializers.py:297
+#: mapaguarani/core/serializers.py:555
 msgid "Old Villages, lands in use or dispossessed lands"
 msgstr "Aldeas antiguas, tierras en uso"
 
-#: mapaguarani/core/serializers.py:297
+#: mapaguarani/core/serializers.py:303
 #, python-brace-format
 msgid "{population} (Source: {source} - {year})"
 msgstr ""
@@ -672,76 +674,75 @@ msgstr ""
 msgid "Relatórios sobre as Terras Indígenas"
 msgstr "Informes acerca de las Tierras Indígenas"
 
-#: mapaguarani/templates/modals/reports-modal.html:11
+#: mapaguarani/templates/modals/reports-modal.html:12
 msgid "Quadro Resumo"
 msgstr "Cuadro Resumen"
 
-#: mapaguarani/templates/modals/reports-modal.html:12
+#: mapaguarani/templates/modals/reports-modal.html:13
+#: mapaguarani/templates/modals/reports-modal.html:15
 msgid "Downloads"
 msgstr "Descargas"
 
-#: mapaguarani/templates/modals/reports-modal.html:18
+#: mapaguarani/templates/modals/reports-modal.html:23
 msgid "Quadro Resumo da Presença dos Povos Guarani no Brasil"
 msgstr "Cuadro Resumen de Presencia de Pueblos Guarani en Brasil"
 
-#: mapaguarani/templates/modals/reports-modal.html:23
+#: mapaguarani/templates/modals/reports-modal.html:28
 msgid "Terras Indígenas com presença dos povos Guarani"
 msgstr "Tierras Indígenas con presencia de Pueblos Guarani"
 
-#: mapaguarani/templates/modals/reports-modal.html:27
+#: mapaguarani/templates/modals/reports-modal.html:32
 msgid "Descrição"
 msgstr "Descripción"
 
-#: mapaguarani/templates/modals/reports-modal.html:28
+#: mapaguarani/templates/modals/reports-modal.html:33
 msgid "Total"
 msgstr ""
 
-#: mapaguarani/templates/modals/reports-modal.html:36
+#: mapaguarani/templates/modals/reports-modal.html:41
 msgid "TIs com Uso Exclusivo dos Guarani"
 msgstr ""
 
-#: mapaguarani/templates/modals/reports-modal.html:63
+#: mapaguarani/templates/modals/reports-modal.html:68
 msgid "TIs de Outros povos com Presença Guarani"
 msgstr ""
 
-#: mapaguarani/templates/modals/reports-modal.html:125
+#: mapaguarani/templates/modals/reports-modal.html:132
 msgid ""
 "Você pode baixar a planilha das terras indigenas, e os shapefiles das "
 "camadas de Aldeias e Terras Indígenas"
 msgstr ""
 
-#: mapaguarani/templates/modals/reports-modal.html:126
+#: mapaguarani/templates/modals/reports-modal.html:133
 msgid ""
 "A geração destes arquivos pode demorar vários minutos, por favor aguarde o "
 "download começar após clicar abaixo no arquivo abaixo desejado."
 msgstr ""
 
-#: mapaguarani/templates/modals/reports-modal.html:129
+#: mapaguarani/templates/modals/reports-modal.html:136
 msgid "Arquivos Terras Indígenas"
 msgstr "Archivos Tierras Indígenas"
 
-#: mapaguarani/templates/modals/reports-modal.html:130
-#: mapaguarani/templates/modals/reports-modal.html:139
-#: mapaguarani/templates/modals/reports-modal.html:148
-#: mapaguarani/templates/modals/reports-modal.html:157
+#: mapaguarani/templates/modals/reports-modal.html:138
+#: mapaguarani/templates/modals/reports-modal.html:149
+#: mapaguarani/templates/modals/reports-modal.html:166
 msgid "baixar Planilha Excel"
 msgstr "descargar Excel"
 
-#: mapaguarani/templates/modals/reports-modal.html:131
-#: mapaguarani/templates/modals/reports-modal.html:140
-#: mapaguarani/templates/modals/reports-modal.html:149
-#: mapaguarani/templates/modals/reports-modal.html:158
+#: mapaguarani/templates/modals/reports-modal.html:139
+#: mapaguarani/templates/modals/reports-modal.html:156
+#: mapaguarani/templates/modals/reports-modal.html:160
+#: mapaguarani/templates/modals/reports-modal.html:167
 msgid "baixar KML"
 msgstr "descargar KML"
 
-#: mapaguarani/templates/modals/reports-modal.html:133
-#: mapaguarani/templates/modals/reports-modal.html:142
+#: mapaguarani/templates/modals/reports-modal.html:141
 #: mapaguarani/templates/modals/reports-modal.html:151
-#: mapaguarani/templates/modals/reports-modal.html:160
+#: mapaguarani/templates/modals/reports-modal.html:169
 msgid "baixar Shapefile"
 msgstr "descargar  Shapefile"
 
-#: mapaguarani/templates/modals/reports-modal.html:168
+#: mapaguarani/templates/modals/reports-modal.html:177
 msgid "Fechar"
 msgstr "Cerrar"
 

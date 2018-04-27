@@ -271,7 +271,7 @@ class IndigenousPlace(models.Model):
     )
     prominent_subgroup = models.ManyToManyField(
         ProminentEthnicSubGroup,
-        verbose_name=_('prominent ethnic sub-group'),
+        verbose_name=_('Guarani ethnic sub-group'),
         related_name='%(class)s_prominent_subgroup_layers',
         blank=True
     )
