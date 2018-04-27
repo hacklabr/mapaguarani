@@ -13,7 +13,9 @@
             <a href="#page-{{$index}}" data-toggle="tab">{{ page.title }}</a>
             {% endverbatim %}
           </li>
+          {% if site.domain == 'guarani.map.as' %}
           <li><a href="#projects-tab" data-toggle="tab">Mundo Cultural Guarani</a></li>
+          {% endif %}
         </ul>
         <div class="tab-content" id="aboutTabsContent">
           {% verbatim %}
@@ -24,7 +26,7 @@
             <div ng-bind-html="page.content"></div>
           </div>
           {% endverbatim %}
-
+          {% if site.domain == 'guarani.map.as' %}
           <div id="projects-tab"
                ng-controller="ProjectsCtrl"
                class="tab-pane fade">
@@ -70,6 +72,7 @@
               {% endverbatim %}
             </div>
           </div>
+          {% endif %}
         </div>
       </div>
       <div class="modal-footer">
