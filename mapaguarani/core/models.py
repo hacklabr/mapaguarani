@@ -364,6 +364,8 @@ class IndigenousVillage(IndigenousPlace):
             return State.objects.get(geometry__covers=self.geometry)
         except State.DoesNotExist:
             return
+        except State.MultipleObjectsReturned:
+            return State.objects.filter(geometry__covers=self.geometry).first()
 
     @property
     def country(self):

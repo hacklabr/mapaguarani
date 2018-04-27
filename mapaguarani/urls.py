@@ -51,11 +51,11 @@ urlpatterns = [
 
     url(r'^api/pages', include('pages.urls', namespace='pages')),
 
-    url(r'^export/villages$', IndigenousVillageExportView.as_view(), name='export_xls_villages'),
+    url(r'^export/villages.xlsx$', IndigenousVillageExportView.as_view(), name='export_xls_villages'),
 
-    url(r'^export/lands$', IndigenousLandExportView.as_view(), name='export_xls_lands'),
+    url(r'^export/lands.xlsx$', IndigenousLandExportView.as_view(), name='export_xls_lands'),
 
-    url(r'^export/archaeological$', ArchaeologicalPlaceExportView.as_view(), name='export_xls_archaeological'),
+    url(r'^export/archaeological.xlsx$', ArchaeologicalPlaceExportView.as_view(), name='export_xls_archaeological'),
 
     url(r'^shapefiles/villages/$', IndigenousVillagesShapefileView.as_view(), name='villages_shapefiles'),
 
