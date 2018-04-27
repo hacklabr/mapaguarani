@@ -412,7 +412,14 @@
         },
         link: function(scope, element, attrs) {
           var center = scope.center || [-16.107747, -51.103348];
-          var zoom = scope.zoom || 5;
+
+          var default_zoom = 5;
+          if ($window.innerHeight < 500 || $window.innerWidth < 500 ) {
+            default_zoom = 3.5;
+          } else if ($window.innerHeight < 900) {
+            default_zoom = 4.5;
+          }
+          var zoom = scope.zoom || default_zoom;
 
           angular.element(element).append('<div id="' + attrs.id + '"></div>"').attr('id', '');
 
@@ -421,7 +428,9 @@
             zoom: zoom,
             zoomControl: false,
             attributionControl: false,
-            preferCanvas: true
+            preferCanvas: true,
+            zoomSnap: 0.1,
+            zoomDelta: 0.5,
           });
 
           // Store map leaflet object on map service

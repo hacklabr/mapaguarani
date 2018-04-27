@@ -38,7 +38,7 @@ input[type="radio"], input[type="checkbox"] {
   &:before {
     content: '';
     width: 100%;
-    height: 200px;
+    height: 100px;
     position: absolute;
     z-index: -1;
     top: 0;
@@ -115,9 +115,15 @@ input[type="radio"], input[type="checkbox"] {
   text-shadow: 1px 1px 1px rgba(0,0,0,0.6);
   text-transform: uppercase;
   letter-spacing: -1px;
+  @media screen and (max-width: 500px){
+    font-size: 16px;
+  }
 }
+
 .navbar-collapse.in {
   overflow-y: hidden;
+  z-index: 9999999999999999999999 !important;
+  background: #000;
 }
 .navbar-header .navbar-icon-container {
   margin-right: 15px;

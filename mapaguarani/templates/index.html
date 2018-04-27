@@ -7,14 +7,12 @@
     <div class="container-fluid">
       <div class="navbar-header">
         <div class="navbar-icon-container">
-          <a href="#" class="navbar-icon pull-right visible-xs" id="nav-btn"><i class="fa fa-bars fa-lg white"></i></a>
-          <a href="#" class="navbar-icon pull-right visible-xs" id="sidebar-toggle-btn"><i class="fa fa-search fa-lg white"></i></a>
+          <a href="#header-menu" class="navbar-icon pull-right visible-xs" id="nav-btn" data-toggle="collapse"><i class="fa fa-bars fa-lg white"></i></a>
         </div>
         <a class="navbar-brand" ui-sref="home" ui-sref-opts="{reload: true, inherit: false}">{{ site.name }}</a>
       </div>
-      <div class="navbar-collapse navbar-right collapse">
+      <div id="header-menu" class="navbar-collapse navbar-right collapse">
         <ul class="nav navbar-nav">
-
           <li>
               {% if not user.is_authenticated %}
               <!-- <a href="" data-toggle="modal" data-target="#login-modal" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Entrar</a> -->
