@@ -317,8 +317,8 @@ class IndigenousVillage(IndigenousPlace):
                                        max_length=512,
                                        help_text="""Indique quem foi o responsável pela localização da aldeia.""")
     geometry = models.PointField(_('Geometry'),
-                                 help_text="""Localize o ponto da aldeia. 
-                                              Você pode incluir as coordenadas geográficas (em graus decimais) ou 
+                                 help_text="""Localize o ponto da aldeia.
+                                              Você pode incluir as coordenadas geográficas (em graus decimais) ou
                                               localizar o ponto olhando o mapa ou a foto aérea do Google.""")
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'), related_name='villages',
                               help_text="""O sistema é dividido em camadas que configuram as permissões de usuários e as
@@ -473,7 +473,7 @@ class IndigenousLand(IndigenousPlace):
         related_name='%(class)s_documentation',
         blank=True,
         help_text="""Acrescente a documentação oficial sobre a terra indígena (decretos de homologação, portarias declaratórias,etc.).
-                     Caso o mesmo documento se refira a mais de uma terra indígena, ele pode já estar cadastrado e você pode apenas selecioná-lo. 
+                     Caso o mesmo documento se refira a mais de uma terra indígena, ele pode já estar cadastrado e você pode apenas selecioná-lo.
                      Confira na lista antes de adicionar. """)
     official_area = models.FloatField(_('Official area'),
                                       blank=True,
@@ -483,13 +483,13 @@ class IndigenousLand(IndigenousPlace):
         _('Guarani full and exclusive portion area possession'),
         blank=True,
         null=True,
-        help_text="""Em caso de terras ainda em processo de regularização, caso tenha informação de qual porção da área já foi desintrusada incluir. 
+        help_text="""Em caso de terras ainda em processo de regularização, caso tenha informação de qual porção da área já foi desintrusada incluir.
                      Em áreas em que não se iniciou o processo de desintrusão colocar 0.""")
     others_exclusive_possession_area_portion = models.FloatField(
         _("Other peoples' full and exclusive portion area possession"),
         blank=True,
         null=True,
-        help_text="""Em caso de terras ainda em processo de regularização, caso tenha informação de qual porção da área já foi desintrusada incluir. 
+        help_text="""Em caso de terras ainda em processo de regularização, caso tenha informação de qual porção da área já foi desintrusada incluir.
                      Em áreas em que não se iniciou o processo de desintrusão colocar 0. """)
     # private field
     claim = models.TextField(_('Claim'),
@@ -532,7 +532,7 @@ class IndigenousLand(IndigenousPlace):
                      indique qual outro registro se refere à mesma terra, original ou revisada. """)
 
     geometry = models.MultiPolygonField(_('Indigenous Land Spatial Data'),
-                                        help_text="""Inclua aqui o polígono da terra indígena apenas em formato *.KML. 
+                                        help_text="""Inclua aqui o polígono da terra indígena apenas em formato *.KML.
                                         Certifique-se de que apenas a terra indígena correspondente está no arquivo. """)
 
     layer = models.ForeignKey(MapLayer, verbose_name=_('Layer'),
