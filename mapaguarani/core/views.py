@@ -16,6 +16,7 @@ from rest_pandas import PandasView
 from boundaries.models import State, Country
 
 from spillway import views as spillway_views
+from spillway import fields as spillway_fields
 from spillway.generics import BaseGeoView
 from spillway.serializers import GeoModelSerializer
 from spillway.filters import TileFilter
@@ -287,7 +288,7 @@ class ShapefileView(generics.GenericAPIView):
         for field_name, field_type in serializer_fields.items():
             if isinstance(field_type, relations.ManyRelatedField):
                 raise AttributeError("All Many to Many fields should be exclude from serializer. Field: " + field_name)
-            if not isinstance(field_type, rest_framework_gis.fields.GeometryField):
+            if not (isinstance(field_type, rest_framework_gis.fields.GeometryField) or isinstance(field_type, spillway_fields.GeometryField)):
                 properties[field_name] = self._get_fiona_type(field_type)
 
         schema = {"geometry": geometry_type,
