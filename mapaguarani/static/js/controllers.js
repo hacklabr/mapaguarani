@@ -13,12 +13,13 @@
   controllers.controller('HomeCtrl', [
     '$scope',
     '$state',
+    '$window',
     '$stateParams',
     'GuaraniService',
     'guaraniMapService',
     'user',
     'Villages',
-    function ($scope, $state, $stateParams, Guarani, Map, user, Villages) {
+    function ($scope, $state, $window, $stateParams, Guarani, Map, user, Villages) {
 
       // State dependencies resolved, emit event to hide loading message
       $scope.$emit('mapaguarani.loaded');
@@ -52,6 +53,14 @@
 
       $scope.user = user;
 
+      function inIframe () {
+          try {
+              return $window.self !== $window.top;
+          } catch (e) {
+              return true;
+          }
+      }
+
       // Watch and store map from MapService
       var map;
 
@@ -63,6 +72,9 @@
             var y = parseFloat($stateParams.y);
             var z = parseFloat($stateParams.z);
             m.setView([x, y], z);
+            if (inIframe()) {
+              m.scrollWheelZoom.disable();
+            }
           }
           m.on('moveend', function(e) {
               if ($state.current.name === 'home') {
@@ -105,12 +117,13 @@
   controllers.controller('SingleCtrl', [
     '$state',
     '$scope',
+    '$window',
     '$stateParams',
     'Data',
     'guaraniMapService',
     'GuaraniService',
     'user',
-    function($state, $scope, $stateParams, data, Map, Guarani, user) {
+    function($state, $scope, $window, $stateParams, data, Map, Guarani, user) {
 
       // State dependencies resolved, emit event to hide loading message
       $scope.$emit('mapaguarani.loaded');
@@ -124,6 +137,14 @@
       $scope.map[$scope.type] = [$scope.data];
       $scope.user = user;
 
+      function inIframe () {
+          try {
+              return $window.self !== $window.top;
+          } catch (e) {
+              return true;
+          }
+      }
+
       // If focus, fit map bounds to item location
       // FIXME refactor this like there is no tomorrow
       if($state.params.focus) {
@@ -135,6 +156,9 @@
             var y = parseFloat($stateParams.y);
             var z = parseFloat($stateParams.z);
             map.setView([x, y], z);
+            if (inIframe()) {
+              map.scrollWheelZoom.disable();
+            }
           } else if($scope.data.geometry) {
             var focusLayer = L.featureGroup();
             for(var key in $scope.map) {
