@@ -413,7 +413,7 @@
         link: function(scope, element, attrs) {
           var center = scope.center || [-16.107747, -51.103348];
 
-          var default_zoom = 5;
+          var default_zoom = 5.0;
           if ($window.innerHeight < 500 || $window.innerWidth < 500 ) {
             default_zoom = 3.5;
           } else if ($window.innerHeight < 900) {
@@ -425,13 +425,15 @@
 
           var map = L.map(attrs.id, {
             center: center,
-            zoom: zoom,
             zoomControl: false,
             attributionControl: false,
             preferCanvas: true,
             zoomSnap: 0.1,
             zoomDelta: 0.5,
+            zoom: 5,
           });
+
+          map.setZoom(default_zoom);
 
           // Store map leaflet object on map service
           Map.setMap(map);
