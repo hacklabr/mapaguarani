@@ -415,10 +415,11 @@
           var center = scope.center || [-16.107747, -51.103348];
 
           var default_zoom = 5.0;
-          if ($window.innerHeight < 500 || $window.innerWidth < 500 ) {
-            default_zoom = 3.5;
-          } else if ($window.innerHeight < 900) {
-            default_zoom = 4.5;
+          // if ($window.innerHeight < 500 || $window.innerWidth < 500 ) {
+          //   default_zoom = 3.5;
+          // } else
+          if ($window.innerHeight < 900) {
+            default_zoom = 4.0;
           }
           var zoom = scope.zoom || default_zoom;
 
@@ -431,10 +432,8 @@
             preferCanvas: true,
             zoomSnap: 0.1,
             zoomDelta: 0.5,
-            zoom: 5,
+            zoom: zoom,
           });
-
-          map.setZoom(default_zoom);
 
           // Store map leaflet object on map service
           Map.setMap(map);
