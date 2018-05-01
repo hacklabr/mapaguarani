@@ -136,8 +136,8 @@
             <h4>{% trans "Arquivos Terras Indígenas" %}</h4>
             <p class="lead text-left">
               <a class="btn  btn-success" href="{% url 'export_xls_lands' %}?format=xlsx">{% trans "baixar Planilha Excel" %}</a>
-              <a class="btn  btn-success" href="{% url 'lands-kml-list' %}">{% trans "baixar KML" %}</a>
               {% if user.is_authenticated %}
+              <a class="btn  btn-success" href="{% url 'lands-kml-list' %}">{% trans "baixar KML" %}</a>
               <a class="btn  btn-success" href="{% url 'lands_shapefiles' %}">{% trans "baixar Shapefile" %}</a>
               {% endif %}
             </p>
@@ -151,21 +151,23 @@
                   <a class="btn  btn-success" href="{% url 'villages_shapefiles' %} ">{% trans "baixar Shapefile" %}</a>
               {% endif %}
             </p>
-            <p text-left">
+            {% if user.is_authenticated %}
+            <p class="text-left">
               Aldeias habitadas atualmente
               <a class="btn  btn-success" href="{% url 'villages-kml-list' %}?guarani_presence=True ">{% trans "baixar KML" %}</a>
             </p>
-            <p text-left">
+            <p class="text-left">
               Antigas áreas de usuo ou áreas esbulhadas
               <a class="btn  btn-success" href="{% url 'villages-kml-list' %}?guarani_presence=False ">{% trans "baixar KML" %}</a>
             </p>
+            {% endif %}
             <br>
 
             <h4>Sítios Arqueológicos</h4>
             <p class="lead text-left">
                 <a class="btn  btn-success" href="{% url 'export_xls_archaeological' %}?format=xlsx">{% trans "baixar Planilha Excel" %}</a>
-                <a class="btn  btn-success" href="{% url 'arch-kml-list' %}">{% trans "baixar KML" %}</a>
                 {% if user.is_authenticated %}
+                  <a class="btn  btn-success" href="{% url 'arch-kml-list' %}">{% trans "baixar KML" %}</a>
                     <a class="btn  btn-success" href="{% url 'archaeological_shapefiles' %}">{% trans "baixar Shapefile" %}</a>
                 {% endif %}
             </p>

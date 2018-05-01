@@ -9,7 +9,7 @@ from django.views.generic import View
 from django.http import JsonResponse
 # FIXME
 import rest_framework_gis
-from rest_framework import viewsets, relations, serializers, generics
+from rest_framework import viewsets, relations, serializers, generics, permissions
 from rest_framework_serializer_field_permissions import fields
 from collections import OrderedDict
 from rest_pandas import PandasView
@@ -126,6 +126,7 @@ class IndigenousLandKMLView(FilterLayersBySiteAndUserAuthenticatedMixin, KMLView
     queryset = IndigenousLand.objects.all()
     serializer_class = SimpleIndigenousLandKMLSerializer
     filename = 'indigenous_land.kml'
+    permission_classes = (permissions.IsAuthenticated,)
 
 
 class ArchaeologicalPlaceExportView(FilterLayersBySiteAndUserAuthenticatedMixin, ArchaeologicalPlaceMixin, PandasView):
@@ -173,6 +174,7 @@ class IndigenousVillageGeojsonView(FilterVillageMixin, FilterLayersBySiteAndUser
 class IndigenousVillageKMLView(KMLViewMixin, IndigenousVillageGeojsonView):
     serializer_class = SimpleIndigenousVillageKMLSerializer
     filename = 'indigenous_village.kml'
+    permission_classes = (permissions.IsAuthenticated,)
 
 
 class IndigenousVillageExportView(FilterVillageMixin, FilterLayersBySiteAndUserAuthenticatedMixin, PandasView):
@@ -188,6 +190,7 @@ class ArchaeologicalPlaceGeojsonView(FilterLayersBySiteAndUserAuthenticatedMixin
 class ArchaeologicalPlaceKMLView(KMLViewMixin, ArchaeologicalPlaceGeojsonView):
     serializer_class = SimpleArchaeologicalPlaceKMLSerializer
     filename = 'archaeological_places.kml'
+    permission_classes = (permissions.IsAuthenticated,)
 
 
 class ArchaeologicalPlaceViewSet(FilterLayersBySiteAndUserAuthenticatedMixin, viewsets.ReadOnlyModelViewSet):
@@ -332,6 +335,7 @@ class ShapefileView(generics.GenericAPIView):
 class IndigenousLandsShapefileView(FilterLayersBySiteAndUserAuthenticatedMixin, ShapefileView):
     serializer_class = IndigenousLandGeojsonSerializer
     queryset = IndigenousLand.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
     # self.readme = readme
     geo_field = 'geometry'
     geometry_type = 'MultiPolygon'
@@ -342,6 +346,7 @@ class IndigenousVillagesShapefileView(FilterVillageMixin, FilterLayersBySiteAndU
     serializer_class = IndigenousVillageGeojsonSerializer
     queryset = IndigenousVillage.objects.all()
     # self.readme = readme
+    permission_classes = (permissions.IsAuthenticated,)
     geo_field = 'geometry'
     geometry_type = 'Point'
     file_name = 'aldeias_indigenas'
@@ -350,6 +355,7 @@ class IndigenousVillagesShapefileView(FilterVillageMixin, FilterLayersBySiteAndU
 class ArchaeologicalPlacesShapefileView(FilterLayersBySiteAndUserAuthenticatedMixin, ArchaeologicalPlaceMixin, ShapefileView):
     serializer_class = ArchaeologicalPlaceGeojsonSerializer
     queryset = ArchaeologicalPlace.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
     # self.readme = readme
     geo_field = 'geometry'
     geometry_type = 'Point'
