@@ -583,6 +583,8 @@ class IndigenousLandGeojsonSerializer(IndigenousLandExportSerializer,
                   'cities', 'states', 'demand', 'claim', 'public_comments', 'source',
                   'private_comments', 'layer']
 
+cache_registry.register(IndigenousLandGeojsonSerializer)
+
 
 class IndigenousLandProtobufSerializer(IndigenousLandSerializer,
                                       GeoFeatureModelSerializer,
