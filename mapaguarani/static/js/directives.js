@@ -66,14 +66,15 @@
   var boundariesTilesOptions = {
     pane: 'base_tiles',
     vectorTileLayerStyles: {
-      lands: function(properties, zoom) {
+      boundaries: function(properties, zoom) {
         var styles = {
-            weight: 2,
-            fillColor: '#b2e2e2;',
-            color: '#b2e2e2;',
-            // fillOpacity: 0.4,
-            // opacity: 0.7,
+            weight: 1,
+            fillColor: '#fff',
+            color: '#fff',
+            fillOpacity: 0.4,
+            opacity: 0.7,
             // fill: true,
+            stroke: true,
         };
         return styles
       },
