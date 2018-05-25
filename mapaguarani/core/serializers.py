@@ -96,7 +96,7 @@ class BaseListSerializerMixin(serializers.ListSerializer):
 class ListIndigenousVillageSerializer(BaseListSerializerMixin):
 
     exclude_field = ['land', 'population', 'protected_areas_integral', 'protected_areas_conservation',
-                     'city', 'state', 'country', 'projects', 'layer_projects', ]
+                     'cities', 'states', 'country', 'projects', 'layer_projects', ]
 
 
 class IndigenousLandListSerializer(BaseListSerializerMixin):
@@ -111,43 +111,16 @@ class IndigenousLandListSerializer(BaseListSerializerMixin):
 class ListArchaeologicalSiteSerializer(BaseListSerializerMixin):
 
     exclude_field = ['land', 'protected_areas_integral', 'protected_areas_conservation',
-                     'city', 'state', 'country', 'projects', 'layer_projects', ]
+                     'cities', 'states', 'country', 'projects', 'layer_projects', ]
 
-
-class BasePointMixinSerializer(serializers.ModelSerializer):
-
-    city = serializers.SerializerMethodField()
-    state = serializers.SerializerMethodField()
-    country = serializers.SerializerMethodField()
-    land = serializers.SerializerMethodField()
-    projects = SimpleProjectSerializer(many=True)
-
-    @staticmethod
-    def get_city(obj):
-        if obj.city:
-            return obj.city.name
-
-    @staticmethod
-    def get_state(obj):
-        if obj.state:
-            return obj.state.name or obj.state.acronym
-
-    @staticmethod
-    def get_country(obj):
-        if obj.country:
-            return obj.country.name
-
-    @staticmethod
-    def get_land(obj):
-        if obj.land:
-            land = obj.land[0]
-            return SimpleIndigenousLandSerializer(land).data
 
 class GeoBaseMixinSerializer(serializers.ModelSerializer):
 
     protected_areas_integral = serializers.SerializerMethodField()
     protected_areas_conservation = serializers.SerializerMethodField()
     layer_projects = serializers.SerializerMethodField()
+    country = serializers.SerializerMethodField()
+    projects = SimpleProjectSerializer(many=True)
 
     @staticmethod
     def get_protected_areas_integral(obj):
@@ -164,8 +137,28 @@ class GeoBaseMixinSerializer(serializers.ModelSerializer):
         if obj.layer_projects:
             return SimpleProjectSerializer(obj.layer_projects, many=True).data
 
+    @staticmethod
+    def get_country(obj):
+        if obj.country:
+            return obj.country.name
 
-class PlaceExportSerializer(object):
+
+class PlaceExportSerializer(serializers.ModelSerializer):
+
+    cities = serializers.SerializerMethodField()
+    states = serializers.SerializerMethodField()
+    layer = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_cities(obj):
+        if obj.cities:
+            return ', '.join([city.name for city in obj.cities.all()])
+
+    @staticmethod
+    def get_states(obj):
+        if obj.states:
+            return ', '.join([state.name for state in obj.states.all()])
+
     @staticmethod
     def get_layer(obj):
         if obj.layer:
@@ -180,7 +173,6 @@ class IndigenousPlaceExportSerializer(PlaceExportSerializer):
 
     ethnic_groups = serializers.SerializerMethodField()
     prominent_subgroup = serializers.SerializerMethodField()
-    layer = serializers.SerializerMethodField()
 
     @staticmethod
     def get_ethnic_groups(obj):
@@ -192,13 +184,13 @@ class IndigenousPlaceExportSerializer(PlaceExportSerializer):
 
 
 class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
-                                  GeoBaseMixinSerializer,
-                                  BasePointMixinSerializer):
+                                  GeoBaseMixinSerializer):
 
     position_precision = serializers.SerializerMethodField()
     population = serializers.SerializerMethodField()
     guarani_presence = serializers.SerializerMethodField()
     projects = SimpleProjectSerializer(many=True)
+    land = serializers.SerializerMethodField()
 
     # Private fields
     private_comments = fields.ReadOnlyField(permission_classes=(IsAuthenticated(), ))
@@ -231,9 +223,15 @@ class IndigenousVillageSerializer(FieldPermissionSerializerMixin,
 
         return GuaraniPresenceSerializer(presence).data
 
+    # @staticmethod
+    # def get_villages(obj):
+    #     return SimpleIndigenousVillageSerializer(obj.villages, many=True).data
+
     @staticmethod
-    def get_villages(obj):
-        return SimpleIndigenousVillageSerializer(obj.villages, many=True).data
+    def get_land(obj):
+        if obj.land:
+            land = obj.land[0]
+            return SimpleIndigenousLandSerializer(land).data
 
 
 class IndigenousVillageCachedSerializer(IndigenousVillageSerializer,
@@ -280,7 +278,7 @@ class IndigenousVillageExportSerializer(IndigenousPlaceExportSerializer,
         # only the id field is excluded
         fields = ['id', 'name', 'other_names', 'land', 'guarani_presence', 'population',
                   'ethnic_groups', 'prominent_subgroup',
-                  'city', 'state', 'country',
+                  'cities', 'states', 'country',
                   'position_precision', 'public_comments',
                   'private_comments', 'layer', 'latitude', 'longitude']
 
@@ -335,7 +333,7 @@ class IndigenousVillageGeojsonSerializer(GeoFeatureModelSerializer,
         # only the id field is excluded
         fields = ['name', 'other_names', 'land', 'guarani_presence', 'population',
                   'ethnic_groups', 'prominent_subgroup',
-                  'city', 'state', 'country',
+                  'cities', 'states', 'country',
                   'position_precision', 'public_comments',
                   'private_comments', 'layer']
 
@@ -614,9 +612,10 @@ class IndigenousLandProtobufSerializer(IndigenousLandSerializer,
 cache_registry.register(IndigenousLandProtobufSerializer)
 
 
-class ArchaeologicalPlaceSerializer(GeoBaseMixinSerializer, BasePointMixinSerializer):
+class ArchaeologicalPlaceSerializer(GeoBaseMixinSerializer):
 
     position_precision = serializers.SerializerMethodField()
+    land = serializers.SerializerMethodField()
 
     @staticmethod
     def get_position_precision(obj):
@@ -630,8 +629,15 @@ class ArchaeologicalPlaceSerializer(GeoBaseMixinSerializer, BasePointMixinSerial
         depth = 1
         fields = '__all__'
 
+    @staticmethod
+    def get_land(obj):
+        if obj.land:
+            land = obj.land[0]
+            return SimpleIndigenousLandSerializer(land).data
 
-class ArchaeologicalPlaceExportSerializer(serializers.ModelSerializer):
+
+class ArchaeologicalPlaceExportSerializer(PlaceExportSerializer,
+                                           ArchaeologicalPlaceSerializer):
     def get_latitude(self, obj):
         if obj.geometry:
             return obj.geometry.get_y()
@@ -668,37 +674,24 @@ class ArchaeologicalPlaceExportSerializer(serializers.ModelSerializer):
                   'dating_method',
                   'lab_code',
                   'latitude',
-                  'longitude')
+                  'longitude',
+                  'cities',
+                  'country')
 
 
 class ArchaeologicalPlaceGeojsonSerializer(PlaceExportSerializer,
+                                           GeoBaseMixinSerializer,
                                            GeoFeatureModelSerializer,
                                            CachedSerializerMixin):
-
-    city_name = serializers.SerializerMethodField()
-    country_name = serializers.SerializerMethodField()
-
-    def get_city_name(self, obj):
-        if obj.city:
-            return obj.city.name
-        else:
-            return None
-
-    def get_country_name(self, obj):
-        if obj.country:
-            return obj.country.name
-        else:
-            return None
 
     class Meta:
         model = ArchaeologicalPlace
         geo_field = 'geometry'
-        fields = [#'id',
-                  'ap_date',
+        fields = ['ap_date',
                   'biblio_references',
                   'calibrated_dating',
-                  'city_name',
-                  'country_name',
+                  'cities',
+                  'country',
                   'dating',
                   'dating_method',
                   'name']

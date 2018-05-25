@@ -76,13 +76,13 @@
         <th>Fonte da localização</th>
         <td>{{data.position_source}}</td>
       </tr>
-      <tr ng-show="data.city">
-        <th>Município</th>
-        <td>{{data.city}}</td>
+      <tr ng-show="data.cities" ng-repeat="city in data.cities">
+        <th>{{city.label}}</th>
+        <td>{{city.name}}</td>
       </tr>
-      <tr ng-show="data.state">
-        <th>Estado</th>
-        <td>{{data.state}}</td>
+      <tr ng-show="data.states" ng-repeat="state in data.states">
+        <th>{{state.label}}</th>
+        <td>{{state.name}}</td>
       </tr>
       <tr ng-show="data.country">
         <th>País</th>

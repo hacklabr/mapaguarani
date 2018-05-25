@@ -60,6 +60,7 @@ class IndigenousPlaceAdmin(LayerPermissionsMixin, ObjectPermissionsModelAdminMix
 class IndigenousVillageAdmin(IndigenousPlaceAdmin):
     # extra_js = [GMAP.api_url + GMAP.key]
     # map_template = 'gis/admin/google.html'
+    exclude = ['cities', 'states', 'country']
     list_display = ('name', 'status', 'other_names', 'get_ethnic_groups', 'get_prominent_subgroup',
                     'population', 'get_guarani_presence',
                     'position_precision', 'position_source', 'geometry',
@@ -114,17 +115,17 @@ class IndigenousLandAdmin(geoadmin.GeoModelAdmin,
         form.base_fields['other_names'].help_text = """Coloque aqui todos os outros nomes pelos quais a Terra Indígena
                                                        é conhecida, separados por vírgula"""
         form.base_fields['ethnic_groups'].help_text = 'Selecione o(s) povo(s) indígenas que habitam o local.\n'
-        form.base_fields['prominent_subgroup'].help_text = """Preencha apenas se a terra indígena tiver presença do 
+        form.base_fields['prominent_subgroup'].help_text = """Preencha apenas se a terra indígena tiver presença do
                                                               povo guarani, qual(is) subgrupo(s) deste povo habita(m) o local."""
-        form.base_fields['public_comments'].help_text = """Acrescente aqui informações textuais adicionais relevantes 
-                                                           para o público amplo. Qualquer pessoa mesmo sem login 
+        form.base_fields['public_comments'].help_text = """Acrescente aqui informações textuais adicionais relevantes
+                                                           para o público amplo. Qualquer pessoa mesmo sem login
                                                            poderá visualizá-las."""
-        form.base_fields['private_comments'].help_text = """Acrescente aqui informações textuais adicionais relevantes 
-                                                            para os administradores do site, como descrições de como foi 
-                                                            desenhado o polígono da terra indígena, ou eventuais necessidades 
-                                                            futuras de revisão de dados, e etc… Essas observações só serão 
+        form.base_fields['private_comments'].help_text = """Acrescente aqui informações textuais adicionais relevantes
+                                                            para os administradores do site, como descrições de como foi
+                                                            desenhado o polígono da terra indígena, ou eventuais necessidades
+                                                            futuras de revisão de dados, e etc… Essas observações só serão
                                                             visualizadas pelos administradores, colaboradores e editores logados."""
-        form.base_fields['status'].help_text = """Você pode deixar essa terra indígena restrita, para visualização apenas 
+        form.base_fields['status'].help_text = """Você pode deixar essa terra indígena restrita, para visualização apenas
                                                   de pessoas logadas, ou pública, para visualização de qualquer visitante."""
         form.base_fields['layer'].queryset = form.base_fields['layer'].queryset.filter(type__in=('generic','land'))
         return form

@@ -255,6 +255,32 @@ class ProminentEthnicSubGroup(models.Model):
         return self.name
 
 
+class AdministrativeBoundaries(models.Model):
+
+    country = models.ForeignKey(
+        Country,
+        verbose_name=_('Country'),
+        related_name='%(class)s_ethnic_groups_layers',
+        blank=True,
+        null=True
+    )
+    states = models.ManyToManyField(
+        State,
+        verbose_name=_('States'),
+        related_name='%(class)s_ethnic_groups_layers',
+        blank=True
+    )
+    cities = models.ManyToManyField(
+        City,
+        verbose_name=_('Cities'),
+        related_name='%(class)s_ethnic_groups_layers',
+        blank=True
+    )
+
+    class Meta:
+        abstract = True
+
+
 class IndigenousPlace(models.Model):
 
     STATUS = (
@@ -293,12 +319,7 @@ class IndigenousPlace(models.Model):
         return self.name
 
 
-class IndigenousVillage(IndigenousPlace):
-
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self._meta.get_field('name').help_text="""Coloque aqui o nome pelo qual a própria comunidade reconhece a aldeia, sempre
-    #                                      com primeira letra maiúscula e as demais minúsculas"""
+class IndigenousVillage(IndigenousPlace, AdministrativeBoundaries):
 
     POSITION_PRECISION = (
         ('exact', _('Exact')),
@@ -350,32 +371,6 @@ class IndigenousVillage(IndigenousPlace):
     @property
     def protected_areas(self):
         return BaseProtectedArea.objects.filter(geometry__covers=self.geometry)
-
-    @property
-    def city(self):
-        try:
-            return City.objects.get(geometry__covers=self.geometry)
-        except City.DoesNotExist:
-            return
-
-    @property
-    def state(self):
-        try:
-            return State.objects.get(geometry__covers=self.geometry)
-        except State.DoesNotExist:
-            return
-        except State.MultipleObjectsReturned:
-            return State.objects.filter(geometry__covers=self.geometry).first()
-
-    @property
-    def country(self):
-        try:
-            return Country.objects.get(geometry__covers=self.geometry)
-        except Country.DoesNotExist:
-            return
-        except Country.MultipleObjectsReturned:
-            # import ipdb;ipdb.set_trace()
-            return
 
     @property
     def layer_projects(self):
@@ -465,7 +460,7 @@ class LandTenureStatus(models.Model):
         return self.name
 
 
-class IndigenousLand(IndigenousPlace):
+class IndigenousLand(AdministrativeBoundaries, IndigenousPlace):
 
     documents = models.ManyToManyField(
         Document,
@@ -583,17 +578,6 @@ class IndigenousLand(IndigenousPlace):
         return State.objects.filter(geometry__intersects=self.geometry)
 
     @property
-    def country(self):
-        try:
-            return Country.objects.get(geometry__covers=self.geometry)
-        except Country.DoesNotExist:
-            return
-        except Country.MultipleObjectsReturned:
-            # countries = Country.objects.filter(geometry__covers=self.geometry)
-            # import ipdb;ipdb.set_trace()
-            return
-
-    @property
     def layer_projects(self):
         return self.layer.projects
 
@@ -618,7 +602,7 @@ class LegalProceedings(models.Model):
         return self.name
 
 
-class ArchaeologicalPlace(models.Model):
+class ArchaeologicalPlace(AdministrativeBoundaries):
     POSITION_PRECISION_CHOICES = (
         ('exact', _('Exact')),
         ('approximate', _('Approximate')),
@@ -667,43 +651,9 @@ class ArchaeologicalPlace(models.Model):
         verbose_name = _('Archaeological Place')
         verbose_name_plural = _('Archaeological Places')
 
-    # def has_change_permission(self, request, obj=None):
-    #     eita = super().has_change_permission(request, obj)
-    #     raise Exception('PARATUDO')
-
-    # def clean(self):
-    #     if not rules.has_perm('core.add_archaeologicalplace', self.request.user, self.obj):
-    #         raise ValidationError('User does not have permission to add model')
-    #     pass
-
     @property
     def protected_areas(self):
         return BaseProtectedArea.objects.filter(geometry__covers=self.geometry)
-
-    @property
-    def city(self):
-        try:
-            return City.objects.get(geometry__covers=self.geometry)
-        except City.DoesNotExist:
-            return
-
-    @property
-    def state(self):
-        try:
-            return State.objects.get(geometry__covers=self.geometry)
-        except State.DoesNotExist:
-            return
-
-    @property
-    def country(self):
-        try:
-            return Country.objects.get(geometry__covers=self.geometry)
-        except Country.DoesNotExist:
-            return
-        except Country.MultipleObjectsReturned:
-            # countries = Country.objects.filter(geometry__covers=self.geometry)
-            # import ipdb;ipdb.set_trace()
-            return
 
     @property
     def land(self):
