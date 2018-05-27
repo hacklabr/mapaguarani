@@ -32,12 +32,12 @@ from .serializers import (IndigenousLandSerializer, IndigenousVillageSerializer,
                           LandTenureSerializer, LandTenureStatusSerializer,
                           IndigenousLandGeojsonSerializer, SimpleIndigenousLandKMLSerializer,
                           IndigenousVillageGeojsonSerializer, ArchaeologicalPlaceGeojsonSerializer,
-                          LandTenureReportSerializer,
+                          LandTenureReportSerializer, IndigenousVillagePublicExportSerializer,
                           SimpleIndigenousGeojsonVillageSerializer,
                           SimpleIndigenousVillageKMLSerializer,
                           SimpleIndigenousVillageSerializerWithPosition,
                           SimpleArchaeologicalPlaceGeojsonSerializer,
-                          IndigenousVillageExportSerializer,
+                          IndigenousVillageExportSerializer, IndigenousLandPublicExportSerializer,
                           IndigenousLandExportSerializer, ProjectSerializer,
                           IndigenousLandProtobufSerializer, ProminentEthnicSubGroupSerializer,
                           IndigenousVillageCachedSerializer)
@@ -119,7 +119,13 @@ class IndigenousLandViewSet(FilterLayersBySiteAndUserAuthenticatedMixin, viewset
 
 class IndigenousLandExportView(FilterLayersBySiteAndUserAuthenticatedMixin, PandasView):
     queryset = IndigenousLand.objects.all()
-    serializer_class = IndigenousLandExportSerializer
+
+    def get_serializer_class(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            self.serializer_class = IndigenousLandExportSerializer
+        else:
+            self.serializer_class = IndigenousLandPublicExportSerializer
+        return super().get_serializer_class(*args, **kwargs)
 
 
 class IndigenousLandKMLView(FilterLayersBySiteAndUserAuthenticatedMixin, KMLViewMixin, viewsets.ReadOnlyModelViewSet):
@@ -179,7 +185,13 @@ class IndigenousVillageKMLView(KMLViewMixin, IndigenousVillageGeojsonView):
 
 class IndigenousVillageExportView(FilterVillageMixin, FilterLayersBySiteAndUserAuthenticatedMixin, PandasView):
     queryset = IndigenousVillage.objects.all()
-    serializer_class = IndigenousVillageExportSerializer
+
+    def get_serializer_class(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            self.serializer_class = IndigenousVillageExportSerializer
+        else:
+            self.serializer_class = IndigenousVillagePublicExportSerializer
+        return super().get_serializer_class(*args, **kwargs)
 
 
 class ArchaeologicalPlaceGeojsonView(FilterLayersBySiteAndUserAuthenticatedMixin, viewsets.ReadOnlyModelViewSet):
@@ -492,9 +504,6 @@ class ProtobufTileView(ResponseExceptionMixin, BaseGeoView,
     model_serializer_class = GeoModelSerializer
 
     def get(self, request, *args, **kwargs):
-        # import ipdb;ipdb.set_trace()
-        # if isinstance(request.accepted_renderer,
-        #               ProtobufRenderer):
         return super(ProtobufTileView, self).get(request, *args, **kwargs)
 
 

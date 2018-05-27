@@ -11,6 +11,20 @@ from rest_framework_cache.serializers import CachedSerializerMixin
 from rest_framework_cache.registry import cache_registry
 
 
+class NamedCachedSerializerMixin(CachedSerializerMixin):
+
+    def _get_cache_key(self, instance):
+        request = self.context.get('request')
+        protocol = request.scheme if request else 'http'
+        serializer_name = self.Meta.cache_name
+        params = {"id": instance.pk,
+                  "app_label": instance._meta.app_label,
+                  "model_name": instance._meta.object_name,
+                  "serializer_name": serializer_name,
+                  "protocol": protocol}
+        return '{protocol}.{app_label}.{model_name}.{serializer_name}:{id}'.format(**params)
+
+
 class PopulationSerializer(serializers.ModelSerializer):
 
         class Meta:
@@ -248,7 +262,7 @@ cache_registry.register(IndigenousVillageCachedSerializer)
 
 class IndigenousVillageExportSerializer(IndigenousPlaceExportSerializer,
                                         IndigenousVillageSerializer,
-                                        CachedSerializerMixin):
+                                        NamedCachedSerializerMixin):
     """
     This serializer is used to generate the shapefile and xls
     """
@@ -273,9 +287,8 @@ class IndigenousVillageExportSerializer(IndigenousPlaceExportSerializer,
     position_precision = serializers.SerializerMethodField()
 
     class Meta:
+        cache_name = 'IndigenousVillageExportSerializer'
         model = IndigenousVillage
-        # geo_field = 'geometry'
-        # only the id field is excluded
         fields = ['id', 'name', 'other_names', 'land', 'guarani_presence', 'population',
                   'ethnic_groups', 'prominent_subgroup',
                   'cities', 'states', 'country',
@@ -318,6 +331,20 @@ class IndigenousVillageExportSerializer(IndigenousPlaceExportSerializer,
             return land.name
 
 cache_registry.register(IndigenousVillageExportSerializer)
+
+
+class IndigenousVillagePublicExportSerializer(IndigenousVillageExportSerializer):
+
+    class Meta:
+        cache_name = 'IndigenousVillagePublicExportSerializer'
+        model = IndigenousVillage
+        fields = ['id', 'name', 'other_names', 'land', 'guarani_presence', 'population',
+                  'ethnic_groups', 'prominent_subgroup',
+                  'cities', 'states', 'country',
+                  'position_precision', 'public_comments',
+                  'layer', 'latitude', 'longitude']
+
+cache_registry.register(IndigenousVillagePublicExportSerializer)
 
 
 class IndigenousVillageGeojsonSerializer(GeoFeatureModelSerializer,
@@ -495,7 +522,7 @@ class IndigenousLandSerializer(FieldPermissionSerializerMixin, GeoBaseMixinSeria
 
 class IndigenousLandExportSerializer(IndigenousPlaceExportSerializer,
                                      IndigenousLandSerializer,
-                                     CachedSerializerMixin,):
+                                     NamedCachedSerializerMixin):
 
     """
     This serializer is used to generate the shapefile
@@ -511,7 +538,7 @@ class IndigenousLandExportSerializer(IndigenousPlaceExportSerializer,
 
     class Meta:
         model = IndigenousLand
-        # geo_field = 'geometry'
+        cache_name = 'IndigenousLandExportSerializer'
         fields = ['id', 'name', 'other_names', 'ethnic_groups', 'prominent_subgroup', 'villages', 'population',
                   'guarani_presence', 'official_area', 'land_tenure',
                   'land_tenure_status', 'associated_land',
@@ -561,6 +588,23 @@ class IndigenousLandExportSerializer(IndigenousPlaceExportSerializer,
     def get_land_tenure_status(obj):
         if obj.land_tenure_status:
             return obj.land_tenure_status.name
+
+cache_registry.register(IndigenousLandExportSerializer)
+
+
+class IndigenousLandPublicExportSerializer(IndigenousLandExportSerializer):
+
+    class Meta:
+        model = IndigenousLand
+        cache_name = 'IndigenousLandPublicExportSerializer'
+        fields = ['id', 'name', 'other_names', 'ethnic_groups', 'prominent_subgroup', 'villages', 'population',
+                  'guarani_presence', 'official_area', 'land_tenure',
+                  'land_tenure_status', 'associated_land',
+                  'guarani_exclusive_possession_area_portion', 'others_exclusive_possession_area_portion',
+                  'documents',
+                  'cities', 'states', 'country','public_comments', 'source', 'layer']
+
+cache_registry.register(IndigenousLandPublicExportSerializer)
 
 
 class IndigenousLandGeojsonSerializer(IndigenousLandExportSerializer,
