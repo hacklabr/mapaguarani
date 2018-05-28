@@ -114,7 +114,11 @@
     'guaraniMapService',
     'user',
     'Villages',
-    function($rootScope, $state, $stateParams, Guarani, Map, user, Villages) {
+    'EthnicGroups',
+    'ProminentEthnicGroups',
+    'LandTenures',
+    function($rootScope, $state, $stateParams,
+             Guarani, Map, user, Villages, EthnicGroups, ProminentEthnicGroups, LandTenures) {
       return {
         restrict: 'E',
         scope: {
@@ -273,35 +277,33 @@
               name: 'Subgrupo de destaque',
               ref: 'id',
               label: 'name',
-              options: Guarani.getUniq(scope.villages, 'prominent_subgroup', 'id')
+              options: []
             }
           };
+          ProminentEthnicGroups.query({}, function(prominent_ethnic_groups) {
+            scope.adv.villages.prominent_subgroup.options = prominent_ethnic_groups;
+          })
+
           scope.adv.lands = {
             ethnic_groups: {
               name: 'Grupos étnicos',
               ref: 'id',
               label: 'name',
-              options: Guarani.getUniq(scope.lands, 'ethnic_groups', 'id')
+              options: []
             },
-//            prominent_subgroup: {
-//              name: 'Subgrupo de destaque',
-//              ref: 'id',
-//              label: 'name',
-//              options: Guarani.getUniq(scope.lands, 'prominent_subgroup', 'id')
-//            },
             land_tenure: {
               name: 'Situação fundiária',
               ref: 'id',
               label: 'name',
-              options: Guarani.getUniq(scope.lands, 'land_tenure', 'id')
+              options: []
             }
-//            land_tenure_status: {
-//              name: 'Situação da posse',
-//              ref: 'id',
-//              label: 'name',
-//              options: Guarani.getUniq(scope.lands, 'land_tenure_status', 'id')
-//            }
           };
+          LandTenures.query({}, function(tenures) {
+            scope.adv.lands.land_tenure.options = tenures;
+          })
+          EthnicGroups.query({}, function(ethnic_groups) {
+            scope.adv.lands.ethnic_groups.options = ethnic_groups;
+          })
 
           /*
            * Paging
@@ -403,8 +405,9 @@
     '$state',
     '$stateParams',
     '$window',
+    'LandTenures',
     // '$routeParams',
-    function(Guarani, Map, $rootScope, $http, $state, $stateParams, $window) {
+    function(Guarani, Map, $rootScope, $http, $state, $stateParams, $window, LandTenures) {
       return {
         restrict: 'E',
         scope: {
@@ -544,7 +547,7 @@
           landsLegend.onAdd = function(map) {
             var div = L.DomUtil.create('div', 'info legend lands');
             div.innerHTML += '<p><strong>Terras indígenas</strong></p>';
-            Guarani.tenures.query(function(tenures) {
+            LandTenures.query(function(tenures) {
               var tenure_map = {};
               _.each(tenures, function(tenure) {
                 tenure_map[tenure.name] = tenure.map_color

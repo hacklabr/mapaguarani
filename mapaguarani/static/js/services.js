@@ -33,6 +33,20 @@
         });
     });
 
+    services.factory('EthnicGroups', function($resource){
+        return $resource('/api/ethnic_groups/:id', {}, {
+        });
+    });
+    services.factory('ProminentEthnicGroups', function($resource){
+        return $resource('/api/prominent_ethnic_subgroups/:id', {}, {
+        });
+    });
+
+    services.factory('LandTenures', function($resource){
+        return $resource('/api/land_tenures/:id', {}, {
+        });
+    });
+
   services.factory('GuaraniService', [
     '$q',
     '$window',
@@ -60,13 +74,6 @@
             cache: true
           }
         }),
-        tenures: $resource('/api/land_tenures', {}, {
-          query: {
-            method: 'GET',
-            isArray: true,
-            cache: true
-          }
-        }),
         tenures_report: $resource('/api/landtenurereport', {}, {
           query: {
             method: 'GET',
@@ -81,30 +88,6 @@
             cache: true
           }
         }),
-        getUniq: function(list, param, uniqParam) {
-          var vals = [];
-          _.each(list, function(item) {
-            if(item[param]) {
-              if(angular.isArray(item[param])) {
-                if(item[param].length)
-                  vals = vals.concat(item[param]);
-              } else
-                vals.push(item[param]);
-            }
-          });
-          if(vals.length) {
-            var uniq = _.uniq(vals, function(item, key) {
-              if(typeof uniqParam !== 'undefined' && item[uniqParam]) {
-                return item[uniqParam];
-              } else {
-                return item;
-              }
-            });
-            return _.compact(uniq);
-          } else {
-            return [];
-          }
-        },
         toGeoJSON: function(data) {
           var geojson = {
             type: 'FeatureCollection',
