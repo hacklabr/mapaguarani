@@ -112,12 +112,20 @@ class ArchaeologicalPlaceMixin(object):
         return queryset
 
 
+class QuerysetAsIteratorMixin(object):
+
+    def filter_queryset(self, queryset):
+        return super().filter_queryset(queryset).iterator()
+
+
 class IndigenousLandViewSet(FilterLayersBySiteAndUserAuthenticatedMixin, viewsets.ReadOnlyModelViewSet):
     queryset = IndigenousLand.objects.all()
     serializer_class = IndigenousLandSerializer
 
 
-class IndigenousLandExportView(FilterLayersBySiteAndUserAuthenticatedMixin, PandasView):
+class IndigenousLandExportView(FilterLayersBySiteAndUserAuthenticatedMixin,
+                               QuerysetAsIteratorMixin,
+                               PandasView):
     queryset = IndigenousLand.objects.all()
 
     def get_serializer_class(self, *args, **kwargs):
@@ -128,14 +136,20 @@ class IndigenousLandExportView(FilterLayersBySiteAndUserAuthenticatedMixin, Pand
         return super().get_serializer_class(*args, **kwargs)
 
 
-class IndigenousLandKMLView(FilterLayersBySiteAndUserAuthenticatedMixin, KMLViewMixin, viewsets.ReadOnlyModelViewSet):
+class IndigenousLandKMLView(FilterLayersBySiteAndUserAuthenticatedMixin,
+                            KMLViewMixin,
+                            QuerysetAsIteratorMixin,
+                            viewsets.ReadOnlyModelViewSet):
     queryset = IndigenousLand.objects.all()
     serializer_class = SimpleIndigenousLandKMLSerializer
     filename = 'indigenous_land.kml'
     permission_classes = (permissions.IsAuthenticated,)
 
 
-class ArchaeologicalPlaceExportView(FilterLayersBySiteAndUserAuthenticatedMixin, ArchaeologicalPlaceMixin, PandasView):
+class ArchaeologicalPlaceExportView(FilterLayersBySiteAndUserAuthenticatedMixin,
+                                    ArchaeologicalPlaceMixin,
+                                    QuerysetAsIteratorMixin,
+                                    PandasView):
     queryset = ArchaeologicalPlace.objects.all()
     serializer_class = ArchaeologicalPlaceExportSerializer
 
@@ -145,7 +159,9 @@ class IndigenousVillageViewSet(FilterLayersBySiteAndUserAuthenticatedMixin, view
     serializer_class = IndigenousVillageSerializer
 
 
-class IndigenousVillageCachedViewSet(FilterLayersBySiteAndUserAuthenticatedMixin, viewsets.ReadOnlyModelViewSet):
+class IndigenousVillageCachedViewSet(FilterLayersBySiteAndUserAuthenticatedMixin,
+                                     QuerysetAsIteratorMixin,
+                                     viewsets.ReadOnlyModelViewSet):
     queryset = IndigenousVillage.objects.all()
     serializer_class = IndigenousVillageCachedSerializer
 
@@ -172,7 +188,10 @@ class FilterVillageMixin(object):
         return queryset
 
 
-class IndigenousVillageGeojsonView(FilterVillageMixin, FilterLayersBySiteAndUserAuthenticatedMixin, viewsets.ReadOnlyModelViewSet):
+class IndigenousVillageGeojsonView(FilterVillageMixin,
+                                   FilterLayersBySiteAndUserAuthenticatedMixin,
+                                   QuerysetAsIteratorMixin,
+                                   viewsets.ReadOnlyModelViewSet):
     queryset = IndigenousVillage.objects.all()
     serializer_class = SimpleIndigenousGeojsonVillageSerializer
 
@@ -183,7 +202,10 @@ class IndigenousVillageKMLView(KMLViewMixin, IndigenousVillageGeojsonView):
     permission_classes = (permissions.IsAuthenticated,)
 
 
-class IndigenousVillageExportView(FilterVillageMixin, FilterLayersBySiteAndUserAuthenticatedMixin, PandasView):
+class IndigenousVillageExportView(FilterVillageMixin,
+                                  FilterLayersBySiteAndUserAuthenticatedMixin,
+                                  QuerysetAsIteratorMixin,
+                                  PandasView):
     queryset = IndigenousVillage.objects.all()
 
     def get_serializer_class(self, *args, **kwargs):
@@ -194,7 +216,9 @@ class IndigenousVillageExportView(FilterVillageMixin, FilterLayersBySiteAndUserA
         return super().get_serializer_class(*args, **kwargs)
 
 
-class ArchaeologicalPlaceGeojsonView(FilterLayersBySiteAndUserAuthenticatedMixin, viewsets.ReadOnlyModelViewSet):
+class ArchaeologicalPlaceGeojsonView(FilterLayersBySiteAndUserAuthenticatedMixin,
+                                     QuerysetAsIteratorMixin,
+                                     viewsets.ReadOnlyModelViewSet):
     queryset = ArchaeologicalPlace.objects.all()
     serializer_class = SimpleArchaeologicalPlaceGeojsonSerializer
 
@@ -224,7 +248,7 @@ class LandTenureStatusViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = LandTenureStatusSerializer
 
 
-class ShapefileView(generics.GenericAPIView):
+class ShapefileView(QuerysetAsIteratorMixin, generics.GenericAPIView):
 
     serializer_class = None
     queryset = None
