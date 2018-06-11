@@ -85,7 +85,7 @@ class KMLViewMixin(object):
 class FilterLayersBySiteAndUserAuthenticatedMixin(object):
 
     def get_queryset(self):
-        queryset = super(FilterLayersBySiteAndUserAuthenticatedMixin, self).get_queryset()
+        queryset = super().get_queryset()
 
         # Filter layers according to current site
         current_site = get_current_site(self.request)
