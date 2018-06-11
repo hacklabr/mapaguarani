@@ -8,7 +8,7 @@ class Command(BaseCommand):
 
     def set_place_boundaries(self, queryset):
 
-        for instance in queryset:
+        for instance in queryset.iterator():
             instance.cities = City.objects.filter(geometry__covers=instance.geometry)
             instance.states = State.objects.filter(geometry__covers=instance.geometry)
             try:
@@ -27,7 +27,7 @@ class Command(BaseCommand):
         self.stdout.write('Finished set Archaeological!')
 
         self.stdout.write('Starting set lands...')
-        for land in IndigenousLand.objects.all():
+        for land in IndigenousLand.objects.all().iterator():
             land.cities = City.objects.filter(geometry__intersects=land.geometry)
             land.states = State.objects.filter(geometry__intersects=land.geometry)
             try:
