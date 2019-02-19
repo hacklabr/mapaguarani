@@ -485,6 +485,12 @@
               map.removeControl(scope.interactiveLayers[ev.layer.name].legend);
           });
 
+          L.easyButton('fa-crosshairs fa-lg', function() {
+            window.navigator.geolocation.getCurrentPosition(function(position) {
+              map.setView([position.coords.latitude, position.coords.longitude], 12.5);
+            });
+          }, 'Centralizar mapa na sua posição atual').addTo(map);
+
           var markerClick = function(ev, type) {
               if(ev.target && ev.target.feature && ev.target.feature.id) {
                 $state.go(type, {id: ev.target.feature.id, focus: false});

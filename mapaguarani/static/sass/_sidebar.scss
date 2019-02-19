@@ -2,7 +2,7 @@
   position: absolute;
   z-index: 2000;
   height: 100%;
-  margin: 50px 0 0; 
+  margin: 50px 0 0;
   width: 390px;
   overflow: hidden;
   -webkit-transition: all 0.25s ease-out;
@@ -65,7 +65,7 @@
     width: 340px;
     .content {
       pointer-events: auto;
-      background: #fff; 
+      background: #fff;
       position: relative;
       z-index: 1;
       #main-search {
@@ -286,7 +286,7 @@
       }
     }
     &.site {
-      .item { 
+      .item {
         h3 {
           margin-bottom: 0;
         }
@@ -311,12 +311,12 @@
   }
 }
 .button-menu {
-  cursor: pointer; 
+  cursor: pointer;
   position: absolute;
   pointer-events: auto;
-  text-align: center; 
+  text-align: center;
   width: 40px;
-  top: 165px;
+  top: 200px;
   left: 322px;
   z-index: 1999;
   transition: left 1s ease;
@@ -336,8 +336,8 @@
     border: 1px solid rgba(0,0,0,0.3);
     border-radius: 50%;
     box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
-    box-sizing: border-box;      
-    display: block; 
+    box-sizing: border-box;
+    display: block;
     height: 40px;
     width: 40px;
     .fa {
@@ -351,6 +351,6 @@
     }
   }
   &.menu-open {
-    left: 20px;
+    left: 16.5px;
   }
 }
