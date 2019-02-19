@@ -22,10 +22,10 @@ Este exemplo cobre a importação feita a partir de um binário (psqlc), adapte 
 docker-compose up postgres
 # copia backup para dentro do container (isso pode ser melhorado)
 docker cp mapaguarani.psqlc mapaguarani_postgres_1:/mapaguarani.psqlc
-docker-compose exec -u postgres postgres dropdb django
-docker-compose exec -u postgres postgres createdb django
-docker-compose exec -u postgres postgres psql -d django -c "CREATE EXTENSION postgis;"
-docker-compose exec -u postgres postgres pg_restore -O -x -n public -d django mapaguarani.psqlc
+docker-compose exec postgres sh -c "dropdb -U\$POSTGRES_USER django"
+docker-compose exec postgres sh -c "createdb -U\$POSTGRES_USER django"
+docker-compose exec postgres sh -c "psql -U\$POSTGRES_USER -d django -c \"CREATE EXTENSION postgis;\""
+docker-compose exec postgres sh -c "pg_restore -U\$POSTGRES_USER -O -x -n public -d django mapaguarani.psqlc"
 ```
 
 ## Testes
