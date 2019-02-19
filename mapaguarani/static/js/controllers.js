@@ -252,8 +252,17 @@
            return 1;
         return 0;
       }
+
+      function strip_django(p) {
+        return Object.assign(p, {
+          content: p.content.replace(/{%\s*static\s*'(.*)'\s*%}/g, function(match, p1) {
+            return '/static/' + p1;
+          })
+        });
+      }
+
       $scope.pages = Pages.query({url_prefix:'/sobre/'}, function(pages) {
-        $scope.pages = pages.sort(compare_by_position);
+        $scope.pages = pages.sort(compare_by_position).map(strip_django);
       });
     }
   ]);
