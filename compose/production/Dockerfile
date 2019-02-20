@@ -28,9 +28,6 @@ RUN apt-get install -y \
     && rm -rf /tmp/*
 ## Finished installing Node ##
 
-# Install Bower
-RUN npm install -g bower
-
 # Requirements have to be pulled and installed here, otherwise caching won't work
 COPY ./requirements /requirements
 RUN pip install --no-cache-dir -r /requirements/production.txt \
@@ -47,9 +44,9 @@ RUN chmod +x /entrypoint.sh
 RUN chown django /entrypoint.sh
 
 # Install js dependencies
-COPY bower.json .
-RUN bower --allow-root install
-RUN mkdir -p /app && mv bower_components /app/
+COPY package.json .
+RUN npm install
+RUN mkdir -p /app && mv node_modules /app/
 
 COPY . /app
 

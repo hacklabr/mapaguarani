@@ -19,9 +19,6 @@ RUN apt-get install -y \
     && rm -rf /tmp/*
 ## Finished installing ##
 
-# Install Bower
-RUN npm install -g bower
-
 # Needed to build GDAL
 ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
 ENV C_INCLUDE_PATH=/usr/include/gdal

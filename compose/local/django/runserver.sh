@@ -6,7 +6,6 @@ set -o nounset
 set -o xtrace
 
 npm install
-bower --allow-root install
 
 python manage.py migrate
 python manage.py collectstatic --noinput
