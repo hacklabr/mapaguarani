@@ -40,6 +40,12 @@
     </div>
   </div>
 
+  <script>
+    $('.navbar-nav a').click(function() {
+      $('.navbar-icon').click();
+    });
+  </script>
+
   <div id="container">
     <div id="sidebar" ng-class="menuIsClosed ? 'closed' : 'open'">
       <div ui-view></div>
