@@ -175,16 +175,16 @@ class SimpleIndigenousVillageViewSetWithPosition(FilterLayersBySiteAndUserAuthen
 
 
 class FilterVillageMixin(object):
-    def get_queryset(self):
-        queryset = super().get_queryset()
+    def filter_queryset(self, queryset):
+        queryset = super().filter_queryset(queryset)
         guarani_presence = self.request.query_params.get('guarani_presence', None)
         if guarani_presence is not None:
             if guarani_presence in ('False', 'false'):
                 guarani_presence = False
             elif guarani_presence in ('True', 'true'):
                 guarani_presence = True
-            queryset = [x for x in queryset if x.guarani_presence==guarani_presence]
 
+            queryset = [x for x in queryset if x.guarani_presence==guarani_presence]
         return queryset
 
 
