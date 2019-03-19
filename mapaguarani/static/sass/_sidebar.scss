@@ -60,6 +60,20 @@
       }
     }
   }
+  a.btn-link {
+    background-color: #eac367;
+    color: white;
+    display: inline-block;
+    margin-top: 20px;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+
+    &:hover {
+      background-color: #c19a3c;
+    }
+  }
   #sidebar-main-content {
     position: relative;
     width: 340px;
