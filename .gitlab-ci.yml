@@ -11,7 +11,8 @@ variables:
   DJANGO_HOMOLOG_IMAGE: $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME-$CI_COMMIT_SHORT_SHA
   NGINX_HOMOLOG_IMAGE: $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME-$CI_COMMIT_SHORT_SHA
   NGINX_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/nginx:$CI_BUILD_REF_NAME
-  
+  KUBECONFIG: /etc/k8s-config
+
 
 ##########
 ## Homolog
@@ -21,9 +22,9 @@ build to homolog:
   script:
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
     - docker build -f compose/production/Dockerfile --target django -t $DJANGO_HOMOLOG_IMAGE .
-    - docker push $DJANGO_RELEASE_IMAGE
+    - docker push $DJANGO_HOMOLOG_IMAGE
     - docker build -f compose/production/Dockerfile --target nginx -t $NGINX_HOMOLOG_IMAGE .
-    - docker push $NGINX_RELEASE_IMAGE
+    - docker push $NGINX_HOMOLOG_IMAGE
   only:
     - /master/
   environment: homolog
