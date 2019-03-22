@@ -8,7 +8,10 @@ stages:
 
 variables:
   DJANGO_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/django:$CI_BUILD_REF_NAME
+  DJANGO_HOMOLOG_IMAGE: $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME-$CI_COMMIT_SHORT_SHA
+  NGINX_HOMOLOG_IMAGE: $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME-$CI_COMMIT_SHORT_SHA
   NGINX_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/nginx:$CI_BUILD_REF_NAME
+  
 
 ##########
 ## Homolog
@@ -17,9 +20,9 @@ build to homolog:
   stage: build
   script:
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-    - docker build -f compose/production/Dockerfile --target django -t $DJANGO_RELEASE_IMAGE .
+    - docker build -f compose/production/Dockerfile --target django -t $DJANGO_HOMOLOG_IMAGE .
     - docker push $DJANGO_RELEASE_IMAGE
-    - docker build -f compose/production/Dockerfile --target nginx -t $NGINX_RELEASE_IMAGE .
+    - docker build -f compose/production/Dockerfile --target nginx -t $NGINX_HOMOLOG_IMAGE .
     - docker push $NGINX_RELEASE_IMAGE
   only:
     - /master/
@@ -29,10 +32,13 @@ build to homolog:
 
 deploy to homolog:
  stage: deploy
- image: cdrx/rancher-gitlab-deploy
+ image: hacklab/kubectl:latest
  script:
-   - upgrade --environment CTI --stack mapaguarani-dev --service backend --no-finish-upgrade --sidekicks
-   - upgrade --environment CTI --stack mapatrabalhoindigenista-dev --service backend --no-finish-upgrade --sidekicks
+   - echo ${kube_config} | base64 -d > ${KUBECONFIG}
+   - kubectl -n mapaguarani-dev --record deployment.apps/django set image deployment.v1.apps/django django=$DJANGO_HOMOLOG_IMAGE
+   - sleep 10
+   - kubectl -n mapaguarani-dev --record deployment.apps/backend set image deployment.v1.apps/backend backend=$NGINX_HOMOLOG_IMAGE
+
  only:
    - /master/
  environment: homolog
@@ -63,12 +69,15 @@ build to production:
 
 deploy to production:
  stage: deploy
- image: cdrx/rancher-gitlab-deploy
+ image: hacklab/kubectl:latest
  script:
-   - upgrade --environment CTI --stack mapaguarani-prod --service backend --no-finish-upgrade --sidekicks
-   - upgrade --environment CTI --stack mapatrabalhoindigenista-prod --service backend --no-finish-upgrade --sidekicks
+   - echo ${kube_config} | base64 -d > ${KUBECONFIG}
+   - kubectl -n mapaguarani-prod --record deployment.apps/django set image deployment.v1.apps/django django=$DJANGO_RELEASE_IMAGE
+   - sleep 10
+   - kubectl -n mapaguarani-prod --record deployment.apps/backend set image deployment.v1.apps/backend backend=$NGINX_RELEASE_IMAGE
  only:
    - tags
  environment: production
  tags:
    - docker
+
