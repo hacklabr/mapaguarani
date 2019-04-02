@@ -37,7 +37,7 @@ deploy to homolog:
  script:
    - echo ${kube_config} | base64 -d > ${KUBECONFIG}
    - kubectl -n mapaguarani-dev --record deployment.apps/django set image deployment.v1.apps/django django=$DJANGO_HOMOLOG_IMAGE
-   - sleep 10
+   - sleep 30
    - kubectl -n mapaguarani-dev --record deployment.apps/backend set image deployment.v1.apps/backend backend=$NGINX_HOMOLOG_IMAGE
 
  only:
@@ -74,7 +74,7 @@ deploy to production:
  script:
    - echo ${kube_config} | base64 -d > ${KUBECONFIG}
    - kubectl -n mapaguarani-prod --record deployment.apps/django set image deployment.v1.apps/django django=$DJANGO_RELEASE_IMAGE
-   - sleep 10
+   - sleep 30
    - kubectl -n mapaguarani-prod --record deployment.apps/backend set image deployment.v1.apps/backend backend=$NGINX_RELEASE_IMAGE
  only:
    - tags
